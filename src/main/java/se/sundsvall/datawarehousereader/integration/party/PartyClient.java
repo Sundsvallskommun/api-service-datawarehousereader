@@ -12,11 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import generated.se.sundsvall.party.PartyType;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration;
 
 @FeignClient(name = CLIENT_REGISTRATION_ID, url = "${integration.party.url}", configuration = PartyConfiguration.class, decode404 = true)
-@CircuitBreaker(name = CLIENT_REGISTRATION_ID)
 public interface PartyClient {
 
 	/**
