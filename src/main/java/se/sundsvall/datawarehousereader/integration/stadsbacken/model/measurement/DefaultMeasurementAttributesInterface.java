@@ -5,19 +5,19 @@ import java.time.LocalDateTime;
 
 public interface DefaultMeasurementAttributesInterface {
 
-    String getUnit();
+	String getUnit();
 
-    String getCustomerOrgId();
+	String getCustomerOrgId();
 
-    String getUuid();
+	String getUuid();
 
-    String getFacilityId();
+	String getFacilityId();
 
-    String getFeedType();
+	String getFeedType();
 
-    Integer getInterpolation();
+	Integer getInterpolation();
 
-    BigDecimal getUsage();
+	BigDecimal getUsage();
 
-    LocalDateTime getMeasurementTimestamp();
+	LocalDateTime getMeasurementTimestamp();
 }

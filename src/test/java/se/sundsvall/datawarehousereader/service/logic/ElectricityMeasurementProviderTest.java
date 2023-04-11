@@ -1,5 +1,21 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.domain.Sort.by;
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.zalando.problem.Status.NOT_IMPLEMENTED;
+import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.HOUR;
+import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,6 +28,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.zalando.problem.ThrowableProblem;
+
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementElectricityDayRepository;
@@ -20,20 +37,6 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementElect
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityMonthEntity;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.by;
-import static org.zalando.problem.Status.NOT_IMPLEMENTED;
-import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
 
 @ExtendWith(MockitoExtension.class)
 class ElectricityMeasurementProviderTest {
@@ -46,9 +49,6 @@ class ElectricityMeasurementProviderTest {
 
 	@Mock
 	private MeasurementElectricityMonthRepository electricityMonthRepositoryMock;
-
-	@Mock
-	private Page<MeasurementElectricityHourEntity> pageHourMock;
 
 	@Mock
 	private Page<MeasurementElectricityDayEntity> pageDayMock;
@@ -90,10 +90,7 @@ class ElectricityMeasurementProviderTest {
 
 		switch (aggregateOn) {
 			case HOUR -> {
-				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageHourMock);
-				when(pageHourMock.getContent()).thenReturn(List.of(entityHourMock));
-				when(pageHourMock.getTotalPages()).thenReturn(1);
-				when(pageHourMock.getTotalElements()).thenReturn(1L);
+				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock)));
 			}
 			case DAY -> {
 				when(electricityDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
@@ -115,7 +112,7 @@ class ElectricityMeasurementProviderTest {
 		switch (aggregateOn) {
 			case HOUR -> {
 				verify(electricityHourRepositoryMock).findAllMatching(customerOrgNrCaptor.capture(), facilityIdCaptor.capture(),
-					fromDateCaptor.capture(), toDateCaptor.capture(), pageableCaptor.capture());
+					fromDateCaptor.capture(), toDateCaptor.capture());
 				verifyNoInteractions(electricityDayRepositoryMock);
 				verifyNoInteractions(electricityMonthRepositoryMock);
 			}
@@ -138,9 +135,11 @@ class ElectricityMeasurementProviderTest {
 		assertThat(facilityIdCaptor.getValue()).isNull();
 		assertThat(fromDateCaptor.getValue()).isNull();
 		assertThat(toDateCaptor.getValue()).isNull();
-		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
-		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(100);
-		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(by(ASC, "measurementTimestamp"));
+		if (HOUR != aggregateOn) {
+			assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
+			assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(100);
+			assertThat(pageableCaptor.getValue().getSort()).isEqualTo(by(ASC, "measurementTimestamp"));
+		}
 		assertThat(response.getMetaData().getCount()).isEqualTo(1);
 		assertThat(response.getMetaData().getLimit()).isEqualTo(100);
 		assertThat(response.getMetaData().getPage()).isEqualTo(1);
@@ -160,13 +159,11 @@ class ElectricityMeasurementProviderTest {
 		final var toDateTime = LocalDateTime.now();
 		searchParams.setPartyId(partyId);
 		searchParams.setFacilityId(facilityId);
+		searchParams.setLimit(1);
 
 		switch (aggregateOn) {
 			case HOUR -> {
-				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageHourMock);
-				when(pageHourMock.getContent()).thenReturn(List.of(entityHourMock));
-				when(pageHourMock.getTotalPages()).thenReturn(2);
-				when(pageHourMock.getTotalElements()).thenReturn(2L);
+				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock, entityHourMock)));
 			}
 			case DAY -> {
 				when(electricityDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
@@ -188,7 +185,7 @@ class ElectricityMeasurementProviderTest {
 		switch (aggregateOn) {
 			case HOUR -> {
 				verify(electricityHourRepositoryMock).findAllMatching(customerOrgNrCaptor.capture(), facilityIdCaptor.capture(),
-					fromDateCaptor.capture(), toDateCaptor.capture(), pageableCaptor.capture());
+					fromDateCaptor.capture(), toDateCaptor.capture());
 				verifyNoInteractions(electricityDayRepositoryMock);
 				verifyNoInteractions(electricityMonthRepositoryMock);
 			}
@@ -211,11 +208,13 @@ class ElectricityMeasurementProviderTest {
 		assertThat(facilityIdCaptor.getValue()).isEqualTo(facilityId);
 		assertThat(fromDateCaptor.getValue()).isEqualTo(fromDateTime);
 		assertThat(toDateCaptor.getValue()).isEqualTo(toDateTime);
-		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
-		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(100);
-		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(by(ASC, "measurementTimestamp"));
+		if (HOUR != aggregateOn) {
+			assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
+			assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(1);
+			assertThat(pageableCaptor.getValue().getSort()).isEqualTo(by(ASC, "measurementTimestamp"));
+		}
 		assertThat(response.getMetaData().getCount()).isEqualTo(1);
-		assertThat(response.getMetaData().getLimit()).isEqualTo(100);
+		assertThat(response.getMetaData().getLimit()).isEqualTo(1);
 		assertThat(response.getMetaData().getPage()).isEqualTo(1);
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(2);
 		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(2);
@@ -228,9 +227,7 @@ class ElectricityMeasurementProviderTest {
 
 		switch (aggregateOn) {
 			case HOUR -> {
-				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageHourMock);
-				when(pageHourMock.getTotalPages()).thenReturn(2);
-				when(pageHourMock.getTotalElements()).thenReturn(2L);
+				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock, entityHourMock)));
 			}
 			case DAY -> {
 				when(electricityDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
@@ -246,13 +243,14 @@ class ElectricityMeasurementProviderTest {
 		}
 
 		final var searchParams = MeasurementParameters.create();
-		searchParams.setPage(2);
+		searchParams.setPage(101);
+		searchParams.setLimit(1);
 		final var response = provider.getMeasurements(null, aggregateOn, null, null, searchParams);
 
 		switch (aggregateOn) {
 			case HOUR -> {
 				verify(electricityHourRepositoryMock).findAllMatching(customerOrgNrCaptor.capture(), facilityIdCaptor.capture(),
-					fromDateCaptor.capture(), toDateCaptor.capture(), pageableCaptor.capture());
+					fromDateCaptor.capture(), toDateCaptor.capture());
 				verifyNoInteractions(electricityDayRepositoryMock);
 				verifyNoInteractions(electricityMonthRepositoryMock);
 			}
@@ -272,8 +270,8 @@ class ElectricityMeasurementProviderTest {
 		}
 
 		assertThat(response.getMetaData().getCount()).isZero();
-		assertThat(response.getMetaData().getLimit()).isEqualTo(100);
-		assertThat(response.getMetaData().getPage()).isEqualTo(2);
+		assertThat(response.getMetaData().getLimit()).isEqualTo(1);
+		assertThat(response.getMetaData().getPage()).isEqualTo(101);
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(2);
 		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(2);
 		assertThat(response.getMeasurements()).isEmpty();
