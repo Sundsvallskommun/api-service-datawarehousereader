@@ -8,23 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
-import javax.persistence.NamedStoredProcedureQuery;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(schema = "kundinfo", name = "vMeasurementElectricityHour")
 @IdClass(MeasurementElectricityHourKey.class)
-@NamedStoredProcedureQuery(name = "measurement.electricityHour", procedureName = "kundinfo.spMeasurementElectricityHour", 
-resultClasses = MeasurementElectricityHourEntity.class,
-parameters = {
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "customerorgid", type = String.class),
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "anlaggningsID", type = String.class),
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "datum_start", type = LocalDateTime.class),
-		@StoredProcedureParameter(mode = ParameterMode.IN, name = "datum_stop", type = LocalDateTime.class)
-})
 public class MeasurementElectricityHourEntity implements DefaultMeasurementAttributesInterface {
 
 	@Id
