@@ -1,5 +1,7 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
+import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
+import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,18 +10,23 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.domain.Sort.by;
 import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.zalando.problem.Status.BAD_REQUEST;
 import static org.zalando.problem.Status.NOT_IMPLEMENTED;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.HOUR;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
@@ -40,6 +47,9 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measuremen
 
 @ExtendWith(MockitoExtension.class)
 class ElectricityMeasurementProviderTest {
+
+	private static final LocalDateTime START_DATE_TIME = LocalDate.now().with(firstDayOfYear()).atStartOfDay();
+	private static final LocalDateTime END_DATE_TIME = LocalDate.now().with(lastDayOfYear()).atStartOfDay();
 
 	@Mock
 	private MeasurementElectricityHourRepository electricityHourRepositoryMock;
@@ -107,7 +117,7 @@ class ElectricityMeasurementProviderTest {
 			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
-		final var response = provider.getMeasurements(null, aggregateOn, null, null, searchParams);
+		final var response = provider.getMeasurements(null, aggregateOn, START_DATE_TIME, END_DATE_TIME, searchParams);
 
 		switch (aggregateOn) {
 			case HOUR -> {
@@ -133,8 +143,8 @@ class ElectricityMeasurementProviderTest {
 
 		assertThat(customerOrgNrCaptor.getValue()).isNull();
 		assertThat(facilityIdCaptor.getValue()).isNull();
-		assertThat(fromDateCaptor.getValue()).isNull();
-		assertThat(toDateCaptor.getValue()).isNull();
+		assertThat(fromDateCaptor.getValue()).isEqualTo(START_DATE_TIME);
+		assertThat(toDateCaptor.getValue()).isEqualTo(END_DATE_TIME);
 		if (HOUR != aggregateOn) {
 			assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
 			assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(100);
@@ -245,7 +255,7 @@ class ElectricityMeasurementProviderTest {
 		final var searchParams = MeasurementParameters.create();
 		searchParams.setPage(101);
 		searchParams.setLimit(1);
-		final var response = provider.getMeasurements(null, aggregateOn, null, null, searchParams);
+		final var response = provider.getMeasurements(null, aggregateOn, START_DATE_TIME, END_DATE_TIME, searchParams);
 
 		switch (aggregateOn) {
 			case HOUR -> {
@@ -285,6 +295,27 @@ class ElectricityMeasurementProviderTest {
 		assertThat(e.getStatus()).isEqualTo(NOT_IMPLEMENTED);
 		assertThat(e.getMessage()).isEqualTo("Not Implemented: aggregation 'YEAR' and category 'ELECTRICITY'");
 
-		verifyNoInteractions(electricityMonthRepositoryMock);
+		verifyNoInteractions(electricityHourRepositoryMock, electricityDayRepositoryMock, electricityMonthRepositoryMock);
+	}
+
+	@ParameterizedTest
+	@MethodSource("dateRangeArgumentProvider")
+	void testDateRangeExeedsMax(LocalDateTime start, LocalDateTime end) {
+		final var searchParams = MeasurementParameters.create();
+
+		ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, HOUR, start, end, searchParams));
+		assertThat(e.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(e.getMessage()).isEqualTo("Bad Request: Date range exceeds maximum range. Range can max be one year when asking for hourly electricity measurements.");
+
+		verifyNoInteractions(electricityHourRepositoryMock, electricityDayRepositoryMock, electricityMonthRepositoryMock);
+	}
+
+	private static Stream<Arguments> dateRangeArgumentProvider() {
+		return Stream.of(
+			Arguments.of(null, null),
+			Arguments.of(null, END_DATE_TIME),
+			Arguments.of(START_DATE_TIME, null),
+			Arguments.of(START_DATE_TIME, END_DATE_TIME.plusDays(1).plusNanos(1)),
+			Arguments.of(START_DATE_TIME.minusNanos(1), END_DATE_TIME.plusDays(1)));
 	}
 }

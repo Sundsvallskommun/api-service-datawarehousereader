@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
+import static java.util.Optional.ofNullable;
 import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.toMeasurementResponse;
 
@@ -41,12 +42,13 @@ public class ElectricityMeasurementProvider {
 	private MeasurementElectricityMonthRepository electricityMonthRepository;
 
 	private static final String AGGREGATION_NOT_IMPLEMENTED = "aggregation '%s' and category '%s'";
+	private static final String MAXIMUM_HOURLY_MEASUREMENT_RANGE_VIOLATION = "Date range exceeds maximum range. Range can max be one year when asking for hourly electricity measurements.";
 
 	@Transactional
 	public MeasurementResponse getMeasurements(String legalId, Aggregation aggregateOn, LocalDateTime fromDateTime, LocalDateTime toDateTime, MeasurementParameters parameters) {
 
 		final var pagedMatches = switch (aggregateOn) {
-			case HOUR -> toPage(parameters, electricityHourRepository.findAllMatching(legalId, parameters.getFacilityId(), fromDateTime, toDateTime));
+			case HOUR -> handleHourMeasurementRequest(legalId, fromDateTime, toDateTime, parameters);
 			case DAY -> electricityDayRepositoryRepository.findAllMatching(legalId, parameters.getFacilityId(), fromDateTime, toDateTime, toPageRequest(parameters));
 			case MONTH -> electricityMonthRepository.findAllMatching(legalId, parameters.getFacilityId(), fromDateTime, toDateTime, toPageRequest(parameters));
 			default -> throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(AGGREGATION_NOT_IMPLEMENTED, aggregateOn, ELECTRICITY));
@@ -57,6 +59,15 @@ public class ElectricityMeasurementProvider {
 			MeasurementMapper.toMeasurements(pagedMatches.getContent(), parameters, aggregateOn, ELECTRICITY);
 
 		return toMeasurementResponse(parameters, pagedMatches.getTotalPages(), pagedMatches.getTotalElements(), measurements);
+	}
+
+	private Page<MeasurementElectricityHourEntity> handleHourMeasurementRequest(String legalId, LocalDateTime fromDateTime, LocalDateTime toDateTime, MeasurementParameters parameters) {
+		// Throw exception if requested period is larger than a year
+		if (ofNullable(fromDateTime).orElse(LocalDateTime.MIN).plusYears(1).isBefore(ofNullable(toDateTime).orElse(LocalDateTime.MAX))) {
+			throw Problem.valueOf(Status.BAD_REQUEST, MAXIMUM_HOURLY_MEASUREMENT_RANGE_VIOLATION);
+		}
+
+		return toPage(parameters, electricityHourRepository.findAllMatching(legalId, parameters.getFacilityId(), fromDateTime, toDateTime));
 	}
 
 	/**
