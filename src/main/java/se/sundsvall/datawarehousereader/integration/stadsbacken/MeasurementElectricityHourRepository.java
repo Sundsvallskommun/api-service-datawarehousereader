@@ -1,30 +1,25 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityKey;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
 
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementElectricityHourSpecification.withCustomerOrgId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementElectricityHourSpecification.withMeasurementTimestamp;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementElectricityHourSpecification.withfacilityId;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.data.repository.query.Param;
+
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityKey;
 
 @Transactional
 @CircuitBreaker(name = "measurementElectricityHourRepository")
 public interface MeasurementElectricityHourRepository 
 	extends PagingAndSortingRepository<MeasurementElectricityHourEntity, MeasurementElectricityKey>, JpaSpecificationExecutor<MeasurementElectricityHourEntity> {
 	
-	default Page<MeasurementElectricityHourEntity> findAllMatching(String customerOrgNumber, String facilityId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo, Pageable pageable) {
-		return this.findAll(
-			withCustomerOrgId(customerOrgNumber).
-				and(withfacilityId(facilityId)).
-				and(withMeasurementTimestamp(dateTimeFrom, dateTimeTo))
-			, pageable);
-	}
+	@Query(value = "exec kundinfo.spMeasurementElectricityHour :customerOrgNumber, :facilityId, :dateTimeFrom, :dateTimeTo", nativeQuery = true)
+	List<MeasurementElectricityHourEntity> findAllMatching(@Param("customerOrgNumber") String customerOrgNumber, @Param("facilityId") String facilityId,
+		@Param("dateTimeFrom") LocalDateTime dateTimeFrom, @Param("dateTimeTo") LocalDateTime dateTimeTo);
 }

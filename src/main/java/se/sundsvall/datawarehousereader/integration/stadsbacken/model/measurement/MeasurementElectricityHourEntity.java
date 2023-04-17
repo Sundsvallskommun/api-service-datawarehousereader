@@ -1,17 +1,19 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
+import javax.persistence.Transient;
 
 @Entity
 @Table(schema = "kundinfo", name = "vMeasurementElectricityHour")
-@IdClass(MeasurementElectricityKey.class)
+@IdClass(MeasurementElectricityHourKey.class)
 public class MeasurementElectricityHourEntity implements DefaultMeasurementAttributesInterface {
 
 	@Id
@@ -29,9 +31,11 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 	@Column(name = "feedType", insertable = false, updatable = false, columnDefinition = "varchar(6)")
 	private String feedType;
 
-	@Id
-	@Column(name = "isInterpolted", nullable = false, insertable = false, updatable = false, columnDefinition = "bit")
-	private Integer interpolation;
+	// 0 means that the data is based on real values, i.e. that no interpolation has been done (this
+	// information is missing from SP result but defined in the DefaultMeasurementAttributesInterface
+	// and needs to be returned to fulfill the interface)
+	@Transient
+	private Integer interpolation = 0;
 
 	@Id
 	@Column(name = "DateAndTime", insertable = false, updatable = false, columnDefinition = "datetime")
@@ -44,10 +48,6 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 	@Id
 	@Column(name = "usage", insertable = false, updatable = false, columnDefinition="decimal(28,10)")
 	private BigDecimal usage;
-
-	@Id
-	@Column(name = "READING_DAY_SEQ", nullable = false, insertable = false, updatable = false)
-	private Integer readingSequence;
 
 	public static MeasurementElectricityHourEntity create() {
 		return new MeasurementElectricityHourEntity();
@@ -157,46 +157,32 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
-	public Integer getReadingSequence() {
-		return readingSequence;
-	}
-
-	public void setReadingSequence(Integer readingSequence) {
-		this.readingSequence = readingSequence;
-	}
-
-	public MeasurementElectricityHourEntity withReadingSequence(Integer readingSequence) {
-		this.readingSequence = readingSequence;
-		return this;
-	}
-
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerOrgId, facilityId, feedType, interpolation, measurementTimestamp, unit, usage, uuid, readingSequence);
+		return Objects.hash(customerOrgId, facilityId, feedType, interpolation, measurementTimestamp, unit, usage, uuid);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		MeasurementElectricityHourEntity other = (MeasurementElectricityHourEntity) obj;
-		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId)
-				&& Objects.equals(feedType, other.feedType) && Objects.equals(interpolation, other.interpolation)
-				&& Objects.equals(measurementTimestamp, other.measurementTimestamp) && Objects.equals(unit, other.unit)
-				&& Objects.equals(usage, other.usage) && Objects.equals(uuid, other.uuid) && Objects.equals(readingSequence, other.readingSequence);
+		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId) && Objects.equals(feedType, other.feedType) && Objects.equals(interpolation, other.interpolation) && Objects.equals(
+			measurementTimestamp, other.measurementTimestamp) && Objects.equals(unit, other.unit) && Objects.equals(usage, other.usage) && Objects.equals(uuid, other.uuid);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MeasurementElectricityHourEntity [customerOrgId=").append(customerOrgId).append(", uuid=")
-				.append(uuid).append(", facilityId=").append(facilityId).append(", feedType=").append(feedType)
-				.append(", interpolation=").append(interpolation).append(", measurementTimestamp=")
-				.append(measurementTimestamp).append(", unit=").append(unit).append(", usage=").append(usage).append(", readingSequence=").append(readingSequence).append("]");
+		builder.append("MeasurementElectricityHourEntity [customerOrgId=").append(customerOrgId).append(", uuid=").append(uuid).append(", facilityId=").append(facilityId).append(", feedType=").append(feedType).append(", interpolation=").append(
+			interpolation).append(", measurementTimestamp=").append(measurementTimestamp).append(", unit=").append(unit).append(", usage=").append(usage).append("]");
 		return builder.toString();
 	}
 }

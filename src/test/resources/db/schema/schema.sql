@@ -158,13 +158,13 @@
        customerorgid varchar(8000) not null,
         facilityId varchar(255) not null,
         feedType varchar(6) not null,
-        isInterpolted bit not null,
+								   
         DateAndTime datetime not null,
         unit nvarchar(255) not null,
         usage decimal(28,10) not null,
-        READING_DAY_SEQ int not null,
+									 
         uuid uniqueidentifier,
-        primary key (customerorgid, facilityId, feedType, isInterpolted, DateAndTime, unit, usage)
+        primary key (customerorgid, facilityId, feedType, DateAndTime, unit, usage)
     );
 
     create table kundinfo.vMeasurementElectricityMonth (
