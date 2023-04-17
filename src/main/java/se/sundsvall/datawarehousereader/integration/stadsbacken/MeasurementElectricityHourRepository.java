@@ -19,7 +19,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measuremen
 public interface MeasurementElectricityHourRepository 
 	extends PagingAndSortingRepository<MeasurementElectricityHourEntity, MeasurementElectricityKey>, JpaSpecificationExecutor<MeasurementElectricityHourEntity> {
 	
-	@Query(value = "exec kundinfo.spMeasurementElectricityHour :customerorgid, :anlaggningsID, :datum_start, :datum_stop ;", nativeQuery = true)
-	List<MeasurementElectricityHourEntity> findAllMatching(@Param("customerorgid") String customerOrgNumber, @Param("anlaggningsID") String facilityId,
-		@Param("datum_start") LocalDateTime dateTimeFrom, @Param("datum_stop") LocalDateTime dateTimeTo);
+	@Query(value = "exec kundinfo.spMeasurementElectricityHour :customerOrgNumber, :facilityId, :dateTimeFrom, :dateTimeTo", nativeQuery = true)
+	List<MeasurementElectricityHourEntity> findAllMatching(@Param("customerOrgNumber") String customerOrgNumber, @Param("facilityId") String facilityId,
+		@Param("dateTimeFrom") LocalDateTime dateTimeFrom, @Param("dateTimeTo") LocalDateTime dateTimeTo);
 }
