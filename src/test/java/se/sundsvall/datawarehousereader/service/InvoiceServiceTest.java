@@ -160,34 +160,6 @@ class InvoiceServiceTest {
 	}
 
 	@Test
-	void testDeprecatedInvoiceDetails() {
-		final var invoiceNumber = 1337;
-		final var detailEntities = List.of(new InvoiceDetailEntity());
-
-		when(invoiceDetailRepositoryMock.findAllByInvoiceNumber(anyLong())).thenReturn(detailEntities);
-
-		final var response = service.getInvoiceDetails(invoiceNumber);
-
-		verify(invoiceDetailRepositoryMock).findAllByInvoiceNumber(invoiceNumber);
-		assertThat(response).isEqualTo(toDetails(detailEntities));
-	}
-
-	@Test
-	void testDeprecatedInvoiceDetailsNotFound() {
-		when(invoiceDetailRepositoryMock.findAllByInvoiceNumber(anyLong())).thenReturn(Collections.emptyList());
-
-		final var invoiceNumber = 1337L;
-
-		final var exception = assertThrows(ThrowableProblem.class, () -> service.getInvoiceDetails(invoiceNumber));
-
-		assertThat(exception.getStatus()).isNotNull();
-		assertThat(exception.getStatus().getStatusCode()).isEqualTo(Status.NOT_FOUND.getStatusCode());
-		assertThat(exception.getStatus().getReasonPhrase()).isEqualTo(Status.NOT_FOUND.getReasonPhrase());
-		assertThat(exception.getMessage()).isEqualTo("Not Found: No invoicedetails found for invoicenumber '1337'");
-		assertThat(exception.getDetail()).isEqualTo("No invoicedetails found for invoicenumber '1337'");
-	}
-
-	@Test
 	void testInvoiceDetails() {
 		final var organizationNumber = "1234567890";
 		final var invoiceNumber = 1337;
