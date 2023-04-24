@@ -78,7 +78,7 @@ class InvoiceResourceTest {
 			.isEqualTo(InvoiceResponse.create());
 
 		verify(serviceMock).getInvoices(parametersCaptor.capture());
-		InvoiceParameters parameters = parametersCaptor.getValue();
+		final InvoiceParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getAdministration()).isEqualTo(ADMINISTRATION);
 		assertThat(parameters.getCustomerNumber()).isEqualTo(List.of(CUSTOMER_NUMBER));
 		assertThat(parameters.getCustomerType()).isEqualTo(CUSTOMER_TYPE);
@@ -112,7 +112,7 @@ class InvoiceResourceTest {
 			.isEqualTo(InvoiceResponse.create());
 
 		verify(serviceMock).getInvoices(parametersCaptor.capture());
-		InvoiceParameters parameters = parametersCaptor.getValue();
+		final InvoiceParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getAdministration()).isEqualTo(ADMINISTRATION);
 		assertThat(parameters.getCustomerNumber()).isEqualTo(List.of(CUSTOMER_NUMBER));
 		assertThat(parameters.getCustomerType()).isEqualTo(CUSTOMER_TYPE);
@@ -143,7 +143,7 @@ class InvoiceResourceTest {
 			.isEqualTo(InvoiceResponse.create());
 
 		verify(serviceMock).getInvoices(parametersCaptor.capture());
-		InvoiceParameters parameters = parametersCaptor.getValue();
+		final InvoiceParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getAdministration()).isNull();
 		assertThat(parameters.getCustomerNumber()).isNull();
 		assertThat(parameters.getCustomerType()).isNull();
@@ -163,20 +163,6 @@ class InvoiceResourceTest {
 	}
 
 	@Test
-	void getDeprecatedInvoicesDetails() {
-		when(serviceMock.getInvoiceDetails(INVOICE_NUMBER)).thenReturn(List.of(InvoiceDetail.create()));
-
-		webTestClient.get().uri("/invoices/{invoiceNumber}/details", INVOICE_NUMBER)
-			.exchange()
-			.expectStatus().isOk()
-			.expectHeader().contentType(APPLICATION_JSON)
-			.expectBodyList(InvoiceDetail.class)
-			.isEqualTo(List.of(InvoiceDetail.create()));
-
-		verify(serviceMock).getInvoiceDetails(INVOICE_NUMBER);
-	}
-
-	@Test
 	void getInvoicesDetails() {
 		when(serviceMock.getInvoiceDetails(ORGANIZATION_NUMBER, INVOICE_NUMBER)).thenReturn(List.of(InvoiceDetail.create()));
 
@@ -190,11 +176,11 @@ class InvoiceResourceTest {
 		verify(serviceMock).getInvoiceDetails(ORGANIZATION_NUMBER, INVOICE_NUMBER);
 	}
 
-	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String customerNumber, String customerType, String facilityId, Long invoiceNumber, LocalDate invoiceDateFrom,
-		LocalDate invoiceDateTo, String invoiceName, String invoiceType, String invoiceStatus, Long ocrNumber, LocalDate dueDateFrom, LocalDate dueDateTo, String organizationGroup,
-		String administration) {
+	private MultiValueMap<String, String> createParameterMap(final Integer page, final Integer limit, final String customerNumber, final String customerType, final String facilityId, final Long invoiceNumber, final LocalDate invoiceDateFrom,
+		final LocalDate invoiceDateTo, final String invoiceName, final String invoiceType, final String invoiceStatus, final Long ocrNumber, final LocalDate dueDateFrom, final LocalDate dueDateTo, final String organizationGroup,
+		final String administration) {
 
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", valueOf(p)));
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", valueOf(p)));

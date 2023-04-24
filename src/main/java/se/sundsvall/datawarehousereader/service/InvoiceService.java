@@ -30,11 +30,11 @@ public class InvoiceService {
 	@Autowired
 	private InvoiceDetailRepository invoiceDetailRepository;
 
-	public InvoiceResponse getInvoices(InvoiceParameters parameters) {
+	public InvoiceResponse getInvoices(final InvoiceParameters parameters) {
 		final var matches = invoiceRepository.findAllByParameters(parameters, of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		// If page larger than last page is requested, a empty list is returned otherwise the current page
-		List<Invoice> invoices = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInvoices(matches.getContent());
+		final List<Invoice> invoices = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInvoices(matches.getContent());
 
 		return InvoiceResponse.create()
 			.withMetaData(MetaData.create()
@@ -48,17 +48,7 @@ public class InvoiceService {
 			.withInvoices(invoices);
 	}
 
-	@Deprecated(since = "2022-11-04", forRemoval = true)
-	public List<InvoiceDetail> getInvoiceDetails(long invoiceNumber) {
-		final var entities = invoiceDetailRepository.findAllByInvoiceNumber(invoiceNumber);
-		if (entities.isEmpty()) {
-			throw Problem.valueOf(Status.NOT_FOUND, String.format("No invoicedetails found for invoicenumber '%s'", invoiceNumber));
-		}
-
-		return toDetails(entities);
-	}
-
-	public List<InvoiceDetail> getInvoiceDetails(String organizationNumber, long invoiceNumber) {
+	public List<InvoiceDetail> getInvoiceDetails(final String organizationNumber, final long invoiceNumber) {
 		final var entities = invoiceDetailRepository.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
 		if (entities.isEmpty()) {
 			throw Problem.valueOf(Status.NOT_FOUND, String.format(INVOICE_DETAIL_NOT_FOUND, organizationNumber, invoiceNumber));

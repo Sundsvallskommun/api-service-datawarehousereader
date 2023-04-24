@@ -1,5 +1,19 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.domain.Sort.by;
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.zalando.problem.Status.NOT_IMPLEMENTED;
+import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,6 +27,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zalando.problem.ThrowableProblem;
+
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementDistrictHeatingDayRepository;
@@ -21,20 +36,6 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementDistr
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingDayEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingHourEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingMonthEntity;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.by;
-import static org.zalando.problem.Status.NOT_IMPLEMENTED;
-import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
 
 @ExtendWith(MockitoExtension.class)
 class DistrictHeatingMeasurementProviderTest {
@@ -108,6 +109,7 @@ class DistrictHeatingMeasurementProviderTest {
 				when(pageMonthMock.getTotalPages()).thenReturn(1);
 				when(pageMonthMock.getTotalElements()).thenReturn(1L);
 			}
+			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
 		final var response = provider.getMeasurements(null, aggregateOn, null, null, searchParams);
@@ -128,6 +130,7 @@ class DistrictHeatingMeasurementProviderTest {
 				verifyNoInteractions(districtHeatingHourRepositoryMock);
 				verifyNoInteractions(districtHeatingDayRepositoryMock);
 			}
+			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
 		assertThat(customerOrgNrCaptor.getValue()).isNull();
@@ -187,6 +190,7 @@ class DistrictHeatingMeasurementProviderTest {
 				when(monthEntityMock.getFeedType()).thenReturn(feedType);
 				when(monthEntityMock.getFacilityId()).thenReturn(facilityId);
 			}
+			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
 		final var response = provider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, searchParams);
@@ -207,6 +211,7 @@ class DistrictHeatingMeasurementProviderTest {
 				verifyNoInteractions(districtHeatingHourRepositoryMock);
 				verifyNoInteractions(districtHeatingDayRepositoryMock);
 			}
+			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
 		assertThat(customerOrgNrCaptor.getValue()).isEqualTo(legalId);
