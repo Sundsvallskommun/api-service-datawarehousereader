@@ -12,7 +12,6 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.In
 @Transactional
 @CircuitBreaker(name = "invoiceDetailRepository")
 public interface InvoiceDetailRepository extends CrudRepository<InvoiceDetailEntity, Integer> {
-	@Deprecated(since = "2022-11-04", forRemoval = true)
-	List<InvoiceDetailEntity> findAllByInvoiceNumber(long invoiceNumber);
+
 	List<InvoiceDetailEntity> findAllByOrganizationIdAndInvoiceNumber(String organizationNumber, long invoiceNumber);
 }
