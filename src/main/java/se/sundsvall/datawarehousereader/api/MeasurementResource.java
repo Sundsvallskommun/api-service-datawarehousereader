@@ -6,12 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import se.sundsvall.datawarehousereader.api.model.Category;
-import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
-import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
-import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
-import se.sundsvall.datawarehousereader.service.MeasurementService;
-
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-
-import javax.validation.Valid;
+import se.sundsvall.datawarehousereader.api.model.Category;
+import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
+import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
+import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
+import se.sundsvall.datawarehousereader.service.MeasurementService;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;

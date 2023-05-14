@@ -93,11 +93,11 @@
         periodTo nvarchar(4000),
         Productcode smallint not null,
         ProductName nvarchar(255),
-        Quantity double precision,
+        Quantity float(53),
         unit nvarchar(255),
         Unitprice money,
         Vat money,
-        Vatrate double precision,
+        Vatrate float(53),
         primary key (invoiceProductSeq)
     );
 
@@ -158,11 +158,9 @@
        customerorgid varchar(8000) not null,
         facilityId varchar(255) not null,
         feedType varchar(6) not null,
-								   
         DateAndTime datetime not null,
         unit nvarchar(255) not null,
         usage decimal(28,10) not null,
-									 
         uuid uniqueidentifier,
         primary key (customerorgid, facilityId, feedType, DateAndTime, unit, usage)
     );

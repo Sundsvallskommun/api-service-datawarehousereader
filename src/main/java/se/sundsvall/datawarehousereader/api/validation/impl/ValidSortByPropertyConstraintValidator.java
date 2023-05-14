@@ -1,19 +1,9 @@
 package se.sundsvall.datawarehousereader.api.validation.impl;
 
-import static org.springframework.util.CollectionUtils.isEmpty;
-
-import java.lang.reflect.Field;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
-
-import javax.persistence.Column;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-
+import jakarta.persistence.Column;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import org.hibernate.validator.internal.engine.messageinterpolation.util.InterpolationHelper;
-
 import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
@@ -26,6 +16,14 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
+
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 public class ValidSortByPropertyConstraintValidator implements ConstraintValidator<ValidSortByProperty, AbstractParameterBase> {
 	private static final String CUSTOM_ERROR_MESSAGE_TEMPLATE = "One or more of the sortBy members %s are not valid. Valid properties to sort by are %s.";

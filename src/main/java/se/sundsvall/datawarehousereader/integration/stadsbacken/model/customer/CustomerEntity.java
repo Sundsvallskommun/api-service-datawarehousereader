@@ -1,12 +1,12 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer;
 
-import java.util.Objects;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
-import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vCustomer")

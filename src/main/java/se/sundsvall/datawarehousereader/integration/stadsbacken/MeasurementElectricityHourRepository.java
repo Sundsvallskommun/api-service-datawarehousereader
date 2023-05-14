@@ -1,18 +1,16 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityKey;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Transactional
 @CircuitBreaker(name = "measurementElectricityHourRepository")

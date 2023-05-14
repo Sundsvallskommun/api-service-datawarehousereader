@@ -1,23 +1,20 @@
 package se.sundsvall.datawarehousereader.api.model;
 
-import static java.lang.Integer.parseInt;
-import static org.springframework.data.domain.Sort.DEFAULT_DIRECTION;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import se.sundsvall.datawarehousereader.api.validation.ValidSortByProperty;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.validation.ValidSortByProperty;
+import static java.lang.Integer.parseInt;
+import static org.springframework.data.domain.Sort.DEFAULT_DIRECTION;
 
 @ValidSortByProperty
 public abstract class AbstractParameterBase {
