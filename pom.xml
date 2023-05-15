@@ -19,7 +19,7 @@
 		<published.container.port.test>8792</published.container.port.test>
 		<published.container.port.production>9093</published.container.port.production>
 		<!-- Service properties -->
-		<openapi-generator-maven-plugin.version>6.5.0</openapi-generator-maven-plugin.version>
+		<openapi-generator-maven-plugin.version>6.6.0</openapi-generator-maven-plugin.version>
 		<testcontainers.version>1.18.0</testcontainers.version>
 		<generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
 		<generated-sources-java-path>src/main/java</generated-sources-java-path>
