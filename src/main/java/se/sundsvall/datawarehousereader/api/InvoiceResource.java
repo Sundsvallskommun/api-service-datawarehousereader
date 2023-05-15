@@ -8,8 +8,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -36,8 +34,6 @@ import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 @Tag(name = "Invoice", description = "Invoice operations")
 public class InvoiceResource {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceResource.class);
-
 	@Autowired
 	private InvoiceService service;
 
@@ -47,7 +43,6 @@ public class InvoiceResource {
 	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = { Problem.class, ConstraintViolationProblem.class })))
 	@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	public ResponseEntity<InvoiceResponse> getInvoices(@Valid final InvoiceParameters searchParams) {
-		LOGGER.debug("Received getInvoices()-request: {} ", searchParams);
 
 		return ResponseEntity.ok(service.getInvoices(searchParams));
 	}
@@ -61,7 +56,6 @@ public class InvoiceResource {
 	public ResponseEntity<List<InvoiceDetail>> getInvoiceDetails(
 		@Parameter(name = "organizationNumber", description = "Organization number of invoice issuer", example = "5565027223", required = true) @PathVariable(name = "organizationNumber") @ValidOrganizationNumber final String organizationNumber,
 		@Parameter(name = "invoiceNumber", description = "Invoice number", example = "805137494", required = true) @PathVariable(name = "invoiceNumber") final long invoiceNumber) {
-		LOGGER.debug("Received getInvoiceDetails()-request: organizationNumber='{}', invoiceNumber='{}'", organizationNumber, invoiceNumber);
 
 		return ResponseEntity.ok(service.getInvoiceDetails(organizationNumber, invoiceNumber));
 	}

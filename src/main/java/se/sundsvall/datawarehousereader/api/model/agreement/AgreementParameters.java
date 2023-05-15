@@ -1,16 +1,15 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
 import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 
 @Schema(description = "Agreement request parameters model")
 public class AgreementParameters extends AbstractParameterBase {
@@ -223,9 +222,9 @@ public class AgreementParameters extends AbstractParameterBase {
 		if (!super.equals(o))
 			return false;
 		AgreementParameters that = (AgreementParameters) o;
-		return mainAgreement == that.mainAgreement && binding == that.binding && Objects.equals(partyId, that.partyId) &&
+		return Objects.equals(mainAgreement, that.mainAgreement) && Objects.equals(binding, that.binding) && Objects.equals(partyId, that.partyId) &&
 			Objects.equals(customerNumber, that.customerNumber) && Objects.equals(facilityId, that.facilityId) &&
-			category == that.category && Objects.equals(billingId, that.billingId) && Objects.equals(agreementId, that.agreementId) &&
+			Objects.equals(category, that.category) && Objects.equals(billingId, that.billingId) && Objects.equals(agreementId, that.agreementId) &&
 			Objects.equals(description, that.description) && Objects.equals(bindingRule, that.bindingRule) &&
 			Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate);
 	}

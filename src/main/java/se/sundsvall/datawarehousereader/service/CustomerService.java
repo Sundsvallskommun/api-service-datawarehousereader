@@ -1,26 +1,25 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.springframework.data.domain.PageRequest.of;
-import static org.springframework.util.StringUtils.hasText;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
-import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
-
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import se.sundsvall.datawarehousereader.api.model.MetaData;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.springframework.util.StringUtils.hasText;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
 
 @Service
 public class CustomerService {
@@ -34,11 +33,11 @@ public class CustomerService {
 	private PartyProvider partyProvider;
 
 	public CustomerEngagementResponse getCustomerEngagements(CustomerEngagementParameters parameters) {
-		final var matches = repository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
+		final var matches = repository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		LOGGER.debug("Database query results: {} with content: {}", matches, matches.getContent());
 
-		// If page larger than last page is requested, a empty list is returned otherwise the current page
+		// If page larger than last page is requested, an empty list is returned otherwise the current page
 		List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
 
 		return CustomerEngagementResponse.create()
@@ -60,8 +59,7 @@ public class CustomerService {
 	}
 
 	private List<CustomerEngagement> switchToPartyId(List<CustomerEngagement> customerEngagements) {
-		customerEngagements.stream()
-			.forEach(engagement -> engagement
+		customerEngagements.forEach(engagement -> engagement
 				.withPartyId(fetchPartyId(engagement))
 				.withCustomerOrgNumber(null)); // Needs to be reset to not expose person/organization number in response
 

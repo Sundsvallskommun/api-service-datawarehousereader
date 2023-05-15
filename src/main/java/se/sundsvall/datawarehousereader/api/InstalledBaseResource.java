@@ -6,8 +6,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -28,8 +26,6 @@ import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 @RequestMapping("/installedbase")
 @Tag(name = "Installed base", description = "Installed base operations")
 public class InstalledBaseResource {
-
-	private static final Logger LOGGER = LoggerFactory.getLogger(InstalledBaseResource.class);
 	
 	@Autowired
 	private InstalledBaseService service;
@@ -40,7 +36,6 @@ public class InstalledBaseResource {
 	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = {Problem.class, ConstraintViolationProblem.class})))
 	@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	public ResponseEntity<InstalledBaseResponse> getInstalledBase(@Valid InstalledBaseParameters searchParams) {
-		LOGGER.debug("Received getInstalledBase()-request: {} ", searchParams);
 
 		return ResponseEntity.ok(service.getInstalledBase(searchParams));
 	}

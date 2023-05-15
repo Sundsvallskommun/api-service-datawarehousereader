@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
@@ -25,7 +26,6 @@ import java.util.Objects;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
-import static org.springframework.data.domain.PageRequest.of;
 import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
 import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.decorateMeasurement;
 import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.toMeasurementResponse;
@@ -49,13 +49,13 @@ public class DistrictHeatingMeasurementProvider {
 		var matches = switch (aggregation) {
 			case HOUR ->
 				districtHeatingHourRepository.findAllMatching(legalId, searchParams.getFacilityId(), fromDateTime, toDateTime,
-					of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
+					PageRequest.of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
 			case DAY ->
 				districtHeatingDayRepository.findAllMatching(legalId, searchParams.getFacilityId(), fromDateTime, toDateTime,
-					of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
+					PageRequest.of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
 			case MONTH ->
 				districtHeatingMonthRepository.findAllMatching(legalId, searchParams.getFacilityId(), fromDateTime, toDateTime,
-					of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
+					PageRequest.of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
 			default ->
 				throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(AGGREGATION_NOT_IMPLEMENTED, aggregation, DISTRICT_HEATING));
 		};

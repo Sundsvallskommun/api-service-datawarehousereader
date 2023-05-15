@@ -21,8 +21,7 @@ public interface PartyClient {
 	 * 
 	 * @param partyType the type of party.
 	 * @param partyId   the ID of the party. I.e. the personId or organizationId.
-	 * @return an optional string containing the legalId that corresponds to the provided partyType and partyId if found,
-	 *         or optional.empty() if not found.
+	 * @return an optional string containing the legalId that corresponds to the provided partyType and partyId if found.
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("legalIds")
@@ -34,8 +33,7 @@ public interface PartyClient {
 	 * 
 	 * @param partyType the type of party.
 	 * @param legalId   the legal-ID of the party. I.e. the personalNumber or organizationNumber.
-	 * @return an optional string containing the partyId that corresponds to the provided partyType and legalId if found,
-	 *         or optional.empty() if not found.
+	 * @return an optional string containing the partyId that corresponds to the provided partyType and legalId if found.
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("partyIds")
