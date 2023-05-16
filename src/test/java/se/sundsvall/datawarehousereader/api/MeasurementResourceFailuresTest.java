@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,11 +7,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.util.UriBuilder;
-
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.service.MeasurementService;
+
+import java.util.UUID;
+
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -123,10 +122,8 @@ class MeasurementResourceFailuresTest {
 			.expectBody()
 			.jsonPath("$.title").isEqualTo("Bad Request")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.detail").isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; "
-				+ "nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type "
-				+ "[@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] "
-				+ "for value 'not-valid-category'; nested exception is about:blank{400, Bad Request, Invalid value for enum Category: not-valid-category}");
+			.jsonPath("$.detail").isEqualTo("""
+                Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]""");
 	}
 
 	@Test
@@ -139,10 +136,8 @@ class MeasurementResourceFailuresTest {
 			.expectBody()
 			.jsonPath("$.title").isEqualTo("Bad Request")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.detail").isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; "
-				+ "nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] to type "
-				+ "[@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] "
-				+ "for value 'not-valid-aggregation'; nested exception is about:blank{400, Bad Request, Invalid value for enum Aggregation: not-valid-aggregation}");
+			.jsonPath("$.detail").isEqualTo("""
+				Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]""");
 	}
 
 	@Test

@@ -1,8 +1,8 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
+import jakarta.persistence.criteria.CriteriaBuilder.In;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder.In;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;

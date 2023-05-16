@@ -1,27 +1,28 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import javax.transaction.Transactional;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
  * MeasurementElectricityHour repository tests.
  * 
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
-@SpringBootTest
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = NONE)
 @ActiveProfiles("junit")
 @Transactional
 class MeasurementElectricityHourRepositoryTest {
@@ -106,7 +107,7 @@ class MeasurementElectricityHourRepositoryTest {
 
 		final var list = repository.findAllMatching(null, null, null, dateTimeTo);
 
-		assertThat(list.size()).isEqualTo(3);
+		assertThat(list).isNotNull().hasSize(3);
 	}
 
 	@Test
@@ -124,7 +125,7 @@ class MeasurementElectricityHourRepositoryTest {
 
 		final var list = repository.findAllMatching(null, null, dateTimeFrom, null);
 
-		assertThat(list.size()).isEqualTo(1);
+		assertThat(list).isNotNull().hasSize(1);
 	}
 
 	@Test
@@ -140,7 +141,7 @@ class MeasurementElectricityHourRepositoryTest {
 	void testResponseWithNoFiltering() {
 		final var list = repository.findAllMatching(null, null, null, null);
 
-		assertThat(list.size()).isEqualTo(180);
+		assertThat(list).isNotNull().hasSize(180);
 	}
 
 	private static BigDecimal toBigDecimal(double value) {

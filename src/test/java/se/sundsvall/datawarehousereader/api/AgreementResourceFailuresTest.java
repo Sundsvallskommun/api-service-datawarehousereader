@@ -1,18 +1,17 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.service.AgreementService;
+
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -106,9 +105,8 @@ class AgreementResourceFailuresTest {
 			.jsonPath("$.violations[0].field").isEqualTo("category")
 			.jsonPath("$.violations[0].message").isEqualTo("""
 				Failed to convert property value of type 'java.lang.String' to required type 'java.util.List' for property 'category'; \
-				nested exception is org.springframework.core.convert.ConversionFailedException: Failed to convert from type [java.lang.String] \
-				to type [@io.swagger.v3.oas.annotations.media.ArraySchema se.sundsvall.datawarehousereader.api.model.Category] for value 'not-valid-category'; \
-				nested exception is about:blank{400, Bad Request, Invalid value for enum Category: not-valid-category}""");
+				Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.ArraySchema \
+				se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]""");
 
 		verifyNoInteractions(serviceMock);
 	}

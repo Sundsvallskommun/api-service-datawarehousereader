@@ -1,5 +1,16 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.repository.PagingAndSortingRepository;
+import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementKey;
+import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+
 import static java.util.Optional.ofNullable;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withAgreementId;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withBillingId;
@@ -13,19 +24,6 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withFromDate;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withMainAgreement;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withToDate;
-
-import javax.transaction.Transactional;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.repository.PagingAndSortingRepository;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementKey;
-import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
 @Transactional
 @CircuitBreaker(name = "agreementRepository")

@@ -1,14 +1,13 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.datawarehousereader.api.model.Category;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.Category;
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Schema(description = "Agreement model")
 public class Agreement {
@@ -223,8 +222,8 @@ public class Agreement {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Agreement agreement = (Agreement) o;
-		return mainAgreement == agreement.mainAgreement && binding == agreement.binding && Objects.equals(partyId, agreement.partyId) && Objects.equals(customerNumber, agreement.customerNumber) && Objects.equals(facilityId, agreement.facilityId)
-			&& category == agreement.category && Objects.equals(billingId, agreement.billingId) && Objects.equals(agreementId, agreement.agreementId) && Objects.equals(description, agreement.description) && Objects.equals(bindingRule,
+		return Objects.equals(mainAgreement, agreement.mainAgreement) && Objects.equals(binding, agreement.binding) && Objects.equals(partyId, agreement.partyId) && Objects.equals(customerNumber, agreement.customerNumber) && Objects.equals(facilityId, agreement.facilityId)
+			&& Objects.equals(category, agreement.category) && Objects.equals(billingId, agreement.billingId) && Objects.equals(agreementId, agreement.agreementId) && Objects.equals(description, agreement.description) && Objects.equals(bindingRule,
 				agreement.bindingRule) && Objects.equals(fromDate, agreement.fromDate) && Objects.equals(toDate, agreement.toDate);
 	}
 
