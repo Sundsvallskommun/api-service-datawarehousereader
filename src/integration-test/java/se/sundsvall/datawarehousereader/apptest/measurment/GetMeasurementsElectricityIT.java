@@ -28,7 +28,7 @@ class GetMeasurementsElectricityIT extends AbstractAppTest {
 	void test01_getElectricityDay() {
 		setupCall()
 			.withServicePath(format(PATH, ELECTRICITY, DAY) +
-				"/?page=1" +
+				"?page=1" +
 				"&limit=100" +
 				"&partyId=16A64870-DF4D-4A27-A514-56297AB6F8D9" +
 				"&facilityId=735999109170208042" +
@@ -44,7 +44,7 @@ class GetMeasurementsElectricityIT extends AbstractAppTest {
 	void test02_getElectricityDayWithCustomPageAndLimit() {
 		setupCall()
 			.withServicePath(format(PATH, ELECTRICITY, DAY) +
-				"/?page=2" +
+				"?page=2" +
 				"&limit=2" +
 				"&partyId=16A64870-DF4D-4A27-A514-56297AB6F8D9" +
 				"&facilityId=735999109170208042" +
@@ -60,7 +60,7 @@ class GetMeasurementsElectricityIT extends AbstractAppTest {
 	void test03_getElectricityMonth() {
 		setupCall()
 			.withServicePath(format(PATH, ELECTRICITY, MONTH) +
-				"/?page=1" +
+				"?page=1" +
 				"&limit=100" +
 				"&partyId=B1EDEA3C-1083-4E1A-81FB-7D95E505E102" +
 				"&facilityId=9151530012" +
@@ -76,7 +76,7 @@ class GetMeasurementsElectricityIT extends AbstractAppTest {
 	void test04_getElectricityHour() {
 		setupCall()
 			.withServicePath(format(PATH, ELECTRICITY, HOUR) +
-				"/?page=1" +
+				"?page=1" +
 				"&limit=100" +
 				"&partyId=B1EDEA3C-1083-4E1A-81FB-7D95E505E102" +
 				"&facilityId=735999109320425015" +

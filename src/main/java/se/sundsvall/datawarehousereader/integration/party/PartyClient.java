@@ -1,20 +1,19 @@
 package se.sundsvall.datawarehousereader.integration.party;
 
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
-import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT_REGISTRATION_ID;
-
-import java.util.Optional;
-
+import generated.se.sundsvall.party.PartyType;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration;
 
-@FeignClient(name = CLIENT_REGISTRATION_ID, url = "${integration.party.url}", configuration = PartyConfiguration.class, decode404 = true)
+import java.util.Optional;
+
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
+import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
+import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT;
+
+@FeignClient(name = CLIENT, url = "${integration.party.url}", configuration = PartyConfiguration.class)
 public interface PartyClient {
 
 	/**
@@ -22,8 +21,7 @@ public interface PartyClient {
 	 * 
 	 * @param partyType the type of party.
 	 * @param partyId   the ID of the party. I.e. the personId or organizationId.
-	 * @return an optional string containing the legalId that corresponds to the provided partyType and partyId if found,
-	 *         or optional.empty() if not found.
+	 * @return an optional string containing the legalId that corresponds to the provided partyType and partyId if found.
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("legalIds")
@@ -35,8 +33,7 @@ public interface PartyClient {
 	 * 
 	 * @param partyType the type of party.
 	 * @param legalId   the legal-ID of the party. I.e. the personalNumber or organizationNumber.
-	 * @return an optional string containing the partyId that corresponds to the provided partyType and legalId if found,
-	 *         or optional.empty() if not found.
+	 * @return an optional string containing the partyId that corresponds to the provided partyType and legalId if found.
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("partyIds")

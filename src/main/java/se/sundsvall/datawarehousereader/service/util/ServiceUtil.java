@@ -1,11 +1,11 @@
 package se.sundsvall.datawarehousereader.service.util;
 
+import java.util.List;
+import java.util.Objects;
+
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.lang3.StringUtils.containsNone;
-
-import java.util.List;
-import java.util.Objects;
 
 public class ServiceUtil {
 
@@ -21,8 +21,8 @@ public class ServiceUtil {
 	 * - string contains no hyphen
 	 * If sent in string doesn't pass the test above, the string is returned untouched.
 	 * 
-	 * @param personNumber
-	 * @return
+	 * @param personNumber string
+	 * @return string with hyphen added or untouched string if it doesn't pass the tests above
 	 */
 	public static String addHyphen(String personNumber) {
 		return ofNullable(personNumber)
@@ -35,8 +35,8 @@ public class ServiceUtil {
 	/**
 	 * Method to remove hyphen from sent in person number
 	 * 
-	 * @param personNumber
-	 * @return
+	 * @param personNumber string
+	 * @return string without hyphen or untouched string if it is null
 	 */
 	public static String removeHyphen(String personNumber) {
 		return ofNullable(personNumber)
@@ -47,7 +47,7 @@ public class ServiceUtil {
 	/**
 	 * Method for converting Integer to String
 	 * 
-	 * @param integer
+	 * @param integer integer
 	 * @return string representation of sent in integer or null if integer equals null
 	 */
 	public static String toString(Integer integer) {
@@ -59,7 +59,7 @@ public class ServiceUtil {
 	/**
 	 * Method for converting Boolean to String
 	 * 
-	 * @param bool
+	 * @param bool boolean
 	 * @return string representation of sent in boolean or null if boolean equals null
 	 */
 	public static String toString(Boolean bool) {
@@ -71,7 +71,7 @@ public class ServiceUtil {
 	/**
 	 * Method for converting String to Integer
 	 * 
-	 * @param value
+	 * @param value string
 	 * @return integer representation of sent in string or null if string equals null
 	 */
 	public static Integer toInteger(String value) {
@@ -81,9 +81,9 @@ public class ServiceUtil {
 	}
 
 	/**
-	 * Method for converting List<String> to List<Integer>
+	 * Method for converting list of strings to list of integers
 	 *
-	 * @param values
+	 * @param values list of strings
 	 * @return list of integer representation of sent in list of strings or empty-list if list of strings equals null
 	 */
 	public static List<Integer> toIntegers(List<String> values) {

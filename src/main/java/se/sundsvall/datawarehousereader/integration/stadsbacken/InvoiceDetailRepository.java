@@ -1,13 +1,11 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
-import org.springframework.data.repository.CrudRepository;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import jakarta.transaction.Transactional;
+import org.springframework.data.repository.CrudRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
+
+import java.util.List;
 
 @Transactional
 @CircuitBreaker(name = "invoiceDetailRepository")

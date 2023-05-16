@@ -2,7 +2,8 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
 import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 
@@ -21,7 +23,8 @@ import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
  * 
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
-@SpringBootTest
+@DataJpaTest
+@AutoConfigureTestDatabase(replace = NONE)
 @ActiveProfiles("junit")
 class AgreementRepositoryTest {
 

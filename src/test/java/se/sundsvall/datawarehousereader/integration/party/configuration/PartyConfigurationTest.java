@@ -1,13 +1,6 @@
 package se.sundsvall.datawarehousereader.integration.party.configuration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT_REGISTRATION_ID;
-
-import java.util.List;
-
+import feign.codec.ErrorDecoder;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -21,11 +14,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.test.context.ActiveProfiles;
-
-import feign.codec.ErrorDecoder;
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.dept44.configuration.feign.FeignMultiCustomizer;
 import se.sundsvall.dept44.configuration.feign.decoder.ProblemErrorDecoder;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT;
 
 @SpringBootTest(classes = Application.class)
 @ActiveProfiles("junit")
@@ -60,7 +59,7 @@ class PartyConfigurationTest {
 
 		when(propertiesMock.connectTimeout()).thenReturn(connectTimeout);
 		when(propertiesMock.readTimeout()).thenReturn(readTimeout);
-		when(clientRepositoryMock.findByRegistrationId(CLIENT_REGISTRATION_ID)).thenReturn(clientRegistrationMock);
+		when(clientRepositoryMock.findByRegistrationId(CLIENT)).thenReturn(clientRegistrationMock);
 
 		// Mock static FeignMultiCustomizer to enable spy and to verify that static method is being called
 		try (MockedStatic<FeignMultiCustomizer> feignMultiCustomizerMock = Mockito.mockStatic(FeignMultiCustomizer.class)) {
@@ -74,7 +73,7 @@ class PartyConfigurationTest {
 		// Verifications
 		verify(propertiesMock).connectTimeout();
 		verify(propertiesMock).readTimeout();
-		verify(clientRepositoryMock).findByRegistrationId(CLIENT_REGISTRATION_ID);
+		verify(clientRepositoryMock).findByRegistrationId(CLIENT);
 		verify(feignMultiCustomizerSpy).withErrorDecoder(errorDecoderCaptor.capture());
 		verify(feignMultiCustomizerSpy).withRequestTimeoutsInSeconds(connectTimeout, readTimeout);
 		verify(feignMultiCustomizerSpy).withRetryableOAuth2InterceptorForClientRegistration(clientRegistrationMock);
@@ -84,7 +83,7 @@ class PartyConfigurationTest {
 		assertThat(errorDecoderCaptor.getValue())
 			.isInstanceOf(ProblemErrorDecoder.class)
 			.hasFieldOrPropertyWithValue("bypassResponseCodes", List.of(NOT_FOUND.value()))
-			.hasFieldOrPropertyWithValue("integrationName", CLIENT_REGISTRATION_ID);
+			.hasFieldOrPropertyWithValue("integrationName", CLIENT);
 	}
 
 	@Test
