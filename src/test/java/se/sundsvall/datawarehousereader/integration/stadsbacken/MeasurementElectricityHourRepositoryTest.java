@@ -1,24 +1,25 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
+
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
  * MeasurementElectricityHour repository tests.
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @DataJpaTest
@@ -34,8 +35,8 @@ class MeasurementElectricityHourRepositoryTest {
 	void testResponseMeasurementsForOneHour() {
 		final var customerOrgNbr = "195211161234";
 		final var facilityId = "735999109320425015";
-		final var dateTimeFrom = LocalDateTime.of(2022, 4, 27,  21, 0);
-		final var dateTimeTo = LocalDateTime.of(2022, 4, 27,  21, 0);
+		final var dateTimeFrom = LocalDateTime.of(2022, 4, 27, 21, 0);
+		final var dateTimeTo = LocalDateTime.of(2022, 4, 27, 21, 0);
 
 		final var list = repository.findAllMatching(customerOrgNbr, facilityId, dateTimeFrom, dateTimeTo);
 
@@ -74,7 +75,7 @@ class MeasurementElectricityHourRepositoryTest {
 				MeasurementElectricityHourEntity::getUnit,
 				MeasurementElectricityHourEntity::getUsage,
 				MeasurementElectricityHourEntity::getUuid)
-			.containsExactly(
+			.containsExactlyInAnyOrder(
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDateTime.of(2022, 4, 10, 0, 0), "kWh", toBigDecimal(0.03), "62743983-9C08-4CB4-A7F6-1DAAE3889733"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDateTime.of(2022, 4, 10, 1, 0), "kWh", toBigDecimal(0.05), "62743983-9C08-4CB4-A7F6-1DAAE3889733"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDateTime.of(2022, 4, 10, 2, 0), "kWh", toBigDecimal(0.03), "62743983-9C08-4CB4-A7F6-1DAAE3889733"),

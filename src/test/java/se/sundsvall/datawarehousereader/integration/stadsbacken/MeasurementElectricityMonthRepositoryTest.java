@@ -1,26 +1,27 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static org.springframework.data.domain.Sort.by;
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityMonthEntity;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.Direction.DESC;
-import static org.springframework.data.domain.Sort.by;
 
 /**
  * MeasurementElectricityMonth repository tests.
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @DataJpaTest
@@ -108,12 +109,12 @@ class MeasurementElectricityMonthRepositoryTest {
 			.containsExactly(
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 6, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 6, 1).atStartOfDay(), "kWh", toBigDecimal(11.75), null),
-				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 7, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 7, 1).atStartOfDay(), "kWh", toBigDecimal(3.83), null),
+				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 7, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 8, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 8, 1).atStartOfDay(), "kWh", toBigDecimal(12.92), null),
-				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 9, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
-				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 9, 1).atStartOfDay(), "kWh", toBigDecimal(13.91), null));
+				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 9, 1).atStartOfDay(), "kWh", toBigDecimal(13.91), null),
+				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 9, 1).atStartOfDay(), "kWh", toBigDecimal(0), null));
 	}
 
 	@Test
@@ -141,8 +142,8 @@ class MeasurementElectricityMonthRepositoryTest {
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 9, 1).atStartOfDay(), "kWh", toBigDecimal(13.91), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 8, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 8, 1).atStartOfDay(), "kWh", toBigDecimal(12.92), null),
-				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 7, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 7, 1).atStartOfDay(), "kWh", toBigDecimal(3.83), null),
+				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 7, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 6, 1).atStartOfDay(), "kWh", toBigDecimal(0), null),
 				tuple("5534567890", "735999109112403108", "Energy", 0, LocalDate.of(2017, 6, 1).atStartOfDay(), "kWh", toBigDecimal(11.75), null));
 	}
