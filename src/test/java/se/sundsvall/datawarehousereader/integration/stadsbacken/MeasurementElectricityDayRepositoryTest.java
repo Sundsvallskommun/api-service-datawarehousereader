@@ -1,26 +1,27 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static org.springframework.data.domain.Sort.by;
+import static org.springframework.data.domain.Sort.Direction.ASC;
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-import static org.springframework.data.domain.Sort.Direction.ASC;
-import static org.springframework.data.domain.Sort.Direction.DESC;
-import static org.springframework.data.domain.Sort.by;
 
 /**
  * MeasurementElectricityDay repository tests.
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @DataJpaTest
@@ -83,8 +84,8 @@ class MeasurementElectricityDayRepositoryTest {
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 2).atStartOfDay(), "kWh", toBigDecimal(21.96), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 3).atStartOfDay(), "kWh", toBigDecimal(13.15), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 3).atStartOfDay(), "kWh", toBigDecimal(50.42), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
-				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 4).atStartOfDay(), "kWh", toBigDecimal(42.66), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 23, LocalDate.of(2020, 9, 4).atStartOfDay(), "kWh", toBigDecimal(41.676), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
+				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 4).atStartOfDay(), "kWh", toBigDecimal(42.66), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 5).atStartOfDay(), "kWh", toBigDecimal(25.21), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 5).atStartOfDay(), "kWh", toBigDecimal(36.36), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 6).atStartOfDay(), "kWh", toBigDecimal(18.81), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
@@ -115,10 +116,10 @@ class MeasurementElectricityDayRepositoryTest {
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 6).atStartOfDay(), "kWh", toBigDecimal(18.81), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 5).atStartOfDay(), "kWh", toBigDecimal(25.21), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 5).atStartOfDay(), "kWh", toBigDecimal(36.36), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
-				tuple(customerOrgNbr, facilityId, "Energy", 23, LocalDate.of(2020, 9, 4).atStartOfDay(), "kWh", toBigDecimal(41.676), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 4).atStartOfDay(), "kWh", toBigDecimal(42.66), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
-				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 3).atStartOfDay(), "kWh", toBigDecimal(13.15), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
+				tuple(customerOrgNbr, facilityId, "Energy", 23, LocalDate.of(2020, 9, 4).atStartOfDay(), "kWh", toBigDecimal(41.676), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 3).atStartOfDay(), "kWh", toBigDecimal(50.42), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
+				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 3).atStartOfDay(), "kWh", toBigDecimal(13.15), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"),
 				tuple(customerOrgNbr, facilityId, "Energy", 0, LocalDate.of(2020, 9, 2).atStartOfDay(), "kWh", toBigDecimal(21.96), "3B3F9EF0-FDF6-4DBB-AB6D-AFA41BF76685"));
 
 	}
