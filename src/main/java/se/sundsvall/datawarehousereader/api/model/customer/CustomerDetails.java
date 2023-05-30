@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Customer details model")
@@ -29,9 +30,9 @@ public class CustomerDetails {
     private String city;
     @Schema(description = "Care of address", example = "Agatha Malm", accessMode = READ_ONLY)
     private String careOf;
-    @Schema(description = "List of phoneNumbers", example = "076-1234567,073-1234567", accessMode = READ_ONLY)
+    @ArraySchema(schema = @Schema(description = "List of phoneNumbers", example = "076-1234567", accessMode = READ_ONLY))
     private List<String> phoneNumbers;
-    @Schema(description = "List of emailAddresses", example = "test@test.se, test@sundsvall.se", accessMode = READ_ONLY)
+    @ArraySchema(schema = @Schema(description = "List of emailAddresses", example = "test@test.se", accessMode = READ_ONLY))
     private List<String> emails;
 
     @Schema(description = "Customer category ID", example = "1", accessMode = READ_ONLY)
