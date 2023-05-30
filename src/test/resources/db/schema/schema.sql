@@ -25,6 +25,26 @@
         primary key (customerid, organizationid)
     );
 
+    create table kundinfo.vCustomerDetails (
+        CustomerCategoryID int,
+        CustomerChangedFlg bit,
+        Customerid int not null,
+        Installedchangedflg bit,
+        Address nvarchar(255),
+        [C/o] nvarchar(255),
+        City nvarchar(255),
+        CustomerCategoryDescription nvarchar(255),
+        CustomerOrgId nvarchar(255),
+        Email1 nvarchar(255),
+        Email2 nvarchar(255),
+        Name nvarchar(255),
+        Phone1 nvarchar(255),
+        Phone2 nvarchar(255),
+        Phone3 nvarchar(255),
+        Zipcode nvarchar(255),
+        primary key (Customerid)
+        );
+
     create table kundinfo.vInstalledBase (
         DateFrom datetime,
         DateTo datetime,

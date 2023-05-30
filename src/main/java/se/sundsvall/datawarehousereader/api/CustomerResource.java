@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
+
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
 import se.sundsvall.datawarehousereader.service.CustomerService;
@@ -39,4 +42,15 @@ public class CustomerResource {
 		
 		return ResponseEntity.ok(service.getCustomerEngagements(searchParams));
 	}
+
+	@GetMapping(path = "/details", produces = { APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE })
+	@Operation(summary = "Get basic customer information", description = "Resource returns all customer engagements matching provided search parameters")
+	@ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = APPLICATION_JSON_VALUE, schema = @Schema(implementation = CustomerDetailsResponse.class)))
+	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = {Problem.class, ConstraintViolationProblem.class})))
+	@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
+	public ResponseEntity<CustomerDetailsResponse> getCustomerDetails(@Valid CustomerDetailsParameters searchParams) {
+
+		return ResponseEntity.ok(service.getCustomerDetails(searchParams));
+	}
+
 }

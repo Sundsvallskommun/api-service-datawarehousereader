@@ -52,6 +52,8 @@ class CustomerRepositoryTest {
 			.hasSize(6)
 			.extracting(CustomerEntity::getCustomerId, CustomerEntity::getCustomerOrgId, CustomerEntity::getCustomerType, CustomerEntity::getOrganizationId, CustomerEntity::getOrganizationName)
 			.containsExactlyInAnyOrder(
+
+
 				tuple(691071, "197706010123", "Private", "5564786647", "Sundsvall Energi AB"),
 				tuple(600606, "5512345678", "Enterprise", "5564786647", "Sundsvall Energi AB"),
 				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB"),
