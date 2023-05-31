@@ -36,13 +36,21 @@ import se.sundsvall.datawarehousereader.service.CustomerService;
 class CustomerResourceTest {
 
 	private static final OffsetDateTime START_DATE_TIME = OffsetDateTime.now();
+
 	private static final int DEFAULT_PAGE = 1;
+
 	private static final int DEFAULT_LIMIT = 100;
+
 	private static final int PAGE = 12;
+
 	private static final int LIMIT = 50;
+
 	private static final String CUSTOMER_NUMBER = "123";
+
 	private static final String PARTY_ID = UUID.randomUUID().toString();
+
 	private static final String ORGANIZATION_NUMBER = "organizationNumber";
+
 	private static final String ORGANIZATION_NAME = "organizationName";
 
 	@MockBean
@@ -62,8 +70,8 @@ class CustomerResourceTest {
 		when(serviceMock.getCustomerEngagements(any())).thenReturn(CustomerEngagementResponse.create());
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-			.queryParams(createParameterMap(PAGE, LIMIT, CUSTOMER_NUMBER, PARTY_ID, ORGANIZATION_NUMBER, ORGANIZATION_NAME))
-			.build())
+				.queryParams(createParameterMap(PAGE, LIMIT, CUSTOMER_NUMBER, PARTY_ID, ORGANIZATION_NUMBER, ORGANIZATION_NAME))
+				.build())
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -80,13 +88,26 @@ class CustomerResourceTest {
 		assertThat(parameters.getPage()).isEqualTo(PAGE);
 	}
 
+	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String customerNumber, String customerOrgId, String organizationId, String organizationName) {
+		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+
+		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
+		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));
+		ofNullable(customerNumber).ifPresent(p -> parameters.add("customerNumber", p));
+		ofNullable(customerOrgId).ifPresent(p -> parameters.add("partyId", p));
+		ofNullable(organizationId).ifPresent(p -> parameters.add("organizationNumber", p));
+		ofNullable(organizationName).ifPresent(p -> parameters.add("organizationName", p));
+
+		return parameters;
+	}
+
 	@Test
 	void getCustomerEngagementsDefaultValues() {
 		when(serviceMock.getCustomerEngagements(any())).thenReturn(CustomerEngagementResponse.create());
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-			.queryParams(createParameterMap(null, null, CUSTOMER_NUMBER, PARTY_ID, ORGANIZATION_NUMBER, ORGANIZATION_NAME))
-			.build())
+				.queryParams(createParameterMap(null, null, CUSTOMER_NUMBER, PARTY_ID, ORGANIZATION_NUMBER, ORGANIZATION_NAME))
+				.build())
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -125,21 +146,8 @@ class CustomerResourceTest {
 		assertThat(parameters.getPage()).isEqualTo(DEFAULT_PAGE);
 	}
 
-	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String customerNumber, String customerOrgId, String organizationId, String organizationName) {
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
-
-		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
-		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));
-		ofNullable(customerNumber).ifPresent(p -> parameters.add("customerNumber", p));
-		ofNullable(customerOrgId).ifPresent(p -> parameters.add("partyId", p));
-		ofNullable(organizationId).ifPresent(p -> parameters.add("organizationNumber", p));
-		ofNullable(organizationName).ifPresent(p -> parameters.add("organizationName", p));
-
-		return parameters;
-	}
-
 	@Test
-	void getCustomerDetailsAllParams(){
+	void getCustomerDetailsAllParams() {
 		when(serviceMock.getCustomerDetails(any())).thenReturn(CustomerDetailsResponse.create());
 		MultiValueMap<String, String> parameterMap = new LinkedMultiValueMap<>();
 		parameterMap.add("fromDateTime", START_DATE_TIME.format(DateTimeFormatter.ISO_INSTANT.withZone(ZoneId.systemDefault())));

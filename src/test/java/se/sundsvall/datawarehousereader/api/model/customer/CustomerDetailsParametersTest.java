@@ -22,56 +22,51 @@ import org.springframework.data.domain.Sort;
 
 class CustomerDetailsParametersTest {
 
-    @BeforeAll
-    static void setup() {
-        registerValueGenerator(() -> now().plusDays(new Random().nextInt()), OffsetDateTime.class);
-    }
+	@BeforeAll
+	static void setup() {
+		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), OffsetDateTime.class);
+	}
 
-    @Test
-    void testBean() {
-        MatcherAssert.assertThat(CustomerDetailsParameters.class, allOf(
-            hasValidBeanConstructor(),
-            hasValidGettersAndSetters(),
-            hasValidBeanHashCode(),
-            hasValidBeanEquals(),
-            hasValidBeanToString()));
-    }
+	@Test
+	void testBean() {
+		MatcherAssert.assertThat(CustomerDetailsParameters.class, allOf(
+			hasValidBeanConstructor(),
+			hasValidGettersAndSetters(),
+			hasValidBeanHashCode(),
+			hasValidBeanEquals(),
+			hasValidBeanToString()));
+	}
 
+	@Test
+	void testCreatePattern() {
 
-    @Test
-    void testCreatePattern() {
+		final var partyId = List.of("partyId1", "partyId2");
+		final var fromDateTime = OffsetDateTime.now();
+		final var toDateTime = OffsetDateTime.now().plusDays(1);
 
-        final var partyId = List.of("partyId1", "partyId2");
-        final var fromDateTime = OffsetDateTime.now();
-        final var toDateTime = OffsetDateTime.now().plusDays(1);
+		final var parameters = CustomerDetailsParameters.create()
+			.withPartyId(partyId)
+			.withToDateTime(toDateTime)
+			.withFromDateTime(fromDateTime);
 
+		Assertions.assertThat(parameters.getPartyId()).isEqualTo(partyId);
+		Assertions.assertThat(parameters.getToDateTime()).isEqualTo(toDateTime);
+		Assertions.assertThat(parameters.getFromDateTime()).isEqualTo(fromDateTime);
 
-        final var parameters = CustomerDetailsParameters.create()
-            .withPartyId(partyId)
-            .withToDateTime(toDateTime)
-            .withFromDateTime(fromDateTime);
+	}
 
-        Assertions.assertThat(parameters.getPartyId()).isEqualTo(partyId);
-        Assertions.assertThat(parameters.getToDateTime()).isEqualTo(toDateTime);
-        Assertions.assertThat(parameters.getFromDateTime()).isEqualTo(fromDateTime);
+	@Test
+	void testNoDirtOnCreatedBean() {
+		assertThat(CustomerDetailsParameters.create())
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortBy", "sortDirection")
+			.hasFieldOrPropertyWithValue("page", 1)
+			.hasFieldOrPropertyWithValue("limit", 100)
+			.hasFieldOrPropertyWithValue("sortDirection", Sort.DEFAULT_DIRECTION);
 
-
-    }
-
-
-    @Test
-    void testNoDirtOnCreatedBean() {
-        assertThat(CustomerDetailsParameters.create())
-            .hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortBy", "sortDirection")
-            .hasFieldOrPropertyWithValue("page", 1)
-            .hasFieldOrPropertyWithValue("limit", 100)
-            .hasFieldOrPropertyWithValue("sortDirection", Sort.DEFAULT_DIRECTION);
-
-        assertThat(new CustomerDetailsParameters())
-            .hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortBy", "sortDirection")
-            .hasFieldOrPropertyWithValue("page", 1)
-            .hasFieldOrPropertyWithValue("limit", 100)
-            .hasFieldOrPropertyWithValue("sortDirection", Sort.DEFAULT_DIRECTION);
-    }
-
+		assertThat(new CustomerDetailsParameters())
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortBy", "sortDirection")
+			.hasFieldOrPropertyWithValue("page", 1)
+			.hasFieldOrPropertyWithValue("limit", 100)
+			.hasFieldOrPropertyWithValue("sortDirection", Sort.DEFAULT_DIRECTION);
+	}
 }

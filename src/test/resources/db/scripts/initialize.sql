@@ -59,7 +59,3 @@ begin
                     CustomerChangedFlg,
                     Installedchangedflg
     from vCustomerDetails end;
-
-
-
-

@@ -17,34 +17,33 @@ import se.sundsvall.datawarehousereader.api.model.MetaData;
 
 class CustomerDetailsResponseTest {
 
+	@Test
+	void testBean() {
+		assertThat(CustomerDetailsResponse.class, allOf(
+			hasValidBeanConstructor(),
+			hasValidGettersAndSetters(),
+			hasValidBeanHashCode(),
+			hasValidBeanEquals(),
+			hasValidBeanToString()));
+	}
 
-    @Test
-    void testBean() {
-        assertThat(CustomerDetailsResponse.class, allOf(
-            hasValidBeanConstructor(),
-            hasValidGettersAndSetters(),
-            hasValidBeanHashCode(),
-            hasValidBeanEquals(),
-            hasValidBeanToString()));
-    }
+	@Test
+	void testCreatePattern() {
+		final var metaData = MetaData.create();
+		final var customer = CustomerDetails.create();
 
-    @Test
-    void testCreatePattern() {
-        final var metaData = MetaData.create();
-        final var customer = CustomerDetails.create();
+		final var response = CustomerDetailsResponse.create()
+			.withMetadata(metaData)
+			.withCustomerDetails(List.of(customer));
 
-        final var response = CustomerDetailsResponse.create()
-            .withMetadata(metaData)
-            .withCustomerDetails(List.of(customer));
+		Assertions.assertThat(response.getMetaData()).isEqualTo(metaData);
+		Assertions.assertThat(response.getCustomerDetails()).hasSize(1).contains(customer);
+	}
 
-        Assertions.assertThat(response.getMetaData()).isEqualTo(metaData);
-        Assertions.assertThat(response.getCustomerDetails()).hasSize(1).contains(customer);
-    }
-
-    @Test
-    void testNoDirtOnCreatedBean() {
-        Assertions.assertThat(CustomerDetailsResponse.create()).hasAllNullFieldsOrProperties();
-        Assertions.assertThat(new CustomerDetailsResponse()).hasAllNullFieldsOrProperties();
-    }
+	@Test
+	void testNoDirtOnCreatedBean() {
+		Assertions.assertThat(CustomerDetailsResponse.create()).hasAllNullFieldsOrProperties();
+		Assertions.assertThat(new CustomerDetailsResponse()).hasAllNullFieldsOrProperties();
+	}
 
 }

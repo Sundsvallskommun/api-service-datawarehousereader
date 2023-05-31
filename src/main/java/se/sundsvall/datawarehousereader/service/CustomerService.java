@@ -37,123 +37,121 @@ import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 @Service
 public class CustomerService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
-    private final CustomerRepository repository;
+	private final CustomerRepository repository;
 
-    private final CustomerDetailsRepository detailsRepository;
+	private final CustomerDetailsRepository detailsRepository;
 
-    private final PartyProvider partyProvider;
+	private final PartyProvider partyProvider;
 
-    public CustomerService(final CustomerDetailsRepository detailsRepository, final CustomerRepository repository, final PartyProvider partyProvider) {
-        this.detailsRepository = detailsRepository;
-        this.repository = repository;
-        this.partyProvider = partyProvider;
-    }
+	public CustomerService(final CustomerDetailsRepository detailsRepository, final CustomerRepository repository, final PartyProvider partyProvider) {
+		this.detailsRepository = detailsRepository;
+		this.repository = repository;
+		this.partyProvider = partyProvider;
+	}
 
-    public CustomerEngagementResponse getCustomerEngagements(CustomerEngagementParameters parameters) {
-        final var matches = repository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
+	public CustomerEngagementResponse getCustomerEngagements(CustomerEngagementParameters parameters) {
+		final var matches = repository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
-        LOGGER.debug("Database query results: {} with content: {}", matches, matches.getContent());
+		LOGGER.debug("Database query results: {} with content: {}", matches, matches.getContent());
 
-        // If page larger than last page is requested, an empty list is returned otherwise the current page
-        List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
+		// If page larger than last page is requested, an empty list is returned otherwise the current page
+		List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
 
-        return CustomerEngagementResponse.create()
-            .withMetaData(MetaData.create()
-                .withPage(parameters.getPage())
-                .withSortBy(parameters.getSortBy())
-                .withSortDirection(parameters.getSortDirection())
-                .withTotalPages(matches.getTotalPages())
-                .withTotalRecords(matches.getTotalElements())
-                .withCount(customerEngagements.size())
-                .withLimit(parameters.getLimit()))
-            .withCustomerEngagements(customerEngagements);
-    }
-
-
-    public CustomerDetailsResponse getCustomerDetails(CustomerDetailsParameters parameters) {
-
-        final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
+		return CustomerEngagementResponse.create()
+			.withMetaData(MetaData.create()
+				.withPage(parameters.getPage())
+				.withSortBy(parameters.getSortBy())
+				.withSortDirection(parameters.getSortDirection())
+				.withTotalPages(matches.getTotalPages())
+				.withTotalRecords(matches.getTotalElements())
+				.withCount(customerEngagements.size())
+				.withLimit(parameters.getLimit()))
+			.withCustomerEngagements(customerEngagements);
+	}
 
 
-        final var matches = toPage(parameters, detailsRepository.findAllMatching(fromDateTime));
+	public CustomerDetailsResponse getCustomerDetails(CustomerDetailsParameters parameters) {
 
+		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 
-        List<CustomerDetails> customerDetails = matches
-            .getTotalPages() < parameters.getPage() ? emptyList() : toCustomerDetails(matches.getContent());
+		final var matches = toPage(parameters, detailsRepository.findAllMatching(fromDateTime));
 
-        customerDetails.forEach(details -> {
-            details.setPartyId(fetchPartyId(details.getCustomerType(), details.getCustomerOrgNumber()));
-            details.setCustomerOrgNumber(null);
+		List<CustomerDetails> customerDetails = matches
+			.getTotalPages() < parameters.getPage() ? emptyList() : toCustomerDetails(matches.getContent());
 
-        });
+		customerDetails.forEach(details -> {
+			details.setPartyId(fetchPartyId(details.getCustomerType(), details.getCustomerOrgNumber()));
+			details.setCustomerOrgNumber(null);
 
-        customerDetails = customerDetails.stream()
-            .filter(details -> parameters.getPartyId().contains(details.getPartyId()))
-            .toList();
+		});
 
-        return CustomerDetailsResponse.create()
-            .withMetadata(MetaData.create()
-                .withPage(parameters.getPage())
-                .withSortBy(parameters.getSortBy())
-                .withSortDirection(parameters.getSortDirection())
-                .withTotalPages(matches.getTotalPages())
-                .withTotalRecords(matches.getTotalElements())
-                .withCount(customerDetails.size())
-                .withLimit(parameters.getLimit()))
-            .withCustomerDetails(customerDetails);
-    }
+		customerDetails = customerDetails.stream()
+			.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
+			.toList();
 
-    /**
-     * Method for converting result list into a Page object with sub list for requested page. Convertion must be done
-     * explicitly as stored procedures can not produce a return object of type Page and cant sort result list.
-     *
-     * @param parameters object containing input for calculating the current requested sub page for the result list
-     * @param matches with result to be converted to a paged list
-     * @return a Page object representing the sublist for the requested page of the list
-     */
-    private Page<CustomerDetailsEntity> toPage(CustomerDetailsParameters parameters, List<CustomerDetailsEntity> matches) {
+		return CustomerDetailsResponse.create()
+			.withMetadata(MetaData.create()
+				.withPage(parameters.getPage())
+				.withSortBy(parameters.getSortBy())
+				.withSortDirection(parameters.getSortDirection())
+				.withTotalPages(matches.getTotalPages())
+				.withTotalRecords(matches.getTotalElements())
+				.withCount(customerDetails.size())
+				.withLimit(parameters.getLimit()))
+			.withCustomerDetails(customerDetails);
+	}
 
-        // Convert list into a list of pages
-        PagedListHolder<CustomerDetailsEntity> page = toPagedListHolder(parameters, matches);
+	/**
+	 * Method for converting result list into a Page object with sub list for requested page. Convertion must be done
+	 * explicitly as stored procedures can not produce a return object of type Page and cant sort result list.
+	 *
+	 * @param parameters object containing input for calculating the current requested sub page for the result list
+	 * @param matches with result to be converted to a paged list
+	 * @return a Page object representing the sublist for the requested page of the list
+	 */
+	private Page<CustomerDetailsEntity> toPage(CustomerDetailsParameters parameters, List<CustomerDetailsEntity> matches) {
 
-        if (page.getPageCount() < parameters.getPage()) {
-            return new PageImpl<>(Collections.emptyList(), toPageRequest(parameters), page.getNrOfElements());
-        }
-        return new PageImpl<>(page.getPageList(), PageRequest.of(page.getPage(), page.getPageSize(), parameters.sort()), page.getNrOfElements());
-    }
+		// Convert list into a list of pages
+		PagedListHolder<CustomerDetailsEntity> page = toPagedListHolder(parameters, matches);
 
-    private PagedListHolder<CustomerDetailsEntity> toPagedListHolder(CustomerDetailsParameters parameters, List<CustomerDetailsEntity> matches) {
-        PagedListHolder<CustomerDetailsEntity> page = new PagedListHolder<>(matches);
-        page.setPage(parameters.getPage() - 1);
-        page.setPageSize(parameters.getLimit());
-        return page;
-    }
+		if (page.getPageCount() < parameters.getPage()) {
+			return new PageImpl<>(Collections.emptyList(), toPageRequest(parameters), page.getNrOfElements());
+		}
+		return new PageImpl<>(page.getPageList(), PageRequest.of(page.getPage(), page.getPageSize(), parameters.sort()), page.getNrOfElements());
+	}
 
-    private PageRequest toPageRequest(CustomerDetailsParameters parameters) {
-        return PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort());
-    }
+	private PagedListHolder<CustomerDetailsEntity> toPagedListHolder(CustomerDetailsParameters parameters, List<CustomerDetailsEntity> matches) {
+		PagedListHolder<CustomerDetailsEntity> page = new PagedListHolder<>(matches);
+		page.setPage(parameters.getPage() - 1);
+		page.setPageSize(parameters.getLimit());
+		return page;
+	}
 
-    private List<String> getCustomerOrgIdList(List<String> partyIds) {
-        return ofNullable(partyIds).orElse(emptyList()).stream()
-            .map(partyProvider::translateToLegalId)
-            .toList();
-    }
+	private PageRequest toPageRequest(CustomerDetailsParameters parameters) {
+		return PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort());
+	}
 
-    private List<CustomerEngagement> switchToPartyId(List<CustomerEngagement> customerEngagements) {
-        customerEngagements.forEach(engagement -> engagement
-            .withPartyId(fetchPartyId(engagement.getCustomerType(), engagement.getCustomerOrgNumber()))
-            .withCustomerOrgNumber(null)); // Needs to be reset to not expose person/organization number in response
+	private List<String> getCustomerOrgIdList(List<String> partyIds) {
+		return ofNullable(partyIds).orElse(emptyList()).stream()
+			.map(partyProvider::translateToLegalId)
+			.toList();
+	}
 
-        return customerEngagements;
-    }
+	private List<CustomerEngagement> switchToPartyId(List<CustomerEngagement> customerEngagements) {
+		customerEngagements.forEach(engagement -> engagement
+			.withPartyId(fetchPartyId(engagement.getCustomerType(), engagement.getCustomerOrgNumber()))
+			.withCustomerOrgNumber(null)); // Needs to be reset to not expose person/organization number in response
 
-    private String fetchPartyId(CustomerType type, String orgNumber) {
-        if (!hasText(orgNumber)) {
-            LOGGER.info("CustomerEngagement did not contain a 'customerOrgNumber'. Skipping call to Party-service. {}", orgNumber);
-            return null;
-        }
-        return partyProvider.translateToPartyId(toPartyType(type), removeHyphen(orgNumber));
-    }
+		return customerEngagements;
+	}
+
+	private String fetchPartyId(CustomerType type, String orgNumber) {
+		if (!hasText(orgNumber)) {
+			LOGGER.info("CustomerEngagement did not contain a 'customerOrgNumber'. Skipping call to Party-service. {}", orgNumber);
+			return null;
+		}
+		return partyProvider.translateToPartyId(toPartyType(type), removeHyphen(orgNumber));
+	}
 }

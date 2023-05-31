@@ -6,6 +6,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 
@@ -18,7 +19,7 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 
 /**
  * Customer repository tests.
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @DataJpaTest
@@ -52,8 +53,6 @@ class CustomerRepositoryTest {
 			.hasSize(6)
 			.extracting(CustomerEntity::getCustomerId, CustomerEntity::getCustomerOrgId, CustomerEntity::getCustomerType, CustomerEntity::getOrganizationId, CustomerEntity::getOrganizationName)
 			.containsExactlyInAnyOrder(
-
-
 				tuple(691071, "197706010123", "Private", "5564786647", "Sundsvall Energi AB"),
 				tuple(600606, "5512345678", "Enterprise", "5564786647", "Sundsvall Energi AB"),
 				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB"),
