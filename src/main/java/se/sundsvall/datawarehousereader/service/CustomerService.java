@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.support.PagedListHolder;
@@ -38,6 +39,8 @@ import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 public class CustomerService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
+
+	private static final String PERSONAL_NUMBER_REGEX = "(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])-\\d{4}";
 
 	private final CustomerRepository repository;
 
@@ -81,11 +84,9 @@ public class CustomerService {
 		List<CustomerDetails> customerDetails = matches
 			.getTotalPages() < parameters.getPage() ? emptyList() : toCustomerDetails(matches.getContent());
 
-		customerDetails.forEach(details -> {
-			details.setPartyId(fetchPartyId(details.getCustomerType(), details.getCustomerOrgNumber()));
-			details.setCustomerOrgNumber(null);
-
-		});
+		customerDetails.forEach(details -> details
+				.withPartyId(fetchPartyId(extractCustomerType(details.getCustomerOrgNumber()), details.getCustomerOrgNumber()))
+				.withCustomerOrgNumber(null));
 
 		customerDetails = customerDetails.stream()
 			.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
@@ -153,5 +154,13 @@ public class CustomerService {
 			return null;
 		}
 		return partyProvider.translateToPartyId(toPartyType(type), removeHyphen(orgNumber));
+	}
+
+	private CustomerType extractCustomerType(String customerOrgId) {
+		return ofNullable(customerOrgId)
+			.filter(StringUtils::isNotBlank)
+			.map(string -> string.matches(PERSONAL_NUMBER_REGEX) ? CustomerType.PRIVATE : CustomerType.ENTERPRISE)
+			.orElse(null);
+
 	}
 }

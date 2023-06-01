@@ -34,7 +34,6 @@ class CustomerDetailsTest {
 		final var partyId = "partyId";
 		final var customerNumber = "customerNumber";
 		final var customerName = "customerName";
-		final var customerType = CustomerType.PRIVATE;
 		final var street = "street";
 		final var postalCode = "postalCode";
 		final var city = "city";
@@ -47,7 +46,6 @@ class CustomerDetailsTest {
 			.withPartyId(partyId)
 			.withCustomerNumber(customerNumber)
 			.withCustomerName(customerName)
-			.withCustomerType(customerType)
 			.withStreet(street)
 			.withPostalCode(postalCode)
 			.withCity(city)
@@ -59,7 +57,6 @@ class CustomerDetailsTest {
 		Assertions.assertThat(customer.getPartyId()).isEqualTo(partyId);
 		Assertions.assertThat(customer.getCustomerNumber()).isEqualTo(customerNumber);
 		Assertions.assertThat(customer.getCustomerName()).isEqualTo(customerName);
-		Assertions.assertThat(customer.getCustomerType()).isEqualTo(customerType);
 		Assertions.assertThat(customer.getStreet()).isEqualTo(street);
 		Assertions.assertThat(customer.getPostalCode()).isEqualTo(postalCode);
 		Assertions.assertThat(customer.getCity()).isEqualTo(city);

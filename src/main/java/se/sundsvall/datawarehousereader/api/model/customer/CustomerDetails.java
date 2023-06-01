@@ -5,10 +5,6 @@ import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import se.sundsvall.datawarehousereader.api.model.CustomerType;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -56,9 +52,6 @@ public class CustomerDetails {
 
 	@Schema(description = "Indicates if placement and/or equipment details have changed since the search date", example = "true", accessMode = READ_ONLY)
 	private boolean installedChangedFlg;
-
-	@JsonIgnore
-	private CustomerType customerType;
 
 	public static CustomerDetails create() {
 		return new CustomerDetails();
@@ -248,23 +241,7 @@ public class CustomerDetails {
 
 	@Override
 	public String toString() {
-		return "CustomerDetails{" +
-			"customerOrgNumber='" + customerOrgNumber + '\'' +
-			", partyId='" + partyId + '\'' +
-			", customerNumber='" + customerNumber + '\'' +
-			", customerName='" + customerName + '\'' +
-			", street='" + street + '\'' +
-			", postalCode='" + postalCode + '\'' +
-			", city='" + city + '\'' +
-			", careOf='" + careOf + '\'' +
-			", phoneNumbers=" + phoneNumbers +
-			", emails=" + emails +
-			", customerCategoryID=" + customerCategoryID +
-			", customerCategoryDescription='" + customerCategoryDescription + '\'' +
-			", customerChangedFlg=" + customerChangedFlg +
-			", installedChangedFlg=" + installedChangedFlg +
-			", customerType=" + customerType +
-			'}';
+		return "CustomerDetails{" + "customerOrgNumber='" + customerOrgNumber + '\'' + ", partyId='" + partyId + '\'' + ", customerNumber='" + customerNumber + '\'' + ", customerName='" + customerName + '\'' + ", street='" + street + '\'' + ", postalCode='" + postalCode + '\'' + ", city='" + city + '\'' + ", careOf='" + careOf + '\'' + ", phoneNumbers=" + phoneNumbers + ", emails=" + emails + ", customerCategoryID=" + customerCategoryID + ", customerCategoryDescription='" + customerCategoryDescription + '\'' + ", customerChangedFlg=" + customerChangedFlg + ", installedChangedFlg=" + installedChangedFlg + '}';
 	}
 
 	@Override
@@ -276,24 +253,11 @@ public class CustomerDetails {
 			return false;
 		}
 		final CustomerDetails that = (CustomerDetails) o;
-		return customerCategoryID == that.customerCategoryID && customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(partyId, that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city) && Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && customerType == that.customerType;
+		return customerCategoryID == that.customerCategoryID && customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(partyId, that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city) && Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerOrgNumber, partyId, customerNumber, customerName, street, postalCode, city, careOf, phoneNumbers, emails, customerCategoryID, customerCategoryDescription, customerChangedFlg, installedChangedFlg, customerType);
-	}
-
-	public CustomerDetails withCustomerType(final CustomerType customerType) {
-		this.customerType = customerType;
-		return this;
-	}
-
-	public CustomerType getCustomerType() {
-		return customerType;
-	}
-
-	public void setCustomerType(final CustomerType customerType) {
-		this.customerType = customerType;
+		return Objects.hash(customerOrgNumber, partyId, customerNumber, customerName, street, postalCode, city, careOf, phoneNumbers, emails, customerCategoryID, customerCategoryDescription, customerChangedFlg, installedChangedFlg);
 	}
 }

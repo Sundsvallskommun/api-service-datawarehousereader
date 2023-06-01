@@ -7,16 +7,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-import org.apache.commons.lang3.StringUtils;
-
-import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
 public class CustomerDetailsMapper {
-
-	private static final String PERSONAL_NUMBER_REGEX = "(19|20)\\d{2}(0[1-9]|1[0-2])(0[1-9]|[12]\\d|3[01])-\\d{4}";
 
 	private CustomerDetailsMapper() {}
 
@@ -40,8 +35,7 @@ public class CustomerDetailsMapper {
 			.withCustomerCategoryID(entity.getCustomerCategoryID())
 			.withCustomerCategoryDescription(entity.getCustomerCategoryDescription())
 			.withCustomerChangedFlg(entity.isCustomerChangedFlg())
-			.withInstalledChangedFlg(entity.isInstalledChangedFlg())
-			.withCustomerType(extractCustomerType(entity.getCustomerOrgId()));
+			.withInstalledChangedFlg(entity.isInstalledChangedFlg());
 	}
 
 	private static List<String> extractPhoneNumbers(final CustomerDetailsEntity entity) {
@@ -57,12 +51,5 @@ public class CustomerDetailsMapper {
 			.toList();
 	}
 
-	private static CustomerType extractCustomerType(String customerOrgId) {
-		return ofNullable(customerOrgId)
-			.filter(StringUtils::isNotBlank)
-			.map(string -> string.matches(PERSONAL_NUMBER_REGEX) ? CustomerType.PRIVATE : CustomerType.ENTERPRISE)
-			.orElse(null);
-
-	}
 
 }
