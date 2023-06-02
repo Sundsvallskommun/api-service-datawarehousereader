@@ -84,13 +84,22 @@ public class CustomerService {
 		List<CustomerDetails> customerDetails = matches
 			.getTotalPages() < parameters.getPage() ? emptyList() : toCustomerDetails(matches.getContent());
 
-		customerDetails.forEach(details -> details
-				.withPartyId(fetchPartyId(extractCustomerType(details.getCustomerOrgNumber()), details.getCustomerOrgNumber()))
-				.withCustomerOrgNumber(null));
+		customerDetails.forEach(details -> {
+			try {
+				details.withPartyId(fetchPartyId(extractCustomerType(details.getCustomerOrgNumber()), details.getCustomerOrgNumber()));
+			} catch (Exception e) {
+				LOGGER.error("Failed to get party type for party id: {}", details.getPartyId());
+				details.withPartyId(null);
+			}
+			details.withCustomerOrgNumber(null);
+		});
 
-		customerDetails = customerDetails.stream()
-			.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
-			.toList();
+		if (parameters.getPartyId() != null && !parameters.getPartyId().isEmpty()) {
+			customerDetails = customerDetails.stream()
+				.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
+				.toList();
+		}
+
 
 		return CustomerDetailsResponse.create()
 			.withMetadata(MetaData.create()
