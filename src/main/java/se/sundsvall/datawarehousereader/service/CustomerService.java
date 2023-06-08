@@ -13,6 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,13 +87,22 @@ public class CustomerService {
 		List<CustomerDetails> customerDetails = matches
 			.getTotalPages() < parameters.getPage() ? emptyList() : toCustomerDetails(matches.getContent());
 
-		customerDetails.forEach(details -> details
-				.withPartyId(fetchPartyId(extractCustomerType(details.getCustomerOrgNumber()), details.getCustomerOrgNumber()))
-				.withCustomerOrgNumber(null));
+		customerDetails.forEach(details -> {
+			try {
+				details.withPartyId(fetchPartyId(extractCustomerType(details.getCustomerOrgNumber()), details.getCustomerOrgNumber()));
+			} catch (Exception e) {
+				LOGGER.error("Failed to get party type for party id: {}", details.getPartyId());
+				details.withPartyId(null);
+			}
+			details.withCustomerOrgNumber(null);
+		});
 
-		customerDetails = customerDetails.stream()
-			.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
-			.toList();
+		if (CollectionUtils.isNotEmpty(parameters.getPartyId())) {
+			customerDetails = customerDetails.stream()
+				.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
+				.toList();
+		}
+
 
 		return CustomerDetailsResponse.create()
 			.withMetadata(MetaData.create()
