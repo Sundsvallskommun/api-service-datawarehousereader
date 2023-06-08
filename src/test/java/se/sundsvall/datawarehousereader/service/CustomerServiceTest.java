@@ -31,6 +31,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
@@ -111,11 +113,11 @@ class CustomerServiceTest {
 	}
 
 	@Test
-	void getParametersWithAllParameters() {
+	void getDetailsWithAllParameters() {
 
 		var randomUUID = UUID.randomUUID().toString();
 
-		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID);
+		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
 
 		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
 			CustomerDetailsEntity.create()
@@ -151,8 +153,74 @@ class CustomerServiceTest {
 		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
 		verify(partyProviderMock, times(2)).translateToPartyId(eq(PartyType.PRIVATE), any());
 
-		assertThat(result.getCustomerDetails()).hasSize(2);
+		assertThat(result.getCustomerDetails()).hasSize(1);
 		assertThat(result.getCustomerDetails().get(0).getPartyId()).isEqualTo(randomUUID);
+		assertThat(result.getCustomerDetails().get(0).getCustomerOrgNumber()).isNull();
+		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryID()).isEqualTo(2);
+		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryDescription()).isEqualTo("customerCategoryDescription");
+		assertThat(result.getCustomerDetails().get(0).getCustomerName()).isEqualTo("Name");
+		assertThat(result.getCustomerDetails().get(0).getCareOf()).isEqualTo("co");
+		assertThat(result.getCustomerDetails().get(0).getStreet()).isEqualTo("address");
+		assertThat(result.getCustomerDetails().get(0).getPostalCode()).isEqualTo("zipcode");
+		assertThat(result.getCustomerDetails().get(0).getCity()).isEqualTo("city");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers()).hasSize(3);
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(0)).isEqualTo("phone1");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(1)).isEqualTo("phone2");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(2)).isEqualTo("phone3");
+		assertThat(result.getCustomerDetails().get(0).getEmails()).hasSize(2);
+		assertThat(result.getCustomerDetails().get(0).getEmails().get(0)).isEqualTo("email1");
+		assertThat(result.getCustomerDetails().get(0).getEmails().get(1)).isEqualTo("email2");
+		assertThat(result.getCustomerDetails().get(0).isCustomerChangedFlg()).isTrue();
+		assertThat(result.getCustomerDetails().get(0).isInstalledChangedFlg()).isTrue();
+		assertThat(result.getMetaData().getCount()).isEqualTo(1L);
+		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
+		assertThat(result.getMetaData().getPage()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(2);
+		assertThat(result.getMetaData().getSortBy()).isEqualTo(Collections.singletonList("customerOrgId"));
+		assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
+	}
+
+	@Test
+	void testGetDetailsWithoutPartyId(){
+		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenThrow(Problem.valueOf(Status.NOT_FOUND, "Party not found"));
+
+		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
+			CustomerDetailsEntity.create()
+				.withCustomerOrgId("19990101-1234")
+				.withCustomerId(1)
+				.withCustomerCategoryID(2)
+				.withCustomerCategoryDescription("customerCategoryDescription")
+				.withName("Name")
+				.withCo("co")
+				.withAddress("address")
+				.withZipcode("zipcode")
+				.withCity("city")
+				.withPhone1("phone1")
+				.withPhone2("phone2")
+				.withPhone3("phone3")
+				.withEmail1("email1")
+				.withEmail2("email2")
+				.withCustomerChangedFlg(true)
+				.withInstalledChangedFlg(true),
+			CustomerDetailsEntity.create()
+				.withCustomerOrgId("19990101-1235")
+				.withCustomerCategoryID(2)));
+
+
+		final var params = CustomerDetailsParameters.create();
+		params.setFromDateTime(OffsetDateTime.now());
+		params.setLimit(100);
+		params.setPage(1);
+		params.setSortBy(Collections.singletonList("customerOrgId"));
+
+		final var result = service.getCustomerDetails(params);
+
+		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
+		verify(partyProviderMock, times(2)).translateToPartyId(eq(PartyType.PRIVATE), any());
+
+		assertThat(result.getCustomerDetails()).hasSize(2);
+		assertThat(result.getCustomerDetails().get(0).getPartyId()).isNull();
 		assertThat(result.getCustomerDetails().get(0).getCustomerOrgNumber()).isNull();
 		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryID()).isEqualTo(2);
 		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryDescription()).isEqualTo("customerCategoryDescription");

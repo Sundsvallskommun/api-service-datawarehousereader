@@ -13,6 +13,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,7 +97,7 @@ public class CustomerService {
 			details.withCustomerOrgNumber(null);
 		});
 
-		if (parameters.getPartyId() != null && !parameters.getPartyId().isEmpty()) {
+		if (CollectionUtils.isNotEmpty(parameters.getPartyId())) {
 			customerDetails = customerDetails.stream()
 				.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
 				.toList();
