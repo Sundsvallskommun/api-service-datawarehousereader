@@ -13,8 +13,6 @@ import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import se.sundsvall.datawarehousereader.api.model.CustomerType;
-
 class CustomerDetailsTest {
 
 	@Test

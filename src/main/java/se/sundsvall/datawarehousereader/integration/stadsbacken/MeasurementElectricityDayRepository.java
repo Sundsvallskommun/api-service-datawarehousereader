@@ -1,11 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import jakarta.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityKey;
 
@@ -15,7 +17,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementElectricityDaySpecification.withMeasurementTimestamp;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementElectricityDaySpecification.withfacilityId;
 
-@Transactional
+@Transactional(readOnly = true)
 @CircuitBreaker(name = "measurementElectricityDayRepository")
 public interface MeasurementElectricityDayRepository 
 	extends PagingAndSortingRepository<MeasurementElectricityDayEntity, MeasurementElectricityKey>, JpaSpecificationExecutor<MeasurementElectricityDayEntity> {
