@@ -14,8 +14,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +61,7 @@ public class CustomerService {
 		LOGGER.debug("Database query results: {} with content: {}", matches, matches.getContent());
 
 		// If page larger than last page is requested, an empty list is returned otherwise the current page
-		List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
+		final List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
 
 		return CustomerEngagementResponse.create()
 			.withMetaData(MetaData.create()
@@ -77,7 +75,6 @@ public class CustomerService {
 			.withCustomerEngagements(customerEngagements);
 	}
 
-
 	public CustomerDetailsResponse getCustomerDetails(CustomerDetailsParameters parameters) {
 
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
@@ -90,7 +87,7 @@ public class CustomerService {
 		customerDetails.forEach(details -> {
 			try {
 				details.withPartyId(fetchPartyId(extractCustomerType(details.getCustomerOrgNumber()), details.getCustomerOrgNumber()));
-			} catch (Exception e) {
+			} catch (final Exception e) {
 				LOGGER.error("Failed to get party type for party id: {}", details.getPartyId());
 				details.withPartyId(null);
 			}
@@ -102,7 +99,6 @@ public class CustomerService {
 				.filter(details -> parameters.getPartyId().contains(details.getPartyId()))
 				.toList();
 		}
-
 
 		return CustomerDetailsResponse.create()
 			.withMetadata(MetaData.create()
@@ -120,14 +116,14 @@ public class CustomerService {
 	 * Method for converting result list into a Page object with sub list for requested page. Convertion must be done
 	 * explicitly as stored procedures can not produce a return object of type Page and cant sort result list.
 	 *
-	 * @param parameters object containing input for calculating the current requested sub page for the result list
-	 * @param matches with result to be converted to a paged list
-	 * @return a Page object representing the sublist for the requested page of the list
+	 * @param  parameters object containing input for calculating the current requested sub page for the result list
+	 * @param  matches    with result to be converted to a paged list
+	 * @return            a Page object representing the sublist for the requested page of the list
 	 */
 	private Page<CustomerDetailsEntity> toPage(CustomerDetailsParameters parameters, List<CustomerDetailsEntity> matches) {
 
 		// Convert list into a list of pages
-		PagedListHolder<CustomerDetailsEntity> page = toPagedListHolder(parameters, matches);
+		final PagedListHolder<CustomerDetailsEntity> page = toPagedListHolder(parameters, matches);
 
 		if (page.getPageCount() < parameters.getPage()) {
 			return new PageImpl<>(Collections.emptyList(), toPageRequest(parameters), page.getNrOfElements());
@@ -136,7 +132,7 @@ public class CustomerService {
 	}
 
 	private PagedListHolder<CustomerDetailsEntity> toPagedListHolder(CustomerDetailsParameters parameters, List<CustomerDetailsEntity> matches) {
-		PagedListHolder<CustomerDetailsEntity> page = new PagedListHolder<>(matches);
+		final PagedListHolder<CustomerDetailsEntity> page = new PagedListHolder<>(matches);
 		page.setPage(parameters.getPage() - 1);
 		page.setPageSize(parameters.getLimit());
 		return page;
