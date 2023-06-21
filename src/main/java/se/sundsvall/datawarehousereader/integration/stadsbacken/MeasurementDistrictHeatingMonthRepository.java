@@ -1,11 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import jakarta.transaction.Transactional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingKey;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingMonthEntity;
 
@@ -15,7 +17,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementDistrictHeatingMonthSpecification.withMeasurementTimestamp;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.MeasurementDistrictHeatingMonthSpecification.withfacilityId;
 
-@Transactional
+@Transactional(readOnly = true)
 @CircuitBreaker(name = "measurementDistrictHeatingMonthRepository")
 public interface MeasurementDistrictHeatingMonthRepository 
 	extends PagingAndSortingRepository<MeasurementDistrictHeatingMonthEntity, MeasurementDistrictHeatingKey>, JpaSpecificationExecutor<MeasurementDistrictHeatingMonthEntity> {
