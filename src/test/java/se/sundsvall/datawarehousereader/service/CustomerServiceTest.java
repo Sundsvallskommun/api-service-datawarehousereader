@@ -3,12 +3,16 @@ package se.sundsvall.datawarehousereader.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 import static org.springframework.data.domain.Sort.sort;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -26,13 +30,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.zalando.problem.Problem;
+import org.zalando.problem.Status;
 
-import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+
+import generated.se.sundsvall.party.PartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -41,6 +52,9 @@ class CustomerServiceTest {
 
 	@Mock
 	private CustomerRepository repositoryMock;
+
+	@Mock
+	private CustomerDetailsRepository customerDetailsRepositoryMock;
 
 	@Mock
 	private PartyProvider partyProviderMock;
@@ -62,6 +76,12 @@ class CustomerServiceTest {
 
 	@Captor
 	private ArgumentCaptor<Pageable> pageableCaptor;
+
+	private static Stream<Arguments> toCustomerTypesStreamArguments() {
+		return Stream.of(
+			Arguments.of(CustomerType.PRIVATE, PartyType.PRIVATE),
+			Arguments.of(CustomerType.ENTERPRISE, PartyType.ENTERPRISE));
+	}
 
 	@ParameterizedTest
 	@MethodSource("toCustomerTypesStreamArguments")
@@ -90,6 +110,141 @@ class CustomerServiceTest {
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
 		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(1);
 		assertThat(response.getCustomerEngagements()).hasSize(1);
+	}
+
+	@Test
+	void getDetailsWithAllParameters() {
+
+		var randomUUID = UUID.randomUUID().toString();
+
+		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
+
+		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
+			CustomerDetailsEntity.create()
+				.withCustomerOrgId("19990101-1234")
+				.withCustomerId(1)
+				.withCustomerCategoryID(2)
+				.withCustomerCategoryDescription("customerCategoryDescription")
+				.withName("Name")
+				.withCo("co")
+				.withAddress("address")
+				.withZipcode("zipcode")
+				.withCity("city")
+				.withPhone1("phone1")
+				.withPhone2("phone2")
+				.withPhone3("phone3")
+				.withEmail1("email1")
+				.withEmail2("email2")
+				.withCustomerChangedFlg(true)
+				.withInstalledChangedFlg(true),
+			CustomerDetailsEntity.create()
+				.withCustomerOrgId("19990101-1235")
+				.withCustomerCategoryID(2)));
+
+		final var params = CustomerDetailsParameters.create();
+		params.setPartyId(List.of(randomUUID));
+		params.setFromDateTime(OffsetDateTime.now());
+		params.setLimit(100);
+		params.setPage(1);
+		params.setSortBy(Collections.singletonList("customerOrgId"));
+
+		final var result = service.getCustomerDetails(params);
+
+		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
+		verify(partyProviderMock, times(2)).translateToPartyId(eq(PartyType.PRIVATE), any());
+
+		assertThat(result.getCustomerDetails()).hasSize(1);
+		assertThat(result.getCustomerDetails().get(0).getPartyId()).isEqualTo(randomUUID);
+		assertThat(result.getCustomerDetails().get(0).getCustomerOrgNumber()).isNull();
+		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryID()).isEqualTo(2);
+		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryDescription()).isEqualTo("customerCategoryDescription");
+		assertThat(result.getCustomerDetails().get(0).getCustomerName()).isEqualTo("Name");
+		assertThat(result.getCustomerDetails().get(0).getCareOf()).isEqualTo("co");
+		assertThat(result.getCustomerDetails().get(0).getStreet()).isEqualTo("address");
+		assertThat(result.getCustomerDetails().get(0).getPostalCode()).isEqualTo("zipcode");
+		assertThat(result.getCustomerDetails().get(0).getCity()).isEqualTo("city");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers()).hasSize(3);
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(0)).isEqualTo("phone1");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(1)).isEqualTo("phone2");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(2)).isEqualTo("phone3");
+		assertThat(result.getCustomerDetails().get(0).getEmails()).hasSize(2);
+		assertThat(result.getCustomerDetails().get(0).getEmails().get(0)).isEqualTo("email1");
+		assertThat(result.getCustomerDetails().get(0).getEmails().get(1)).isEqualTo("email2");
+		assertThat(result.getCustomerDetails().get(0).isCustomerChangedFlg()).isTrue();
+		assertThat(result.getCustomerDetails().get(0).isInstalledChangedFlg()).isTrue();
+		assertThat(result.getMetaData().getCount()).isEqualTo(1L);
+		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
+		assertThat(result.getMetaData().getPage()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(2);
+		assertThat(result.getMetaData().getSortBy()).isEqualTo(Collections.singletonList("customerOrgId"));
+		assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
+	}
+
+	@Test
+	void testGetDetailsWithoutPartyId(){
+		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenThrow(Problem.valueOf(Status.NOT_FOUND, "Party not found"));
+
+		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
+			CustomerDetailsEntity.create()
+				.withCustomerOrgId("19990101-1234")
+				.withCustomerId(1)
+				.withCustomerCategoryID(2)
+				.withCustomerCategoryDescription("customerCategoryDescription")
+				.withName("Name")
+				.withCo("co")
+				.withAddress("address")
+				.withZipcode("zipcode")
+				.withCity("city")
+				.withPhone1("phone1")
+				.withPhone2("phone2")
+				.withPhone3("phone3")
+				.withEmail1("email1")
+				.withEmail2("email2")
+				.withCustomerChangedFlg(true)
+				.withInstalledChangedFlg(true),
+			CustomerDetailsEntity.create()
+				.withCustomerOrgId("19990101-1235")
+				.withCustomerCategoryID(2)));
+
+
+		final var params = CustomerDetailsParameters.create();
+		params.setFromDateTime(OffsetDateTime.now());
+		params.setLimit(100);
+		params.setPage(1);
+		params.setSortBy(Collections.singletonList("customerOrgId"));
+
+		final var result = service.getCustomerDetails(params);
+
+		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
+		verify(partyProviderMock, times(2)).translateToPartyId(eq(PartyType.PRIVATE), any());
+
+		assertThat(result.getCustomerDetails()).hasSize(2);
+		assertThat(result.getCustomerDetails().get(0).getPartyId()).isNull();
+		assertThat(result.getCustomerDetails().get(0).getCustomerOrgNumber()).isNull();
+		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryID()).isEqualTo(2);
+		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryDescription()).isEqualTo("customerCategoryDescription");
+		assertThat(result.getCustomerDetails().get(0).getCustomerName()).isEqualTo("Name");
+		assertThat(result.getCustomerDetails().get(0).getCareOf()).isEqualTo("co");
+		assertThat(result.getCustomerDetails().get(0).getStreet()).isEqualTo("address");
+		assertThat(result.getCustomerDetails().get(0).getPostalCode()).isEqualTo("zipcode");
+		assertThat(result.getCustomerDetails().get(0).getCity()).isEqualTo("city");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers()).hasSize(3);
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(0)).isEqualTo("phone1");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(1)).isEqualTo("phone2");
+		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(2)).isEqualTo("phone3");
+		assertThat(result.getCustomerDetails().get(0).getEmails()).hasSize(2);
+		assertThat(result.getCustomerDetails().get(0).getEmails().get(0)).isEqualTo("email1");
+		assertThat(result.getCustomerDetails().get(0).getEmails().get(1)).isEqualTo("email2");
+		assertThat(result.getCustomerDetails().get(0).isCustomerChangedFlg()).isTrue();
+		assertThat(result.getCustomerDetails().get(0).isInstalledChangedFlg()).isTrue();
+		assertThat(result.getMetaData().getCount()).isEqualTo(2L);
+		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
+		assertThat(result.getMetaData().getPage()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(2);
+		assertThat(result.getMetaData().getSortBy()).isEqualTo(Collections.singletonList("customerOrgId"));
+		assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
 	}
 
 	@Test
@@ -187,11 +342,5 @@ class CustomerServiceTest {
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
 		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(1);
 		assertThat(response.getCustomerEngagements()).isEmpty();
-	}
-
-	private static Stream<Arguments> toCustomerTypesStreamArguments() {
-		return Stream.of(
-			Arguments.of(CustomerType.PRIVATE, PartyType.PRIVATE),
-			Arguments.of(CustomerType.ENTERPRISE, PartyType.ENTERPRISE));
 	}
 }
