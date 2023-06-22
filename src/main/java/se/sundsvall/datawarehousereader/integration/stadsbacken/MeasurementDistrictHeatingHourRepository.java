@@ -21,6 +21,8 @@ public interface MeasurementDistrictHeatingHourRepository extends PagingAndSorti
 
 	default Page<MeasurementDistrictHeatingHourEntity> findAllMatching(String customerOrgNumber, String facilityId, LocalDateTime dateTimeFrom, LocalDateTime dateTimeTo, Pageable pageable) {
 		return this.findAll(
-			withCustomerOrgId(customerOrgNumber).and(withfacilityId(facilityId)).and(withMeasurementTimestamp(dateTimeFrom, dateTimeTo)), pageable);
+			withCustomerOrgId(customerOrgNumber)
+				.and(withfacilityId(facilityId))
+				.and(withMeasurementTimestamp(dateTimeFrom, dateTimeTo)), pageable);
 	}
 }
