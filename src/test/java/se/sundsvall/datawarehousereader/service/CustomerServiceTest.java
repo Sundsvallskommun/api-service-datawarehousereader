@@ -1,6 +1,8 @@
 package se.sundsvall.datawarehousereader.service;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
@@ -34,7 +36,9 @@ import org.springframework.data.domain.Sort;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
+import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
@@ -42,8 +46,6 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerReposito
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
-
-import generated.se.sundsvall.party.PartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -115,7 +117,7 @@ class CustomerServiceTest {
 	@Test
 	void getDetailsWithAllParameters() {
 
-		var randomUUID = UUID.randomUUID().toString();
+		final var randomUUID = UUID.randomUUID().toString();
 
 		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
 
@@ -153,25 +155,37 @@ class CustomerServiceTest {
 		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
 		verify(partyProviderMock, times(2)).translateToPartyId(eq(PartyType.PRIVATE), any());
 
-		assertThat(result.getCustomerDetails()).hasSize(1);
-		assertThat(result.getCustomerDetails().get(0).getPartyId()).isEqualTo(randomUUID);
-		assertThat(result.getCustomerDetails().get(0).getCustomerOrgNumber()).isNull();
-		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryID()).isEqualTo(2);
-		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryDescription()).isEqualTo("customerCategoryDescription");
-		assertThat(result.getCustomerDetails().get(0).getCustomerName()).isEqualTo("Name");
-		assertThat(result.getCustomerDetails().get(0).getCareOf()).isEqualTo("co");
-		assertThat(result.getCustomerDetails().get(0).getStreet()).isEqualTo("address");
-		assertThat(result.getCustomerDetails().get(0).getPostalCode()).isEqualTo("zipcode");
-		assertThat(result.getCustomerDetails().get(0).getCity()).isEqualTo("city");
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers()).hasSize(3);
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(0)).isEqualTo("phone1");
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(1)).isEqualTo("phone2");
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(2)).isEqualTo("phone3");
-		assertThat(result.getCustomerDetails().get(0).getEmails()).hasSize(2);
-		assertThat(result.getCustomerDetails().get(0).getEmails().get(0)).isEqualTo("email1");
-		assertThat(result.getCustomerDetails().get(0).getEmails().get(1)).isEqualTo("email2");
-		assertThat(result.getCustomerDetails().get(0).isCustomerChangedFlg()).isTrue();
-		assertThat(result.getCustomerDetails().get(0).isInstalledChangedFlg()).isTrue();
+		assertThat(result.getCustomerDetails())
+			.hasSize(1)
+			.extracting(
+				CustomerDetails::getPartyId,
+				CustomerDetails::getCustomerOrgNumber,
+				CustomerDetails::getCustomerCategoryID,
+				CustomerDetails::getCustomerCategoryDescription,
+				CustomerDetails::getCustomerName,
+				CustomerDetails::getCareOf,
+				CustomerDetails::getStreet,
+				CustomerDetails::getPostalCode,
+				CustomerDetails::getCity,
+				CustomerDetails::getPhoneNumbers,
+				CustomerDetails::getEmails,
+				CustomerDetails::isCustomerChangedFlg,
+				CustomerDetails::isInstalledChangedFlg)
+			.containsExactly(tuple(
+				randomUUID,
+				null,
+				2,
+				"customerCategoryDescription",
+				"Name",
+				"co",
+				"address",
+				"zipcode",
+				"city",
+				List.of("phone1", "phone2", "phone3"),
+				List.of("email1", "email2"),
+				true,
+				true));
+
 		assertThat(result.getMetaData().getCount()).isEqualTo(1L);
 		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
 		assertThat(result.getMetaData().getPage()).isEqualTo(1);
@@ -207,7 +221,6 @@ class CustomerServiceTest {
 				.withCustomerOrgId("19990101-1235")
 				.withCustomerCategoryID(2)));
 
-
 		final var params = CustomerDetailsParameters.create();
 		params.setFromDateTime(OffsetDateTime.now());
 		params.setLimit(100);
@@ -219,25 +232,26 @@ class CustomerServiceTest {
 		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
 		verify(partyProviderMock, times(2)).translateToPartyId(eq(PartyType.PRIVATE), any());
 
-		assertThat(result.getCustomerDetails()).hasSize(2);
-		assertThat(result.getCustomerDetails().get(0).getPartyId()).isNull();
-		assertThat(result.getCustomerDetails().get(0).getCustomerOrgNumber()).isNull();
-		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryID()).isEqualTo(2);
-		assertThat(result.getCustomerDetails().get(0).getCustomerCategoryDescription()).isEqualTo("customerCategoryDescription");
-		assertThat(result.getCustomerDetails().get(0).getCustomerName()).isEqualTo("Name");
-		assertThat(result.getCustomerDetails().get(0).getCareOf()).isEqualTo("co");
-		assertThat(result.getCustomerDetails().get(0).getStreet()).isEqualTo("address");
-		assertThat(result.getCustomerDetails().get(0).getPostalCode()).isEqualTo("zipcode");
-		assertThat(result.getCustomerDetails().get(0).getCity()).isEqualTo("city");
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers()).hasSize(3);
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(0)).isEqualTo("phone1");
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(1)).isEqualTo("phone2");
-		assertThat(result.getCustomerDetails().get(0).getPhoneNumbers().get(2)).isEqualTo("phone3");
-		assertThat(result.getCustomerDetails().get(0).getEmails()).hasSize(2);
-		assertThat(result.getCustomerDetails().get(0).getEmails().get(0)).isEqualTo("email1");
-		assertThat(result.getCustomerDetails().get(0).getEmails().get(1)).isEqualTo("email2");
-		assertThat(result.getCustomerDetails().get(0).isCustomerChangedFlg()).isTrue();
-		assertThat(result.getCustomerDetails().get(0).isInstalledChangedFlg()).isTrue();
+		assertThat(result.getCustomerDetails())
+			.hasSize(2)
+			.extracting(
+				CustomerDetails::getPartyId,
+				CustomerDetails::getCustomerOrgNumber,
+				CustomerDetails::getCustomerCategoryID,
+				CustomerDetails::getCustomerCategoryDescription,
+				CustomerDetails::getCustomerName,
+				CustomerDetails::getCareOf,
+				CustomerDetails::getStreet,
+				CustomerDetails::getPostalCode,
+				CustomerDetails::getCity,
+				CustomerDetails::getPhoneNumbers,
+				CustomerDetails::getEmails,
+				CustomerDetails::isCustomerChangedFlg,
+				CustomerDetails::isInstalledChangedFlg)
+			.containsExactly(
+				tuple(null, null, 2, "customerCategoryDescription", "Name", "co", "address", "zipcode", "city", List.of("phone1", "phone2", "phone3"), List.of("email1", "email2"), true, true),
+				tuple(null, null, 2, null, null, null, null, null, null, emptyList(), emptyList(), false, false));
+
 		assertThat(result.getMetaData().getCount()).isEqualTo(2L);
 		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
 		assertThat(result.getMetaData().getPage()).isEqualTo(1);
