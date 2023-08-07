@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class MeasurementDistrictHeatingKey implements Serializable {
+
 	private static final long serialVersionUID = -1348815619727439020L;
 
 	private String customerOrgId;
 
 	private String facilityId;
-	
+
 	private Integer readingSequence;
 
 	public String getCustomerOrgId() {
@@ -43,23 +44,26 @@ public class MeasurementDistrictHeatingKey implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		MeasurementDistrictHeatingKey other = (MeasurementDistrictHeatingKey) obj;
+		}
+		final MeasurementDistrictHeatingKey other = (MeasurementDistrictHeatingKey) obj;
 		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId)
-				&& Objects.equals(readingSequence, other.readingSequence);
+			&& Objects.equals(readingSequence, other.readingSequence);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementDistrictHeatingKey [customerOrgId=").append(customerOrgId)
-				.append(", facilityId=").append(facilityId).append(", readingSequence=").append(readingSequence)
-				.append("]");
+			.append(", facilityId=").append(facilityId).append(", readingSequence=").append(readingSequence)
+			.append("]");
 		return builder.toString();
 	}
 }

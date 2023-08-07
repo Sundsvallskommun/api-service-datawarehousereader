@@ -1,13 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vInvoice")
@@ -79,7 +79,7 @@ public class InvoiceEntity {
 
 	@Column(name = "OrganizationId", insertable = false, updatable = false, columnDefinition = "varchar(10)")
 	private String organizationId;
-	
+
 	@Column(name = "Street", insertable = false, updatable = false)
 	private String street;
 
@@ -314,56 +314,59 @@ public class InvoiceEntity {
 	@Override
 	public int hashCode() {
 		return Objects.hash(administration, amountVatExcluded, amountVatIncluded, careOf, city, currency, customerId,
-				customerType, dueDate, facilityId, invoiceDate, invoiceDescription, invoiceName, invoiceNumber,
-				invoiceStatus, invoiceType, ocrNumber, organizationGroup, organizationId, pdfAvailable, postCode,
-				reversedVat, rounding, street, totalAmount, vat, vatEligibleAmount);
+			customerType, dueDate, facilityId, invoiceDate, invoiceDescription, invoiceName, invoiceNumber,
+			invoiceStatus, invoiceType, ocrNumber, organizationGroup, organizationId, pdfAvailable, postCode,
+			reversedVat, rounding, street, totalAmount, vat, vatEligibleAmount);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InvoiceEntity other = (InvoiceEntity) obj;
+		}
+		final InvoiceEntity other = (InvoiceEntity) obj;
 		return Objects.equals(administration, other.administration)
-				&& Objects.equals(amountVatExcluded, other.amountVatExcluded)
-				&& Objects.equals(amountVatIncluded, other.amountVatIncluded) && Objects.equals(careOf, other.careOf)
-				&& Objects.equals(city, other.city) && Objects.equals(currency, other.currency)
-				&& customerId == other.customerId && Objects.equals(customerType, other.customerType)
-				&& Objects.equals(dueDate, other.dueDate) && Objects.equals(facilityId, other.facilityId)
-				&& Objects.equals(invoiceDate, other.invoiceDate)
-				&& Objects.equals(invoiceDescription, other.invoiceDescription)
-				&& Objects.equals(invoiceName, other.invoiceName) && invoiceNumber == other.invoiceNumber
-				&& Objects.equals(invoiceStatus, other.invoiceStatus) && Objects.equals(invoiceType, other.invoiceType)
-				&& Objects.equals(ocrNumber, other.ocrNumber)
-				&& Objects.equals(organizationGroup, other.organizationGroup)
-				&& Objects.equals(organizationId, other.organizationId)
-				&& Objects.equals(pdfAvailable, other.pdfAvailable) && Objects.equals(postCode, other.postCode)
-				&& Objects.equals(reversedVat, other.reversedVat) && Objects.equals(rounding, other.rounding)
-				&& Objects.equals(street, other.street) && Objects.equals(totalAmount, other.totalAmount)
-				&& Objects.equals(vat, other.vat) && Objects.equals(vatEligibleAmount, other.vatEligibleAmount);
+			&& Objects.equals(amountVatExcluded, other.amountVatExcluded)
+			&& Objects.equals(amountVatIncluded, other.amountVatIncluded) && Objects.equals(careOf, other.careOf)
+			&& Objects.equals(city, other.city) && Objects.equals(currency, other.currency)
+			&& (customerId == other.customerId) && Objects.equals(customerType, other.customerType)
+			&& Objects.equals(dueDate, other.dueDate) && Objects.equals(facilityId, other.facilityId)
+			&& Objects.equals(invoiceDate, other.invoiceDate)
+			&& Objects.equals(invoiceDescription, other.invoiceDescription)
+			&& Objects.equals(invoiceName, other.invoiceName) && (invoiceNumber == other.invoiceNumber)
+			&& Objects.equals(invoiceStatus, other.invoiceStatus) && Objects.equals(invoiceType, other.invoiceType)
+			&& Objects.equals(ocrNumber, other.ocrNumber)
+			&& Objects.equals(organizationGroup, other.organizationGroup)
+			&& Objects.equals(organizationId, other.organizationId)
+			&& Objects.equals(pdfAvailable, other.pdfAvailable) && Objects.equals(postCode, other.postCode)
+			&& Objects.equals(reversedVat, other.reversedVat) && Objects.equals(rounding, other.rounding)
+			&& Objects.equals(street, other.street) && Objects.equals(totalAmount, other.totalAmount)
+			&& Objects.equals(vat, other.vat) && Objects.equals(vatEligibleAmount, other.vatEligibleAmount);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InvoiceEntity [invoiceNumber=").append(invoiceNumber).append(", invoiceDate=")
-				.append(invoiceDate).append(", invoiceName=").append(invoiceName).append(", invoiceType=")
-				.append(invoiceType).append(", invoiceDescription=").append(invoiceDescription)
-				.append(", invoiceStatus=").append(invoiceStatus).append(", ocrNumber=").append(ocrNumber)
-				.append(", dueDate=").append(dueDate).append(", totalAmount=").append(totalAmount)
-				.append(", amountVatIncluded=").append(amountVatIncluded).append(", amountVatExcluded=")
-				.append(amountVatExcluded).append(", vatEligibleAmount=").append(vatEligibleAmount)
-				.append(", rounding=").append(rounding).append(", vat=").append(vat).append(", reversedVat=")
-				.append(reversedVat).append(", currency=").append(currency).append(", customerId=").append(customerId)
-				.append(", customerType=").append(customerType).append(", facilityId=").append(facilityId)
-				.append(", organizationGroup=").append(organizationGroup).append(", administration=")
-				.append(administration).append(", organizationId=").append(organizationId).append(", street=")
-				.append(street).append(", postCode=").append(postCode).append(", city=").append(city)
-				.append(", careOf=").append(careOf).append(", pdfAvailable=").append(pdfAvailable).append("]");
+			.append(invoiceDate).append(", invoiceName=").append(invoiceName).append(", invoiceType=")
+			.append(invoiceType).append(", invoiceDescription=").append(invoiceDescription)
+			.append(", invoiceStatus=").append(invoiceStatus).append(", ocrNumber=").append(ocrNumber)
+			.append(", dueDate=").append(dueDate).append(", totalAmount=").append(totalAmount)
+			.append(", amountVatIncluded=").append(amountVatIncluded).append(", amountVatExcluded=")
+			.append(amountVatExcluded).append(", vatEligibleAmount=").append(vatEligibleAmount)
+			.append(", rounding=").append(rounding).append(", vat=").append(vat).append(", reversedVat=")
+			.append(reversedVat).append(", currency=").append(currency).append(", customerId=").append(customerId)
+			.append(", customerType=").append(customerType).append(", facilityId=").append(facilityId)
+			.append(", organizationGroup=").append(organizationGroup).append(", administration=")
+			.append(administration).append(", organizationId=").append(organizationId).append(", street=")
+			.append(street).append(", postCode=").append(postCode).append(", city=").append(city)
+			.append(", careOf=").append(careOf).append(", pdfAvailable=").append(pdfAvailable).append("]");
 		return builder.toString();
 	}
 }

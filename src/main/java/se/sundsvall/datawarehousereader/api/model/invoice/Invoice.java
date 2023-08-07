@@ -452,56 +452,59 @@ public class Invoice {
 	@Override
 	public int hashCode() {
 		return Objects.hash(administration, amountVatExcluded, amountVatIncluded, careOf, city, currency,
-				customerNumber, customerType, dueDate, facilityId, invoiceDate, invoiceDescription, invoiceName,
-				invoiceNumber, invoiceStatus, invoiceType, ocrNumber, organizationGroup, organizationNumber,
-				pdfAvailable, postCode, reversedVat, rounding, street, totalAmount, vat, vatEligibleAmount);
+			customerNumber, customerType, dueDate, facilityId, invoiceDate, invoiceDescription, invoiceName,
+			invoiceNumber, invoiceStatus, invoiceType, ocrNumber, organizationGroup, organizationNumber,
+			pdfAvailable, postCode, reversedVat, rounding, street, totalAmount, vat, vatEligibleAmount);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		Invoice other = (Invoice) obj;
+		}
+		final Invoice other = (Invoice) obj;
 		return Objects.equals(administration, other.administration)
-				&& Objects.equals(amountVatExcluded, other.amountVatExcluded)
-				&& Objects.equals(amountVatIncluded, other.amountVatIncluded) && Objects.equals(careOf, other.careOf)
-				&& Objects.equals(city, other.city) && Objects.equals(currency, other.currency)
-				&& Objects.equals(customerNumber, other.customerNumber) && customerType == other.customerType
-				&& Objects.equals(dueDate, other.dueDate) && Objects.equals(facilityId, other.facilityId)
-				&& Objects.equals(invoiceDate, other.invoiceDate)
-				&& Objects.equals(invoiceDescription, other.invoiceDescription)
-				&& Objects.equals(invoiceName, other.invoiceName) && Objects.equals(invoiceNumber, other.invoiceNumber)
-				&& Objects.equals(invoiceStatus, other.invoiceStatus) && Objects.equals(invoiceType, other.invoiceType)
-				&& Objects.equals(ocrNumber, other.ocrNumber)
-				&& Objects.equals(organizationGroup, other.organizationGroup)
-				&& Objects.equals(organizationNumber, other.organizationNumber)
-				&& Objects.equals(pdfAvailable, other.pdfAvailable) && Objects.equals(postCode, other.postCode)
-				&& Objects.equals(reversedVat, other.reversedVat) && Objects.equals(rounding, other.rounding)
-				&& Objects.equals(street, other.street) && Objects.equals(totalAmount, other.totalAmount)
-				&& Objects.equals(vat, other.vat) && Objects.equals(vatEligibleAmount, other.vatEligibleAmount);
+			&& Objects.equals(amountVatExcluded, other.amountVatExcluded)
+			&& Objects.equals(amountVatIncluded, other.amountVatIncluded) && Objects.equals(careOf, other.careOf)
+			&& Objects.equals(city, other.city) && Objects.equals(currency, other.currency)
+			&& Objects.equals(customerNumber, other.customerNumber) && (customerType == other.customerType)
+			&& Objects.equals(dueDate, other.dueDate) && Objects.equals(facilityId, other.facilityId)
+			&& Objects.equals(invoiceDate, other.invoiceDate)
+			&& Objects.equals(invoiceDescription, other.invoiceDescription)
+			&& Objects.equals(invoiceName, other.invoiceName) && Objects.equals(invoiceNumber, other.invoiceNumber)
+			&& Objects.equals(invoiceStatus, other.invoiceStatus) && Objects.equals(invoiceType, other.invoiceType)
+			&& Objects.equals(ocrNumber, other.ocrNumber)
+			&& Objects.equals(organizationGroup, other.organizationGroup)
+			&& Objects.equals(organizationNumber, other.organizationNumber)
+			&& Objects.equals(pdfAvailable, other.pdfAvailable) && Objects.equals(postCode, other.postCode)
+			&& Objects.equals(reversedVat, other.reversedVat) && Objects.equals(rounding, other.rounding)
+			&& Objects.equals(street, other.street) && Objects.equals(totalAmount, other.totalAmount)
+			&& Objects.equals(vat, other.vat) && Objects.equals(vatEligibleAmount, other.vatEligibleAmount);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("Invoice [customerNumber=").append(customerNumber).append(", customerType=").append(customerType)
-				.append(", facilityId=").append(facilityId).append(", invoiceNumber=").append(invoiceNumber)
-				.append(", invoiceDate=").append(invoiceDate).append(", invoiceName=").append(invoiceName)
-				.append(", invoiceType=").append(invoiceType).append(", invoiceDescription=").append(invoiceDescription)
-				.append(", invoiceStatus=").append(invoiceStatus).append(", ocrNumber=").append(ocrNumber)
-				.append(", dueDate=").append(dueDate).append(", totalAmount=").append(totalAmount)
-				.append(", amountVatIncluded=").append(amountVatIncluded).append(", amountVatExcluded=")
-				.append(amountVatExcluded).append(", vatEligibleAmount=").append(vatEligibleAmount)
-				.append(", rounding=").append(rounding).append(", vat=").append(vat).append(", reversedVat=")
-				.append(reversedVat).append(", currency=").append(currency).append(", organizationGroup=")
-				.append(organizationGroup).append(", organizationNumber=").append(organizationNumber)
-				.append(", administration=").append(administration).append(", street=").append(street)
-				.append(", postCode=").append(postCode).append(", city=").append(city).append(", careOf=")
-				.append(careOf).append(", pdfAvailable=").append(pdfAvailable).append("]");
+			.append(", facilityId=").append(facilityId).append(", invoiceNumber=").append(invoiceNumber)
+			.append(", invoiceDate=").append(invoiceDate).append(", invoiceName=").append(invoiceName)
+			.append(", invoiceType=").append(invoiceType).append(", invoiceDescription=").append(invoiceDescription)
+			.append(", invoiceStatus=").append(invoiceStatus).append(", ocrNumber=").append(ocrNumber)
+			.append(", dueDate=").append(dueDate).append(", totalAmount=").append(totalAmount)
+			.append(", amountVatIncluded=").append(amountVatIncluded).append(", amountVatExcluded=")
+			.append(amountVatExcluded).append(", vatEligibleAmount=").append(vatEligibleAmount)
+			.append(", rounding=").append(rounding).append(", vat=").append(vat).append(", reversedVat=")
+			.append(reversedVat).append(", currency=").append(currency).append(", organizationGroup=")
+			.append(organizationGroup).append(", organizationNumber=").append(organizationNumber)
+			.append(", administration=").append(administration).append(", street=").append(street)
+			.append(", postCode=").append(postCode).append(", city=").append(city).append(", careOf=")
+			.append(careOf).append(", pdfAvailable=").append(pdfAvailable).append("]");
 		return builder.toString();
 	}
 

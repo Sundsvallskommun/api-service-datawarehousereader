@@ -24,11 +24,11 @@ public class InstalledBaseResponse {
 	public static InstalledBaseResponse create() {
 		return new InstalledBaseResponse();
 	}
-	
+
 	public List<InstalledBaseItem> getInstalledBase() {
 		return installedBase;
 	}
-	
+
 	public void setInstalledBase(List<InstalledBaseItem> installedBase) {
 		this.installedBase = installedBase;
 	}
@@ -58,21 +58,24 @@ public class InstalledBaseResponse {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InstalledBaseResponse other = (InstalledBaseResponse) obj;
+		}
+		final InstalledBaseResponse other = (InstalledBaseResponse) obj;
 		return Objects.equals(installedBase, other.installedBase) && Objects.equals(metaData, other.metaData);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseResponse [metaData=").append(metaData).append(", installedBase=")
-				.append(installedBase).append("]");
+			.append(installedBase).append("]");
 		return builder.toString();
 	}
 }

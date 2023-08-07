@@ -1,13 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
-
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vAgreements")
@@ -235,11 +235,13 @@ public class AgreementEntity {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
-		AgreementEntity that = (AgreementEntity) o;
+		}
+		final AgreementEntity that = (AgreementEntity) o;
 		return Objects.equals(agreementId, that.agreementId) && Objects.equals(uuid, that.uuid) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerId, that.customerId) && Objects.equals(facilityId, that.facilityId)
 			&& Objects.equals(category, that.category) && Objects.equals(billingId, that.billingId) && Objects.equals(description, that.description) && Objects.equals(mainAgreement, that.mainAgreement) && Objects.equals(binding, that.binding)
 			&& Objects.equals(bindingRule, that.bindingRule) && Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate);
@@ -247,7 +249,7 @@ public class AgreementEntity {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		return builder.append("AgreementEntity [agreementId=").append(agreementId)
 			.append(", uuid='").append(uuid).append(", customerOrgId='").append(customerOrgId)
 			.append(", customerId='").append(customerId).append(", facilityId='").append(facilityId)

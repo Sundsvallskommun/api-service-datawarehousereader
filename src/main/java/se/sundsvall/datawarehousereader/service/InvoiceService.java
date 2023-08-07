@@ -1,10 +1,17 @@
 package se.sundsvall.datawarehousereader.service;
 
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
+
 import se.sundsvall.datawarehousereader.api.model.MetaData;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
@@ -13,14 +20,9 @@ import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 
-import java.util.Collections;
-import java.util.List;
-
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
-
 @Service
 public class InvoiceService {
+
 	private static final String INVOICE_DETAIL_NOT_FOUND = "No invoicedetails found for invoice issuer '%s' and invoicenumber '%s'";
 
 	@Autowired

@@ -1,15 +1,15 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vMeasurementElectricityHour")
@@ -19,7 +19,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 	@Id
 	@Column(name = "customerorgid", nullable = false, insertable = false, updatable = false, columnDefinition = "varchar(8000)")
 	private String customerOrgId;
-	 
+
 	@Column(name = "uuid", insertable = false, updatable = false, columnDefinition = "uniqueidentifier")
 	private String uuid;
 
@@ -46,13 +46,14 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 	private String unit;
 
 	@Id
-	@Column(name = "usage", insertable = false, updatable = false, columnDefinition="decimal(28,10)")
+	@Column(name = "usage", insertable = false, updatable = false, columnDefinition = "decimal(28,10)")
 	private BigDecimal usage;
 
 	public static MeasurementElectricityHourEntity create() {
 		return new MeasurementElectricityHourEntity();
 	}
-	
+
+	@Override
 	public String getCustomerOrgId() {
 		return customerOrgId;
 	}
@@ -66,6 +67,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public String getUuid() {
 		return uuid;
 	}
@@ -79,6 +81,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public String getFacilityId() {
 		return facilityId;
 	}
@@ -92,6 +95,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public String getFeedType() {
 		return feedType;
 	}
@@ -105,6 +109,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public Integer getInterpolation() {
 		return interpolation;
 	}
@@ -118,6 +123,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public LocalDateTime getMeasurementTimestamp() {
 		return measurementTimestamp;
 	}
@@ -131,6 +137,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public String getUnit() {
 		return unit;
 	}
@@ -144,6 +151,7 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		return this;
 	}
 
+	@Override
 	public BigDecimal getUsage() {
 		return usage;
 	}
@@ -173,14 +181,14 @@ public class MeasurementElectricityHourEntity implements DefaultMeasurementAttri
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		MeasurementElectricityHourEntity other = (MeasurementElectricityHourEntity) obj;
+		final MeasurementElectricityHourEntity other = (MeasurementElectricityHourEntity) obj;
 		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId) && Objects.equals(feedType, other.feedType) && Objects.equals(interpolation, other.interpolation) && Objects.equals(
 			measurementTimestamp, other.measurementTimestamp) && Objects.equals(unit, other.unit) && Objects.equals(usage, other.usage) && Objects.equals(uuid, other.uuid);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementElectricityHourEntity [customerOrgId=").append(customerOrgId).append(", uuid=").append(uuid).append(", facilityId=").append(facilityId).append(", feedType=").append(feedType).append(", interpolation=").append(
 			interpolation).append(", measurementTimestamp=").append(measurementTimestamp).append(", unit=").append(unit).append(", usage=").append(usage).append("]");
 		return builder.toString();

@@ -1,15 +1,16 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.format.annotation.DateTimeFormat;
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-import se.sundsvall.datawarehousereader.api.model.Category;
-import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
+import se.sundsvall.datawarehousereader.api.model.Category;
+import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 
 @Schema(description = "Agreement request parameters model")
 public class AgreementParameters extends AbstractParameterBase {
@@ -215,13 +216,16 @@ public class AgreementParameters extends AbstractParameterBase {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
-		if (!super.equals(o))
+		}
+		if (!super.equals(o)) {
 			return false;
-		AgreementParameters that = (AgreementParameters) o;
+		}
+		final AgreementParameters that = (AgreementParameters) o;
 		return Objects.equals(mainAgreement, that.mainAgreement) && Objects.equals(binding, that.binding) && Objects.equals(partyId, that.partyId) &&
 			Objects.equals(customerNumber, that.customerNumber) && Objects.equals(facilityId, that.facilityId) &&
 			Objects.equals(category, that.category) && Objects.equals(billingId, that.billingId) && Objects.equals(agreementId, that.agreementId) &&
@@ -237,7 +241,7 @@ public class AgreementParameters extends AbstractParameterBase {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("AgreementParameters [partyId=").append(partyId).append(", customerNumber=").append(customerNumber).append(", facilityId=").append(facilityId).append(", category=").append(category).append(", billingId=").append(billingId)
 			.append(", agreementId=").append(agreementId).append(", description=").append(description).append(", mainAgreement=").append(mainAgreement).append(", binding=").append(binding).append(", bindingRule=").append(bindingRule).append(
 				", fromDate=").append(fromDate).append(", toDate=").append(toDate).append(", page=").append(page).append(", limit=").append(limit).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");

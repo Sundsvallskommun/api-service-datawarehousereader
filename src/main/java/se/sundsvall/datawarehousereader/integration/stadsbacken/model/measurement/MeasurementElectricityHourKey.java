@@ -6,12 +6,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MeasurementElectricityHourKey implements Serializable {
+
 	private static final long serialVersionUID = -1348815619727439020L;
 
 	private String customerOrgId;
 
 	private String facilityId;
-	
+
 	private String feedType;
 
 	private String unit;
@@ -84,14 +85,14 @@ public class MeasurementElectricityHourKey implements Serializable {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		MeasurementElectricityHourKey other = (MeasurementElectricityHourKey) obj;
+		final MeasurementElectricityHourKey other = (MeasurementElectricityHourKey) obj;
 		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId) && Objects.equals(feedType, other.feedType) && Objects.equals(measurementTimestamp, other.measurementTimestamp) && Objects.equals(unit,
 			other.unit) && Objects.equals(usage, other.usage);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementElectricityHourKey [customerOrgId=").append(customerOrgId).append(", facilityId=").append(facilityId).append(", feedType=").append(feedType).append(", unit=").append(unit).append(", usage=").append(usage).append(
 			", measurementTimestamp=").append(measurementTimestamp).append("]");
 		return builder.toString();

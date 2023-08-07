@@ -53,7 +53,8 @@ public class MeasurementElectricityHourEntityComparator implements Comparator<Me
 
 		if (allNull(value1, value2)) {
 			return 0;
-		} else if (isNull(value1)) {
+		}
+		if (isNull(value1)) {
 			return -1;
 		} else if (isNull(value2)) {
 			return 1;
@@ -63,11 +64,12 @@ public class MeasurementElectricityHourEntityComparator implements Comparator<Me
 	}
 
 	private int doComparison(Object object1, Object object2) {
-		if (object1 instanceof LocalDateTime localDateTime1 && object2 instanceof LocalDateTime localDateTime2) {
+		if (object1 instanceof final LocalDateTime localDateTime1 && object2 instanceof final LocalDateTime localDateTime2) {
 			return localDateTime1.compareTo(localDateTime2);
-		} else if (object1 instanceof Integer integer1 && object2 instanceof Integer integer2) {
+		}
+		if (object1 instanceof final Integer integer1 && object2 instanceof final Integer integer2) {
 			return integer1.compareTo(integer2);
-		} else if (object1 instanceof BigDecimal bigDecimal1 && object2 instanceof BigDecimal bigDecimal2) {
+		} else if (object1 instanceof final BigDecimal bigDecimal1 && object2 instanceof final BigDecimal bigDecimal2) {
 			return bigDecimal1.compareTo(bigDecimal2);
 		}
 

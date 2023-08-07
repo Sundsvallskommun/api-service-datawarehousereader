@@ -89,25 +89,28 @@ public class CustomerEngagementParameters extends AbstractParameterBase {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(customerNumber, organizationName, organizationNumber, partyId);
+		result = (prime * result) + Objects.hash(customerNumber, organizationName, organizationNumber, partyId);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		CustomerEngagementParameters other = (CustomerEngagementParameters) obj;
+		}
+		final CustomerEngagementParameters other = (CustomerEngagementParameters) obj;
 		return Objects.equals(customerNumber, other.customerNumber) && Objects.equals(organizationName, other.organizationName) && Objects.equals(organizationNumber, other.organizationNumber) && Objects.equals(partyId, other.partyId);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("CustomerEngagementParameters [partyId=").append(partyId).append(", customerNumber=").append(customerNumber).append(", organizationNumber=").append(organizationNumber).append(", organizationName=").append(organizationName)
 			.append(", page=").append(page).append(", limit=").append(limit).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");
 		return builder.toString();

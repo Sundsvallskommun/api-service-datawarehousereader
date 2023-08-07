@@ -1,20 +1,22 @@
 package se.sundsvall.datawarehousereader.api.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import se.sundsvall.datawarehousereader.api.validation.ValidSortByProperty;
+import static java.lang.Integer.parseInt;
+import static org.springframework.data.domain.Sort.DEFAULT_DIRECTION;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static java.lang.Integer.parseInt;
-import static org.springframework.data.domain.Sort.DEFAULT_DIRECTION;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import se.sundsvall.datawarehousereader.api.validation.ValidSortByProperty;
 
 @ValidSortByProperty
 public abstract class AbstractParameterBase {
@@ -92,7 +94,7 @@ public abstract class AbstractParameterBase {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		AbstractParameterBase other = (AbstractParameterBase) obj;
-		return limit == other.limit && page == other.page && Objects.equals(sortBy, other.sortBy) && sortDirection == other.sortDirection;
+		final AbstractParameterBase other = (AbstractParameterBase) obj;
+		return (limit == other.limit) && (page == other.page) && Objects.equals(sortBy, other.sortBy) && (sortDirection == other.sortDirection);
 	}
 }

@@ -14,8 +14,9 @@ public class InstalledBaseMapper {
 
 	/**
 	 * Method for building a query by example object based on the installed base entity
-	 * @param parameters object containing values to match
-	 * @return example to match against when performing database query
+	 *
+	 * @param  parameters object containing values to match
+	 * @return            example to match against when performing database query
 	 */
 	public static Example<InstalledBaseItemEntity> toExample(InstalledBaseParameters parameters) {
 		if (isNull(parameters)) {

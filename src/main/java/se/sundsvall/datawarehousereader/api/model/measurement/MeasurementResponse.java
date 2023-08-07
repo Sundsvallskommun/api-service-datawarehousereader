@@ -24,7 +24,7 @@ public class MeasurementResponse {
 	public static MeasurementResponse create() {
 		return new MeasurementResponse();
 	}
-	
+
 	public MetaData getMetaData() {
 		return metaData;
 	}
@@ -58,21 +58,24 @@ public class MeasurementResponse {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		MeasurementResponse other = (MeasurementResponse) obj;
+		}
+		final MeasurementResponse other = (MeasurementResponse) obj;
 		return Objects.equals(measurements, other.measurements) && Objects.equals(metaData, other.metaData);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementResponse [metaData=").append(metaData).append(", measurements=").append(measurements)
-				.append("]");
+			.append("]");
 		return builder.toString();
 	}
 }

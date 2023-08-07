@@ -39,6 +39,7 @@ class InvoiceTest {
 
 	@Test
 	void testCreatePattern() {
+
 		final var administration = "administration";
 		final var amountVatExcluded = valueOf(101);
 		final var amountVatIncluded = valueOf(202);
@@ -64,7 +65,7 @@ class InvoiceTest {
 		final var street = "street";
 		final var totalAmount = valueOf(404);
 		final var vat = valueOf(505);
-		final var vatEligableAmount = valueOf(606);
+		final var vatEligibleAmount = valueOf(606);
 		final var pdfAvailable = false;
 
 		final var invoice = Invoice.create()
@@ -82,6 +83,7 @@ class InvoiceTest {
 			.withInvoiceDescription(invoiceDescription)
 			.withInvoiceName(invoiceName)
 			.withInvoiceNumber(invoiceNumber)
+
 			.withInvoiceStatus(invoiceStatus)
 			.withInvoiceType(invoiceType)
 			.withOcrNumber(ocrNumber)
@@ -93,36 +95,66 @@ class InvoiceTest {
 			.withStreet(street)
 			.withTotalAmount(totalAmount)
 			.withVat(vat)
-			.withVatEligibleAmount(vatEligableAmount)
+			.withVatEligibleAmount(vatEligibleAmount)
 			.withPdfAvailable(pdfAvailable);
 
-		assertThat(invoice.getAdministration()).isEqualTo(administration);
-		assertThat(invoice.getAmountVatExcluded()).isEqualTo(amountVatExcluded);
-		assertThat(invoice.getAmountVatIncluded()).isEqualTo(amountVatIncluded);
-		assertThat(invoice.getCareOf()).isEqualTo(careOf);
-		assertThat(invoice.getCity()).isEqualTo(city);
-		assertThat(invoice.getCurrency()).isEqualTo(currency);
-		assertThat(invoice.getCustomerNumber()).isEqualTo(customerNumber);
-		assertThat(invoice.getCustomerType()).isEqualTo(customerType);
-		assertThat(invoice.getDueDate()).isEqualTo(dueDate);
-		assertThat(invoice.getFacilityId()).isEqualTo(facilityId);
-		assertThat(invoice.getInvoiceDate()).isEqualTo(invoiceDate);
-		assertThat(invoice.getInvoiceDescription()).isEqualTo(invoiceDescription);
-		assertThat(invoice.getInvoiceName()).isEqualTo(invoiceName);
-		assertThat(invoice.getInvoiceNumber()).isEqualTo(invoiceNumber);
-		assertThat(invoice.getInvoiceStatus()).isEqualTo(invoiceStatus);
-		assertThat(invoice.getInvoiceType()).isEqualTo(invoiceType);
-		assertThat(invoice.getOcrNumber()).isEqualTo(ocrNumber);
-		assertThat(invoice.getOrganizationGroup()).isEqualTo(organizationGroup);
-		assertThat(invoice.getOrganizationNumber()).isEqualTo(organizationNumber);
-		assertThat(invoice.getPostCode()).isEqualTo(postalCode);
-		assertThat(invoice.getReversedVat()).isEqualTo(reversedVat);
-		assertThat(invoice.getRounding()).isEqualTo(rounding);
-		assertThat(invoice.getStreet()).isEqualTo(street);
-		assertThat(invoice.getTotalAmount()).isEqualTo(totalAmount);
-		assertThat(invoice.getVat()).isEqualTo(vat);
-		assertThat(invoice.getVatEligibleAmount()).isEqualTo(vatEligableAmount);
-		assertThat(invoice.getPdfAvailable()).isEqualTo(pdfAvailable);
+		assertThat(invoice)
+			.extracting(
+				Invoice::getAdministration,
+				Invoice::getAmountVatExcluded,
+				Invoice::getAmountVatIncluded,
+				Invoice::getCareOf,
+				Invoice::getCity,
+				Invoice::getCurrency,
+				Invoice::getCustomerNumber,
+				Invoice::getCustomerType,
+				Invoice::getDueDate,
+				Invoice::getFacilityId,
+				Invoice::getInvoiceDate,
+				Invoice::getInvoiceDescription,
+				Invoice::getInvoiceName,
+				Invoice::getInvoiceNumber,
+				Invoice::getInvoiceStatus,
+				Invoice::getInvoiceType,
+				Invoice::getOcrNumber,
+				Invoice::getOrganizationGroup,
+				Invoice::getOrganizationNumber,
+				Invoice::getPostCode,
+				Invoice::getReversedVat,
+				Invoice::getRounding,
+				Invoice::getStreet,
+				Invoice::getTotalAmount,
+				Invoice::getVat,
+				Invoice::getVatEligibleAmount,
+				Invoice::getPdfAvailable)
+			.containsExactly(
+				administration,
+				amountVatExcluded,
+				amountVatIncluded,
+				careOf,
+				city,
+				currency,
+				customerNumber,
+				customerType,
+				dueDate,
+				facilityId,
+				invoiceDate,
+				invoiceDescription,
+				invoiceName,
+				invoiceNumber,
+				invoiceStatus,
+				invoiceType,
+				ocrNumber,
+				organizationGroup,
+				organizationNumber,
+				postalCode,
+				reversedVat,
+				rounding,
+				street,
+				totalAmount,
+				vat,
+				vatEligibleAmount,
+				pdfAvailable);
 	}
 
 	@Test

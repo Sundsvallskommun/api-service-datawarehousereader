@@ -245,13 +245,16 @@ public class InvoiceDetail {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InvoiceDetail other = (InvoiceDetail) obj;
+		}
+		final InvoiceDetail other = (InvoiceDetail) obj;
 		return Objects.equals(amount, other.amount) && Objects.equals(amountVatExcluded, other.amountVatExcluded) && Objects.equals(description, other.description) && Objects.equals(invoiceNumber, other.invoiceNumber) && Objects.equals(
 			organizationNumber, other.organizationNumber) && Objects.equals(periodFrom, other.periodFrom) && Objects.equals(periodTo, other.periodTo) && Objects.equals(productCode, other.productCode) && Objects.equals(productName, other.productName)
 			&& Objects.equals(quantity, other.quantity) && Objects.equals(unit, other.unit) && Objects.equals(unitPrice, other.unitPrice) && Objects.equals(vat, other.vat) && Objects.equals(vatRate, other.vatRate);
@@ -259,7 +262,7 @@ public class InvoiceDetail {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InvoiceDetail [invoiceNumber=").append(invoiceNumber).append(", amount=").append(amount).append(", amountVatExcluded=").append(amountVatExcluded).append(", vat=").append(vat).append(", vatRate=").append(vatRate).append(
 			", quantity=").append(quantity).append(", unit=").append(unit).append(", unitPrice=").append(unitPrice).append(", periodFrom=").append(periodFrom).append(", periodTo=").append(periodTo).append(", description=").append(description).append(
 				", productCode=").append(productCode).append(", productName=").append(productName).append(", organizationNumber=").append(organizationNumber).append("]");

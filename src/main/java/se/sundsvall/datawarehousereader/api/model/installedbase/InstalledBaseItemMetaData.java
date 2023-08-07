@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Installed base item metadata model")
 public class InstalledBaseItemMetaData {
-	
+
 	@Schema(description = "Key", example = "netarea", accessMode = READ_ONLY)
 	private String key;
 
@@ -20,7 +20,7 @@ public class InstalledBaseItemMetaData {
 
 	@Schema(description = "Displayname", example = "Nätområde", accessMode = READ_ONLY)
 	private String displayName;
-	
+
 	public static InstalledBaseItemMetaData create() {
 		return new InstalledBaseItemMetaData();
 	}
@@ -58,7 +58,7 @@ public class InstalledBaseItemMetaData {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	public InstalledBaseItemMetaData withType(String type) {
 		this.type = type;
 		return this;
@@ -84,22 +84,25 @@ public class InstalledBaseItemMetaData {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InstalledBaseItemMetaData other = (InstalledBaseItemMetaData) obj;
+		}
+		final InstalledBaseItemMetaData other = (InstalledBaseItemMetaData) obj;
 		return Objects.equals(displayName, other.displayName) && Objects.equals(key, other.key)
-				&& Objects.equals(type, other.type) && Objects.equals(value, other.value);
+			&& Objects.equals(type, other.type) && Objects.equals(value, other.value);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItemMetaData [key=").append(key).append(", value=").append(value).append(", type=")
-				.append(type).append(", displayName=").append(displayName).append("]");
+			.append(type).append(", displayName=").append(displayName).append("]");
 		return builder.toString();
 	}
 }
