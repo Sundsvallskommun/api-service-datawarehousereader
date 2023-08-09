@@ -144,13 +144,13 @@ public class MetaData {
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
-		MetaData other = (MetaData) obj;
-		return count == other.count && limit == other.limit && page == other.page && sortBy == other.sortBy && sortDirection == other.sortDirection && totalPages == other.totalPages && totalRecords == other.totalRecords;
+		final MetaData other = (MetaData) obj;
+		return (count == other.count) && (limit == other.limit) && (page == other.page) && (sortBy == other.sortBy) && (sortDirection == other.sortDirection) && (totalPages == other.totalPages) && (totalRecords == other.totalRecords);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MetaData [page=").append(page).append(", limit=").append(limit).append(", count=").append(count).append(", totalRecords=").append(totalRecords).append(", totalPages=").append(totalPages).append(", sortBy=").append(sortBy)
 			.append(", sortDirection=").append(sortDirection).append("]");
 		return builder.toString();

@@ -115,26 +115,29 @@ public class InstalledBaseParameters extends AbstractParameterBase {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(careOf, city, company, customerNumber, facilityId, postCode, propertyDesignation, street, type);
+		result = (prime * result) + Objects.hash(careOf, city, company, customerNumber, facilityId, postCode, propertyDesignation, street, type);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InstalledBaseParameters other = (InstalledBaseParameters) obj;
+		}
+		final InstalledBaseParameters other = (InstalledBaseParameters) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(facilityId, other.facilityId) && Objects
 			.equals(postCode, other.postCode) && Objects.equals(propertyDesignation, other.propertyDesignation) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseParameters [company=").append(company).append(", customerNumber=").append(customerNumber).append(", type=").append(type).append(", facilityId=").append(facilityId).append(", careOf=").append(careOf).append(
 			", street=").append(street).append(", postCode=").append(postCode).append(", city=").append(city).append(", propertyDesignation=").append(propertyDesignation).append(", page=").append(page).append(", limit=").append(limit).append(
 				", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");

@@ -75,20 +75,23 @@ public class MeasurementParameters extends AbstractParameterBase {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result
+		result = (prime * result)
 			+ Objects.hash(facilityId, fromDateTime, partyId, toDateTime);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		MeasurementParameters other = (MeasurementParameters) obj;
+		}
+		final MeasurementParameters other = (MeasurementParameters) obj;
 		return Objects.equals(facilityId, other.facilityId) &&
 			Objects.equals(fromDateTime, other.fromDateTime) && Objects.equals(partyId, other.partyId) &&
 			Objects.equals(toDateTime, other.toDateTime);
@@ -96,7 +99,7 @@ public class MeasurementParameters extends AbstractParameterBase {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementParameters [partyId=").append(partyId).append(", facilityId=").append(facilityId).append(", fromDateTime=").append(fromDateTime).append(", toDateTime=").append(toDateTime).append(", page=").append(page).append(
 			", limit=").append(limit).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");
 		return builder.toString();

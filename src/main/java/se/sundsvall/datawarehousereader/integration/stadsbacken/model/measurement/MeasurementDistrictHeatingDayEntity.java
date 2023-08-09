@@ -1,14 +1,14 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vMeasurementDistrictHeatingDay")
@@ -18,7 +18,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 	@Id
 	@Column(name = "customerorgid", nullable = false, insertable = false, updatable = false, columnDefinition = "varchar(8000)")
 	private String customerOrgId;
-	 
+
 	@Column(name = "uuid", insertable = false, updatable = false, columnDefinition = "uniqueidentifier")
 	private String uuid;
 
@@ -28,7 +28,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 
 	@Column(name = "feedType", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String feedType;
-	
+
 	@Column(name = "isInterpolated", nullable = false, insertable = false, updatable = false, columnDefinition = "tinyint")
 	private Integer interpolation;
 
@@ -38,7 +38,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 	@Column(name = "unit", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String unit;
 
-	@Column(name = "usage", insertable = false, updatable = false, columnDefinition="decimal(33,10)")
+	@Column(name = "usage", insertable = false, updatable = false, columnDefinition = "decimal(33,10)")
 	private BigDecimal usage;
 
 	@Id
@@ -48,7 +48,8 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 	public static MeasurementDistrictHeatingDayEntity create() {
 		return new MeasurementDistrictHeatingDayEntity();
 	}
-	
+
+	@Override
 	public String getCustomerOrgId() {
 		return customerOrgId;
 	}
@@ -62,6 +63,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public String getUuid() {
 		return uuid;
 	}
@@ -75,6 +77,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public String getFacilityId() {
 		return facilityId;
 	}
@@ -88,6 +91,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public String getFeedType() {
 		return feedType;
 	}
@@ -101,6 +105,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public Integer getInterpolation() {
 		return interpolation;
 	}
@@ -114,6 +119,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public LocalDateTime getMeasurementTimestamp() {
 		return measurementTimestamp;
 	}
@@ -127,6 +133,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public String getUnit() {
 		return unit;
 	}
@@ -140,6 +147,7 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 		return this;
 	}
 
+	@Override
 	public BigDecimal getUsage() {
 		return usage;
 	}
@@ -169,34 +177,37 @@ public class MeasurementDistrictHeatingDayEntity implements DefaultMeasurementAt
 	@Override
 	public int hashCode() {
 		return Objects.hash(customerOrgId, facilityId, feedType, interpolation, measurementTimestamp,
-				readingSequence, unit, usage, uuid);
+			readingSequence, unit, usage, uuid);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		MeasurementDistrictHeatingDayEntity other = (MeasurementDistrictHeatingDayEntity) obj;
+		}
+		final MeasurementDistrictHeatingDayEntity other = (MeasurementDistrictHeatingDayEntity) obj;
 		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId)
-				&& Objects.equals(feedType, other.feedType)
-				&& Objects.equals(interpolation, other.interpolation)
-				&& Objects.equals(measurementTimestamp, other.measurementTimestamp)
-				&& Objects.equals(readingSequence, other.readingSequence) && Objects.equals(unit, other.unit)
-				&& Objects.equals(usage, other.usage) && Objects.equals(uuid, other.uuid);
+			&& Objects.equals(feedType, other.feedType)
+			&& Objects.equals(interpolation, other.interpolation)
+			&& Objects.equals(measurementTimestamp, other.measurementTimestamp)
+			&& Objects.equals(readingSequence, other.readingSequence) && Objects.equals(unit, other.unit)
+			&& Objects.equals(usage, other.usage) && Objects.equals(uuid, other.uuid);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementDistrictHeatingDayEntity [customerOrgId=").append(customerOrgId).append(", uuid=")
-				.append(uuid).append(", facilityId=").append(facilityId).append(", feedType=").append(feedType)
-				.append(", interpolation=").append(interpolation).append(", measurementTimestamp=")
-				.append(measurementTimestamp).append(", unit=").append(unit).append(", usage=")
-				.append(usage).append(", readingSequence=").append(readingSequence).append("]");
+			.append(uuid).append(", facilityId=").append(facilityId).append(", feedType=").append(feedType)
+			.append(", interpolation=").append(interpolation).append(", measurementTimestamp=")
+			.append(measurementTimestamp).append(", unit=").append(unit).append(", usage=")
+			.append(usage).append(", readingSequence=").append(readingSequence).append("]");
 		return builder.toString();
 	}
 }

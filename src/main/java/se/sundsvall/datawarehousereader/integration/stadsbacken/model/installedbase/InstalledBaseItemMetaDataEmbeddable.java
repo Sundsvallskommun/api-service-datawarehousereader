@@ -1,13 +1,14 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
-
 import java.io.Serializable;
 import java.util.Objects;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
+
 @Embeddable
 public class InstalledBaseItemMetaDataEmbeddable implements Serializable {
+
 	private static final long serialVersionUID = 7581230689748313918L;
 
 	@Column(name = "company", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
@@ -72,24 +73,27 @@ public class InstalledBaseItemMetaDataEmbeddable implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InstalledBaseItemMetaDataEmbeddable other = (InstalledBaseItemMetaDataEmbeddable) obj;
+		}
+		final InstalledBaseItemMetaDataEmbeddable other = (InstalledBaseItemMetaDataEmbeddable) obj;
 		return Objects.equals(company, other.company) && Objects.equals(displayName, other.displayName)
-				&& Objects.equals(key, other.key) && Objects.equals(type, other.type)
-				&& Objects.equals(value, other.value);
+			&& Objects.equals(key, other.key) && Objects.equals(type, other.type)
+			&& Objects.equals(value, other.value);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItemMetaDataEmbeddable [company=").append(company).append(", key=").append(key)
-				.append(", value=").append(value).append(", type=").append(type).append(", displayName=")
-				.append(displayName).append("]");
+			.append(", value=").append(value).append(", type=").append(type).append(", displayName=")
+			.append(displayName).append("]");
 		return builder.toString();
 	}
 }

@@ -118,15 +118,18 @@ public class CustomerEngagement {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		CustomerEngagement other = (CustomerEngagement) obj;
+		}
+		final CustomerEngagement other = (CustomerEngagement) obj;
 		return Objects.equals(customerNumber, other.customerNumber)
-			&& Objects.equals(customerOrgNumber, other.customerOrgNumber) && customerType == other.customerType
+			&& Objects.equals(customerOrgNumber, other.customerOrgNumber) && (customerType == other.customerType)
 			&& Objects.equals(organizationName, other.organizationName)
 			&& Objects.equals(organizationNumber, other.organizationNumber)
 			&& Objects.equals(partyId, other.partyId);
@@ -134,7 +137,7 @@ public class CustomerEngagement {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("CustomerEngagement [partyId=").append(partyId).append(", customerOrgNumber=")
 			.append(customerOrgNumber).append(", customerType=").append(customerType).append(", customerNumber=")
 			.append(customerNumber).append(", organizationNumber=").append(organizationNumber)

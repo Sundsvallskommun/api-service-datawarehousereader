@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class CustomerKey implements Serializable {
+
 	private static final long serialVersionUID = 8683879823650117181L;
 
 	private Integer customerId;
@@ -33,21 +34,24 @@ public class CustomerKey implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		CustomerKey other = (CustomerKey) obj;
+		}
+		final CustomerKey other = (CustomerKey) obj;
 		return Objects.equals(customerId, other.customerId) && Objects.equals(organizationId, other.organizationId);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("CustomerKey [customerId=").append(customerId).append(", organizationId=").append(organizationId)
-				.append("]");
+			.append("]");
 		return builder.toString();
 	}
 }

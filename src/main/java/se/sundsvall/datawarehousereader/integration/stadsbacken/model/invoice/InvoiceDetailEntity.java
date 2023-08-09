@@ -1,12 +1,12 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice;
 
+import java.math.BigDecimal;
+import java.util.Objects;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
-import java.math.BigDecimal;
-import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vInvoiceDetail")
@@ -15,7 +15,7 @@ public class InvoiceDetailEntity {
 	@Id
 	@Column(name = "invoiceProductSeq", nullable = false, insertable = false, updatable = false)
 	private int invoiceProductSeq;
-	 
+
 	@Column(name = "invoiceId", nullable = false, insertable = false, updatable = false)
 	private int invoiceId;
 
@@ -196,22 +196,25 @@ public class InvoiceDetailEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InvoiceDetailEntity other = (InvoiceDetailEntity) obj;
-		return Objects.equals(amount, other.amount) && Objects.equals(amountVatExcluded, other.amountVatExcluded) && Objects.equals(description, other.description) && invoiceId == other.invoiceId && Objects.equals(invoiceNumber, other.invoiceNumber)
-			&& invoiceProductSeq == other.invoiceProductSeq && Objects.equals(organizationId, other.organizationId) && Objects.equals(periodFrom, other.periodFrom) && Objects.equals(periodTo, other.periodTo) && productCode == other.productCode
+		}
+		final InvoiceDetailEntity other = (InvoiceDetailEntity) obj;
+		return Objects.equals(amount, other.amount) && Objects.equals(amountVatExcluded, other.amountVatExcluded) && Objects.equals(description, other.description) && (invoiceId == other.invoiceId) && Objects.equals(invoiceNumber, other.invoiceNumber)
+			&& (invoiceProductSeq == other.invoiceProductSeq) && Objects.equals(organizationId, other.organizationId) && Objects.equals(periodFrom, other.periodFrom) && Objects.equals(periodTo, other.periodTo) && (productCode == other.productCode)
 			&& Objects.equals(productName, other.productName) && Objects.equals(quantity, other.quantity) && Objects.equals(unit, other.unit) && Objects.equals(unitPrice, other.unitPrice) && Objects.equals(vat, other.vat) && Objects.equals(vatRate,
 				other.vatRate);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InvoiceDetailEntity [invoiceProductSeq=").append(invoiceProductSeq).append(", invoiceId=").append(invoiceId).append(", productCode=").append(productCode).append(", periodFrom=").append(periodFrom).append(", periodTo=").append(
 			periodTo).append(", amount=").append(amount).append(", invoiceNumber=").append(invoiceNumber).append(", amountVatExcluded=").append(amountVatExcluded).append(", vat=").append(vat).append(", vatRate=").append(vatRate).append(", quantity=")
 			.append(quantity).append(", unit=").append(unit).append(", unitPrice=").append(unitPrice).append(", description=").append(description).append(", productName=").append(productName).append(", organizationId=").append(organizationId).append(

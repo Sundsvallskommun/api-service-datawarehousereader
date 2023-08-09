@@ -7,10 +7,9 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import se.sundsvall.datawarehousereader.api.model.MetaData;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.api.model.MetaData;
 
 @Schema(description = "Customer details response model")
 public class CustomerDetailsResponse {
@@ -65,7 +64,7 @@ public class CustomerDetailsResponse {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
 		}
 		final CustomerDetailsResponse that = (CustomerDetailsResponse) o;

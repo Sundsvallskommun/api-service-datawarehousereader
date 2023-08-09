@@ -24,7 +24,7 @@ public class CustomerEngagementResponse {
 	public static CustomerEngagementResponse create() {
 		return new CustomerEngagementResponse();
 	}
-	
+
 	public MetaData getMetaData() {
 		return metaData;
 	}
@@ -41,7 +41,7 @@ public class CustomerEngagementResponse {
 	public List<CustomerEngagement> getCustomerEngagements() {
 		return customerEngagements;
 	}
-	
+
 	public void setCustomerEngagements(List<CustomerEngagement> customerEngagements) {
 		this.customerEngagements = customerEngagements;
 	}
@@ -58,22 +58,25 @@ public class CustomerEngagementResponse {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		CustomerEngagementResponse other = (CustomerEngagementResponse) obj;
+		}
+		final CustomerEngagementResponse other = (CustomerEngagementResponse) obj;
 		return Objects.equals(customerEngagements, other.customerEngagements) && Objects.equals(metaData, other.metaData);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("CustomerEngagementResponse [metaData=").append(metaData).append(", customerEngagements=").append(customerEngagements)
-				.append("]");
+			.append("]");
 		return builder.toString();
 	}
-	
+
 }

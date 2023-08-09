@@ -147,7 +147,6 @@ public class CustomerDetailsEntity {
 		return this;
 	}
 
-
 	public String getAddress() {
 		return address;
 	}
@@ -300,11 +299,14 @@ public class CustomerDetailsEntity {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
 		}
 		final CustomerDetailsEntity that = (CustomerDetailsEntity) o;
-		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
+		return (customerChangedFlg == that.customerChangedFlg) && (installedChangedFlg == that.installedChangedFlg) && Objects.equals(customerId, that.customerId) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerCategoryID,
+			that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode,
+				that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2,
+					that.email2);
 	}
 
 	@Override

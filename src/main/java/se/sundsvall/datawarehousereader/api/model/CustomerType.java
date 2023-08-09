@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Customer type", enumAsRef = true, example = "Enterprise")
 public enum CustomerType {
+
 	ENTERPRISE("Enterprise"),
 	PRIVATE("Private");
 

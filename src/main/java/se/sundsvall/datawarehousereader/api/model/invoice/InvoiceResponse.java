@@ -58,21 +58,24 @@ public class InvoiceResponse {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InvoiceResponse other = (InvoiceResponse) obj;
+		}
+		final InvoiceResponse other = (InvoiceResponse) obj;
 		return Objects.equals(invoices, other.invoices) && Objects.equals(metaData, other.metaData);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InvoiceResponse [metaData=").append(metaData).append(", invoices=").append(invoices)
-				.append("]");
+			.append("]");
 		return builder.toString();
 	}
 }

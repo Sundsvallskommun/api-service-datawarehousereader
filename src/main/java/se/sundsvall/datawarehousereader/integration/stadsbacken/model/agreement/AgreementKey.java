@@ -29,11 +29,13 @@ public class AgreementKey implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
-		AgreementKey that = (AgreementKey) o;
+		}
+		final AgreementKey that = (AgreementKey) o;
 		return Objects.equals(agreementId, that.agreementId) && Objects.equals(billingId, that.billingId);
 	}
 
@@ -44,7 +46,7 @@ public class AgreementKey implements Serializable {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("AgreementKey [agreementId=").append(agreementId).append(", billingId=").append(billingId)
 			.append("]");
 		return builder.toString();

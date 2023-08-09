@@ -11,9 +11,9 @@ import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
-import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT;
+import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT_ID;
 
-@FeignClient(name = CLIENT, url = "${integration.party.url}", configuration = PartyConfiguration.class)
+@FeignClient(name = CLIENT_ID, url = "${integration.party.url}", configuration = PartyConfiguration.class)
 public interface PartyClient {
 
 	/**

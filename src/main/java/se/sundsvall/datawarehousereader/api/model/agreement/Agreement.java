@@ -1,13 +1,14 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import org.springframework.format.annotation.DateTimeFormat;
-import se.sundsvall.datawarehousereader.api.model.Category;
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.api.model.Category;
 
 @Schema(description = "Agreement model")
 public class Agreement {
@@ -217,19 +218,22 @@ public class Agreement {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o)
+		if (this == o) {
 			return true;
-		if (o == null || getClass() != o.getClass())
+		}
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
-		Agreement agreement = (Agreement) o;
-		return Objects.equals(mainAgreement, agreement.mainAgreement) && Objects.equals(binding, agreement.binding) && Objects.equals(partyId, agreement.partyId) && Objects.equals(customerNumber, agreement.customerNumber) && Objects.equals(facilityId, agreement.facilityId)
+		}
+		final Agreement agreement = (Agreement) o;
+		return Objects.equals(mainAgreement, agreement.mainAgreement) && Objects.equals(binding, agreement.binding) && Objects.equals(partyId, agreement.partyId) && Objects.equals(customerNumber, agreement.customerNumber) && Objects.equals(facilityId,
+			agreement.facilityId)
 			&& Objects.equals(category, agreement.category) && Objects.equals(billingId, agreement.billingId) && Objects.equals(agreementId, agreement.agreementId) && Objects.equals(description, agreement.description) && Objects.equals(bindingRule,
 				agreement.bindingRule) && Objects.equals(fromDate, agreement.fromDate) && Objects.equals(toDate, agreement.toDate);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("Agreement [partyId=").append(partyId).append(", customerNumber=").append(customerNumber)
 			.append(", facilityId=").append(facilityId).append(", billingId=").append(billingId)
 			.append(", description=").append(description).append(", mainAgreement=").append(mainAgreement)

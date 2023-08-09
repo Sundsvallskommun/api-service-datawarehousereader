@@ -44,14 +44,14 @@ public class Measurement {
 
 	@ArraySchema(schema = @Schema(implementation = MeasurementMetaData.class, accessMode = READ_ONLY))
 	private List<MeasurementMetaData> metaData;
-	
+
 	@Schema(description = "Interpolation information. Zero means that no interpolations has been done. Value greater than zero tells how many values in the serie that has been interpolated/calculated.", example = "13", accessMode = READ_ONLY)
 	private int interpolation;
 
 	public static Measurement create() {
 		return new Measurement();
 	}
-	
+
 	public String getPartyId() {
 		return partyId;
 	}
@@ -176,7 +176,7 @@ public class Measurement {
 	public void setInterpolation(int interpolation) {
 		this.interpolation = interpolation;
 	}
-	
+
 	public Measurement withInterpolation(int interpolation) {
 		this.interpolation = interpolation;
 		return this;
@@ -185,33 +185,36 @@ public class Measurement {
 	@Override
 	public int hashCode() {
 		return Objects.hash(category, facilityId, interpolation, measurementType, metaData, partyId, aggregatedOn,
-				timestamp, unit, value);
+			timestamp, unit, value);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		Measurement other = (Measurement) obj;
-		return category == other.category && Objects.equals(facilityId, other.facilityId)
-				&& interpolation == other.interpolation && Objects.equals(measurementType, other.measurementType)
-				&& Objects.equals(metaData, other.metaData) && Objects.equals(partyId, other.partyId)
-				&& aggregatedOn == other.aggregatedOn && Objects.equals(timestamp, other.timestamp)
-				&& Objects.equals(unit, other.unit) && Objects.equals(value, other.value);
+		}
+		final Measurement other = (Measurement) obj;
+		return (category == other.category) && Objects.equals(facilityId, other.facilityId)
+			&& (interpolation == other.interpolation) && Objects.equals(measurementType, other.measurementType)
+			&& Objects.equals(metaData, other.metaData) && Objects.equals(partyId, other.partyId)
+			&& (aggregatedOn == other.aggregatedOn) && Objects.equals(timestamp, other.timestamp)
+			&& Objects.equals(unit, other.unit) && Objects.equals(value, other.value);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("Measurement [partyId=").append(partyId).append(", facilityId=").append(facilityId)
-				.append(", category=").append(category).append(", aggregatedOn=").append(aggregatedOn)
-				.append(", measurementType=").append(measurementType).append(", unit=").append(unit).append(", value=")
-				.append(value).append(", timestamp=").append(timestamp).append(", metaData=").append(metaData)
-				.append(", interpolation=").append(interpolation).append("]");
+			.append(", category=").append(category).append(", aggregatedOn=").append(aggregatedOn)
+			.append(", measurementType=").append(measurementType).append(", unit=").append(unit).append(", value=")
+			.append(value).append(", timestamp=").append(timestamp).append(", metaData=").append(metaData)
+			.append(", interpolation=").append(interpolation).append("]");
 		return builder.toString();
 	}
 }

@@ -1,17 +1,15 @@
 package se.sundsvall.datawarehousereader.api.model.customer;
 
-
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
+import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 
 @Schema(description = "Customer details request parameters model")
 public class CustomerDetailsParameters extends AbstractParameterBase {
@@ -88,7 +86,7 @@ public class CustomerDetailsParameters extends AbstractParameterBase {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
 		}
 		if (!super.equals(o)) {

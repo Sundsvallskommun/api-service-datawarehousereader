@@ -198,7 +198,7 @@ public class InvoiceParameters extends AbstractParameterBase {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(administration, customerNumber, customerType, dueDateFrom, dueDateTo,
+		result = (prime * result) + Objects.hash(administration, customerNumber, customerType, dueDateFrom, dueDateTo,
 			facilityId, invoiceDateFrom, invoiceDateTo, invoiceName, invoiceNumber, invoiceStatus, invoiceType,
 			ocrNumber, organizationGroup, organizationNumber);
 		return result;
@@ -206,15 +206,18 @@ public class InvoiceParameters extends AbstractParameterBase {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InvoiceParameters other = (InvoiceParameters) obj;
+		}
+		final InvoiceParameters other = (InvoiceParameters) obj;
 		return Objects.equals(administration, other.administration)
-			&& Objects.equals(customerNumber, other.customerNumber) && customerType == other.customerType
+			&& Objects.equals(customerNumber, other.customerNumber) && (customerType == other.customerType)
 			&& Objects.equals(dueDateFrom, other.dueDateFrom) && Objects.equals(dueDateTo, other.dueDateTo)
 			&& Objects.equals(facilityId, other.facilityId)
 			&& Objects.equals(invoiceDateFrom, other.invoiceDateFrom)
@@ -228,7 +231,7 @@ public class InvoiceParameters extends AbstractParameterBase {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InvoiceParameters [customerNumber=").append(customerNumber).append(", customerType=").append(customerType).append(", facilityId=").append(facilityId).append(", invoiceNumber=").append(invoiceNumber).append(
 			", invoiceDateFrom=").append(invoiceDateFrom).append(", invoiceDateTo=").append(invoiceDateTo).append(", invoiceName=").append(invoiceName).append(", invoiceType=").append(invoiceType).append(", invoiceStatus=").append(invoiceStatus)
 			.append(", ocrNumber=").append(ocrNumber).append(", dueDateFrom=").append(dueDateFrom).append(", dueDateTo=").append(dueDateTo).append(", organizationGroup=").append(organizationGroup).append(", organizationNumber=").append(

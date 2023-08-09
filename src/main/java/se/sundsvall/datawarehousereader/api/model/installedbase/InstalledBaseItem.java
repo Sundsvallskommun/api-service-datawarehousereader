@@ -11,10 +11,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Installed base item model")
 public class InstalledBaseItem {
-	
+
 	@Schema(description = "Company", example = "Sundsvall Energi AB", accessMode = READ_ONLY)
 	private String company;
-	
+
 	@Schema(description = "Customer number", example = "104327", accessMode = READ_ONLY)
 	private String customerNumber;
 
@@ -47,10 +47,10 @@ public class InstalledBaseItem {
 
 	@Schema(description = "To date", example = "2022-12-31", accessMode = READ_ONLY)
 	private LocalDate dateTo;
-	
+
 	@ArraySchema(schema = @Schema(implementation = InstalledBaseItemMetaData.class, accessMode = READ_ONLY), maxItems = 1000)
 	private List<InstalledBaseItemMetaData> metaData;
-	
+
 	public static InstalledBaseItem create() {
 		return new InstalledBaseItem();
 	}
@@ -62,7 +62,7 @@ public class InstalledBaseItem {
 	public void setCompany(String company) {
 		this.company = company;
 	}
-	
+
 	public InstalledBaseItem withCompany(String company) {
 		this.company = company;
 		return this;
@@ -205,12 +205,12 @@ public class InstalledBaseItem {
 	public void setDateTo(LocalDate dateTo) {
 		this.dateTo = dateTo;
 	}
-	
+
 	public InstalledBaseItem withDateTo(LocalDate dateTo) {
 		this.dateTo = dateTo;
 		return this;
 	}
-	
+
 	public List<InstalledBaseItemMetaData> getMetaData() {
 		return metaData;
 	}
@@ -231,21 +231,24 @@ public class InstalledBaseItem {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InstalledBaseItem other = (InstalledBaseItem) obj;
+		}
+		final InstalledBaseItem other = (InstalledBaseItem) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(dateFrom, other.dateFrom) && Objects.equals(
-			dateTo, other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(metaData, other.metaData) && placementId == other.placementId && Objects.equals(postCode, other.postCode) && Objects.equals(propertyDesignation,
+			dateTo, other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(metaData, other.metaData) && (placementId == other.placementId) && Objects.equals(postCode, other.postCode) && Objects.equals(propertyDesignation,
 				other.propertyDesignation) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItem [company=").append(company).append(", customerNumber=").append(customerNumber).append(", type=").append(type).append(", facilityId=").append(facilityId).append(", placementId=").append(placementId).append(
 			", careOf=").append(careOf).append(", street=").append(street).append(", postCode=").append(postCode).append(", city=").append(city).append(", propertyDesignation=").append(propertyDesignation).append(", dateFrom=").append(dateFrom)
 			.append(", dateTo=").append(dateTo).append(", metaData=").append(metaData).append("]");
