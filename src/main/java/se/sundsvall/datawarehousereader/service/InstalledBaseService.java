@@ -1,19 +1,20 @@
 package se.sundsvall.datawarehousereader.service;
 
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.mapper.InstalledBaseMapper.toExample;
+import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 import se.sundsvall.datawarehousereader.api.model.MetaData;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItem;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstalledBaseRepository;
-
-import java.util.Collections;
-import java.util.List;
-
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.mapper.InstalledBaseMapper.toExample;
-import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
 
 @Service
 public class InstalledBaseService {
@@ -25,7 +26,7 @@ public class InstalledBaseService {
 		final var matches = repository.findAll(toExample(parameters), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		// If page larger than last page is requested, a empty list is returned otherwise the current page
-		List<InstalledBaseItem> installedBase = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInstalledBaseItems(matches.getContent());
+		final List<InstalledBaseItem> installedBase = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInstalledBaseItems(matches.getContent());
 
 		return InstalledBaseResponse.create()
 			.withMetaData(MetaData.create()

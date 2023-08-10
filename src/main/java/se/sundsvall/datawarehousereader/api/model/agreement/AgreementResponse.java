@@ -1,14 +1,15 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 import java.util.List;
 import java.util.Objects;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.api.model.MetaData;
 
 @Schema(description = "Agreement response model")
 public class AgreementResponse {
@@ -23,7 +24,7 @@ public class AgreementResponse {
 	public static AgreementResponse create() {
 		return new AgreementResponse();
 	}
-	
+
 	public MetaData getMetaData() {
 		return metaData;
 	}
@@ -40,7 +41,7 @@ public class AgreementResponse {
 	public List<Agreement> getAgreements() {
 		return agreements;
 	}
-	
+
 	public void setAgreements(List<Agreement> agreements) {
 		this.agreements = agreements;
 	}
@@ -57,22 +58,25 @@ public class AgreementResponse {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		AgreementResponse other = (AgreementResponse) obj;
+		}
+		final AgreementResponse other = (AgreementResponse) obj;
 		return Objects.equals(agreements, other.agreements) && Objects.equals(metaData, other.metaData);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("AgreementResponse [metaData=").append(metaData).append(", agreements=").append(agreements)
-				.append("]");
+			.append("]");
 		return builder.toString();
 	}
-	
+
 }

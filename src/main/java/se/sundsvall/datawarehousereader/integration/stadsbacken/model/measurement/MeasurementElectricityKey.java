@@ -6,12 +6,13 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MeasurementElectricityKey implements Serializable {
+
 	private static final long serialVersionUID = -1348815619727439020L;
 
 	private String customerOrgId;
 
 	private String facilityId;
-	
+
 	private String feedType;
 
 	private String unit;
@@ -85,26 +86,29 @@ public class MeasurementElectricityKey implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		MeasurementElectricityKey other = (MeasurementElectricityKey) obj;
+		}
+		final MeasurementElectricityKey other = (MeasurementElectricityKey) obj;
 		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId)
-				&& Objects.equals(feedType, other.feedType) && Objects.equals(interpolation, other.interpolation)
-				&& Objects.equals(measurementTimestamp, other.measurementTimestamp) && Objects.equals(unit, other.unit)
-				&& Objects.equals(usage, other.usage);
+			&& Objects.equals(feedType, other.feedType) && Objects.equals(interpolation, other.interpolation)
+			&& Objects.equals(measurementTimestamp, other.measurementTimestamp) && Objects.equals(unit, other.unit)
+			&& Objects.equals(usage, other.usage);
 	}
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("MeasurementElectricityKey [customerOrgId=").append(customerOrgId).append(", facilityId=")
-				.append(facilityId).append(", feedType=").append(feedType).append(", unit=").append(unit)
-				.append(", usage=").append(usage).append(", interpolation=").append(interpolation)
-				.append(", measurementTimestamp=").append(measurementTimestamp).append("]");
+			.append(facilityId).append(", feedType=").append(feedType).append(", unit=").append(unit)
+			.append(", usage=").append(usage).append(", interpolation=").append(interpolation)
+			.append(", measurementTimestamp=").append(measurementTimestamp).append("]");
 		return builder.toString();
 	}
 }

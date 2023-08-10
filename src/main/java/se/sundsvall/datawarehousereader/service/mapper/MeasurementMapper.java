@@ -42,7 +42,7 @@ public class MeasurementMapper {
 	}
 
 	public static Measurement decorateMeasurement(Measurement measurement, String partyId, Aggregation aggregation, Category category) {
-		return measurement.getPartyId() == null && StringUtils.isNotEmpty(partyId) ? measurement.withPartyId(partyId).withAggregatedOn(aggregation).withCategory(category) : measurement.withAggregatedOn(aggregation).withCategory(category);
+		return (measurement.getPartyId() == null) && StringUtils.isNotEmpty(partyId) ? measurement.withPartyId(partyId).withAggregatedOn(aggregation).withCategory(category) : measurement.withAggregatedOn(aggregation).withCategory(category);
 	}
 
 	public static MeasurementResponse toMeasurementResponse(MeasurementParameters parameters, int totalPages, long totalElements, List<Measurement> measurements) {

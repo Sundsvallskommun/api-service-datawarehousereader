@@ -18,8 +18,9 @@ import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 
 @Service
 public class MeasurementService {
+
 	private static final String CATEGORY_NOT_IMPLEMENTED = "category '%s'";
-	
+
 	@Autowired
 	private DistrictHeatingMeasurementProvider districtHeatingMeasurementProvider;
 
@@ -28,11 +29,11 @@ public class MeasurementService {
 
 	@Autowired
 	private PartyProvider partyProvider;
-	
+
 	public MeasurementResponse getMeasurements(Category category, Aggregation aggregateOn, MeasurementParameters parameters) {
-		var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyProvider::translateToLegalId).orElse(null);
-		var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
-		var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
+		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyProvider::translateToLegalId).orElse(null);
+		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
+		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 
 		return switch (category) {
 			case DISTRICT_HEATING -> districtHeatingMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);

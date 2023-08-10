@@ -241,7 +241,9 @@ public class CustomerDetails {
 
 	@Override
 	public String toString() {
-		return "CustomerDetails{" + "customerOrgNumber='" + customerOrgNumber + '\'' + ", partyId='" + partyId + '\'' + ", customerNumber='" + customerNumber + '\'' + ", customerName='" + customerName + '\'' + ", street='" + street + '\'' + ", postalCode='" + postalCode + '\'' + ", city='" + city + '\'' + ", careOf='" + careOf + '\'' + ", phoneNumbers=" + phoneNumbers + ", emails=" + emails + ", customerCategoryID=" + customerCategoryID + ", customerCategoryDescription='" + customerCategoryDescription + '\'' + ", customerChangedFlg=" + customerChangedFlg + ", installedChangedFlg=" + installedChangedFlg + '}';
+		return "CustomerDetails{" + "customerOrgNumber='" + customerOrgNumber + '\'' + ", partyId='" + partyId + '\'' + ", customerNumber='" + customerNumber + '\'' + ", customerName='" + customerName + '\'' + ", street='" + street + '\''
+			+ ", postalCode='" + postalCode + '\'' + ", city='" + city + '\'' + ", careOf='" + careOf + '\'' + ", phoneNumbers=" + phoneNumbers + ", emails=" + emails + ", customerCategoryID=" + customerCategoryID + ", customerCategoryDescription='"
+			+ customerCategoryDescription + '\'' + ", customerChangedFlg=" + customerChangedFlg + ", installedChangedFlg=" + installedChangedFlg + '}';
 	}
 
 	@Override
@@ -249,11 +251,13 @@ public class CustomerDetails {
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if ((o == null) || (getClass() != o.getClass())) {
 			return false;
 		}
 		final CustomerDetails that = (CustomerDetails) o;
-		return customerCategoryID == that.customerCategoryID && customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(partyId, that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city) && Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription);
+		return (customerCategoryID == that.customerCategoryID) && (customerChangedFlg == that.customerChangedFlg) && (installedChangedFlg == that.installedChangedFlg) && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(partyId,
+			that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city)
+			&& Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription);
 	}
 
 	@Override

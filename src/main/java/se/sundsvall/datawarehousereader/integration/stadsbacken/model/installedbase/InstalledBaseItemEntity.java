@@ -1,5 +1,9 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
+
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -10,24 +14,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-
 @Entity
 @Table(schema = "kundinfo", name = "vInstalledBase")
 public class InstalledBaseItemEntity {
-	
+
 	@Id
 	@Column(name = "InternalId", nullable = false, insertable = false, updatable = false)
 	private Integer internalId;
-	
+
 	@Column(name = "customerid", nullable = false, insertable = false, updatable = false)
 	private Integer customerId;
-	
+
 	@Column(name = "Company", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String company;
-	
+
 	@Column(name = "Type", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String type;
 
@@ -36,7 +36,7 @@ public class InstalledBaseItemEntity {
 
 	@Column(name = "Street", insertable = false, updatable = false)
 	private String street;
-	
+
 	@Column(name = "FacilityId", insertable = false, updatable = false)
 	private String facilityId;
 
@@ -56,15 +56,16 @@ public class InstalledBaseItemEntity {
 	private LocalDate dateTo;
 
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(schema = "kundinfo", name = "vInstalledBaseMetadata", 
-		joinColumns = @JoinColumn(name = "internalId"), 
+	@CollectionTable(schema = "kundinfo",
+		name = "vInstalledBaseMetadata",
+		joinColumns = @JoinColumn(name = "internalId"),
 		foreignKey = @ForeignKey(name = "fk_installed_base_metadata_installed_base"))
 	private List<InstalledBaseItemMetaDataEmbeddable> metaData;
 
 	public static InstalledBaseItemEntity create() {
 		return new InstalledBaseItemEntity();
 	}
-	
+
 	public Integer getInternalId() {
 		return internalId;
 	}
@@ -220,7 +221,7 @@ public class InstalledBaseItemEntity {
 		this.dateTo = dateTo;
 		return this;
 	}
-	
+
 	public List<InstalledBaseItemMetaDataEmbeddable> getMetaData() {
 		return metaData;
 	}
@@ -241,13 +242,16 @@ public class InstalledBaseItemEntity {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
-		InstalledBaseItemEntity other = (InstalledBaseItemEntity) obj;
+		}
+		final InstalledBaseItemEntity other = (InstalledBaseItemEntity) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerId, other.customerId) && Objects.equals(dateFrom, other.dateFrom) && Objects.equals(dateTo,
 			other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(houseName, other.houseName) && Objects.equals(internalId, other.internalId) && Objects.equals(metaData, other.metaData) && Objects.equals(postCode,
 				other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
@@ -255,7 +259,7 @@ public class InstalledBaseItemEntity {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
+		final StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItemEntity [internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(careOf).append(", street=")
 			.append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom).append(", dateTo=").append(
 				dateTo).append(", metaData=").append(metaData).append("]");
