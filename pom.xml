@@ -15,7 +15,6 @@
 	<properties>
 		<!-- Pipeline properties -->
 		<docker.image.name>ms-datawarehousereader</docker.image.name>
-		<published.container.port.sandbox>9093</published.container.port.sandbox>
 		<published.container.port.test>8792</published.container.port.test>
 		<published.container.port.production>9093</published.container.port.production>
 		<!-- Service properties -->
