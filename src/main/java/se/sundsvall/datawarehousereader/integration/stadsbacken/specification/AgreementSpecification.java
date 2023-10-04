@@ -66,4 +66,6 @@ public interface AgreementSpecification {
 	static Specification<AgreementEntity> withToDate(LocalDate date) {
 		return Objects.nonNull(date) ? BUILDER.buildDateFilter("toDate", null, date.atTime(LocalTime.MAX)) : (root, query, criteriaBuilder) -> criteriaBuilder.and();
 	}
+
+
 }

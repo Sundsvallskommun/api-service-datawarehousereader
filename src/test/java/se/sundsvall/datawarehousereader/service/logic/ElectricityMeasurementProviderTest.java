@@ -34,6 +34,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.zalando.problem.ThrowableProblem;
 
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
@@ -107,12 +108,20 @@ class ElectricityMeasurementProviderTest {
 				when(pageDayMock.getContent()).thenReturn(List.of(entityDayMock));
 				when(pageDayMock.getTotalElements()).thenReturn(1L);
 				when(pageDayMock.getTotalPages()).thenReturn(1);
+				when(pageDayMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageDayMock.getNumberOfElements()).thenReturn(1);
+				when(pageDayMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageDayMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case MONTH -> {
 				when(electricityMonthRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageMonthMock);
 				when(pageMonthMock.getContent()).thenReturn(List.of(entityMonthMock));
 				when(pageMonthMock.getTotalPages()).thenReturn(1);
 				when(pageMonthMock.getTotalElements()).thenReturn(1L);
+				when(pageMonthMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageMonthMock.getNumberOfElements()).thenReturn(1);
+				when(pageMonthMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageMonthMock.getSort()).thenReturn(searchParams.sort());
 			}
 			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
@@ -180,12 +189,20 @@ class ElectricityMeasurementProviderTest {
 				when(pageDayMock.getContent()).thenReturn(List.of(entityDayMock));
 				when(pageDayMock.getTotalElements()).thenReturn(2L);
 				when(pageDayMock.getTotalPages()).thenReturn(2);
+				when(pageDayMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageDayMock.getNumberOfElements()).thenReturn(1);
+				when(pageDayMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageDayMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case MONTH -> {
 				when(electricityMonthRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageMonthMock);
 				when(pageMonthMock.getContent()).thenReturn(List.of(entityMonthMock));
 				when(pageMonthMock.getTotalPages()).thenReturn(2);
 				when(pageMonthMock.getTotalElements()).thenReturn(2L);
+				when(pageMonthMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageMonthMock.getNumberOfElements()).thenReturn(1);
+				when(pageMonthMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageMonthMock.getSort()).thenReturn(searchParams.sort());
 			}
 			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
@@ -234,6 +251,9 @@ class ElectricityMeasurementProviderTest {
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {"YEAR"}, mode = EnumSource.Mode.EXCLUDE)
 	void testForPageLargerThanResultsMaxPage(Aggregation aggregateOn) {
+		final var searchParams = MeasurementParameters.create();
+		searchParams.setPage(101);
+		searchParams.setLimit(1);
 
 		switch (aggregateOn) {
 			case HOUR -> {
@@ -243,18 +263,23 @@ class ElectricityMeasurementProviderTest {
 				when(electricityDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
 				when(pageDayMock.getTotalElements()).thenReturn(2L);
 				when(pageDayMock.getTotalPages()).thenReturn(2);
+				when(pageDayMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageDayMock.getNumberOfElements()).thenReturn(0);
+				when(pageDayMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageDayMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case MONTH -> {
 				when(electricityMonthRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageMonthMock);
 				when(pageMonthMock.getTotalPages()).thenReturn(2);
 				when(pageMonthMock.getTotalElements()).thenReturn(2L);
+				when(pageMonthMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageMonthMock.getNumberOfElements()).thenReturn(0);
+				when(pageMonthMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageMonthMock.getSort()).thenReturn(searchParams.sort());
 			}
 			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
-		final var searchParams = MeasurementParameters.create();
-		searchParams.setPage(101);
-		searchParams.setLimit(1);
 		final var response = provider.getMeasurements(null, aggregateOn, START_DATE_TIME, END_DATE_TIME, searchParams);
 
 		switch (aggregateOn) {

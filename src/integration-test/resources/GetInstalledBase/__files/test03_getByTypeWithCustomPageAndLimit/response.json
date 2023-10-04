@@ -317,7 +317,6 @@
 		"page": 18,
 		"limit": 10,
 		"count": 10,
-		"sortDirection": "ASC",
 		"totalRecords": 180,
 		"totalPages": 18
 	}

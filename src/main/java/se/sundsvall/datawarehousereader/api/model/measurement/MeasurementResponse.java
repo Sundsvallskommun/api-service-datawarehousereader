@@ -1,22 +1,21 @@
 package se.sundsvall.datawarehousereader.api.model.measurement;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Schema(description = "Measurement response model")
 public class MeasurementResponse {
 
 	@JsonProperty("_meta")
-	@Schema(implementation = MetaData.class, accessMode = READ_ONLY)
-	private MetaData metaData;
+	@Schema(implementation = PagingAndSortingMetaData.class, accessMode = READ_ONLY)
+	private PagingAndSortingMetaData metaData;
 
 	@ArraySchema(schema = @Schema(implementation = Measurement.class, accessMode = READ_ONLY))
 	private List<Measurement> measurements;
@@ -25,15 +24,15 @@ public class MeasurementResponse {
 		return new MeasurementResponse();
 	}
 
-	public MetaData getMetaData() {
+	public PagingAndSortingMetaData getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(MetaData metaData) {
+	public void setMetaData(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 	}
 
-	public MeasurementResponse withMetaData(MetaData metaData) {
+	public MeasurementResponse withMetaData(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 		return this;
 	}

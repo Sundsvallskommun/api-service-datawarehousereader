@@ -1913,7 +1913,6 @@
 		"limit": 100,
 		"count": 100,
 		"totalRecords": 322,
-		"totalPages": 4,
-		"sortDirection": "ASC"
+		"totalPages": 4
 	}
 }

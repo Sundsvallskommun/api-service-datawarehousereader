@@ -19,7 +19,6 @@
 		"page": 1,
 		"limit": 100,
 		"count": 1,
-		"sortDirection": "ASC",
 		"totalRecords": 1,
 		"totalPages": 1
 	}

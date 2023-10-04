@@ -1902,7 +1902,6 @@
 		"limit": 100,
 		"count": 100,
 		"totalRecords": 142,
-		"totalPages": 2,
-		"sortDirection": "ASC"
+		"totalPages": 2
 	}
 }

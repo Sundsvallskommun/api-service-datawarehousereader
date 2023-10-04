@@ -22,6 +22,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Sort;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstalledBaseRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
@@ -48,12 +49,18 @@ class InstalledBaseServiceTest {
 
 	@Test
 	void testWithEmptyParameters() {
+		final var params = InstalledBaseParameters.create();
+
 		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 
-		final var response = service.getInstalledBase(InstalledBaseParameters.create());
+		final var response = service.getInstalledBase(params);
 
 		verify(repositoryMock).findAll(exampleCaptor.capture(), pageableCaptor.capture());
 
@@ -71,11 +78,6 @@ class InstalledBaseServiceTest {
 
 	@Test
 	void testWithAllParametersSet() {
-		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getContent()).thenReturn(List.of(entityMock));
-		when(pageMock.getTotalPages()).thenReturn(2);
-		when(pageMock.getTotalElements()).thenReturn(2L);
-
 		final var careOf = "careOf";
 		final var city = "city";
 		final var company = "company";
@@ -97,6 +99,16 @@ class InstalledBaseServiceTest {
 		params.setPostCode(postCode);
 		params.setStreet(street);
 		params.setType(type);
+
+		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(pageMock.getContent()).thenReturn(List.of(entityMock));
+		when(pageMock.getTotalPages()).thenReturn(2);
+		when(pageMock.getTotalElements()).thenReturn(2L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
+
 
 		final var response = service.getInstalledBase(params);
 		verify(repositoryMock).findAll(exampleCaptor.capture(), pageableCaptor.capture());
@@ -125,12 +137,17 @@ class InstalledBaseServiceTest {
 
 	@Test
 	void testForPageLargerThanResultsMaxPage() {
+		final var params = InstalledBaseParameters.create();
+		params.setPage(2);
+
 		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(0);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 
-		final var params = InstalledBaseParameters.create();
-		params.setPage(2);
 		final var response = service.getInstalledBase(params);
 
 		verify(repositoryMock).findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class));

@@ -9,14 +9,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 @Schema(description = "Customer engagement response model")
 public class CustomerEngagementResponse {
 
 	@JsonProperty("_meta")
-	@Schema(implementation = MetaData.class, accessMode = READ_ONLY)
-	private MetaData metaData;
+	@Schema(implementation = PagingAndSortingMetaData.class, accessMode = READ_ONLY)
+	private PagingAndSortingMetaData metaData;
 
 	@ArraySchema(schema = @Schema(implementation = CustomerEngagement.class, accessMode = READ_ONLY))
 	private List<CustomerEngagement> customerEngagements;
@@ -25,15 +25,15 @@ public class CustomerEngagementResponse {
 		return new CustomerEngagementResponse();
 	}
 
-	public MetaData getMetaData() {
+	public PagingAndSortingMetaData getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(MetaData metaData) {
+	public void setMetaData(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 	}
 
-	public CustomerEngagementResponse withMetaData(MetaData metaData) {
+	public CustomerEngagementResponse withMetaData(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 		return this;
 	}

@@ -1,26 +1,6 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
-import static generated.se.sundsvall.party.PartyType.PRIVATE;
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.sort;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
-
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Stream;
-
+import generated.se.sundsvall.party.PartyType;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -37,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
@@ -48,7 +27,26 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 
-import generated.se.sundsvall.party.PartyType;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Stream;
+
+import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
+import static generated.se.sundsvall.party.PartyType.PRIVATE;
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.domain.Sort.sort;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -91,15 +89,22 @@ class CustomerServiceTest {
 	@ParameterizedTest
 	@MethodSource("toCustomerTypesStreamArguments")
 	void testGetEngagementsWithEmptyParameters(CustomerType customerType, PartyType partyType) {
+
+		final var params = CustomerEngagementParameters.create();
+
 		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
 		when(entityMock.getCustomerOrgId()).thenReturn("customerOrgId");
+		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 		when(partyProviderMock.translateToPartyId(eq(partyType), any())).thenReturn(RANDOM_UUID);
 
-		final var response = service.getCustomerEngagements(CustomerEngagementParameters.create());
+		final var response = service.getCustomerEngagements(params);
 
 		verify(partyProviderMock).translateToPartyId(eq(partyType), any());
 		verify(repositoryMock).findAllByParameters(customerParameterCaptor.capture(), customerOrgIdsCaptor.capture(), pageableCaptor.capture());
@@ -121,7 +126,6 @@ class CustomerServiceTest {
 		final var randomUUID = UUID.randomUUID().toString();
 
 		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
-
 		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
 			CustomerDetailsEntity.create()
 				.withCustomerOrgId("102000-0000")
@@ -200,7 +204,6 @@ class CustomerServiceTest {
 	@Test
 	void testGetDetailsWithoutPartyId() {
 		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenThrow(Problem.valueOf(Status.NOT_FOUND, "Party not found"));
-
 		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
 			CustomerDetailsEntity.create()
 				.withCustomerOrgId("102000-0000")
@@ -357,20 +360,25 @@ class CustomerServiceTest {
 		final var page = 2;
 		final var params = CustomerEngagementParameters.create();
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getContent()).thenReturn(List.of(entityMock));
-		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
-		when(entityMock.getCustomerOrgId()).thenReturn(legalId);
-		when(pageMock.getTotalPages()).thenReturn(2);
-		when(pageMock.getTotalElements()).thenReturn(2L);
-		when(partyProviderMock.translateToLegalId(partyId)).thenReturn(legalId);
-
 		params.setCustomerNumber(customerNumber);
 		params.setPartyId(List.of(partyId));
 		params.setLimit(limit);
 		params.setOrganizationNumber(organizationNumber);
 		params.setOrganizationName(organizationName);
 		params.setPage(page);
+
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(pageMock.getContent()).thenReturn(List.of(entityMock));
+		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
+		when(entityMock.getCustomerOrgId()).thenReturn(legalId);
+		when(pageMock.getTotalPages()).thenReturn(2);
+		when(pageMock.getTotalElements()).thenReturn(2L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
+		when(partyProviderMock.translateToLegalId(partyId)).thenReturn(legalId);
+
 
 		final var response = service.getCustomerEngagements(params);
 
@@ -404,8 +412,12 @@ class CustomerServiceTest {
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
 		when(entityMock.getCustomerOrgId()).thenReturn(null); // Just to show that this is the important prerequisite for this test.
-		when(pageMock.getTotalPages()).thenReturn(2);
-		when(pageMock.getTotalElements()).thenReturn(2L);
+		when(pageMock.getTotalPages()).thenReturn(1);
+		when(pageMock.getTotalElements()).thenReturn(0L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(0);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 
 		service.getCustomerEngagements(params);
 
@@ -421,12 +433,17 @@ class CustomerServiceTest {
 
 	@Test
 	void testGetEngagementsForPageLargerThanResultsMaxPage() {
+		final var params = CustomerEngagementParameters.create();
+		params.setPage(2);
+
 		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(0);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 
-		final var params = CustomerEngagementParameters.create();
-		params.setPage(2);
 		final var response = service.getCustomerEngagements(params);
 
 		verify(repositoryMock).findAllByParameters(any(), any(), any());

@@ -1,22 +1,21 @@
 package se.sundsvall.datawarehousereader.api.model.customer;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
+import se.sundsvall.dept44.common.validators.annotation.ValidOrganizationNumber;
+import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-import se.sundsvall.dept44.common.validators.annotation.ValidOrganizationNumber;
-import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-
 @Schema(description = "Customer details request parameters model")
-public class CustomerDetailsParameters extends AbstractParameterBase {
+@ValidSortByProperty(CustomerDetailsEntity.class)
+public class CustomerDetailsParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ArraySchema(schema = @Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1"))
 	private List<@ValidUuid String> partyId;

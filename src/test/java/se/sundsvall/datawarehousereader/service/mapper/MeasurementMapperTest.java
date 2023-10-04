@@ -5,7 +5,6 @@ import static org.assertj.core.groups.Tuple.tuple;
 import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.DAY;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.MONTH;
-import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.toMeasurementResponse;
 import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.toMeasurements;
 import static se.sundsvall.dept44.util.DateUtils.toOffsetDateTimeWithLocalOffset;
 
@@ -15,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Sort.Direction;
 
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
@@ -46,7 +44,7 @@ class MeasurementMapperTest {
 	}
 
 	@Test
-	void toMeasurments() {
+	void toMeasurementsTest() {
 		final var entity = createEntity();
 
 		final var searchParams = MeasurementParameters.create();
@@ -78,33 +76,6 @@ class MeasurementMapperTest {
 				USAGE,
 				toOffsetDateTimeWithLocalOffset(TIME_STAMP_LOCAL_DATE_TIME),
 				null));
-	}
-
-	@Test
-	void testToMeasurementResponse() {
-		final var page = 5;
-		final var limit = 10;
-		final var sortBy = List.of("sortBy");
-		final var sortDirection = Direction.DESC;
-		final var parameters = MeasurementParameters.create();
-		final var totalPages = 20;
-		final var totalElements = 200;
-		parameters.setPage(page);
-		parameters.setLimit(limit);
-		parameters.setSortBy(sortBy);
-		parameters.setSortDirection(sortDirection);
-		final var measurements = toMeasurements(List.of(createEntity()), parameters, AGGREGATION_MONTH, CATEGORY_ELECTRICITY);
-
-		final var result = toMeasurementResponse(parameters, totalPages, totalElements, measurements);
-
-		assertThat(result.getMetaData().getPage()).isEqualTo(page);
-		assertThat(result.getMetaData().getLimit()).isEqualTo(limit);
-		assertThat(result.getMetaData().getSortBy()).isEqualTo(sortBy);
-		assertThat(result.getMetaData().getSortDirection()).isEqualTo(sortDirection);
-		assertThat(result.getMetaData().getTotalPages()).isEqualTo(totalPages);
-		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(totalElements);
-		assertThat(result.getMeasurements()).isEqualTo(measurements);
-		assertThat(result.getMetaData().getCount()).isEqualTo(measurements.size());
 	}
 
 	private MeasurementElectricityMonthEntity createEntity() {

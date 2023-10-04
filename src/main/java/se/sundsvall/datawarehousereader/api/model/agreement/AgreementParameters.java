@@ -1,19 +1,21 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.datawarehousereader.api.model.Category;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
+import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-import se.sundsvall.datawarehousereader.api.model.Category;
-import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
 @Schema(description = "Agreement request parameters model")
-public class AgreementParameters extends AbstractParameterBase {
+@ValidSortByProperty(AgreementEntity.class)
+public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ValidUuid(nullable = true)
 	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1")

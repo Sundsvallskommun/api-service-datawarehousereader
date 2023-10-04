@@ -1,13 +1,5 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
-import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.toMeasurementResponse;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
@@ -16,7 +8,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
@@ -26,6 +17,14 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementElect
 import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementElectricityMonthRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityHourEntity;
 import se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 
 @Component
 public class ElectricityMeasurementProvider {
@@ -54,7 +53,9 @@ public class ElectricityMeasurementProvider {
 		// If requested page is larger than last page, an empty list is returned otherwise the requested page
 		final List<Measurement> measurements = pagedMatches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : MeasurementMapper.toMeasurements(pagedMatches.getContent(), parameters, aggregateOn, ELECTRICITY);
 
-		return toMeasurementResponse(parameters, pagedMatches.getTotalPages(), pagedMatches.getTotalElements(), measurements);
+		return MeasurementResponse.create()
+			.withMeasurements(measurements)
+			.withMetaData(PagingAndSortingMetaData.create().withPageData(pagedMatches));
 	}
 
 	private Page<MeasurementElectricityHourEntity> handleHourMeasurementRequest(String legalId, LocalDateTime fromDateTime, LocalDateTime toDateTime, MeasurementParameters parameters) {

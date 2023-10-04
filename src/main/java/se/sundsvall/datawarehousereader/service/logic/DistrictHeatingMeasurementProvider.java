@@ -1,22 +1,10 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
-import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.decorateMeasurement;
-import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.toMeasurementResponse;
-
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementMetaData;
@@ -30,6 +18,17 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measuremen
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingHourEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingMonthEntity;
 import se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
+import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.decorateMeasurement;
 
 @Component
 public class DistrictHeatingMeasurementProvider {
@@ -60,7 +59,9 @@ public class DistrictHeatingMeasurementProvider {
 		// If page larger than last page is requested, an empty list is returned otherwise the current page
 		final List<Measurement> measurements = matches.getTotalPages() < searchParams.getPage() ? Collections.emptyList() : toMeasurements(matches.getContent(), searchParams, aggregation);
 
-		return toMeasurementResponse(searchParams, matches.getTotalPages(), matches.getTotalElements(), measurements);
+		return MeasurementResponse.create()
+			.withMeasurements(measurements)
+			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches));
 	}
 
 	private List<Measurement> toMeasurements(List<? extends DefaultMeasurementAttributesInterface> entities, MeasurementParameters searchParams, Aggregation aggregation) {

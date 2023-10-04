@@ -11,10 +11,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 
 import java.time.LocalDate;
+import java.util.Random;
 
+import com.google.code.beanmatchers.BeanMatchers;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class AgreementTest {
+
+	@BeforeAll
+	static void setup() {
+		BeanMatchers.registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
+	}
 
 	@Test
 	void testBean() {
