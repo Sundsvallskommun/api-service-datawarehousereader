@@ -56,6 +56,9 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate toDate;
 
+	@Schema(description = "Shows if agreement is active ('fromDate' <= today and 'toDate' => today). Null shows both active and inactive", example = "true", nullable = true)
+	private Boolean active;
+
 	public static AgreementParameters create() {
 		return new AgreementParameters();
 	}
@@ -216,6 +219,19 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 		return this;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public AgreementParameters withActive(Boolean active) {
+		this.active = active;
+		return this;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -232,21 +248,36 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 			Objects.equals(customerNumber, that.customerNumber) && Objects.equals(facilityId, that.facilityId) &&
 			Objects.equals(category, that.category) && Objects.equals(billingId, that.billingId) && Objects.equals(agreementId, that.agreementId) &&
 			Objects.equals(description, that.description) && Objects.equals(bindingRule, that.bindingRule) &&
-			Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate);
+			Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate) && Objects.equals(active, that.active);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(super.hashCode(), partyId, customerNumber, facilityId, category, billingId, agreementId, description,
-			mainAgreement, binding, bindingRule, fromDate, toDate);
+			mainAgreement, binding, bindingRule, fromDate, toDate, active);
 	}
 
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("AgreementParameters [partyId=").append(partyId).append(", customerNumber=").append(customerNumber).append(", facilityId=").append(facilityId).append(", category=").append(category).append(", billingId=").append(billingId)
-			.append(", agreementId=").append(agreementId).append(", description=").append(description).append(", mainAgreement=").append(mainAgreement).append(", binding=").append(binding).append(", bindingRule=").append(bindingRule).append(
-				", fromDate=").append(fromDate).append(", toDate=").append(toDate).append(", page=").append(page).append(", limit=").append(limit).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");
+		builder.append("AgreementParameters [partyId=").append(partyId)
+			.append(", customerNumber=").append(customerNumber)
+			.append(", facilityId=").append(facilityId)
+			.append(", category=").append(category)
+			.append(", billingId=").append(billingId)
+			.append(", agreementId=").append(agreementId)
+			.append(", description=").append(description)
+			.append(", mainAgreement=").append(mainAgreement)
+			.append(", binding=").append(binding)
+			.append(", bindingRule=").append(bindingRule)
+			.append(", fromDate=").append(fromDate)
+			.append(", toDate=").append(toDate)
+			.append(", active=").append(active)
+			.append(", page=").append(page)
+			.append(", limit=").append(limit)
+			.append(", sortBy=").append(sortBy)
+			.append(", sortDirection=").append(sortDirection)
+			.append("]");
 		return builder.toString();
 	}
 

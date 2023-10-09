@@ -13,6 +13,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
+
 @Schema(description = "Customer details request parameters model")
 @ValidSortByProperty(CustomerDetailsEntity.class)
 public class CustomerDetailsParameters extends AbstractParameterPagingAndSortingBase {

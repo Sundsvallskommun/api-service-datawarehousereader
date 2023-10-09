@@ -12,7 +12,8 @@
 			"binding": false,
 			"bindingRule": "Fastpris 2 år",
 			"fromDate": "2022-01-01",
-			"toDate": "2022-07-01"
+			"toDate": "2022-07-01",
+			"active": false
 		}
 	],
 	"_meta": {

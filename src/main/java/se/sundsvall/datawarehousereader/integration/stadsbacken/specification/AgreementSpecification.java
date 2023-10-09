@@ -9,8 +9,10 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 
+import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
+import static org.springframework.data.jpa.domain.Specification.*;
 
 public interface AgreementSpecification {
 
@@ -67,5 +69,17 @@ public interface AgreementSpecification {
 		return Objects.nonNull(date) ? BUILDER.buildDateFilter("toDate", null, date.atTime(LocalTime.MAX)) : (root, query, criteriaBuilder) -> criteriaBuilder.and();
 	}
 
+	static Specification<AgreementEntity> withActive(Boolean active) {
+		if(Objects.isNull(active)) {
+			return (root, query, criteriaBuilder) -> criteriaBuilder.and();
+		} else {
+			return TRUE.equals(active) ? isActive() : not(isActive());
+		}
+	}
 
+	static Specification<AgreementEntity> isActive() {
+		return BUILDER.buildDateFilter("fromDate", null, LocalDate.now().atTime(LocalTime.MAX))
+			.and((entity, cq, cb) ->
+				cb.or(cb.isNull(entity.get("toDate")), cb.greaterThanOrEqualTo(entity.get("toDate"), LocalDate.now().atStartOfDay())));
+	}
 }

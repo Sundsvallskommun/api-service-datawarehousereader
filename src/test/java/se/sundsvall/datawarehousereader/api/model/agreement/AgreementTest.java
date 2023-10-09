@@ -48,6 +48,7 @@ class AgreementTest {
 		final var bindingRule = "bindingRule";
 		final var fromDate = LocalDate.now().minusMonths(10L);
 		final var toDate = LocalDate.now();
+		final var active = Boolean.TRUE;
 
 		final var agreement = Agreement.create()
 			.withCustomerNumber(customerNumber)
@@ -61,7 +62,8 @@ class AgreementTest {
 			.withBinding(binding)
 			.withBindingRule(bindingRule)
 			.withFromDate(fromDate)
-			.withToDate(toDate);
+			.withToDate(toDate)
+			.withActive(active);
 
 		assertThat(agreement.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(agreement.getPartyId()).isEqualTo(partyId);
@@ -75,6 +77,7 @@ class AgreementTest {
 		assertThat(agreement.getBindingRule()).isEqualTo(bindingRule);
 		assertThat(agreement.getFromDate()).isEqualTo(fromDate);
 		assertThat(agreement.getToDate()).isEqualTo(toDate);
+		assertThat(agreement.getActive()).isEqualTo(active);
 	}
 
 	@Test

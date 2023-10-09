@@ -7,6 +7,7 @@ import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -76,7 +77,8 @@ class AgreementMapperTest {
 				Agreement::getFromDate,
 				Agreement::getToDate,
 				Agreement::getDescription,
-				Agreement::getFacilityId)
+				Agreement::getFacilityId,
+				Agreement::getActive)
 			.containsExactly(tuple(
 				valueOf(CUSTOMER_ID),
 				PARTY_ID,
@@ -89,6 +91,75 @@ class AgreementMapperTest {
 				FROM_DATE,
 				TO_DATE,
 				DESCRIPTION,
-				FACILITY_ID));
+				FACILITY_ID,
+				true));
+	}
+
+	@Test
+	void toAgreementsActiveWithToDateNull() {
+		final var fromDate = LocalDate.now();
+
+		final var entity = AgreementEntity.create()
+			.withFromDate(fromDate.atTime(LocalTime.MAX))
+			.withToDate(null);
+
+		final var result = toAgreements(List.of(entity));
+
+		assertThat(result)
+			.hasSize(1)
+			.extracting(
+				Agreement::getFromDate,
+				Agreement::getToDate,
+				Agreement::getActive)
+			.containsExactly(tuple(
+					fromDate,
+				null,
+				true));
+	}
+
+	@Test
+	void toAgreementsActiveWithToDateInFuture() {
+		final var fromDate = LocalDate.now();
+		final var toDate = LocalDate.now().plusDays(1);
+
+		final var entity = AgreementEntity.create()
+			.withFromDate(fromDate.atTime(LocalTime.MAX))
+			.withToDate(toDate.atStartOfDay());
+
+		final var result = toAgreements(List.of(entity));
+
+		assertThat(result)
+			.hasSize(1)
+			.extracting(
+				Agreement::getFromDate,
+				Agreement::getToDate,
+				Agreement::getActive)
+			.containsExactly(tuple(
+				fromDate,
+				toDate,
+				true));
+	}
+
+	@Test
+	void toAgreementsActiveWithToDateInThePast() {
+		final var fromDate = LocalDate.now().minusDays(2);
+		final var toDate = LocalDate.now().minusDays(1);
+
+		final var entity = AgreementEntity.create()
+			.withFromDate(fromDate.atTime(LocalTime.MAX))
+			.withToDate(toDate.atStartOfDay());
+
+		final var result = toAgreements(List.of(entity));
+
+		assertThat(result)
+			.hasSize(1)
+			.extracting(
+				Agreement::getFromDate,
+				Agreement::getToDate,
+				Agreement::getActive)
+			.containsExactly(tuple(
+				fromDate,
+				toDate,
+				false));
 	}
 }

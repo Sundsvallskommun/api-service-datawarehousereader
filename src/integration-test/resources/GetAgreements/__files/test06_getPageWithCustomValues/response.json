@@ -10,7 +10,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2017-01-01"
+			"fromDate": "2017-01-01",
+			"active": true
 		}
 	],
 	"_meta": {

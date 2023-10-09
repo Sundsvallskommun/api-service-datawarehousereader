@@ -10,7 +10,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2016-10-14"
+			"fromDate": "2016-10-14",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -22,7 +23,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2016-10-25"
+			"fromDate": "2016-10-25",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -34,7 +36,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2016-11-02"
+			"fromDate": "2016-11-02",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -46,7 +49,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2017-01-01"
+			"fromDate": "2017-01-01",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -58,7 +62,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2017-01-04"
+			"fromDate": "2017-01-04",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -70,7 +75,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2017-03-01"
+			"fromDate": "2017-03-01",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -82,7 +88,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2017-06-01"
+			"fromDate": "2017-06-01",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -94,7 +101,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2017-08-16"
+			"fromDate": "2017-08-16",
+			"active": true
 		},
 		{
 			"partyId": "65E78C52-B2E1-42DD-8D42-828A94E5BAFF",
@@ -106,7 +114,8 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "1950-01-01"
+			"fromDate": "1950-01-01",
+			"active": true
 		}
 	],
 	"_meta": {
