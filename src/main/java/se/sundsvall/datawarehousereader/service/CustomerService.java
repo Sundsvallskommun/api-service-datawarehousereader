@@ -107,7 +107,6 @@ public class CustomerService {
 		if (isNotBlank(parameters.getCustomerEngagementOrgId())) {
 			customerDetails = customerDetails.stream()
 				.filter(details -> removeHyphen(parameters.getCustomerEngagementOrgId()).equals(removeHyphen(details.getCustomerOrgNumber())))
-				//.filter(details -> parameters.getCustomerEngagementOrgId().equals(details.getCustomerOrgNumber()))
 				.toList();
 		}
 
