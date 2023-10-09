@@ -1,0 +1,19 @@
+{
+	"name": "api-party-private-partyId",
+	"priority": 1000,
+	"request": {
+		"method": "GET",
+		"urlPathPattern": "/api-party/PRIVATE/[0-9]+/partyId",
+		"headers": {
+			"Authorization": {
+				"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"
+			}
+		}
+	},
+	"response": {
+		"headers": {
+			"Content-Type": "text/plain"
+		},
+		"status": 404
+	}
+}

@@ -1,0 +1,28 @@
+{
+  "customerDetails": [
+    {
+      "partyId": "10e69eb7-3cb4-442f-8cdb-2e998080dbb1",
+      "customerNumber": "123410",
+      "customerName": "Test Testorsson",
+      "street": "Testvägen60",
+      "postalCode": "85234",
+      "city": "Sundsvall",
+      "phoneNumbers": [
+        "+46761234567"
+      ],
+      "emails": [],
+      "customerCategoryID": 1,
+      "customerCategoryDescription": "Privatperson",
+      "customerChangedFlg": false,
+      "installedChangedFlg": true
+    }
+  ],
+  "_meta": {
+    "page": 1,
+    "limit": 100,
+    "count": 1,
+    "totalRecords": 1,
+    "totalPages": 1,
+    "sortDirection": "ASC"
+  }
+}

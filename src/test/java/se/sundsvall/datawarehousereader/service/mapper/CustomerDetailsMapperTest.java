@@ -15,8 +15,8 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 class CustomerDetailsMapperTest {
 
 	@Test
-	void toCustomerDetailsWithNull() {
-		assertThat(toCustomerDetails(null)).isEmpty();
+	void toCustomerDetailsWithNullList() {
+		assertThat(toCustomerDetails((List<CustomerDetailsEntity>) null)).isEmpty();
 	}
 
 	@Test
@@ -26,7 +26,6 @@ class CustomerDetailsMapperTest {
 
 	@Test
 	void toDetails() {
-
 		final var entity = CustomerDetailsEntity.create()
 			.withCustomerOrgId("customerOrgId")
 			.withCustomerId(1)

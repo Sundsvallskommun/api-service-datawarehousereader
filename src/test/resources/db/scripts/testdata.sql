@@ -4456,7 +4456,7 @@ INSERT INTO kundinfo.vAgreements (uuid,customerorgid,customerId,facilityId,categ
 	 (N'7B07AE3C-E51C-48E9-90E5-DAC8F1369B61',N'197412312345',649901,N'735999109124504015',N'El',2052508,46939,N'Fastpris 2 år',N'true',N'false',NULL,'1950-01-01 00:00:00.0',NULL),
 	 (N'7B07AE3C-E51C-48E9-90E5-DAC8F1369B61',N'197412312345',633630,N'735999109232307027',N'El',2047778,42590,N'Fastpris 2 år',N'true',N'false',NULL,'2017-05-16 00:00:00.0',NULL);
 INSERT INTO kundinfo.vCustomerDetails (customerId, customerOrgId, customerCategoryID, customerCategoryDescription, name, "c/o", address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg) VALUES
-    (123456,'19990101-1234',2,N'Företag','Test Testorsson','c/o Testorsson',N'Testvägen10 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1),
+    (123456,'102000-0000',2,N'Företag','Test Testorsson','c/o Testorsson',N'Testvägen10 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1),
     (123457,'20000101-1234',1,'Privatperson','Test Testorsson',NULL,N'Testvägen21',85234,'Sundsvall','+46761234567','+46761234567',NULL,'test@sundsvall.com','test2@sundsvall.com',0,1),
     (123458,'20010101-1234',1,'Privatperson','Test Testorsson',NULL,N'Testvägen2',85234,'Sundsvall','+46761234567',NULL,NULL,'test@sundsvall.com','test2@sundsvall.com',1,0),
     (123459,'20020101-1234',1,'Privatperson','Test Testorsson',NULL,N'Testvägen21 E',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,'test2@sundsvall.com',0,1),

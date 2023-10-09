@@ -1,0 +1,20 @@
+{
+	"name": "api-party-private-partyId",
+	"priority": 1,
+	"request": {
+		"method": "GET",
+		"urlPath": "/api-party/ENTERPRISE/1020000000/partyId",
+		"headers": {
+			"Authorization": {
+				"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"
+			}
+		}
+	},
+	"response": {
+		"headers": {
+			"Content-Type": "text/plain"
+		},
+		"status": 200,
+		"body": "37ab8d58-f142-4318-a888-9689ee2f3d86"
+	}
+}
