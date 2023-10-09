@@ -1,18 +1,20 @@
 package se.sundsvall.datawarehousereader.api.model.measurement;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
+import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
+
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
 @Schema(description = "Measurement request parameters model")
-public class MeasurementParameters extends AbstractParameterBase {
+@ValidSortByProperty(MeasurementElectricityDayEntity.class)
+public class MeasurementParameters extends AbstractParameterPagingAndSortingBase {
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("measurementTimestamp");
 

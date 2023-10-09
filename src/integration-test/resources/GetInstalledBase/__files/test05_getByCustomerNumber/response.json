@@ -234,7 +234,6 @@
 		"page": 1,
 		"limit": 100,
 		"count": 9,
-		"sortDirection": "ASC",
 		"totalRecords": 9,
 		"totalPages": 1
 	}

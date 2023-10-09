@@ -69,7 +69,7 @@ class InvoiceResourceFailuresTest {
 			.jsonPath("$.title").isEqualTo("Constraint Violation")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("limit")
-			.jsonPath("$.violations[0].message").isEqualTo("must be less than or equal to 1000");
+			.jsonPath("$.violations[0].message").isEqualTo("Page limit cannot be greater than 1000");
 
 		verifyNoInteractions(serviceMock);
 	}
@@ -139,8 +139,8 @@ class InvoiceResourceFailuresTest {
 	@Test
 	void getInvoicesNoValidSortBy() {
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-			.queryParam("sortBy", "not-valid-property")
-			.build())
+				.queryParam("sortBy", "not-valid-property")
+				.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -149,11 +149,11 @@ class InvoiceResourceFailuresTest {
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("invoiceParameters")
 			.jsonPath("$.violations[0].message").isEqualTo("""
-				One or more of the sortBy members [not-valid-property] are not valid. Valid properties to sort by are \
-				[invoiceNumber, invoiceDate, invoiceName, invoiceType, invoiceDescription, invoiceStatus, ocrNumber, \
-				dueDate, totalAmount, amountVatIncluded, amountVatExcluded, vatEligibleAmount, rounding, vat, reversedVat, \
-				currency, customerId, customerType, facilityId, organizationGroup, administration, organizationId, street, \
-				postCode, city, careOf, pdfAvailable].""");
+				One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are \
+				[invoiceName, ocrNumber, invoiceDescription, city, administration, dueDate, organizationId, customerType, \
+				street, invoiceNumber, customerId, invoiceType, currency, organizationGroup, facilityId, amountVatIncluded, \
+				vat, vatEligibleAmount, rounding, invoiceDate, totalAmount, reversedVat, pdfAvailable, careOf, postCode, \
+				invoiceStatus, amountVatExcluded].""");
 
 		verifyNoInteractions(serviceMock);
 	}

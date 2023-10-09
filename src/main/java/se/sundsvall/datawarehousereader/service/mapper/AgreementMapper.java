@@ -1,10 +1,12 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
 import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 import se.sundsvall.datawarehousereader.api.model.Category;
@@ -35,7 +37,14 @@ public class AgreementMapper {
 			.withMainAgreement(Boolean.valueOf(entity.getMainAgreement()))
 			.withFacilityId(entity.getFacilityId())
 			.withFromDate(toLocalDate(entity.getFromDate()))
-			.withToDate(toLocalDate(entity.getToDate()));
+			.withToDate(toLocalDate(entity.getToDate()))
+			.withActive(isActive(entity));
+	}
+
+	private static Boolean isActive(AgreementEntity entity) {
+		final var startDateHasOccurred = nonNull(entity.getFromDate()) && (entity.getFromDate().isBefore(LocalDate.now().atTime(LocalTime.MAX)) || entity.getFromDate().isEqual(LocalDate.now().atTime(LocalTime.MAX)));
+		final var endDateHasNotOccurred = ofNullable(entity.getToDate()).orElse(LocalDateTime.now()).isAfter(LocalDate.now().atStartOfDay()) || ofNullable(entity.getToDate()).orElse(LocalDateTime.now()).isEqual(LocalDate.now().atStartOfDay());
+		return startDateHasOccurred	&& endDateHasNotOccurred;
 	}
 
 	private static LocalDate toLocalDate(LocalDateTime localDateTime) {

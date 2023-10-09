@@ -4,7 +4,6 @@
 		"page": 1,
 		"limit": 100,
 		"count": 0,
-		"sortDirection": "ASC",
 		"totalRecords": 0,
 		"totalPages": 0
 	}

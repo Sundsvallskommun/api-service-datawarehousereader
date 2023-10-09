@@ -10,11 +10,9 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 
 import se.sundsvall.datawarehousereader.api.model.Category;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
-import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.DefaultMeasurementAttributesInterface;
 
 public class MeasurementMapper {
@@ -43,18 +41,5 @@ public class MeasurementMapper {
 
 	public static Measurement decorateMeasurement(Measurement measurement, String partyId, Aggregation aggregation, Category category) {
 		return (measurement.getPartyId() == null) && StringUtils.isNotEmpty(partyId) ? measurement.withPartyId(partyId).withAggregatedOn(aggregation).withCategory(category) : measurement.withAggregatedOn(aggregation).withCategory(category);
-	}
-
-	public static MeasurementResponse toMeasurementResponse(MeasurementParameters parameters, int totalPages, long totalElements, List<Measurement> measurements) {
-		return MeasurementResponse.create()
-			.withMeasurements(measurements)
-			.withMetaData(MetaData.create()
-				.withPage(parameters.getPage())
-				.withSortBy(parameters.getSortBy())
-				.withSortDirection(parameters.getSortDirection())
-				.withTotalPages(totalPages)
-				.withTotalRecords(totalElements)
-				.withCount(measurements.size())
-				.withLimit(parameters.getLimit()));
 	}
 }

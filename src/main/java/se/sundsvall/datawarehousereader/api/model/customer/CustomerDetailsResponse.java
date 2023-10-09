@@ -1,22 +1,21 @@
 package se.sundsvall.datawarehousereader.api.model.customer;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Schema(description = "Customer details response model")
 public class CustomerDetailsResponse {
 
 	@JsonProperty("_meta")
-	@Schema(implementation = MetaData.class, accessMode = READ_ONLY)
-	private MetaData metaData;
+	@Schema(implementation = PagingAndSortingMetaData.class, accessMode = READ_ONLY)
+	private PagingAndSortingMetaData metaData;
 
 	@ArraySchema(schema = @Schema(implementation = CustomerDetails.class, accessMode = READ_ONLY))
 	private List<CustomerDetails> customerDetails;
@@ -25,16 +24,16 @@ public class CustomerDetailsResponse {
 		return new CustomerDetailsResponse();
 	}
 
-	public CustomerDetailsResponse withMetadata(MetaData metaData) {
+	public CustomerDetailsResponse withMetadata(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 		return this;
 	}
 
-	public MetaData getMetaData() {
+	public PagingAndSortingMetaData getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(final MetaData metaData) {
+	public void setMetaData(final PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 	}
 

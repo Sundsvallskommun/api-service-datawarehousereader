@@ -1,22 +1,21 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Schema(description = "Agreement response model")
 public class AgreementResponse {
 
 	@JsonProperty("_meta")
-	@Schema(implementation = MetaData.class, accessMode = READ_ONLY)
-	private MetaData metaData;
+	@Schema(implementation = PagingAndSortingMetaData.class, accessMode = READ_ONLY)
+	private PagingAndSortingMetaData metaData;
 
 	@ArraySchema(schema = @Schema(implementation = Agreement.class, accessMode = READ_ONLY))
 	private List<Agreement> agreements;
@@ -25,15 +24,15 @@ public class AgreementResponse {
 		return new AgreementResponse();
 	}
 
-	public MetaData getMetaData() {
+	public PagingAndSortingMetaData getMetaData() {
 		return metaData;
 	}
 
-	public void setMetaData(MetaData metaData) {
+	public void setMetaData(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 	}
 
-	public AgreementResponse withMetaData(MetaData metaData) {
+	public AgreementResponse withMetaData(PagingAndSortingMetaData metaData) {
 		this.metaData = metaData;
 		return this;
 	}

@@ -1,5 +1,30 @@
 package se.sundsvall.datawarehousereader.service;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
+import se.sundsvall.datawarehousereader.api.model.CustomerType;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
+import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+import se.sundsvall.datawarehousereader.service.mapper.CustomerDetailsMapper;
+import se.sundsvall.dept44.common.validators.annotation.impl.ValidPersonalNumberConstraintValidator;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
@@ -11,31 +36,6 @@ import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toC
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
 
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.support.PagedListHolder;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Service;
-
-import se.sundsvall.datawarehousereader.api.model.CustomerType;
-import se.sundsvall.datawarehousereader.api.model.MetaData;
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
-import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
-import se.sundsvall.datawarehousereader.service.mapper.CustomerDetailsMapper;
-import se.sundsvall.dept44.common.validators.annotation.impl.ValidPersonalNumberConstraintValidator;
 
 @Service
 public class CustomerService {
@@ -67,14 +67,7 @@ public class CustomerService {
 		final List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
 
 		return CustomerEngagementResponse.create()
-			.withMetaData(MetaData.create()
-				.withPage(parameters.getPage())
-				.withSortBy(parameters.getSortBy())
-				.withSortDirection(parameters.getSortDirection())
-				.withTotalPages(matches.getTotalPages())
-				.withTotalRecords(matches.getTotalElements())
-				.withCount(customerEngagements.size())
-				.withLimit(parameters.getLimit()))
+			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches))
 			.withCustomerEngagements(customerEngagements);
 	}
 
@@ -114,14 +107,7 @@ public class CustomerService {
 		final var pagedResult = toPage(parameters, customerDetails);
 
 		return CustomerDetailsResponse.create()
-			.withMetadata(MetaData.create()
-				.withPage(parameters.getPage())
-				.withSortBy(parameters.getSortBy())
-				.withSortDirection(parameters.getSortDirection())
-				.withTotalPages(pagedResult.getTotalPages())
-				.withTotalRecords(pagedResult.getTotalElements())
-				.withCount(pagedResult.getContent().size())
-				.withLimit(parameters.getLimit()))
+			.withMetadata(PagingAndSortingMetaData.create().withPageData(pagedResult))
 			.withCustomerDetails(pagedResult.getContent());
 	}
 

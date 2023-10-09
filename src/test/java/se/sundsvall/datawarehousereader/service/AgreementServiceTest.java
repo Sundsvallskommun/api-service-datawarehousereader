@@ -23,6 +23,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import org.springframework.data.domain.Sort;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
@@ -55,6 +56,10 @@ class AgreementServiceTest {
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(100);
+		when(pageMock.getNumber()).thenReturn(0);
+		when(pageMock.getSort()).thenReturn(Sort.unsorted());
 
 		final var response = service.getAgreements(AgreementParameters.create());
 
@@ -96,6 +101,10 @@ class AgreementServiceTest {
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(2);
 		when(pageMock.getTotalElements()).thenReturn(2L);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(limit);
+		when(pageMock.getNumber()).thenReturn(page - 1);
+		when(pageMock.getSort()).thenReturn(Sort.unsorted());
 
 		final var response = service.getAgreements(params);
 
@@ -119,6 +128,10 @@ class AgreementServiceTest {
 		when(repositoryMock.findAllByParameters(any(), any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumberOfElements()).thenReturn(0);
+		when(pageMock.getSize()).thenReturn(100);
+		when(pageMock.getNumber()).thenReturn(1);
+		when(pageMock.getSort()).thenReturn(Sort.unsorted());
 
 		final var params = AgreementParameters.create();
 		params.setPage(2);

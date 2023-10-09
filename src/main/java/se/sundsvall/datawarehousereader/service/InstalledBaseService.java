@@ -1,20 +1,19 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.mapper.InstalledBaseMapper.toExample;
-import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
-
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import se.sundsvall.datawarehousereader.api.model.MetaData;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItem;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstalledBaseRepository;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import java.util.Collections;
+import java.util.List;
+
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.mapper.InstalledBaseMapper.toExample;
+import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
 
 @Service
 public class InstalledBaseService {
@@ -29,14 +28,7 @@ public class InstalledBaseService {
 		final List<InstalledBaseItem> installedBase = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInstalledBaseItems(matches.getContent());
 
 		return InstalledBaseResponse.create()
-			.withMetaData(MetaData.create()
-				.withPage(parameters.getPage())
-				.withSortBy(parameters.getSortBy())
-				.withSortDirection(parameters.getSortDirection())
-				.withTotalPages(matches.getTotalPages())
-				.withTotalRecords(matches.getTotalElements())
-				.withCount(installedBase.size())
-				.withLimit(parameters.getLimit()))
+			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches))
 			.withInstalledBase(installedBase);
 	}
 }

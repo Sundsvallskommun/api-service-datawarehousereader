@@ -261,4 +261,71 @@ class AgreementRepositoryTest {
 				tuple("B94F5BC6-7D29-443B-A055-C66851D3FD36", "198402012345", 632737, "735999109450512012", "El", 2046329, 41426, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2016, 11, 29, 0, 0, 0), LocalDateTime.of(2019, 9, 3, 0, 0,
 					0)));
 	}
+
+	@Test
+	void getActiveAgreements() {
+		final var page = repository.findAllByParameters(AgreementParameters.create().withCategory(List.of(DISTRICT_HEATING)).withActive(true), null,
+			PageRequest.of(0, 100));
+
+		assertThat(page.getNumber()).isZero();
+		assertThat(page.getNumberOfElements()).isEqualTo(11);
+		assertThat(page.getTotalPages()).isEqualTo(1);
+		assertThat(page.getTotalElements()).isEqualTo(11);
+		assertThat(page.getContent())
+			.hasSize(11)
+			.extracting(AgreementEntity::getUuid,
+				AgreementEntity::getCustomerOrgId,
+				AgreementEntity::getCustomerId,
+				AgreementEntity::getFacilityId,
+				AgreementEntity::getCategory,
+				AgreementEntity::getBillingId,
+				AgreementEntity::getAgreementId,
+				AgreementEntity::getDescription,
+				AgreementEntity::getMainAgreement,
+				AgreementEntity::getBinding,
+				AgreementEntity::getBindingRule,
+				AgreementEntity::getFromDate,
+				AgreementEntity::getToDate)
+			.containsExactlyInAnyOrder(
+				tuple("336EC35A-3335-4FA3-B792-60061222B0E9", "193807289012", 632096, "2455", "Fjärrvärme", 2045420, 40798, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2016, 10, 4, 0, 0), null),
+				tuple(null, "5568001234", 632258, "1396", "Fjärrvärme", 2045960, 41136, "Effektabonnemang lågspänning", "true", "false", null, LocalDateTime.of(2016, 10, 17, 0, 0), null),
+				tuple("15F2DC01-B351-4AFC-99C1-596BD7D404C6", "198402012346", 632752, "1277", "Fjärrvärme", 2046361, 41453, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2016, 12, 1, 0, 0), null),
+				tuple("53A17B25-0E65-487A-A435-ED52809C386C", "193702123456", 632819, "1981", "Fjärrvärme", 2046470, 41545, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 1, 1, 0, 0), null),
+				tuple("2412C4EB-63EB-4FEC-B8D2-14783E6508A1", "199505023456", 632947, "1773", "Fjärrvärme", 2046674, 41719, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 1, 12, 0, 0), null),
+				tuple("336EC35A-3335-4FA3-B792-60061222B0E9", "198905089012", 632067, "2392", "Fjärrvärme", 2045390, 40768, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2016, 6, 7, 0, 0), null),
+				tuple("E575A56F-A0A1-45EF-8123-C95A614F31F4", "198709290123", 632205, "1209", "Fjärrvärme", 2047337, 42216, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 3, 21, 0, 0), null),
+				tuple("65E78C52-B2E1-42DD-8D42-828A94E5BAFF", "199205123456", 630024, "1539", "Fjärrvärme", 2048465, 43176, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 8, 16, 0, 0), null),
+				tuple("BECE12C4-AE4B-4826-8C6C-514009FF5C94", "197007912345", 634100, "1448", "Fjärrvärme", 2048522, 43225, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 9, 1, 0, 0), null),
+				tuple("65E78C52-B2E1-42DD-8D42-828A94E5BAE1", "198609234567", 644333, "3062", "Fjärrvärme", 2049933, 44364, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 1, 16, 0, 0), null),
+				tuple("745CBD9A-B213-47FE-B25A-6F1AD391F4B6", "195409067890", 666334, "3819", "Fjärrvärme", 2058855, 53286, "Effektabonnemang lågspänning", "true", "false", null, LocalDateTime.of(1950, 1, 1, 0, 0), null));
+	}
+
+	@Test
+	void getInActiveAgreements() {
+		final var page = repository.findAllByParameters(AgreementParameters.create().withCategory(List.of(DISTRICT_HEATING)).withActive(false), null,
+			PageRequest.of(0, 100));
+
+		assertThat(page.getNumber()).isZero();
+		assertThat(page.getNumberOfElements()).isEqualTo(2);
+		assertThat(page.getTotalPages()).isEqualTo(1);
+		assertThat(page.getTotalElements()).isEqualTo(2);
+		assertThat(page.getContent())
+			.hasSize(2)
+			.extracting(AgreementEntity::getUuid,
+				AgreementEntity::getCustomerOrgId,
+				AgreementEntity::getCustomerId,
+				AgreementEntity::getFacilityId,
+				AgreementEntity::getCategory,
+				AgreementEntity::getBillingId,
+				AgreementEntity::getAgreementId,
+				AgreementEntity::getDescription,
+				AgreementEntity::getMainAgreement,
+				AgreementEntity::getBinding,
+				AgreementEntity::getBindingRule,
+				AgreementEntity::getFromDate,
+				AgreementEntity::getToDate)
+			.containsExactlyInAnyOrder(
+				tuple("65E78C52-B2E1-42DD-8D42-828A94E5BAE1", "198609234567", 633134, "1108", "Fjärrvärme", 2046960, 41903, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 2, 8, 0, 0), LocalDateTime.of(2019, 8, 31, 0, 0)),
+				tuple("BECE12C4-AE4B-4826-8C6C-514009FF5C94", "197007912345", 633360, "2339", "Fjärrvärme", 2047361, 42234, "Fastpris 2 år", "true", "false", null, LocalDateTime.of(2017, 3, 25, 0, 0), LocalDateTime.of(2019, 7, 31, 0, 0)));
+	}
 }

@@ -69,7 +69,7 @@ class AgreementResourceFailuresTest {
 			.jsonPath("$.title").isEqualTo("Constraint Violation")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("limit")
-			.jsonPath("$.violations[0].message").isEqualTo("must be less than or equal to 1000");
+			.jsonPath("$.violations[0].message").isEqualTo("Page limit cannot be greater than 1000");
 
 		verifyNoInteractions(serviceMock);
 	}
@@ -124,8 +124,8 @@ class AgreementResourceFailuresTest {
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("agreementParameters")
 			.jsonPath("$.violations[0].message").isEqualTo("""
-				One or more of the sortBy members [not-valid-property] are not valid. Valid properties to sort by are [agreementId, billingId, uuid, \
-				customerOrgId, customerId, facilityId, category, description, mainAgreement, binding, bindingRule, fromDate, toDate].""");
+				One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [mainAgreement, billingId, \
+				facilityId, toDate, description, binding, uuid, fromDate, agreementId, customerId, customerOrgId, category, bindingRule].""");
 
 		verifyNoInteractions(serviceMock);
 	}

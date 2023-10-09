@@ -12,14 +12,14 @@
 			"binding": false,
 			"bindingRule": "Fastpris 2 år",
 			"fromDate": "2022-01-01",
-			"toDate": "2022-07-01"
+			"toDate": "2022-07-01",
+			"active": false
 		}
 	],
 	"_meta": {
 		"page": 1,
 		"limit": 100,
 		"count": 1,
-		"sortDirection": "ASC",
 		"totalRecords": 1,
 		"totalPages": 1
 	}

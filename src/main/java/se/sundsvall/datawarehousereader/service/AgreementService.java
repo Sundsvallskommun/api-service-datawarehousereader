@@ -1,21 +1,20 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import se.sundsvall.datawarehousereader.api.model.MetaData;
 import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import java.util.List;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
 
 @Service
 public class AgreementService {
@@ -32,16 +31,10 @@ public class AgreementService {
 		// If page larger than last page is requested, a empty list is returned otherwise the current page
 		final List<Agreement> agreements = matches.getTotalPages() < parameters.getPage() ? emptyList() : toAgreements(matches.getContent());
 
+
 		return AgreementResponse.create()
-			.withMetaData(MetaData.create()
-				.withPage(parameters.getPage())
-				.withSortBy(parameters.getSortBy())
-				.withSortDirection(parameters.getSortDirection())
-				.withTotalPages(matches.getTotalPages())
-				.withTotalRecords(matches.getTotalElements())
-				.withCount(agreements.size())
-				.withLimit(parameters.getLimit()))
-			.withAgreements(agreements);
+			.withAgreements(agreements)
+			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches));
 	}
 
 	private String getCustomerOrgId(String partyId) {

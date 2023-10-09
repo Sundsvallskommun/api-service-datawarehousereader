@@ -96,18 +96,30 @@ class DistrictHeatingMeasurementProviderTest {
 				when(pageHourMock.getContent()).thenReturn(List.of(hourEntityMock));
 				when(pageHourMock.getTotalPages()).thenReturn(1);
 				when(pageHourMock.getTotalElements()).thenReturn(1L);
+				when(pageHourMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageHourMock.getNumberOfElements()).thenReturn(1);
+				when(pageHourMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageHourMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case DAY -> {
 				when(districtHeatingDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
 				when(pageDayMock.getContent()).thenReturn(List.of(dayEntityMock));
 				when(pageDayMock.getTotalPages()).thenReturn(1);
 				when(pageDayMock.getTotalElements()).thenReturn(1L);
+				when(pageDayMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageDayMock.getNumberOfElements()).thenReturn(1);
+				when(pageDayMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageDayMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case MONTH -> {
 				when(districtHeatingMonthRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageMonthMock);
 				when(pageMonthMock.getContent()).thenReturn(List.of(monthEntityMock));
 				when(pageMonthMock.getTotalPages()).thenReturn(1);
 				when(pageMonthMock.getTotalElements()).thenReturn(1L);
+				when(pageMonthMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageMonthMock.getNumberOfElements()).thenReturn(1);
+				when(pageMonthMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageMonthMock.getSort()).thenReturn(searchParams.sort());
 			}
 			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
@@ -168,6 +180,10 @@ class DistrictHeatingMeasurementProviderTest {
 				when(pageHourMock.getContent()).thenReturn(List.of(hourEntityMock));
 				when(pageHourMock.getTotalPages()).thenReturn(1);
 				when(pageHourMock.getTotalElements()).thenReturn(1L);
+				when(pageHourMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageHourMock.getNumberOfElements()).thenReturn(1);
+				when(pageHourMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageHourMock.getSort()).thenReturn(searchParams.sort());
 				when(hourEntityMock.getReadingSequence()).thenReturn(readingSequence);
 				when(hourEntityMock.getFeedType()).thenReturn(feedType);
 				when(hourEntityMock.getFacilityId()).thenReturn(facilityId);
@@ -177,6 +193,10 @@ class DistrictHeatingMeasurementProviderTest {
 				when(pageDayMock.getContent()).thenReturn(List.of(dayEntityMock));
 				when(pageDayMock.getTotalPages()).thenReturn(1);
 				when(pageDayMock.getTotalElements()).thenReturn(1L);
+				when(pageDayMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageDayMock.getNumberOfElements()).thenReturn(1);
+				when(pageDayMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageDayMock.getSort()).thenReturn(searchParams.sort());
 				when(dayEntityMock.getReadingSequence()).thenReturn(readingSequence);
 				when(dayEntityMock.getFeedType()).thenReturn(feedType);
 				when(dayEntityMock.getFacilityId()).thenReturn(facilityId);
@@ -186,6 +206,10 @@ class DistrictHeatingMeasurementProviderTest {
 				when(pageMonthMock.getContent()).thenReturn(List.of(monthEntityMock));
 				when(pageMonthMock.getTotalPages()).thenReturn(1);
 				when(pageMonthMock.getTotalElements()).thenReturn(1L);
+				when(pageMonthMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageMonthMock.getNumberOfElements()).thenReturn(1);
+				when(pageMonthMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageMonthMock.getSort()).thenReturn(searchParams.sort());
 				when(monthEntityMock.getReadingSequence()).thenReturn(readingSequence);
 				when(monthEntityMock.getFeedType()).thenReturn(feedType);
 				when(monthEntityMock.getFacilityId()).thenReturn(facilityId);
@@ -234,28 +258,40 @@ class DistrictHeatingMeasurementProviderTest {
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {"YEAR"}, mode = EnumSource.Mode.EXCLUDE)
 	void testForPageLargerThanResultsMaxPage(Aggregation aggregateOn) {
+		final var searchParams = MeasurementParameters.create();
+		searchParams.setPage(2);
 
 		switch (aggregateOn) {
 			case HOUR -> {
 				when(districtHeatingHourRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageHourMock);
 				when(pageHourMock.getTotalPages()).thenReturn(1);
 				when(pageHourMock.getTotalElements()).thenReturn(1L);
+				when(pageHourMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageHourMock.getNumberOfElements()).thenReturn(0);
+				when(pageHourMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageHourMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case DAY -> {
 				when(districtHeatingDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
 				when(pageDayMock.getTotalPages()).thenReturn(1);
 				when(pageDayMock.getTotalElements()).thenReturn(1L);
+				when(pageDayMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageDayMock.getNumberOfElements()).thenReturn(0);
+				when(pageDayMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageDayMock.getSort()).thenReturn(searchParams.sort());
 			}
 			case MONTH -> {
 				when(districtHeatingMonthRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageMonthMock);
 				when(pageMonthMock.getTotalPages()).thenReturn(1);
 				when(pageMonthMock.getTotalElements()).thenReturn(1L);
+				when(pageMonthMock.getNumber()).thenReturn(searchParams.getPage() - 1);
+				when(pageMonthMock.getNumberOfElements()).thenReturn(0);
+				when(pageMonthMock.getSize()).thenReturn(searchParams.getLimit());
+				when(pageMonthMock.getSort()).thenReturn(searchParams.sort());
 			}
 			default -> throw new IllegalArgumentException("Untested aggregateOn value: " + aggregateOn);
 		}
 
-		final var searchParams = MeasurementParameters.create();
-		searchParams.setPage(2);
 		final var response = provider.getMeasurements(null, aggregateOn, null, null, searchParams);
 
 		switch (aggregateOn) {

@@ -1,12 +1,15 @@
 package se.sundsvall.datawarehousereader.api.model.installedbase;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
+
 import java.util.Objects;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-
 @Schema(description = "Installed base request parameters model")
-public class InstalledBaseParameters extends AbstractParameterBase {
+@ValidSortByProperty(InstalledBaseItemEntity.class)
+public class InstalledBaseParameters extends AbstractParameterPagingAndSortingBase {
 
 	@Schema(description = "Company", example = "Sundsvall Energi AB")
 	private String company;
