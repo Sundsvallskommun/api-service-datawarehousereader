@@ -25,13 +25,12 @@
         primary key (customerid, organizationid)
     );
 
-    create table kundinfo.vCustomerDetails (
+    create table kundinfo.vCustomerDetail (
         CustomerCategoryID int,
         CustomerChangedFlg bit,
         Customerid int not null,
         Installedchangedflg bit,
         Address nvarchar(255),
-        [C/o] nvarchar(255),
         City nvarchar(255),
         CustomerCategoryDescription nvarchar(255),
         CustomerOrgId nvarchar(255),
@@ -42,6 +41,8 @@
         Phone2 nvarchar(255),
         Phone3 nvarchar(255),
         Zipcode nvarchar(255),
+        [c/o] nvarchar(255),
+        uuid uniqueidentifier,
         primary key (Customerid)
     );
 

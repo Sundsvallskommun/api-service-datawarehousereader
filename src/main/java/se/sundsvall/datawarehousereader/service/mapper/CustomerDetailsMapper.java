@@ -23,6 +23,7 @@ public class CustomerDetailsMapper {
 
 	public static CustomerDetails toCustomerDetails(final CustomerDetailsEntity entity) {
 		return CustomerDetails.create()
+			.withPartyId(entity.getUuid() != null ? entity.getUuid().toLowerCase(): null)
 			.withCustomerOrgNumber(entity.getCustomerOrgId())
 			.withCustomerNumber(ServiceUtil.toString(entity.getCustomerId()))
 			.withCustomerName(entity.getName())

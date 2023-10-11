@@ -8,12 +8,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(schema = "kundinfo", name = "vCustomerDetails")
+@Table(schema = "kundinfo", name = "vCustomerDetail")
 public class CustomerDetailsEntity {
 
 	@Id
 	@Column(name = "Customerid", nullable = false, insertable = false, updatable = false)
 	private Integer customerId;
+
+	@Column(name = "uuid", columnDefinition = "uniqueidentifier", insertable = false, updatable = false)
+	private String uuid;
 
 	@Column(name = "CustomerOrgId", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
 	private String customerOrgId;
@@ -27,7 +30,7 @@ public class CustomerDetailsEntity {
 	@Column(name = "Name", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
 	private String name;
 
-	@Column(name = "C/o", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
+	@Column(name = "c/o", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
 	private String co;
 
 	@Column(name = "Address", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
@@ -272,46 +275,52 @@ public class CustomerDetailsEntity {
 		this.installedChangedFlg = installedChangedFlg;
 	}
 
-	@Override
-	public String toString() {
-		return "CustomerDetailsEntity{" +
-			"customerOrgId='" + customerOrgId + '\'' +
-			", customerId=" + customerId +
-			", customerCategoryID=" + customerCategoryID +
-			", customerCategoryDescription='" + customerCategoryDescription + '\'' +
-			", name='" + name + '\'' +
-			", co='" + co + '\'' +
-			", address='" + address + '\'' +
-			", zipcode='" + zipcode + '\'' +
-			", city='" + city + '\'' +
-			", phone1='" + phone1 + '\'' +
-			", phone2='" + phone2 + '\'' +
-			", phone3='" + phone3 + '\'' +
-			", email1='" + email1 + '\'' +
-			", email2='" + email2 + '\'' +
-			", customerChangedFlg=" + customerChangedFlg +
-			", installedChangedFlg=" + installedChangedFlg +
-			'}';
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
+	}
+
+	public CustomerDetailsEntity withUuid(String uuid) {
+		this.uuid = uuid;
+		return this;
 	}
 
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if ((o == null) || (getClass() != o.getClass())) {
-			return false;
-		}
-		final CustomerDetailsEntity that = (CustomerDetailsEntity) o;
-		return (customerChangedFlg == that.customerChangedFlg) && (installedChangedFlg == that.installedChangedFlg) && Objects.equals(customerId, that.customerId) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerCategoryID,
-			that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode,
-				that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2,
-					that.email2);
+	public String toString() {
+		return "CustomerDetailsEntity{" +
+				"customerId=" + customerId +
+				", uuid='" + uuid + '\'' +
+				", customerOrgId='" + customerOrgId + '\'' +
+				", customerCategoryID=" + customerCategoryID +
+				", customerCategoryDescription='" + customerCategoryDescription + '\'' +
+				", name='" + name + '\'' +
+				", co='" + co + '\'' +
+				", address='" + address + '\'' +
+				", zipcode='" + zipcode + '\'' +
+				", city='" + city + '\'' +
+				", phone1='" + phone1 + '\'' +
+				", phone2='" + phone2 + '\'' +
+				", phone3='" + phone3 + '\'' +
+				", email1='" + email1 + '\'' +
+				", email2='" + email2 + '\'' +
+				", customerChangedFlg=" + customerChangedFlg +
+				", installedChangedFlg=" + installedChangedFlg +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CustomerDetailsEntity that = (CustomerDetailsEntity) o;
+		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(uuid, that.uuid) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerOrgId, customerId, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
+		return Objects.hash(customerId, uuid, customerOrgId, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
 	}
-
 }
