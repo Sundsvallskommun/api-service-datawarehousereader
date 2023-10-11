@@ -1,6 +1,26 @@
 package se.sundsvall.datawarehousereader.service;
 
-import generated.se.sundsvall.party.PartyType;
+import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
+import static generated.se.sundsvall.party.PartyType.PRIVATE;
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.domain.Sort.sort;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
+
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,6 +37,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
+
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
@@ -27,26 +48,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Stream;
-
-import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
-import static generated.se.sundsvall.party.PartyType.PRIVATE;
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.sort;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
+import generated.se.sundsvall.party.PartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -126,7 +128,7 @@ class CustomerServiceTest {
 		final var randomUUID = UUID.randomUUID().toString();
 
 		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
-		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
+		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class), eq(0), eq(100))).thenReturn(List.of(
 			CustomerDetailsEntity.create()
 				.withCustomerOrgId("102000-0000")
 				.withCustomerId(1)
@@ -157,7 +159,7 @@ class CustomerServiceTest {
 
 		final var result = service.getCustomerDetails(params);
 
-		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
+		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class), eq(0), eq(100));
 		verify(partyProviderMock, times(1)).translateToPartyId(eq(ENTERPRISE), any());
 		verify(partyProviderMock, times(1)).translateToPartyId(eq(PRIVATE), any());
 
@@ -204,7 +206,7 @@ class CustomerServiceTest {
 	@Test
 	void testGetDetailsWithoutPartyId() {
 		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenThrow(Problem.valueOf(Status.NOT_FOUND, "Party not found"));
-		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
+		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class), eq(0), eq(100))).thenReturn(List.of(
 			CustomerDetailsEntity.create()
 				.withCustomerOrgId("102000-0000")
 				.withCustomerId(1)
@@ -234,7 +236,7 @@ class CustomerServiceTest {
 
 		final var result = service.getCustomerDetails(params);
 
-		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
+		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class), eq(0), eq(100));
 		verify(partyProviderMock, times(1)).translateToPartyId(eq(ENTERPRISE), any());
 		verify(partyProviderMock, times(1)).translateToPartyId(eq(PRIVATE), any());
 
@@ -273,7 +275,7 @@ class CustomerServiceTest {
 
 		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
 
-		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
+		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class), eq(0), eq(100))).thenReturn(List.of(
 			CustomerDetailsEntity.create()
 				.withCustomerOrgId("102000-0000")
 				.withCustomerId(1)
@@ -304,7 +306,7 @@ class CustomerServiceTest {
 
 		final var result = service.getCustomerDetails(params);
 
-		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
+		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class), eq(0), eq(100));
 		verify(partyProviderMock, times(1)).translateToPartyId(eq(ENTERPRISE), any());
 		verify(partyProviderMock, times(1)).translateToPartyId(eq(PRIVATE), any());
 

@@ -17,6 +17,6 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 @CircuitBreaker(name = "CustomerDetailsRepository")
 public interface CustomerDetailsRepository extends PagingAndSortingRepository<CustomerDetailsEntity, Integer>, JpaSpecificationExecutor<CustomerDetailsEntity> {
 
-	@Query(value = "exec kundinfo.spCustomerDetails :fromDate", nativeQuery = true)
-	List<CustomerDetailsEntity> findAllMatching(@Param("fromDate") LocalDateTime dateTimeFrom);
+	@Query(value = "exec [kundinfo].[spCustomerDetails] :fromDate, :offset, :pageSize", nativeQuery = true)
+	List<CustomerDetailsEntity> findAllMatching(@Param("fromDate") LocalDateTime dateTimeFrom, @Param("offset") int offset, @Param("pageSize") int pageSize);
 }

@@ -76,7 +76,7 @@ public class CustomerService {
 			.map(OffsetDateTime::toLocalDateTime)
 			.orElse(null);
 
-		var customerDetails = detailsRepository.findAllMatching(fromDateTime).stream()
+		var customerDetails = detailsRepository.findAllMatching(fromDateTime, parameters.getPage() - 1, parameters.getLimit()).stream()
 			.map(CustomerDetailsMapper::toCustomerDetails)
 			.toList();
 

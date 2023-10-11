@@ -29,7 +29,7 @@ class CustomerDetailsRepositoryTest {
 	void testResponseWithHits() {
 		final var dateTimeFrom = LocalDateTime.of(2022, 4, 27, 23, 59);
 
-		final var list = repository.findAllMatching(dateTimeFrom);
+		final var list = repository.findAllMatching(dateTimeFrom, 0, 100);
 
 		assertThat(list).isNotNull()
 			.hasSize(9)
@@ -63,8 +63,40 @@ class CustomerDetailsRepositoryTest {
 	}
 
 	@Test
+	void testResponseWithPaging() {
+		final var dateTimeFrom = LocalDateTime.of(2022, 4, 27, 23, 59);
+
+		final var list = repository.findAllMatching(dateTimeFrom, 0, 4);
+
+		assertThat(list).isNotNull()
+				.hasSize(4)
+				.extracting(
+						CustomerDetailsEntity::getCustomerId,
+						CustomerDetailsEntity::getCustomerOrgId,
+						CustomerDetailsEntity::getCustomerCategoryID,
+						CustomerDetailsEntity::getCustomerCategoryDescription,
+						CustomerDetailsEntity::getName,
+						CustomerDetailsEntity::getCo,
+						CustomerDetailsEntity::getAddress,
+						CustomerDetailsEntity::getZipcode,
+						CustomerDetailsEntity::getCity,
+						CustomerDetailsEntity::getPhone1,
+						CustomerDetailsEntity::getPhone2,
+						CustomerDetailsEntity::getPhone3,
+						CustomerDetailsEntity::getEmail1,
+						CustomerDetailsEntity::getEmail2,
+						CustomerDetailsEntity::isCustomerChangedFlg,
+						CustomerDetailsEntity::isInstalledChangedFlg)
+				.containsExactlyInAnyOrder(
+						tuple(123410, "20040101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen60", "85234", "Sundsvall", "+46761234567", null, null, null, null, false, true),
+						tuple(123411, "20050101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen12", "85234", "SUNDSVALL", "+46761234567", null, null, "test@sundsvall.com", null, false, true),
+						tuple(123412, "20060101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen2 Lgh 6", "85234", "Sundsvall", null, "+46761234567", null, null, null, true, true),
+						tuple(123413, "20070101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen106", "85234", "Sundsvall", null, "+46761234567", null, null, "test2@sundsvall.com", false, true));
+	}
+
+	@Test
 	void testResponseWithNoFiltering() {
-		final var list = repository.findAllMatching(null);
+		final var list = repository.findAllMatching(null, 0, 100);
 
 		assertThat(list).isNotNull().hasSize(9);
 	}

@@ -38,7 +38,7 @@ begin
 end;
 
 
-CREATE PROCEDURE kundinfo.spCustomerDetails @fromDate datetime2
+CREATE PROCEDURE kundinfo.spCustomerDetails @fromDate datetime2, @pageOffset int, @pageSize int
 AS
 begin
 
@@ -58,4 +58,7 @@ begin
                     Email2,
                     CustomerChangedFlg,
                     Installedchangedflg
-    from vCustomerDetails end;
+    from vCustomerDetails
+    order by CustomerId
+    OFFSET @pageOffset ROWS FETCH NEXT @pageSize ROWS ONLY
+end;

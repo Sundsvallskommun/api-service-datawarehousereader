@@ -1,0 +1,92 @@
+{
+  "customerDetails": [
+	{
+	  "customerNumber": "123410",
+	  "customerName": "Test Testorsson",
+	  "street": "Testvägen60",
+	  "postalCode": "85234",
+	  "city": "Sundsvall",
+	  "phoneNumbers": [
+		"+46761234567"
+	  ],
+	  "emails": [],
+	  "customerCategoryID": 1,
+	  "customerCategoryDescription": "Privatperson",
+	  "customerChangedFlg": false,
+	  "installedChangedFlg": true
+	},
+	{
+	  "customerNumber": "123411",
+	  "customerName": "Test Testorsson",
+	  "street": "Testvägen12",
+	  "postalCode": "85234",
+	  "city": "SUNDSVALL",
+	  "phoneNumbers": [
+		"+46761234567"
+	  ],
+	  "emails": [
+		"test@sundsvall.com"
+	  ],
+	  "customerCategoryID": 1,
+	  "customerCategoryDescription": "Privatperson",
+	  "customerChangedFlg": false,
+	  "installedChangedFlg": true
+	},
+	{
+	  "customerNumber": "123412",
+	  "customerName": "Test Testorsson",
+	  "street": "Testvägen2 Lgh 6",
+	  "postalCode": "85234",
+	  "city": "Sundsvall",
+	  "phoneNumbers": [
+		"+46761234567"
+	  ],
+	  "emails": [],
+	  "customerCategoryID": 1,
+	  "customerCategoryDescription": "Privatperson",
+	  "customerChangedFlg": true,
+	  "installedChangedFlg": true
+	},
+	{
+	  "customerNumber": "123413",
+	  "customerName": "Test Testorsson",
+	  "street": "Testvägen106",
+	  "postalCode": "85234",
+	  "city": "Sundsvall",
+	  "phoneNumbers": [
+		"+46761234567"
+	  ],
+	  "emails": [
+		"test2@sundsvall.com"
+	  ],
+	  "customerCategoryID": 1,
+	  "customerCategoryDescription": "Privatperson",
+	  "customerChangedFlg": false,
+	  "installedChangedFlg": true
+	},
+	{
+	  "customerNumber": "123450",
+	  "customerName": "Test Testorsson",
+	  "street": "Testvägen65 A",
+	  "postalCode": "85234",
+	  "city": "Sundsvall",
+	  "phoneNumbers": [
+		"+46761234567"
+	  ],
+	  "emails": [
+		"test2@sundsvall.com"
+	  ],
+	  "customerCategoryID": 1,
+	  "customerCategoryDescription": "Privatperson",
+	  "customerChangedFlg": true,
+	  "installedChangedFlg": true
+	}
+  ],
+  "_meta": {
+	"page": 1,
+	"limit": 5,
+	"count": 5,
+	"totalRecords": 5,
+	"totalPages": 1
+  }
+}

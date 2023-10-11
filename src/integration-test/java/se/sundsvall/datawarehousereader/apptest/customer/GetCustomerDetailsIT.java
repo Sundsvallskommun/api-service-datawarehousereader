@@ -38,4 +38,14 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test03_getWithPaging() {
+		setupCall()
+			.withServicePath("/customer/details??page=1&limit=5&fromDateTime=2021-10-12T14:11:16.359Z")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }
