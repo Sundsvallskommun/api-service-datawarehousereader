@@ -1,8 +1,12 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase;
 
+import static org.hibernate.annotations.FetchMode.SUBSELECT;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
+import org.hibernate.annotations.Fetch;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -56,6 +60,7 @@ public class InstalledBaseItemEntity {
 	private LocalDate dateTo;
 
 	@ElementCollection(fetch = FetchType.EAGER)
+	@Fetch(SUBSELECT)
 	@CollectionTable(schema = "kundinfo",
 		name = "vInstalledBaseMetadata",
 		joinColumns = @JoinColumn(name = "internalId"),
