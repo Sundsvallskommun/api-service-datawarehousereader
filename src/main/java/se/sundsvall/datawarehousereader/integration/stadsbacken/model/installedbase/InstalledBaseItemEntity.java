@@ -68,8 +68,8 @@ public class InstalledBaseItemEntity {
 	@CollectionTable(schema = "kundinfo",
 		name = "vInstalledBaseMetadata",
 		joinColumns = @JoinColumn(
-			name = "InternalId",
-			referencedColumnName = "internalId"))
+			name = "internalId",
+			referencedColumnName = "InternalId"))
 	private List<InstalledBaseItemMetaDataEmbeddable> metaData;
 
 	public static InstalledBaseItemEntity create() {

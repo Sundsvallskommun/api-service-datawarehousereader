@@ -63,7 +63,7 @@
     );
 
     create table kundinfo.vInstalledBaseMetadata (
-        InternalId int not null,
+        internalId int not null,
         company nvarchar(255),
         displayName varchar(26) not null,
         [key] varchar(255) not null,
