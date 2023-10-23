@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 
 import jakarta.persistence.CollectionTable;
@@ -13,7 +14,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
@@ -64,10 +64,12 @@ public class InstalledBaseItemEntity {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(SUBSELECT)
+	@BatchSize(size = 1000)
 	@CollectionTable(schema = "kundinfo",
 		name = "vInstalledBaseMetadata",
-		joinColumns = @JoinColumn(name = "internalId", referencedColumnName = "InternalId"),
-		foreignKey = @ForeignKey(name = "fk_installed_base_metadata_installed_base"))
+		joinColumns = @JoinColumn(
+			name = "InternalId",
+			referencedColumnName = "internalId"))
 	private List<InstalledBaseItemMetaDataEmbeddable> metaData;
 
 	public static InstalledBaseItemEntity create() {
