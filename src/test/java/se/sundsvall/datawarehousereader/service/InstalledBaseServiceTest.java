@@ -22,7 +22,6 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import org.springframework.data.domain.Sort;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstalledBaseRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
@@ -109,11 +108,10 @@ class InstalledBaseServiceTest {
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
 
-
 		final var response = service.getInstalledBase(params);
 		verify(repositoryMock).findAll(exampleCaptor.capture(), pageableCaptor.capture());
 
-		InstalledBaseItemEntity entity = exampleCaptor.getValue().getProbe();
+		final InstalledBaseItemEntity entity = exampleCaptor.getValue().getProbe();
 		assertThat(entity.getCareOf()).isEqualTo(careOf);
 		assertThat(entity.getCity()).isEqualTo(city);
 		assertThat(entity.getCompany()).isEqualTo(company);

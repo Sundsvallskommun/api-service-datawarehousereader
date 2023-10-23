@@ -1,13 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase;
 
-import com.google.code.beanmatchers.BeanMatchers;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
-
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
@@ -16,6 +8,15 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import com.google.code.beanmatchers.BeanMatchers;
 
 class InstalledBaseItemEntityTest {
 	@BeforeAll
@@ -35,6 +36,8 @@ class InstalledBaseItemEntityTest {
 
 	@Test
 	void testBuilderMethods() {
+
+		final var id = 666;
 		final var careOf = "careOf";
 		final var city = "city";
 		final var company = "company";
@@ -50,6 +53,7 @@ class InstalledBaseItemEntityTest {
 		final var type = "type";
 
 		final var entity = InstalledBaseItemEntity.create()
+			.withId(id)
 			.withCareOf(careOf)
 			.withCity(city)
 			.withCompany(company)
@@ -64,6 +68,7 @@ class InstalledBaseItemEntityTest {
 			.withStreet(street)
 			.withType(type);
 
+		assertThat(entity.getId()).isEqualTo(id);
 		assertThat(entity.getCareOf()).isEqualTo(careOf);
 		assertThat(entity.getCity()).isEqualTo(city);
 		assertThat(entity.getCompany()).isEqualTo(company);
