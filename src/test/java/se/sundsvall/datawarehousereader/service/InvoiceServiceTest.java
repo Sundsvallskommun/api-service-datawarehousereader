@@ -6,7 +6,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.DEFAULT_DIRECTION;
 import static org.springframework.data.domain.Sort.sort;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
@@ -24,7 +23,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.zalando.problem.Status;
 import org.zalando.problem.ThrowableProblem;
 
@@ -135,7 +133,6 @@ class InvoiceServiceTest {
 		when(pageMock.getNumberOfElements()).thenReturn(1);
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
-
 
 		final var response = service.getInvoices(params);
 		verify(invoiceRepositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());

@@ -43,9 +43,10 @@
         Phone3 nvarchar(255),
         Zipcode nvarchar(255),
         primary key (Customerid)
-        );
+    );
 
     create table kundinfo.vInstalledBase (
+        BillLocationID int not null,
         DateFrom datetime,
         DateTo datetime,
         InternalId int not null,
@@ -58,7 +59,7 @@
         Postcode varchar(255),
         Street varchar(255),
         Type nvarchar(255),
-        primary key (InternalId)
+        primary key (BillLocationID)
     );
 
     create table kundinfo.vInstalledBaseMetadata (
@@ -196,8 +197,3 @@
         uuid uniqueidentifier,
         primary key (Usage, isInterpolted, DateFrom, customerorgid, facilityId, feedType, unit)
     );
-
-    alter table kundinfo.vInstalledBaseMetadata 
-       add constraint fk_installed_base_metadata_installed_base 
-       foreign key (internalId) 
-       references kundinfo.vInstalledBase;

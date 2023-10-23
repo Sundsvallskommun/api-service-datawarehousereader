@@ -34,7 +34,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.zalando.problem.ThrowableProblem;
 
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
@@ -95,7 +94,7 @@ class ElectricityMeasurementProviderTest {
 	private ElectricityMeasurementProvider provider;
 
 	@ParameterizedTest
-	@EnumSource(value = Aggregation.class, names = {"YEAR"}, mode = EnumSource.Mode.EXCLUDE)
+	@EnumSource(value = Aggregation.class, names = { "YEAR" }, mode = EnumSource.Mode.EXCLUDE)
 	void testWithEmptyParameters(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
 
@@ -168,7 +167,7 @@ class ElectricityMeasurementProviderTest {
 	}
 
 	@ParameterizedTest
-	@EnumSource(value = Aggregation.class, names = {"YEAR"}, mode = EnumSource.Mode.EXCLUDE)
+	@EnumSource(value = Aggregation.class, names = { "YEAR" }, mode = EnumSource.Mode.EXCLUDE)
 	void testWithAllParametersSet(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
 		final var legalId = "legalId";
@@ -249,7 +248,7 @@ class ElectricityMeasurementProviderTest {
 	}
 
 	@ParameterizedTest
-	@EnumSource(value = Aggregation.class, names = {"YEAR"}, mode = EnumSource.Mode.EXCLUDE)
+	@EnumSource(value = Aggregation.class, names = { "YEAR" }, mode = EnumSource.Mode.EXCLUDE)
 	void testForPageLargerThanResultsMaxPage(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
 		searchParams.setPage(101);
@@ -316,7 +315,7 @@ class ElectricityMeasurementProviderTest {
 	void testProblemIsThrownWhenNotSupportedAggregation() {
 		final var searchParams = MeasurementParameters.create();
 
-		ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, YEAR, null, null, searchParams));
+		final ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, YEAR, null, null, searchParams));
 		assertThat(e.getStatus()).isEqualTo(NOT_IMPLEMENTED);
 		assertThat(e.getMessage()).isEqualTo("Not Implemented: aggregation 'YEAR' and category 'ELECTRICITY'");
 
@@ -328,7 +327,7 @@ class ElectricityMeasurementProviderTest {
 	void testDateRangeExeedsMax(LocalDateTime start, LocalDateTime end) {
 		final var searchParams = MeasurementParameters.create();
 
-		ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, HOUR, start, end, searchParams));
+		final ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, HOUR, start, end, searchParams));
 		assertThat(e.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(e.getMessage()).isEqualTo("Bad Request: Date range exceeds maximum range. Range can max be one year when asking for hourly electricity measurements.");
 
