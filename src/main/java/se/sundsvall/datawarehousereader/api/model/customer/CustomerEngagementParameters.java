@@ -1,15 +1,18 @@
 package se.sundsvall.datawarehousereader.api.model.customer;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
+import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
+import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
+
 import java.util.List;
 import java.util.Objects;
 
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
-import se.sundsvall.datawarehousereader.api.model.AbstractParameterBase;
-import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-
 @Schema(description = "Customer engagement request parameters model")
-public class CustomerEngagementParameters extends AbstractParameterBase {
+@ValidSortByProperty(CustomerEntity.class)
+public class CustomerEngagementParameters extends AbstractParameterPagingAndSortingBase {
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("customerOrgId");
 

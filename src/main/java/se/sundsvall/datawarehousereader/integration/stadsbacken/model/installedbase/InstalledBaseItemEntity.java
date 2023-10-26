@@ -1,15 +1,19 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase;
 
+import static org.hibernate.annotations.FetchMode.SUBSELECT;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
@@ -19,6 +23,9 @@ import jakarta.persistence.Table;
 public class InstalledBaseItemEntity {
 
 	@Id
+	@Column(name = "BillLocationID", nullable = false, insertable = false, updatable = false)
+	private Integer id;
+
 	@Column(name = "InternalId", nullable = false, insertable = false, updatable = false)
 	private Integer internalId;
 
@@ -56,14 +63,30 @@ public class InstalledBaseItemEntity {
 	private LocalDate dateTo;
 
 	@ElementCollection(fetch = FetchType.EAGER)
+	@Fetch(SUBSELECT)
+	@BatchSize(size = 1000)
 	@CollectionTable(schema = "kundinfo",
 		name = "vInstalledBaseMetadata",
-		joinColumns = @JoinColumn(name = "internalId"),
-		foreignKey = @ForeignKey(name = "fk_installed_base_metadata_installed_base"))
+		joinColumns = @JoinColumn(
+			name = "internalId",
+			referencedColumnName = "InternalId"))
 	private List<InstalledBaseItemMetaDataEmbeddable> metaData;
 
 	public static InstalledBaseItemEntity create() {
 		return new InstalledBaseItemEntity();
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public InstalledBaseItemEntity withId(Integer id) {
+		this.id = id;
+		return this;
 	}
 
 	public Integer getInternalId() {
@@ -237,32 +260,24 @@ public class InstalledBaseItemEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(careOf, city, company, customerId, dateFrom, dateTo, facilityId, houseName, internalId, metaData, postCode, street, type);
+		return Objects.hash(careOf, city, company, customerId, dateFrom, dateTo, facilityId, houseName, id, internalId, metaData, postCode, street, type);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final InstalledBaseItemEntity other = (InstalledBaseItemEntity) obj;
+		if (this == obj) { return true; }
+		if (!(obj instanceof final InstalledBaseItemEntity other)) { return false; }
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerId, other.customerId) && Objects.equals(dateFrom, other.dateFrom) && Objects.equals(dateTo,
-			other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(houseName, other.houseName) && Objects.equals(internalId, other.internalId) && Objects.equals(metaData, other.metaData) && Objects.equals(postCode,
-				other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
+			other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(houseName, other.houseName) && Objects.equals(id, other.id) && Objects.equals(internalId, other.internalId) && Objects.equals(metaData, other.metaData) && Objects
+				.equals(postCode, other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("InstalledBaseItemEntity [internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(careOf).append(", street=")
-			.append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom).append(", dateTo=").append(
-				dateTo).append(", metaData=").append(metaData).append("]");
+		builder.append("InstalledBaseItemEntity [id=").append(id).append(", internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(careOf)
+			.append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom).append(
+				", dateTo=").append(dateTo).append(", metaData=").append(metaData).append("]");
 		return builder.toString();
 	}
 }

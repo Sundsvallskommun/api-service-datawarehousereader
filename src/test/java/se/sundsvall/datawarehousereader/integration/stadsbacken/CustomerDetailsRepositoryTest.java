@@ -51,7 +51,7 @@ class CustomerDetailsRepositoryTest {
 				CustomerDetailsEntity::isCustomerChangedFlg,
 				CustomerDetailsEntity::isInstalledChangedFlg)
 			.containsExactlyInAnyOrder(
-				tuple(123456, "19990101-1234", 2, "Företag", "Test Testorsson", "c/o Testorsson", "Testvägen10 c lgh 1005", "85234", "Sundsvall", "+46761234567", null, "+46761234567", null, null, false, true),
+				tuple(123456, "102000-0000", 2, "Företag", "Test Testorsson", "c/o Testorsson", "Testvägen10 c lgh 1005", "85234", "Sundsvall", "+46761234567", null, "+46761234567", null, null, false, true),
 				tuple(123457, "20000101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen21", "85234", "Sundsvall", "+46761234567", "+46761234567", null, "test@sundsvall.com", "test2@sundsvall.com", false, true),
 				tuple(123458, "20010101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen2", "85234", "Sundsvall", "+46761234567", null, null, "test@sundsvall.com", "test2@sundsvall.com", true, false),
 				tuple(123459, "20020101-1234", 1, "Privatperson", "Test Testorsson", null, "Testvägen21 E", "85234", "Sundsvall", "+46761234567", null, null, null, "test2@sundsvall.com", false, true),

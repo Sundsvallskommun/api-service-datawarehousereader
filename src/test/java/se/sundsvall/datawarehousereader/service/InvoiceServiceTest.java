@@ -58,12 +58,19 @@ class InvoiceServiceTest {
 
 	@Test
 	void testWithEmptyParameters() {
+
+		final var params = InvoiceParameters.create();
+
 		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 
-		final var response = service.getInvoices(InvoiceParameters.create());
+		final var response = service.getInvoices(params);
 
 		verify(invoiceRepositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());
 
@@ -84,11 +91,6 @@ class InvoiceServiceTest {
 
 	@Test
 	void testWithAllParametersSet() {
-		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getContent()).thenReturn(List.of(entityMock));
-		when(pageMock.getTotalPages()).thenReturn(2);
-		when(pageMock.getTotalElements()).thenReturn(2L);
-
 		final var administration = "administration";
 		final var customerNumber = List.of("1337", "1338");
 		final var customerType = CustomerType.PRIVATE;
@@ -123,6 +125,15 @@ class InvoiceServiceTest {
 		params.setOrganizationGroup(organizationGroup);
 		params.setPage(page);
 
+		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
+		when(pageMock.getContent()).thenReturn(List.of(entityMock));
+		when(pageMock.getTotalPages()).thenReturn(2);
+		when(pageMock.getTotalElements()).thenReturn(2L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(1);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
+
 		final var response = service.getInvoices(params);
 		verify(invoiceRepositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());
 
@@ -140,12 +151,17 @@ class InvoiceServiceTest {
 
 	@Test
 	void testForPageLargerThanResultsMaxPage() {
+		final var params = InvoiceParameters.create();
+		params.setPage(2);
+
 		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
+		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
+		when(pageMock.getNumberOfElements()).thenReturn(0);
+		when(pageMock.getSize()).thenReturn(params.getLimit());
+		when(pageMock.getSort()).thenReturn(params.sort());
 
-		final var params = InvoiceParameters.create();
-		params.setPage(2);
 		final var response = service.getInvoices(params);
 
 		verify(invoiceRepositoryMock).findAllByParameters(any(InvoiceParameters.class), any(Pageable.class));

@@ -1,5 +1,10 @@
 package se.sundsvall.datawarehousereader.api.model.installedbase;
 
+import org.junit.jupiter.api.Test;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import java.util.List;
+
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
@@ -8,12 +13,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-
-import se.sundsvall.datawarehousereader.api.model.MetaData;
 
 class InstalledBaseResponseTest {
 
@@ -29,7 +28,7 @@ class InstalledBaseResponseTest {
 
 	@Test
 	void testCreatePattern() {
-		final var metaData = MetaData.create();
+		final var metaData = PagingAndSortingMetaData.create();
 		final var installedBase = InstalledBaseItem.create();
 
 		final var response = InstalledBaseResponse.create()

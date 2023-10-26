@@ -10,14 +10,14 @@
 			"description": "Fastpris 2 år",
 			"mainAgreement": true,
 			"binding": false,
-			"fromDate": "2016-10-04"
+			"fromDate": "2016-10-04",
+			"active": true
 		}
 	],
 	"_meta": {
 		"page": 1,
 		"limit": 100,
 		"count": 1,
-		"sortDirection": "ASC",
 		"totalRecords": 1,
 		"totalPages": 1
 	}

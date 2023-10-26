@@ -14,7 +14,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Random;
 
-import org.assertj.core.api.Assertions;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,20 +38,21 @@ class CustomerDetailsParametersTest {
 
 	@Test
 	void testCreatePattern() {
-
 		final var partyId = List.of("partyId1", "partyId2");
+		final var customerEngagementOrgId = "someCustomerEngagementOrgId";
 		final var fromDateTime = OffsetDateTime.now();
 		final var toDateTime = OffsetDateTime.now().plusDays(1);
 
 		final var parameters = CustomerDetailsParameters.create()
 			.withPartyId(partyId)
+			.withCustomerEngagementOrgId(customerEngagementOrgId)
 			.withToDateTime(toDateTime)
 			.withFromDateTime(fromDateTime);
 
-		Assertions.assertThat(parameters.getPartyId()).isEqualTo(partyId);
-		Assertions.assertThat(parameters.getToDateTime()).isEqualTo(toDateTime);
-		Assertions.assertThat(parameters.getFromDateTime()).isEqualTo(fromDateTime);
-
+		assertThat(parameters.getPartyId()).isEqualTo(partyId);
+		assertThat(parameters.getCustomerEngagementOrgId()).isEqualTo(customerEngagementOrgId);
+		assertThat(parameters.getToDateTime()).isEqualTo(toDateTime);
+		assertThat(parameters.getFromDateTime()).isEqualTo(fromDateTime);
 	}
 
 	@Test

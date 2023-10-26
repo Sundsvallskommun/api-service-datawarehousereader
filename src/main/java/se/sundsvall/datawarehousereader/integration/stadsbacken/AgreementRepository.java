@@ -13,6 +13,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
 import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withActive;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withAgreementId;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withBillingId;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withBinding;
@@ -43,6 +44,7 @@ public interface AgreementRepository extends PagingAndSortingRepository<Agreemen
 			and(withFacilityId(parameters.getFacilityId())).
 			and(withFromDate(parameters.getFromDate())).
 			and(withMainAgreement(ServiceUtil.toString(parameters.getMainAgreement()))).
-			and(withToDate(parameters.getToDate())), pageable);
+			and(withToDate(parameters.getToDate())).
+			and(withActive(parameters.getActive())), pageable);
 	}
 }

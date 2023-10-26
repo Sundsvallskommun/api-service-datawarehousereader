@@ -70,7 +70,7 @@ class InstalledBaseResourceFailuresTest {
 			.jsonPath("$.title").isEqualTo("Constraint Violation")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("limit")
-			.jsonPath("$.violations[0].message").isEqualTo("must be less than or equal to 1000");
+			.jsonPath("$.violations[0].message").isEqualTo("Page limit cannot be greater than 1000");
 
 		verifyNoInteractions(serviceMock);
 	}
@@ -88,8 +88,8 @@ class InstalledBaseResourceFailuresTest {
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("installedBaseParameters")
 			.jsonPath("$.violations[0].message").isEqualTo("""
-				One or more of the sortBy members [not-valid-property] are not valid. Valid properties to sort by are \
-				[internalId, customerId, company, type, careOf, street, facilityId, postCode, city, houseName, dateFrom, dateTo].""");
+				One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are \
+				[facilityId, city, type, dateFrom, internalId, houseName, careOf, street, customerId, dateTo, company, postCode, id].""");
 
 		verifyNoInteractions(serviceMock);
 	}

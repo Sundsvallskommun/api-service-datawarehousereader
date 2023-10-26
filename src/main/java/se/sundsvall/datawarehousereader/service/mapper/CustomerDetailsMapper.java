@@ -21,7 +21,7 @@ public class CustomerDetailsMapper {
 			.toList();
 	}
 
-	private static CustomerDetails toCustomerDetails(final CustomerDetailsEntity entity) {
+	public static CustomerDetails toCustomerDetails(final CustomerDetailsEntity entity) {
 		return CustomerDetails.create()
 			.withCustomerOrgNumber(entity.getCustomerOrgId())
 			.withCustomerNumber(ServiceUtil.toString(entity.getCustomerId()))

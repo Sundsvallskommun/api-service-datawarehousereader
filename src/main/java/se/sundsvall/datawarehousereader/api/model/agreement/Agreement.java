@@ -51,6 +51,9 @@ public class Agreement {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDate toDate;
 
+	@Schema(description = "Shows if agreement is active ('fromDate' <= today and 'toDate' => today)", example = "true", accessMode = READ_ONLY)
+	private Boolean active;
+
 	public static Agreement create() {
 		return new Agreement();
 	}
@@ -211,9 +214,23 @@ public class Agreement {
 		return this;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
+	}
+
+	public Agreement withActive(Boolean active) {
+		this.active = active;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(partyId, customerNumber, facilityId, category, billingId, agreementId, description, mainAgreement, binding, bindingRule, fromDate, toDate);
+		return Objects.hash(partyId, customerNumber, facilityId, category, billingId, agreementId,
+			description, mainAgreement, binding, bindingRule, fromDate, toDate, active);
 	}
 
 	@Override
@@ -228,18 +245,26 @@ public class Agreement {
 		return Objects.equals(mainAgreement, agreement.mainAgreement) && Objects.equals(binding, agreement.binding) && Objects.equals(partyId, agreement.partyId) && Objects.equals(customerNumber, agreement.customerNumber) && Objects.equals(facilityId,
 			agreement.facilityId)
 			&& Objects.equals(category, agreement.category) && Objects.equals(billingId, agreement.billingId) && Objects.equals(agreementId, agreement.agreementId) && Objects.equals(description, agreement.description) && Objects.equals(bindingRule,
-				agreement.bindingRule) && Objects.equals(fromDate, agreement.fromDate) && Objects.equals(toDate, agreement.toDate);
+				agreement.bindingRule) && Objects.equals(fromDate, agreement.fromDate) && Objects.equals(toDate, agreement.toDate) && Objects.equals(active, agreement.active);
 	}
 
 	@Override
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
-		builder.append("Agreement [partyId=").append(partyId).append(", customerNumber=").append(customerNumber)
-			.append(", facilityId=").append(facilityId).append(", billingId=").append(billingId)
-			.append(", description=").append(description).append(", mainAgreement=").append(mainAgreement)
-			.append(", binding=").append(binding).append(", bindingRule=").append(bindingRule)
-			.append(", fromDate=").append(fromDate).append(", toDate=").append(toDate)
-			.append(", category=").append(category).append(", agreementId=").append(agreementId).append("]");
+		builder.append("Agreement [partyId=").append(partyId)
+			.append(", customerNumber=").append(customerNumber)
+			.append(", facilityId=").append(facilityId)
+			.append(", billingId=").append(billingId)
+			.append(", description=").append(description)
+			.append(", mainAgreement=").append(mainAgreement)
+			.append(", binding=").append(binding)
+			.append(", bindingRule=").append(bindingRule)
+			.append(", fromDate=").append(fromDate)
+			.append(", toDate=").append(toDate)
+			.append(", category=").append(category)
+			.append(", agreementId=").append(agreementId)
+			.append(", active=").append(active)
+			.append("]");
 		return builder.toString();
 	}
 }
