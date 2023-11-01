@@ -103,14 +103,14 @@ class GetInstalledBaseIT extends AbstractAppTest {
 	void test09_allParametersWithMatch() {
 		setupCall()
 			.withServicePath("/installedbase"
-					+ "?facilityId=735999109141107350"
-					+ "&company=Sundsvall Energi AB"
-					+ "&customerId=10335"
-					+ "&type=Elhandel"
-					+ "&careOf=Fastighetsförmedling AB"
-					+ "&street=Vägen 4"
-					+ "&postCode=85353"
-					+ "&city=Sundsvall")
+				+ "?facilityId=735999109141107350"
+				+ "&company=Sundsvall Energi AB"
+				+ "&customerId=10335"
+				+ "&type=Elhandel"
+				+ "&careOf=Fastighetsförmedling AB"
+				+ "&street=Vägen 4"
+				+ "&postCode=85353"
+				+ "&city=Sundsvall")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -121,14 +121,14 @@ class GetInstalledBaseIT extends AbstractAppTest {
 	void test10_allParametersNoMatch() {
 		setupCall()
 			.withServicePath("/installedbase"
-					+ "?facilityId=735999109141107350"
-					+ "&company=Sundsvall Elnät"
-					+ "&customerId=10335"
-					+ "&type=El"
-					+ "&careOf=Fastighetsförmedling AB"
-					+ "&street=Sallyhillsvägen 4"
-					+ "&postCode=85353"
-					+ "&city=Sundsvall")
+				+ "?facilityId=735999109141107350"
+				+ "&company=Sundsvall Elnät"
+				+ "&customerId=10335"
+				+ "&type=El"
+				+ "&careOf=Fastighetsförmedling AB"
+				+ "&street=Sallyhillsvägen 4"
+				+ "&postCode=85353"
+				+ "&city=Sundsvall")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -143,5 +143,18 @@ class GetInstalledBaseIT extends AbstractAppTest {
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
+	}
+
+	@Test
+	void test12_getCustomerInstallementsModifiedFrom() {
+		setupCall()
+			.withServicePath("/installedbase"
+				+ "?customerId=10335"
+				+ "&lastModifiedDateFrom=2017-12-07")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+
 	}
 }

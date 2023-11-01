@@ -1,11 +1,12 @@
 package se.sundsvall.datawarehousereader.api.model.installedbase;
 
+import java.time.LocalDate;
+import java.util.Objects;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
-
-import java.util.Objects;
 
 @Schema(description = "Installed base request parameters model")
 @ValidSortByProperty(InstalledBaseItemEntity.class)
@@ -37,6 +38,12 @@ public class InstalledBaseParameters extends AbstractParameterPagingAndSortingBa
 
 	@Schema(description = "Property designation", example = "Södermalm 1:27")
 	private String propertyDesignation;
+
+	@Schema(description = "Earliest date when item was last modified", example = "2022-12-31")
+	private LocalDate lastModifiedDateFrom;
+
+	@Schema(description = "Latest date when item was last modified", example = "2022-12-31")
+	private LocalDate lastModifiedDateTom;
 
 	public static InstalledBaseParameters create() {
 		return new InstalledBaseParameters();
@@ -114,11 +121,27 @@ public class InstalledBaseParameters extends AbstractParameterPagingAndSortingBa
 		this.propertyDesignation = propertyDesignation;
 	}
 
+	public LocalDate getLastModifiedDateFrom() {
+		return lastModifiedDateFrom;
+	}
+
+	public void setLastModifiedDateFrom(LocalDate lastModifiedDateFrom) {
+		this.lastModifiedDateFrom = lastModifiedDateFrom;
+	}
+
+	public LocalDate getLastModifiedDateTom() {
+		return lastModifiedDateTom;
+	}
+
+	public void setLastModifiedDateTom(LocalDate lastModifiedDateTom) {
+		this.lastModifiedDateTom = lastModifiedDateTom;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = (prime * result) + Objects.hash(careOf, city, company, customerNumber, facilityId, postCode, propertyDesignation, street, type);
+		result = prime * result + Objects.hash(careOf, city, company, customerNumber, facilityId, lastModifiedDateFrom, lastModifiedDateTom, postCode, propertyDesignation, street, type);
 		return result;
 	}
 
@@ -130,20 +153,21 @@ public class InstalledBaseParameters extends AbstractParameterPagingAndSortingBa
 		if (!super.equals(obj)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof InstalledBaseParameters)) {
 			return false;
 		}
-		final InstalledBaseParameters other = (InstalledBaseParameters) obj;
+		InstalledBaseParameters other = (InstalledBaseParameters) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(facilityId, other.facilityId) && Objects
-			.equals(postCode, other.postCode) && Objects.equals(propertyDesignation, other.propertyDesignation) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
+			.equals(lastModifiedDateFrom, other.lastModifiedDateFrom) && Objects.equals(lastModifiedDateTom, other.lastModifiedDateTom) && Objects.equals(postCode, other.postCode) && Objects.equals(propertyDesignation, other.propertyDesignation)
+			&& Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseParameters [company=").append(company).append(", customerNumber=").append(customerNumber).append(", type=").append(type).append(", facilityId=").append(facilityId).append(", careOf=").append(careOf).append(
-			", street=").append(street).append(", postCode=").append(postCode).append(", city=").append(city).append(", propertyDesignation=").append(propertyDesignation).append(", page=").append(page).append(", limit=").append(limit).append(
-				", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");
+			", street=").append(street).append(", postCode=").append(postCode).append(", city=").append(city).append(", propertyDesignation=").append(propertyDesignation).append(", lastModifiedDateFrom=").append(lastModifiedDateFrom).append(
+				", lastModifiedDateTom=").append(lastModifiedDateTom).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append(", page=").append(page).append(", limit=").append(limit).append("]");
 		return builder.toString();
 	}
 }

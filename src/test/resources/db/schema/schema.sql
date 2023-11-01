@@ -50,6 +50,7 @@
         DateFrom datetime,
         DateTo datetime,
         InternalId int not null,
+        PlacementStatusModified varchar(50),
         customerid int not null,
         CareOf varchar(255),
         City varchar(255),

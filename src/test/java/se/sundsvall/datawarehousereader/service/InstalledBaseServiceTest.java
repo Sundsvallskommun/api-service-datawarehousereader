@@ -1,6 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.lang.Integer.parseInt;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -18,7 +17,6 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -41,7 +39,7 @@ class InstalledBaseServiceTest {
 	private InstalledBaseService service;
 
 	@Captor
-	private ArgumentCaptor<Example<InstalledBaseItemEntity>> exampleCaptor;
+	private ArgumentCaptor<InstalledBaseParameters> parametersCaptor;
 
 	@Captor
 	private ArgumentCaptor<Pageable> pageableCaptor;
@@ -50,7 +48,7 @@ class InstalledBaseServiceTest {
 	void testWithEmptyParameters() {
 		final var params = InstalledBaseParameters.create();
 
-		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(ArgumentMatchers.<InstalledBaseParameters>any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
@@ -61,9 +59,12 @@ class InstalledBaseServiceTest {
 
 		final var response = service.getInstalledBase(params);
 
-		verify(repositoryMock).findAll(exampleCaptor.capture(), pageableCaptor.capture());
+		verify(repositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());
 
-		assertThat(exampleCaptor.getValue().getProbe()).hasAllNullFieldsOrProperties();
+		assertThat(parametersCaptor.getValue())
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortBy", "sortDirection")
+			.extracting(InstalledBaseParameters::getPage, InstalledBaseParameters::getLimit)
+			.isEqualTo(List.of(1, 100));
 		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
 		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(100);
 		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(unsorted());
@@ -99,7 +100,7 @@ class InstalledBaseServiceTest {
 		params.setStreet(street);
 		params.setType(type);
 
-		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(ArgumentMatchers.<InstalledBaseParameters>any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(2);
 		when(pageMock.getTotalElements()).thenReturn(2L);
@@ -109,19 +110,9 @@ class InstalledBaseServiceTest {
 		when(pageMock.getSort()).thenReturn(params.sort());
 
 		final var response = service.getInstalledBase(params);
-		verify(repositoryMock).findAll(exampleCaptor.capture(), pageableCaptor.capture());
+		verify(repositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());
 
-		final InstalledBaseItemEntity entity = exampleCaptor.getValue().getProbe();
-		assertThat(entity.getCareOf()).isEqualTo(careOf);
-		assertThat(entity.getCity()).isEqualTo(city);
-		assertThat(entity.getCompany()).isEqualTo(company);
-		assertThat(entity.getCustomerId()).isEqualTo(parseInt(customerNumber));
-		assertThat(entity.getInternalId()).isNull();
-		assertThat(entity.getMetaData()).isNull();
-		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
-		assertThat(entity.getPostCode()).isEqualTo(postCode);
-		assertThat(entity.getStreet()).isEqualTo(street);
-		assertThat(entity.getType()).isEqualTo(type);
+		assertThat(parametersCaptor.getValue()).usingRecursiveComparison().isEqualTo(params);
 		assertThat(pageableCaptor.getValue().getPageNumber()).isEqualTo(page - 1);
 		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(limit);
 		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(unsorted());
@@ -138,7 +129,7 @@ class InstalledBaseServiceTest {
 		final var params = InstalledBaseParameters.create();
 		params.setPage(2);
 
-		when(repositoryMock.findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(ArgumentMatchers.<InstalledBaseParameters>any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
 		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
@@ -148,7 +139,7 @@ class InstalledBaseServiceTest {
 
 		final var response = service.getInstalledBase(params);
 
-		verify(repositoryMock).findAll(ArgumentMatchers.<Example<InstalledBaseItemEntity>>any(), any(Pageable.class));
+		verify(repositoryMock).findAllByParameters(ArgumentMatchers.<InstalledBaseParameters>any(), any(Pageable.class));
 
 		assertThat(response.getMetaData().getCount()).isZero();
 		assertThat(response.getMetaData().getLimit()).isEqualTo(100);

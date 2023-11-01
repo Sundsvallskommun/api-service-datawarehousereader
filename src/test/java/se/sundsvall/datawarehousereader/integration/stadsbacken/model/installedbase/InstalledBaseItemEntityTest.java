@@ -48,6 +48,7 @@ class InstalledBaseItemEntityTest {
 		final var internalId = 321;
 		final var metaData = List.of(new InstalledBaseItemMetaDataEmbeddable());
 		final var facilityId = "facilityId";
+		final var placementModified = LocalDate.now();
 		final var postCode = "postCode";
 		final var street = "street";
 		final var type = "type";
@@ -60,14 +61,16 @@ class InstalledBaseItemEntityTest {
 			.withCustomerId(customerId)
 			.withDateFrom(dateFrom)
 			.withDateTo(dateTo)
+			.withFacilityId(facilityId)
 			.withHouseName(houseName)
 			.withInternalId(internalId)
 			.withMetaData(metaData)
-			.withFacilityId(facilityId)
+			.withPlacementModified(placementModified)
 			.withPostCode(postCode)
 			.withStreet(street)
 			.withType(type);
 
+		assertThat(entity).hasNoNullFieldsOrProperties();
 		assertThat(entity.getId()).isEqualTo(id);
 		assertThat(entity.getCareOf()).isEqualTo(careOf);
 		assertThat(entity.getCity()).isEqualTo(city);
@@ -75,10 +78,11 @@ class InstalledBaseItemEntityTest {
 		assertThat(entity.getCustomerId()).isEqualTo(customerId);
 		assertThat(entity.getDateFrom()).isEqualTo(dateFrom);
 		assertThat(entity.getDateTo()).isEqualTo(dateTo);
+		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
 		assertThat(entity.getHouseName()).isEqualTo(houseName);
 		assertThat(entity.getInternalId()).isEqualTo(internalId);
 		assertThat(entity.getMetaData()).isEqualTo(metaData);
-		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
+		assertThat(entity.getPlacementModified()).isEqualTo(placementModified);
 		assertThat(entity.getPostCode()).isEqualTo(postCode);
 		assertThat(entity.getStreet()).isEqualTo(street);
 		assertThat(entity.getType()).isEqualTo(type);

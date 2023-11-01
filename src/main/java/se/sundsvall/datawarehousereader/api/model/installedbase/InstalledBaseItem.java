@@ -48,6 +48,9 @@ public class InstalledBaseItem {
 	@Schema(description = "To date", example = "2022-12-31", accessMode = READ_ONLY)
 	private LocalDate dateTo;
 
+	@Schema(description = "Date when object was last modified (or null if never modified)", example = "2022-12-31", accessMode = READ_ONLY)
+	private LocalDate dateLastModified;
+
 	@ArraySchema(schema = @Schema(implementation = InstalledBaseItemMetaData.class, accessMode = READ_ONLY), maxItems = 1000)
 	private List<InstalledBaseItemMetaData> metaData;
 
@@ -211,6 +214,19 @@ public class InstalledBaseItem {
 		return this;
 	}
 
+	public LocalDate getDateLastModified() {
+		return dateLastModified;
+	}
+
+	public void setDateLastModified(LocalDate dateLastModified) {
+		this.dateLastModified = dateLastModified;
+	}
+
+	public InstalledBaseItem withDateLastModified(LocalDate dateLastModified) {
+		this.dateLastModified = dateLastModified;
+		return this;
+	}
+
 	public List<InstalledBaseItemMetaData> getMetaData() {
 		return metaData;
 	}
@@ -226,7 +242,7 @@ public class InstalledBaseItem {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(careOf, city, company, customerNumber, dateFrom, dateTo, facilityId, metaData, placementId, postCode, propertyDesignation, street, type);
+		return Objects.hash(careOf, city, company, customerNumber, dateFrom, dateLastModified, dateTo, facilityId, metaData, placementId, postCode, propertyDesignation, street, type);
 	}
 
 	@Override
@@ -234,25 +250,21 @@ public class InstalledBaseItem {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (!(obj instanceof InstalledBaseItem)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final InstalledBaseItem other = (InstalledBaseItem) obj;
+		InstalledBaseItem other = (InstalledBaseItem) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(dateFrom, other.dateFrom) && Objects.equals(
-			dateTo, other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(metaData, other.metaData) && (placementId == other.placementId) && Objects.equals(postCode, other.postCode) && Objects.equals(propertyDesignation,
-				other.propertyDesignation) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
+			dateLastModified, other.dateLastModified) && Objects.equals(dateTo, other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(metaData, other.metaData) && placementId == other.placementId && Objects.equals(postCode,
+				other.postCode) && Objects.equals(propertyDesignation, other.propertyDesignation) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItem [company=").append(company).append(", customerNumber=").append(customerNumber).append(", type=").append(type).append(", facilityId=").append(facilityId).append(", placementId=").append(placementId).append(
 			", careOf=").append(careOf).append(", street=").append(street).append(", postCode=").append(postCode).append(", city=").append(city).append(", propertyDesignation=").append(propertyDesignation).append(", dateFrom=").append(dateFrom)
-			.append(", dateTo=").append(dateTo).append(", metaData=").append(metaData).append("]");
+			.append(", dateTo=").append(dateTo).append(", dateLastModified=").append(dateLastModified).append(", metaData=").append(metaData).append("]");
 		return builder.toString();
 	}
-
 }

@@ -11,6 +11,7 @@
 			"postCode": "85353",
 			"city": "Sundsvall",
 			"dateFrom": "2017-08-27",
+			"dateLastModified": "2017-12-01",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -29,6 +30,7 @@
 			"careOf": "Fastighetsförmedling AB",
 			"street": "Gatan 44",
 			"dateFrom": "2013-01-12",
+			"dateLastModified": "2017-12-01",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -49,6 +51,7 @@
 			"postCode": "86532",
 			"city": "Alnö",
 			"dateFrom": "2008-02-13",
+			"dateLastModified": "2017-12-03",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -67,6 +70,7 @@
 			"careOf": "Fastighetsförmedling AB",
 			"street": "Gatan 21 B 4010170",
 			"dateFrom": "2019-11-06",
+			"dateLastModified": "2017-12-04",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -87,6 +91,7 @@
 			"postCode": "85353",
 			"city": "Sundsvall",
 			"dateFrom": "2013-01-12",
+			"dateLastModified": "2017-12-05",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -105,6 +110,7 @@
 			"careOf": "Fastighetsförmedling AB",
 			"street": "Gatan 17 F 4010965",
 			"dateFrom": "2001-07-11",
+			"dateLastModified": "2017-12-06",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -123,6 +129,7 @@
 			"careOf": "Fastighetsförmedling AB",
 			"street": "Gatan 27",
 			"dateFrom": "2013-01-12",
+			"dateLastModified": "2017-12-07",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -141,6 +148,7 @@
 			"careOf": "Fastighetsförmedling AB",
 			"street": "Gatan 4 B 4170153",
 			"dateFrom": "2005-10-13",
+			"dateLastModified": "2017-12-07",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -161,6 +169,7 @@
 			"postCode": "85356",
 			"city": "Sundsvall",
 			"dateFrom": "2004-04-14",
+			"dateLastModified": "2017-12-08",
 			"metaData": [
 				{
 					"key": "netarea",
@@ -181,6 +190,7 @@
 			"postCode": "85353",
 			"city": "Sundsvall",
 			"dateFrom": "2001-07-11",
+			"dateLastModified": "2017-12-08",
 			"metaData": [
 				{
 					"key": "netarea",

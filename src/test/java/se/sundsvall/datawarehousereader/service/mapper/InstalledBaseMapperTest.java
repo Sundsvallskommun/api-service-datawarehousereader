@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -19,9 +20,12 @@ class InstalledBaseMapperTest {
 	private static final String CITY = "city";
 	private static final String COMPANY = "company";
 	private static final int CUSTOMER_ID = 123;
+	private static final LocalDate DATE_FROM = LocalDate.now().minusWeeks(1);
+	private static final LocalDate DATE_TO = LocalDate.now().plusWeeks(1);
 	private static final int INTERNAL_ID = 456;
 	private static final String FACILITY_ID = "facilityId";
 	private static final String HOUSE_NAME = "houseName";
+	private static final LocalDate PLACEMENT_MODIFIED = LocalDate.now();
 	private static final String POST_CODE = "postCode";
 	private static final String STREET = "street";
 	private static final String TYPE = "type";
@@ -43,16 +47,19 @@ class InstalledBaseMapperTest {
 	@Test 
 	void toInstalledBaseItemsWithMetaDataNull() {
 		final var entity = InstalledBaseItemEntity.create()
-				.withCareOf(CARE_OF)
-				.withCity(CITY)
-				.withCompany(COMPANY)
-				.withCustomerId(CUSTOMER_ID)
+			.withCareOf(CARE_OF)
+			.withCity(CITY)
+			.withCompany(COMPANY)
+			.withCustomerId(CUSTOMER_ID)
+			.withDateFrom(DATE_FROM)
+			.withDateTo(DATE_TO)
+			.withFacilityId(FACILITY_ID)
 			.withHouseName(HOUSE_NAME)
-				.withFacilityId(FACILITY_ID)
-				.withInternalId(INTERNAL_ID)
-				.withPostCode(POST_CODE)
-				.withStreet(STREET)
-				.withType(TYPE);
+			.withInternalId(INTERNAL_ID)
+			.withPlacementModified(PLACEMENT_MODIFIED)
+			.withPostCode(POST_CODE)
+			.withStreet(STREET)
+			.withType(TYPE);
 		
 		final var result = toInstalledBaseItems(List.of(entity));
 		
@@ -63,6 +70,9 @@ class InstalledBaseMapperTest {
 				InstalledBaseItem::getCity,
 				InstalledBaseItem::getCompany,
 				InstalledBaseItem::getCustomerNumber,
+				InstalledBaseItem::getDateFrom,
+				InstalledBaseItem::getDateTo,
+				InstalledBaseItem::getDateLastModified,
 				InstalledBaseItem::getMetaData,
 				InstalledBaseItem::getFacilityId,
 				InstalledBaseItem::getPlacementId,
@@ -75,6 +85,9 @@ class InstalledBaseMapperTest {
 				CITY,
 				COMPANY,
 				String.valueOf(CUSTOMER_ID),
+				DATE_FROM,
+				DATE_TO,
+				PLACEMENT_MODIFIED,
 				Collections.emptyList(),
 				FACILITY_ID,
 				INTERNAL_ID,
@@ -87,17 +100,20 @@ class InstalledBaseMapperTest {
 	@Test 
 	void toInstalledBaseItemsWithMetaData() {
 		final var entity = InstalledBaseItemEntity.create()
-				.withCareOf(CARE_OF)
-				.withCity(CITY)
-				.withCompany(COMPANY)
-				.withCustomerId(CUSTOMER_ID)
+			.withCareOf(CARE_OF)
+			.withCity(CITY)
+			.withCompany(COMPANY)
+			.withCustomerId(CUSTOMER_ID)
+			.withDateFrom(DATE_FROM)
+			.withDateTo(DATE_TO)
+			.withFacilityId(FACILITY_ID)
 			.withHouseName(HOUSE_NAME)
-				.withMetaData(List.of(createEmbeddableMetaData()))
-				.withFacilityId(FACILITY_ID)
-				.withInternalId(INTERNAL_ID)
-				.withPostCode(POST_CODE)
-				.withStreet(STREET)
-				.withType(TYPE);
+			.withInternalId(INTERNAL_ID)
+			.withMetaData(List.of(createEmbeddableMetaData()))
+			.withPlacementModified(PLACEMENT_MODIFIED)
+			.withPostCode(POST_CODE)
+			.withStreet(STREET)
+			.withType(TYPE);
 		
 		final var result = toInstalledBaseItems(List.of(entity));
 		
@@ -108,6 +124,9 @@ class InstalledBaseMapperTest {
 				InstalledBaseItem::getCity,
 				InstalledBaseItem::getCompany,
 				InstalledBaseItem::getCustomerNumber,
+				InstalledBaseItem::getDateFrom,
+				InstalledBaseItem::getDateTo,
+				InstalledBaseItem::getDateLastModified,
 				InstalledBaseItem::getFacilityId,
 				InstalledBaseItem::getPlacementId,
 				InstalledBaseItem::getPostCode,
@@ -119,6 +138,9 @@ class InstalledBaseMapperTest {
 				CITY,
 				COMPANY,
 				String.valueOf(CUSTOMER_ID),
+				DATE_FROM,
+				DATE_TO,
+				PLACEMENT_MODIFIED,
 				FACILITY_ID,
 				INTERNAL_ID,
 				POST_CODE,

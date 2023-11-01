@@ -62,6 +62,9 @@ public class InstalledBaseItemEntity {
 	@Column(name = "DateTo", insertable = false, updatable = false, columnDefinition = "datetime")
 	private LocalDate dateTo;
 
+	@Column(name = "PlacementStatusModified", insertable = false, updatable = false, columnDefinition = "varchar(50)")
+	private LocalDate placementModified;
+
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(SUBSELECT)
 	@BatchSize(size = 1000)
@@ -245,6 +248,19 @@ public class InstalledBaseItemEntity {
 		return this;
 	}
 
+	public LocalDate getPlacementModified() {
+		return placementModified;
+	}
+
+	public void setPlacementModified(LocalDate placementModified) {
+		this.placementModified = placementModified;
+	}
+
+	public InstalledBaseItemEntity withPlacementModified(LocalDate placementModified) {
+		this.placementModified = placementModified;
+		return this;
+	}
+
 	public List<InstalledBaseItemMetaDataEmbeddable> getMetaData() {
 		return metaData;
 	}
@@ -260,24 +276,29 @@ public class InstalledBaseItemEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(careOf, city, company, customerId, dateFrom, dateTo, facilityId, houseName, id, internalId, metaData, postCode, street, type);
+		return Objects.hash(careOf, city, company, customerId, dateFrom, dateTo, facilityId, houseName, id, internalId, metaData, placementModified, postCode, street, type);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) { return true; }
-		if (!(obj instanceof final InstalledBaseItemEntity other)) { return false; }
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof InstalledBaseItemEntity)) {
+			return false;
+		}
+		InstalledBaseItemEntity other = (InstalledBaseItemEntity) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerId, other.customerId) && Objects.equals(dateFrom, other.dateFrom) && Objects.equals(dateTo,
-			other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(houseName, other.houseName) && Objects.equals(id, other.id) && Objects.equals(internalId, other.internalId) && Objects.equals(metaData, other.metaData) && Objects
-				.equals(postCode, other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
+			other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(houseName, other.houseName) && Objects.equals(id, other.id) && Objects.equals(internalId, other.internalId) && Objects.equals(metaData, other.metaData)
+			&& Objects.equals(placementModified, other.placementModified) && Objects.equals(postCode, other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("InstalledBaseItemEntity [id=").append(id).append(", internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(careOf)
-			.append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom).append(
-				", dateTo=").append(dateTo).append(", metaData=").append(metaData).append("]");
+		StringBuilder builder = new StringBuilder();
+		builder.append("InstalledBaseItemEntity [id=").append(id).append(", internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(
+			careOf).append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom)
+			.append(", dateTo=").append(dateTo).append(", placementModified=").append(placementModified).append(", metaData=").append(metaData).append("]");
 		return builder.toString();
 	}
 }
