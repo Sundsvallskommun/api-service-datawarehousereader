@@ -66,7 +66,7 @@ class InstalledBaseItemTest {
 			.withStreet(street)
 			.withType(type);
 
-		assertThat(installedBase).hasNoNullFieldsOrProperties();
+		assertThat(installedBase).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(installedBase.getCareOf()).isEqualTo(careOf);
 		assertThat(installedBase.getCity()).isEqualTo(city);
 		assertThat(installedBase.getCompany()).isEqualTo(company);

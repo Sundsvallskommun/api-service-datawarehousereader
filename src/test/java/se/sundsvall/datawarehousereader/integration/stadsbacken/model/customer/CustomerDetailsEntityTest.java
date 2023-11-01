@@ -5,10 +5,10 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 class CustomerDetailsEntityTest {
@@ -60,30 +60,31 @@ class CustomerDetailsEntityTest {
 			.withCustomerChangedFlg(customerChangedFlg)
 			.withInstalledChangedFlg(installedChangedFlg);
 
-		Assertions.assertThat(entity.getCustomerId()).isEqualTo(customerId);
-		Assertions.assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
-		Assertions.assertThat(entity.getCustomerCategoryID()).isEqualTo(customerCategoryID);
-		Assertions.assertThat(entity.getCustomerCategoryDescription()).isEqualTo(customerCategoryDescription);
-		Assertions.assertThat(entity.getName()).isEqualTo(name);
-		Assertions.assertThat(entity.getCo()).isEqualTo(co);
-		Assertions.assertThat(entity.getAddress()).isEqualTo(address);
-		Assertions.assertThat(entity.getZipcode()).isEqualTo(zipcode);
-		Assertions.assertThat(entity.getCity()).isEqualTo(city);
-		Assertions.assertThat(entity.getPhone1()).isEqualTo(phone1);
-		Assertions.assertThat(entity.getPhone2()).isEqualTo(phone2);
-		Assertions.assertThat(entity.getPhone3()).isEqualTo(phone3);
-		Assertions.assertThat(entity.getEmail1()).isEqualTo(email1);
-		Assertions.assertThat(entity.getEmail2()).isEqualTo(email2);
-		Assertions.assertThat(entity.isCustomerChangedFlg()).isEqualTo(customerChangedFlg);
-		Assertions.assertThat(entity.isInstalledChangedFlg()).isEqualTo(installedChangedFlg);
+		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
+		assertThat(entity.getCustomerId()).isEqualTo(customerId);
+		assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
+		assertThat(entity.getCustomerCategoryID()).isEqualTo(customerCategoryID);
+		assertThat(entity.getCustomerCategoryDescription()).isEqualTo(customerCategoryDescription);
+		assertThat(entity.getName()).isEqualTo(name);
+		assertThat(entity.getCo()).isEqualTo(co);
+		assertThat(entity.getAddress()).isEqualTo(address);
+		assertThat(entity.getZipcode()).isEqualTo(zipcode);
+		assertThat(entity.getCity()).isEqualTo(city);
+		assertThat(entity.getPhone1()).isEqualTo(phone1);
+		assertThat(entity.getPhone2()).isEqualTo(phone2);
+		assertThat(entity.getPhone3()).isEqualTo(phone3);
+		assertThat(entity.getEmail1()).isEqualTo(email1);
+		assertThat(entity.getEmail2()).isEqualTo(email2);
+		assertThat(entity.isCustomerChangedFlg()).isEqualTo(customerChangedFlg);
+		assertThat(entity.isInstalledChangedFlg()).isEqualTo(installedChangedFlg);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		Assertions.assertThat(CustomerDetailsEntity.create()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg")
+		assertThat(CustomerDetailsEntity.create()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg")
 			.hasFieldOrPropertyWithValue("customerChangedFlg", false)
 			.hasFieldOrPropertyWithValue("installedChangedFlg", false);
-		Assertions.assertThat(new CustomerDetailsEntity()).hasAllNullFieldsOrPropertiesExcept( "customerChangedFlg", "installedChangedFlg")
+		assertThat(new CustomerDetailsEntity()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg")
 			.hasFieldOrPropertyWithValue("customerChangedFlg", false)
 			.hasFieldOrPropertyWithValue("installedChangedFlg", false);
 	}

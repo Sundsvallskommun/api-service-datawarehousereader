@@ -1,13 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
-import com.google.code.beanmatchers.BeanMatchers;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Random;
-
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
@@ -16,6 +8,15 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Random;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import com.google.code.beanmatchers.BeanMatchers;
 
 class MeasurementElectricityDayEntityTest {
 
@@ -41,6 +42,7 @@ class MeasurementElectricityDayEntityTest {
 		final var feedType = "feedType";
 		final var interpolation = Integer.valueOf(543210);
 		final var measurementTimestamp = LocalDateTime.now();
+		final var readingSequence = 654;
 		final var unit = "unit";
 		final var usage = BigDecimal.valueOf(123.456);
 		final var uuid = "uuid";
@@ -51,15 +53,18 @@ class MeasurementElectricityDayEntityTest {
 			.withFeedType(feedType)
 			.withInterpolation(interpolation)
 			.withMeasurementTimestamp(measurementTimestamp)
+			.withReadingSequence(readingSequence)
 			.withUnit(unit)
 			.withUsage(usage)
 			.withUuid(uuid);
 
+		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
 		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
 		assertThat(entity.getFeedType()).isEqualTo(feedType);
 		assertThat(entity.getInterpolation()).isEqualTo(interpolation);
 		assertThat(entity.getMeasurementTimestamp()).isEqualTo(measurementTimestamp);
+		assertThat(entity.getReadingSequence()).isEqualTo(readingSequence);
 		assertThat(entity.getUnit()).isEqualTo(unit);
 		assertThat(entity.getUsage()).isEqualTo(usage);
 		assertThat(entity.getUuid()).isEqualTo(uuid);

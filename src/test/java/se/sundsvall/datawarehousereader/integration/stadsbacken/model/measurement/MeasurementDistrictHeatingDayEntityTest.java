@@ -1,13 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
-import com.google.code.beanmatchers.BeanMatchers;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Random;
-
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
@@ -16,6 +8,15 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Random;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import com.google.code.beanmatchers.BeanMatchers;
 
 class MeasurementDistrictHeatingDayEntityTest {
 
@@ -57,6 +58,7 @@ class MeasurementDistrictHeatingDayEntityTest {
 			.withUsage(usage)
 			.withUuid(uuid);
 
+		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
 		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
 		assertThat(entity.getFeedType()).isEqualTo(feedType);

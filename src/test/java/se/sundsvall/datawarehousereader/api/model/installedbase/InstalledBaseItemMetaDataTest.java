@@ -36,6 +36,7 @@ class InstalledBaseItemMetaDataTest {
 			.withType(type)
 			.withValue(value);
 
+		assertThat(metaData).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(metaData.getDisplayName()).isEqualTo(displayName);
 		assertThat(metaData.getKey()).isEqualTo(key);
 		assertThat(metaData.getType()).isEqualTo(type);

@@ -70,7 +70,7 @@ class InstalledBaseItemEntityTest {
 			.withStreet(street)
 			.withType(type);
 
-		assertThat(entity).hasNoNullFieldsOrProperties();
+		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getId()).isEqualTo(id);
 		assertThat(entity.getCareOf()).isEqualTo(careOf);
 		assertThat(entity.getCity()).isEqualTo(city);

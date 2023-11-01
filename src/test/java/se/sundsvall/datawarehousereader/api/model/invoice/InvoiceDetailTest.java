@@ -57,6 +57,7 @@ class InvoiceDetailTest {
 			.withVatRate(vatRate)
 			.withOrganizationNumber(organizationNumber);
 
+		assertThat(detail).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(detail.getAmount()).isEqualTo(amount);
 		assertThat(detail.getAmountVatExcluded()).isEqualTo(amountVatExcluded);
 		assertThat(detail.getDescription()).isEqualTo(description);
