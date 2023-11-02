@@ -49,6 +49,7 @@ class CustomerDetailsParametersTest {
 			.withToDateTime(toDateTime)
 			.withFromDateTime(fromDateTime);
 
+		assertThat(parameters).isNotNull().hasNoNullFieldsOrPropertiesExcept("sortBy");
 		assertThat(parameters.getPartyId()).isEqualTo(partyId);
 		assertThat(parameters.getCustomerEngagementOrgId()).isEqualTo(customerEngagementOrgId);
 		assertThat(parameters.getToDateTime()).isEqualTo(toDateTime);

@@ -69,6 +69,7 @@ class AgreementParametersTest {
 			.withToDate(toDate)
 			.withActive(active);
 
+		assertThat(agreementParameters).isNotNull().hasNoNullFieldsOrPropertiesExcept("sortBy");
 		assertThat(agreementParameters.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(agreementParameters.getPartyId()).isEqualTo(partyId);
 		assertThat(agreementParameters.getCategory()).isEqualTo(categories);

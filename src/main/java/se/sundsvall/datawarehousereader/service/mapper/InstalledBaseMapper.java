@@ -30,6 +30,7 @@ public class InstalledBaseMapper {
 			.withDateFrom(entity.getDateFrom())
 			.withDateTo(entity.getDateTo())
 			.withFacilityId(entity.getFacilityId())
+			.withDateLastModified(entity.getPlacementModified())
 			.withMetaData(toMetaDatas(entity.getMetaData()))
 			.withPlacementId(entity.getInternalId())
 			.withPostCode(entity.getPostCode())

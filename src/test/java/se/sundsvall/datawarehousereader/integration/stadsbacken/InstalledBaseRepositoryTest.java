@@ -1,19 +1,21 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemMetaDataEmbeddable;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.mapper.InstalledBaseMapper.toExample;
 
 /**
  * Installed base repository tests.
@@ -30,7 +32,7 @@ class InstalledBaseRepositoryTest {
 
 	@Test
 	void getInstalledBaseNoMatch() {
-		final var page = repository.findAll(toExample(createParameters("99999", null, null)), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(createParameters("99999", null, null), PageRequest.of(0, 100));
 
 		assertThat(page.getNumber()).isZero();
 		assertThat(page.getNumberOfElements()).isZero();
@@ -41,7 +43,7 @@ class InstalledBaseRepositoryTest {
 
 	@Test
 	void getInstalledBaseNoFilters() {
-		final var page = repository.findAll(toExample(InstalledBaseParameters.create()), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(InstalledBaseParameters.create(), PageRequest.of(0, 100));
 
 		assertThat(page.getNumber()).isZero();
 		assertThat(page.getNumberOfElements()).isEqualTo(100);
@@ -52,7 +54,7 @@ class InstalledBaseRepositoryTest {
 
 	@Test
 	void getInstalledBaseByCustomerId() {
-		final var page = repository.findAll(toExample(createParameters("38308", null, null)), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(createParameters("38308", null, null), PageRequest.of(0, 100));
 
 		assertThat(page.getNumber()).isZero();
 		assertThat(page.getNumberOfElements()).isEqualTo(2);
@@ -78,7 +80,7 @@ class InstalledBaseRepositoryTest {
 
 	@Test
 	void getInstalledBaseByCustomerIdPageOneOfTwo() {
-		final var page = repository.findAll(toExample(createParameters("38308", null, null)), PageRequest.of(0, 1));
+		final var page = repository.findAllByParameters(createParameters("38308", null, null), PageRequest.of(0, 1));
 
 		assertThat(page.getNumber()).isZero();
 		assertThat(page.getNumberOfElements()).isEqualTo(1);
@@ -101,7 +103,7 @@ class InstalledBaseRepositoryTest {
 
 	@Test
 	void getInstalledBaseByCustomerIdAndCompany() {
-		final var page = repository.findAll(toExample(createParameters("600606", "Sundsvall Energi AB", null)), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(createParameters("600606", "Sundsvall Energi AB", null), PageRequest.of(0, 100));
 
 		assertThat(page.getNumber()).isZero();
 		assertThat(page.getNumberOfElements()).isEqualTo(4);
@@ -133,7 +135,7 @@ class InstalledBaseRepositoryTest {
 
 	@Test
 	void getInstalledBaseByFacilityId() {
-		final var page = repository.findAll(toExample(createParameters(null, null, "9111003092")), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(createParameters(null, null, "9111003092"), PageRequest.of(0, 100));
 
 		assertThat(page.getNumber()).isZero();
 		assertThat(page.getNumberOfElements()).isEqualTo(1);
@@ -153,6 +155,66 @@ class InstalledBaseRepositoryTest {
 			.containsExactly(tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, "Ankeborg 2", 2658, "9111003092", "Gatan 27", "Elhandel"));
 
 		assertThat(page.getContent().get(0).getMetaData()).containsExactly(createMetaDataPost("Sundsvall Energi AB", "Nätområde", "netarea", "location", "Malmö-Burlöv"));
+	}
+
+	@Test
+	void getInstalledBaseByCustomerIdAndModifiedBetween() {
+		final var params = createParameters("10335", "Sundsvall Energi AB", null);
+		params.setLastModifiedDateFrom(LocalDate.of(2017, 12, 3));
+		params.setLastModifiedDateTom(LocalDate.of(2017, 12, 6));
+
+		final var page = repository.findAllByParameters(params, PageRequest.of(0, 100));
+
+		assertThat(page.getNumber()).isZero();
+		assertThat(page.getNumberOfElements()).isEqualTo(4);
+		assertThat(page.getTotalPages()).isEqualTo(1);
+		assertThat(page.getTotalElements()).isEqualTo(4);
+		assertThat(page.getContent())
+			.hasSize(4)
+			.extracting(
+				InstalledBaseItemEntity::getCareOf,
+				InstalledBaseItemEntity::getCompany,
+				InstalledBaseItemEntity::getCustomerId,
+				InstalledBaseItemEntity::getInternalId,
+				InstalledBaseItemEntity::getFacilityId,
+				InstalledBaseItemEntity::getStreet,
+				InstalledBaseItemEntity::getType,
+				InstalledBaseItemEntity::getPlacementModified)
+			.containsExactly(
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38186, "735999109324902055", "Vägen 2223", "Elhandel", LocalDate.of(2017, 12, 3)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38126, "735999109144502091", "Gatan 21 B 4010170", "Elhandel", LocalDate.of(2017, 12, 4)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37817, "735999109144515107", "Vägen 1112", "Elhandel", LocalDate.of(2017, 12, 5)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, 12, 6)));
+	}
+
+	@Test
+	void getInstalledBaseByCustomerIdAndModifiedLaterThan() {
+		final var params = createParameters("10335", "Sundsvall Energi AB", null);
+		params.setLastModifiedDateFrom(LocalDate.of(2017, 12, 6));
+
+		final var page = repository.findAllByParameters(params, PageRequest.of(0, 100));
+
+		assertThat(page.getNumber()).isZero();
+		assertThat(page.getNumberOfElements()).isEqualTo(5);
+		assertThat(page.getTotalPages()).isEqualTo(1);
+		assertThat(page.getTotalElements()).isEqualTo(5);
+		assertThat(page.getContent())
+			.hasSize(5)
+			.extracting(
+				InstalledBaseItemEntity::getCareOf,
+				InstalledBaseItemEntity::getCompany,
+				InstalledBaseItemEntity::getCustomerId,
+				InstalledBaseItemEntity::getInternalId,
+				InstalledBaseItemEntity::getFacilityId,
+				InstalledBaseItemEntity::getStreet,
+				InstalledBaseItemEntity::getType,
+				InstalledBaseItemEntity::getPlacementModified)
+			.containsExactly(
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, 12, 6)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36920, "735999109122811214", "Gatan 27", "Elhandel", LocalDate.of(2017, 12, 7)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36827, "735999109140702235", "Gatan 4 B 4170153", "Elhandel", LocalDate.of(2017, 12, 7)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36437, "735999109141108111", "Gatan 32", "Elhandel", LocalDate.of(2017, 12, 8)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36019, "735999109141106155", "Vägen 6", "Elhandel", LocalDate.of(2017, 12, 8)));
 	}
 
 	private static InstalledBaseParameters createParameters(String customerNumber, String company, String facilityId) {

@@ -83,7 +83,6 @@ class InvoiceTest {
 			.withInvoiceDescription(invoiceDescription)
 			.withInvoiceName(invoiceName)
 			.withInvoiceNumber(invoiceNumber)
-
 			.withInvoiceStatus(invoiceStatus)
 			.withInvoiceType(invoiceType)
 			.withOcrNumber(ocrNumber)
@@ -98,6 +97,7 @@ class InvoiceTest {
 			.withVatEligibleAmount(vatEligibleAmount)
 			.withPdfAvailable(pdfAvailable);
 
+		assertThat(invoice).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(invoice)
 			.extracting(
 				Invoice::getAdministration,

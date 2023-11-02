@@ -30,19 +30,23 @@ class CustomerEngagementTest {
 		final var customerNumber = "101";
 		final var partyId = "partyId";
 		final var customerType = CustomerType.PRIVATE;
+		final var customerOrgNumber = "customerOrgNumber";
 		final var organizationNumber = "organizationNumber";
 		final var organizationName = "organizationName";
 
 		final var customer = CustomerEngagement.create()
 			.withCustomerNumber(customerNumber)
 			.withPartyId(partyId)
+			.withCustomerOrgNumber(customerOrgNumber)
 			.withCustomerType(customerType)
 			.withOrganizationNumber(organizationNumber)
 			.withOrganizationName(organizationName);
 
+		assertThat(customer).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(customer.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(customer.getPartyId()).isEqualTo(partyId);
 		assertThat(customer.getCustomerType()).isEqualTo(customerType);
+		assertThat(customer.getCustomerOrgNumber()).isEqualTo(customerOrgNumber);
 		assertThat(customer.getOrganizationNumber()).isEqualTo(organizationNumber);
 		assertThat(customer.getOrganizationName()).isEqualTo(organizationName);
 	}

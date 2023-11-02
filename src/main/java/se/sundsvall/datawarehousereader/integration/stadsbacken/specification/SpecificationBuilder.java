@@ -53,18 +53,18 @@ public class SpecificationBuilder<T> {
 	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
 	 * @param attribute name of attribute (of type date) that will be used in filter
 	 * @param dateFrom date from (or null) to compare against
-	 * @param dateTo date tom (or null) to compare against
+	 * @param dateTom date tom (or null) to compare against
 	 * @return Specification<T> matching sent in comparison
 	 */
-	public Specification<T> buildDateFilter(String attribute, LocalDate dateFrom, LocalDate dateTo) {
+	public Specification<T> buildDateFilter(String attribute, LocalDate dateFrom, LocalDate dateTom) {
 		return (invoiceEntity, cq, cb) -> {
 
-			if (nonNull(dateFrom) && nonNull(dateTo) ) {
-				return cb.between(invoiceEntity.get(attribute), dateFrom, dateTo);
+			if (nonNull(dateFrom) && nonNull(dateTom) ) {
+				return cb.between(invoiceEntity.get(attribute), dateFrom, dateTom);
 			} else if (nonNull(dateFrom)) {
 				return cb.greaterThanOrEqualTo(invoiceEntity.get(attribute), dateFrom);
-			} else if (nonNull(dateTo)) {
-				return cb.lessThanOrEqualTo(invoiceEntity.get(attribute), dateTo);
+			} else if (nonNull(dateTom)) {
+				return cb.lessThanOrEqualTo(invoiceEntity.get(attribute), dateTom);
 			}
 
 			// always-true predicate, meaning that if no dateFrom or to has been set, no filtering will be applied

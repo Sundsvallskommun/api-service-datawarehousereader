@@ -56,6 +56,7 @@ class MeasurementElectricityHourEntityTest {
 			.withUsage(usage)
 			.withUuid(uuid);
 
+		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
 		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
 		assertThat(entity.getFeedType()).isEqualTo(feedType);
