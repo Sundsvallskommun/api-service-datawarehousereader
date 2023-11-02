@@ -43,6 +43,7 @@ class InstalledBaseItemTest {
 		final var customerNumber = "101";
 		final var dateFrom = LocalDate.MIN;
 		final var dateTo = LocalDate.MAX;
+		final var lastModifiedDate = LocalDate.now();
 		final var facilityId = "facilityId";
 		final var metaData = List.of(InstalledBaseItemMetaData.create());
 		final var postCode = "postCode";
@@ -58,12 +59,14 @@ class InstalledBaseItemTest {
 			.withDateFrom(dateFrom)
 			.withDateTo(dateTo)
 			.withFacilityId(facilityId)
+			.withDateLastModified(lastModifiedDate)
 			.withMetaData(metaData)
 			.withPostCode(postCode)
 			.withPropertyDesignation(propertyDesignation)
 			.withStreet(street)
 			.withType(type);
 
+		assertThat(installedBase).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(installedBase.getCareOf()).isEqualTo(careOf);
 		assertThat(installedBase.getCity()).isEqualTo(city);
 		assertThat(installedBase.getCompany()).isEqualTo(company);
@@ -71,6 +74,7 @@ class InstalledBaseItemTest {
 		assertThat(installedBase.getDateFrom()).isEqualTo(dateFrom);
 		assertThat(installedBase.getDateTo()).isEqualTo(dateTo);
 		assertThat(installedBase.getFacilityId()).isEqualTo(facilityId);
+		assertThat(installedBase.getDateLastModified()).isEqualTo(lastModifiedDate);
 		assertThat(installedBase.getMetaData()).isEqualTo(metaData);
 		assertThat(installedBase.getPostCode()).isEqualTo(postCode);
 		assertThat(installedBase.getPropertyDesignation()).isEqualTo(propertyDesignation);

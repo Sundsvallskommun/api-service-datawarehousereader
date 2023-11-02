@@ -8,17 +8,17 @@ INSERT INTO kundinfo.vCustomer (customerid, customerorgid, customertype, organiz
 	 (10335,N'5534567890', N'Enterprise', N'5565027223', N'Sundsvall Elnät');
 
 -- vInstalledBase
-INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName) VALUES
-	 (1,-41159,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2017-08-27 00:00:00.0',NULL,N'735999109144515039',N'85353',N'Vägen 1112',N'Elhandel',NULL),
-	 (2,-38413,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109232306327',NULL,N'Gatan 44',N'Elhandel',NULL),
-	 (3,-38186,N'Fastighetsförmedling AB',N'Alnö',N'Sundsvall Energi AB',10335,'2008-02-13 00:00:00.0',NULL,N'735999109324902055',N'86532',N'Vägen 2223',N'Elhandel',NULL),
-	 (4,-38126,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2019-11-06 00:00:00.0',NULL,N'735999109144502091',NULL,N'Gatan 21 B 4010170',N'Elhandel',NULL),
-	 (5,-37817,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109144515107',N'85353',N'Vägen 1112',N'Elhandel',NULL),
-	 (6,-37402,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2001-07-11 00:00:00.0',NULL,N'735999109144517538',NULL,N'Gatan 17 F 4010965',N'Elhandel',NULL),
-	 (7,-36920,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109122811214',NULL,N'Gatan 27',N'Elhandel',NULL),
-	 (8,-36827,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2005-10-13 00:00:00.0',NULL,N'735999109140702235',NULL,N'Gatan 4 B 4170153',N'Elhandel',NULL),
-	 (9,-36437,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2004-04-14 00:00:00.0',NULL,N'735999109141108111',N'85356',N'Gatan 32',N'Elhandel',NULL),
-	 (10,-36019,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2001-07-11 00:00:00.0',NULL,N'735999109141106155',N'85353',N'Vägen 6',N'Elhandel',NULL);
+INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName,PlacementStatusModified) VALUES
+	 (1,-41159,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2017-08-27 00:00:00.0',NULL,N'735999109144515039',N'85353',N'Vägen 1112',N'Elhandel',NULL,'2017-12-01 00:00:00.0'),
+	 (2,-38413,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109232306327',NULL,N'Gatan 44',N'Elhandel',NULL,'2017-12-01 00:00:00.0'),
+	 (3,-38186,N'Fastighetsförmedling AB',N'Alnö',N'Sundsvall Energi AB',10335,'2008-02-13 00:00:00.0',NULL,N'735999109324902055',N'86532',N'Vägen 2223',N'Elhandel',NULL,'2017-12-03 00:00:00.0'),
+	 (4,-38126,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2019-11-06 00:00:00.0',NULL,N'735999109144502091',NULL,N'Gatan 21 B 4010170',N'Elhandel',NULL,'2017-12-04 00:00:00.0'),
+	 (5,-37817,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109144515107',N'85353',N'Vägen 1112',N'Elhandel',NULL,'2017-12-05 00:00:00.0'),
+	 (6,-37402,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2001-07-11 00:00:00.0',NULL,N'735999109144517538',NULL,N'Gatan 17 F 4010965',N'Elhandel',NULL,'2017-12-06 00:00:00.0'),
+	 (7,-36920,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109122811214',NULL,N'Gatan 27',N'Elhandel',NULL,'2017-12-07 00:00:00.0'),
+	 (8,-36827,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2005-10-13 00:00:00.0',NULL,N'735999109140702235',NULL,N'Gatan 4 B 4170153',N'Elhandel',NULL,'2017-12-07 00:00:00.0'),
+	 (9,-36437,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2004-04-14 00:00:00.0',NULL,N'735999109141108111',N'85356',N'Gatan 32',N'Elhandel',NULL,'2017-12-08 00:00:00.0'),
+	 (10,-36019,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2001-07-11 00:00:00.0',NULL,N'735999109141106155',N'85353',N'Vägen 6',N'Elhandel',NULL,'2017-12-08 00:00:00.0');
 INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName) VALUES
 	 (11,-34515,N'Fastighetsförmedling AB',N'SUNDSVALL',N'Sundsvall Energi AB',10335,'2006-05-23 00:00:00.0',NULL,N'735999109114706085',N'85236',N'Allén 20 lgh 1105',N'Elhandel',NULL),
 	 (12,-34473,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2001-07-11 00:00:00.0',NULL,N'735999109231807177',N'85630',N'Gatan 33',N'Elhandel',NULL),

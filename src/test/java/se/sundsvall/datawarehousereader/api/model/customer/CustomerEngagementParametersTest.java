@@ -39,6 +39,7 @@ class CustomerEngagementParametersTest {
 			.withOrganizationNumber(organizationNumber)
 			.withPartyId(partyId);
 
+		assertThat(customerParameters).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(customerParameters.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(customerParameters.getOrganizationName()).isEqualTo(organizationName);
 		assertThat(customerParameters.getOrganizationNumber()).isEqualTo(organizationNumber);

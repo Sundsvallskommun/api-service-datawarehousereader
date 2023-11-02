@@ -13,9 +13,10 @@ import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 import java.time.LocalDate;
 import java.util.Random;
 
-import com.google.code.beanmatchers.BeanMatchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import com.google.code.beanmatchers.BeanMatchers;
 
 class AgreementTest {
 
@@ -65,6 +66,7 @@ class AgreementTest {
 			.withToDate(toDate)
 			.withActive(active);
 
+		assertThat(agreement).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(agreement.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(agreement.getPartyId()).isEqualTo(partyId);
 		assertThat(agreement.getCategory()).isEqualTo(category);

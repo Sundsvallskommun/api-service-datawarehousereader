@@ -32,6 +32,7 @@ class MeasurementMetaDataTest {
 			.withKey(key)
 			.withValue(value);
 
+		assertThat(bean).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(bean.getKey()).isEqualTo(key);
 		assertThat(bean.getValue()).isEqualTo(value);
 	}

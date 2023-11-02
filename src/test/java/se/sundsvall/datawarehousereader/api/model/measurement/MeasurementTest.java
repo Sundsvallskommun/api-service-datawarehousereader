@@ -63,6 +63,7 @@ class MeasurementTest {
 			.withUnit(unit)
 			.withValue(value);
 
+		assertThat(bean).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(bean.getAggregatedOn()).isEqualTo(aggregatedOn);
 		assertThat(bean.getCategory()).isEqualTo(category);
 		assertThat(bean.getFacilityId()).isEqualTo(facilityId);

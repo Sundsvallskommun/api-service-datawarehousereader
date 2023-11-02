@@ -1,7 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer;
 
-import org.junit.jupiter.api.Test;
-
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
@@ -10,6 +8,8 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
+
+import org.junit.jupiter.api.Test;
 
 class CustomerEntityTest {
 
@@ -38,6 +38,7 @@ class CustomerEntityTest {
 			.withOrganizationId(organizationId)
 			.withOrganizationName(organizationName);
 
+		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerId()).isEqualTo(customerId);
 		assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
 		assertThat(entity.getCustomerType()).isEqualTo(customerType);
