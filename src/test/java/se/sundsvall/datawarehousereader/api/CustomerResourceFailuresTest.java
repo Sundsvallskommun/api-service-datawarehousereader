@@ -1,18 +1,20 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
 import se.sundsvall.datawarehousereader.Application;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
 import se.sundsvall.datawarehousereader.service.CustomerService;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -109,5 +111,21 @@ class CustomerResourceFailuresTest {
 				[organizationId, customerType, organizationName, customerId, customerOrgId].""");
 
 		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
+	void getCustomerDetailsNoPartyIdAndCustomerEngagementOrgId() {
+		when(serviceMock.getCustomerDetails(any())).thenReturn(CustomerDetailsResponse.create());
+
+		webTestClient.get()
+			.uri("/customer/details")
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody()
+			.jsonPath("$.title").isEqualTo("Constraint Violation")
+			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
+			.jsonPath("$.violations[0].field").isEqualTo("getCustomerDetails.searchParams")
+			.jsonPath("$.violations[0].message").isEqualTo("'partyId' or 'customerEngagementOrgId' must be provided");
 	}
 }

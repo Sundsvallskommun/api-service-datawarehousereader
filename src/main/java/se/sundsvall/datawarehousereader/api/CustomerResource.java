@@ -23,6 +23,7 @@ import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParame
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
+import se.sundsvall.datawarehousereader.api.validation.ValidCustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.service.CustomerService;
 
 @RestController
@@ -49,7 +50,7 @@ public class CustomerResource {
 	@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true)
 	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = { Problem.class, ConstraintViolationProblem.class })))
 	@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
-	public ResponseEntity<CustomerDetailsResponse> getCustomerDetails(@Valid CustomerDetailsParameters searchParams) {
+	public ResponseEntity<CustomerDetailsResponse> getCustomerDetails(@Valid @ValidCustomerDetailsParameters CustomerDetailsParameters searchParams) {
 
 		return ok(service.getCustomerDetails(searchParams));
 	}
