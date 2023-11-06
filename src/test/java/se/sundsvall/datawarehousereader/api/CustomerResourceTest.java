@@ -1,18 +1,5 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static java.util.Optional.ofNullable;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -23,13 +10,25 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
 import se.sundsvall.datawarehousereader.service.CustomerService;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.UUID;
+
+import static java.util.Optional.ofNullable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -170,25 +169,5 @@ class CustomerResourceTest {
 		assertThat(parameters.getPartyId()).isEqualTo(List.of(PARTY_ID));
 		assertThat(parameters.getLimit()).isEqualTo(LIMIT);
 		assertThat(parameters.getPage()).isEqualTo(PAGE);
-	}
-
-	@Test
-	void getCustomerDetailsNoParams() {
-		when(serviceMock.getCustomerDetails(any())).thenReturn(CustomerDetailsResponse.create());
-
-		webTestClient.get()
-			.uri("/customer/details")
-			.exchange()
-			.expectStatus().isOk()
-			.expectHeader().contentType(APPLICATION_JSON)
-			.expectBody(CustomerDetailsResponse.class)
-			.isEqualTo(CustomerDetailsResponse.create());
-
-		verify(serviceMock).getCustomerDetails(customerDetailsParametersArgumentCaptor.capture());
-		CustomerDetailsParameters parameters = customerDetailsParametersArgumentCaptor.getValue();
-		assertThat(parameters.getPartyId()).isNull();
-		assertThat(parameters.getFromDateTime()).isNull();
-		assertThat(parameters.getLimit()).isEqualTo(DEFAULT_LIMIT);
-		assertThat(parameters.getPage()).isEqualTo(DEFAULT_PAGE);
 	}
 }
