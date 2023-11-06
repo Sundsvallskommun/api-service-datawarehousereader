@@ -125,7 +125,7 @@ class CustomerResourceFailuresTest {
 			.expectBody()
 			.jsonPath("$.title").isEqualTo("Constraint Violation")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.violations[0].field").isEqualTo("getCustomerDetails.searchParams")
+			.jsonPath("$.violations[0].field").isEqualTo("customerDetailsParameters")
 			.jsonPath("$.violations[0].message").isEqualTo("'partyId' or 'customerEngagementOrgId' must be provided");
 	}
 }
