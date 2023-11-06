@@ -3,6 +3,7 @@ package se.sundsvall.datawarehousereader.api.model.customer;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.format.annotation.DateTimeFormat;
+import se.sundsvall.datawarehousereader.api.validation.ValidCustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidOrganizationNumber;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
@@ -17,6 +18,7 @@ import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIR
 
 @Schema(description = "Customer details request parameters model")
 @ValidSortByProperty(CustomerDetailsEntity.class)
+@ValidCustomerDetailsParameters
 public class CustomerDetailsParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ArraySchema(schema = @Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1"))
