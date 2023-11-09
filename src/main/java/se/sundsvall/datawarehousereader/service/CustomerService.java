@@ -2,7 +2,6 @@ package se.sundsvall.datawarehousereader.service;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang3.StringUtils.isNotBlank;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasText;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
@@ -89,7 +88,7 @@ public class CustomerService {
 	//Since we can't use specifications, make sure we only query data that we have.
 	private Page<CustomerDetailsEntity> getCustomerDetailsWithParameters(final LocalDateTime fromDateTime, final CustomerDetailsParameters parameters, Pageable pageable) {
 		//We have both orgId and partyIds
-		if (isNotBlank(parameters.getCustomerEngagementOrgId()) && !isEmpty(parameters.getPartyId())) {
+		if (!isEmpty(parameters.getPartyId())) {
 			return detailsRepository.findWithCustomerEngagementOrgIdAndPartyIds(fromDateTime, parameters.getCustomerEngagementOrgId(), parameters.getPartyId(), pageable);
 		}
 		//We have only orgId

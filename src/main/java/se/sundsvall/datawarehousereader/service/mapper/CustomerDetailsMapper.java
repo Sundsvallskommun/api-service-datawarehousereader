@@ -25,7 +25,7 @@ public class CustomerDetailsMapper {
 		return CustomerDetails.create()
 			.withPartyId(entity.getUuid() != null ? entity.getUuid().toLowerCase(): null)
 			.withCustomerOrgNumber(entity.getCustomerOrgId())
-			.withcustomerEngagementOrgId(entity.getOrganizationId())
+			.withCustomerEngagementOrgId(entity.getOrganizationId())
 			.withCustomerEngagementOrgName(entity.getOrganizationName())
 			.withCustomerNumber(ServiceUtil.toString(entity.getCustomerId()))
 			.withCustomerName(entity.getName())

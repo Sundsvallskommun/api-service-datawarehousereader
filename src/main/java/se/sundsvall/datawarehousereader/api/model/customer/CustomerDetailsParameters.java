@@ -1,6 +1,6 @@
 package se.sundsvall.datawarehousereader.api.model.customer;
 
-import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.NOT_REQUIRED;
+import static io.swagger.v3.oas.annotations.media.Schema.RequiredMode.REQUIRED;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -27,7 +27,7 @@ public class CustomerDetailsParameters extends AbstractParameterPagingAndSorting
 	private List<@ValidUuid String> partyId;
 
 	@ValidOrganizationNumber
-	@Schema(description = "Organization id for customer engagements", requiredMode = NOT_REQUIRED)
+	@Schema(description = "Organization id for customer engagements", requiredMode = REQUIRED)
 	private String customerEngagementOrgId;
 
 	@Schema(description = "Date and time for when to search for changes from. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")

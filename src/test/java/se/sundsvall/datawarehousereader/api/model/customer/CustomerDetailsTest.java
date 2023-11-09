@@ -44,7 +44,7 @@ class CustomerDetailsTest {
 
 		final var customer = CustomerDetails.create()
 				.withCustomerEngagementOrgName(customerEngagementOrgName)
-				.withcustomerEngagementOrgId(customerEngagementOrgId)
+				.withCustomerEngagementOrgId(customerEngagementOrgId)
 			.withCustomerOrgNumber(customerOrgNumber)
 			.withPartyId(partyId)
 			.withCustomerCategoryDescription(customerCategoryDescription)

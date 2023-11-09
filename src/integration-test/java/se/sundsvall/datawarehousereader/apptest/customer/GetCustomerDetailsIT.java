@@ -22,7 +22,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test01_getWithOrgNoAndPartyIds() {
 		setupCall()
-			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d79&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d80&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d81&customerEngagementOrgId=5564786647")
+			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d80&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d81&customerEngagementOrgId=5564786647")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
