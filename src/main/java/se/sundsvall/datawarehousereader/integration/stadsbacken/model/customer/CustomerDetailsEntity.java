@@ -21,6 +21,12 @@ public class CustomerDetailsEntity {
 	@Column(name = "CustomerOrgId", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
 	private String customerOrgId;
 
+	@Column(name = "organizationid", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
+	private String organizationId;
+
+	@Column(name = "organizationname", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
+	private String organizationName;
+
 	@Column(name = "CustomerCategoryID", insertable = false, updatable = false)
 	private Integer customerCategoryID;
 
@@ -78,6 +84,32 @@ public class CustomerDetailsEntity {
 
 	public void setCustomerOrgId(final String customerOrgId) {
 		this.customerOrgId = customerOrgId;
+	}
+
+	public CustomerDetailsEntity withOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
+		return this;
+	}
+
+	public String getOrganizationId() {
+		return organizationId;
+	}
+
+	public void setOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
+	}
+
+	public CustomerDetailsEntity withOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
+		return this;
+	}
+
+	public String getOrganizationName() {
+		return organizationName;
+	}
+
+	public void setOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 	}
 
 	public CustomerDetailsEntity withCustomerId(Integer customerId) {
@@ -294,6 +326,8 @@ public class CustomerDetailsEntity {
 				"customerId=" + customerId +
 				", uuid='" + uuid + '\'' +
 				", customerOrgId='" + customerOrgId + '\'' +
+				", organizationId='" + organizationId + '\'' +
+				", organizationName='" + organizationName + '\'' +
 				", customerCategoryID=" + customerCategoryID +
 				", customerCategoryDescription='" + customerCategoryDescription + '\'' +
 				", name='" + name + '\'' +
@@ -316,11 +350,11 @@ public class CustomerDetailsEntity {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		CustomerDetailsEntity that = (CustomerDetailsEntity) o;
-		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(uuid, that.uuid) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
+		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(uuid, that.uuid) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(organizationId, that.organizationId) && Objects.equals(organizationName, that.organizationName) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, uuid, customerOrgId, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
+		return Objects.hash(customerId, uuid, customerOrgId, organizationId, organizationName, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
 	}
 }

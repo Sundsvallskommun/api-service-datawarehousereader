@@ -1,6 +1,8 @@
 {
   "customerDetails": [
 	{
+	  "customerEngagementOrgId": "5564786647",
+	  "customerEngagementOrgName": "Sundsvall Energi AB",
 	  "partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d79",
 	  "customerNumber": "123454",
 	  "customerName": "Test Testorsson",
@@ -19,6 +21,8 @@
 	  "installedChangedFlg": true
 	},
 	{
+	  "customerEngagementOrgId": "5564786647",
+	  "customerEngagementOrgName": "Sundsvall Energi AB",
 	  "partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d80",
 	  "customerNumber": "123455",
 	  "customerName": "Test Testorsson",
@@ -37,6 +41,8 @@
 	  "installedChangedFlg": true
 	},
 	{
+	  "customerEngagementOrgId": "5564786647",
+	  "customerEngagementOrgName": "Sundsvall Energi AB",
 	  "partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d81",
 	  "customerNumber": "123456",
 	  "customerName": "Test Testorsson",

@@ -42,6 +42,8 @@
         Phone3 nvarchar(255),
         Zipcode nvarchar(255),
         [c/o] nvarchar(255),
+        organizationid nvarchar(255),
+        organizationname nvarchar(255),
         uuid uniqueidentifier,
         primary key (Customerid)
     );
@@ -199,3 +201,4 @@
         uuid uniqueidentifier,
         primary key (Usage, isInterpolted, DateFrom, customerorgid, facilityId, feedType, unit)
     );
+

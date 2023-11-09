@@ -42,6 +42,8 @@ class CustomerDetailsEntityTest {
 		final var customerChangedFlg = true;
 		final var installedChangedFlg = true;
 		final var uuid = "123893ec-3b89-4660-a316-f4b2b83c4689";
+		final var organizationId = "organizationId";
+		final var organizationName = "organizationName";
 
 		final var entity = CustomerDetailsEntity.create()
 			.withCustomerOrgId(customerOrgId)
@@ -60,7 +62,9 @@ class CustomerDetailsEntityTest {
 			.withEmail2(email2)
 			.withCustomerChangedFlg(customerChangedFlg)
 			.withInstalledChangedFlg(installedChangedFlg)
-			.withUuid(uuid);
+			.withUuid(uuid)
+			.withOrganizationId(organizationId)
+			.withOrganizationName(organizationName);
 
 		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerId()).isEqualTo(customerId);
@@ -80,6 +84,8 @@ class CustomerDetailsEntityTest {
 		assertThat(entity.isCustomerChangedFlg()).isEqualTo(customerChangedFlg);
 		assertThat(entity.isInstalledChangedFlg()).isEqualTo(installedChangedFlg);
 		assertThat(entity.getUuid()).isEqualTo(uuid);
+		assertThat(entity.getOrganizationId()).isEqualTo(organizationId);
+		assertThat(entity.getOrganizationName()).isEqualTo(organizationName);
 	}
 
 	@Test

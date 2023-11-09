@@ -127,6 +127,7 @@ class CustomerResourceFailuresTest {
 			.jsonPath("$.title").isEqualTo("Constraint Violation")
 			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
 			.jsonPath("$.violations[0].field").isEqualTo("customerDetailsParameters")
-			.jsonPath("$.violations[0].message").isEqualTo("'partyId' or 'customerEngagementOrgId' must be provided");
+			.jsonPath("$.violations[0].message").isEqualTo("'customerEngagementOrgId' must be provided")
+			.jsonPath("$.violations[1].message").isEqualTo("must match the regular expression ^([1235789][\\d][2-9]\\d{7})$");
 	}
 }

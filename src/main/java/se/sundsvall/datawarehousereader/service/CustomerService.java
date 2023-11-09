@@ -7,7 +7,6 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasText;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
-import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.addHyphen;
 import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
 
 import java.time.LocalDateTime;
@@ -91,15 +90,11 @@ public class CustomerService {
 	private Page<CustomerDetailsEntity> getCustomerDetailsWithParameters(final LocalDateTime fromDateTime, final CustomerDetailsParameters parameters, Pageable pageable) {
 		//We have both orgId and partyIds
 		if (isNotBlank(parameters.getCustomerEngagementOrgId()) && !isEmpty(parameters.getPartyId())) {
-			return detailsRepository.findWithCustomerEngagementOrgIdAndPartyIds(fromDateTime, addHyphen(parameters.getCustomerEngagementOrgId()), parameters.getPartyId(), pageable);
+			return detailsRepository.findWithCustomerEngagementOrgIdAndPartyIds(fromDateTime, parameters.getCustomerEngagementOrgId(), parameters.getPartyId(), pageable);
 		}
 		//We have only orgId
-		else if (isNotBlank(parameters.getCustomerEngagementOrgId()) && isEmpty(parameters.getPartyId())) {
-			return detailsRepository.findWithCustomerEngagementOrgId(fromDateTime, addHyphen(parameters.getCustomerEngagementOrgId()), pageable);
-		}
-		//We only have partyIds
 		else {
-			return detailsRepository.findWithPartyIds(fromDateTime, parameters.getPartyId(), pageable);
+			return detailsRepository.findWithCustomerEngagementOrgId(fromDateTime, parameters.getCustomerEngagementOrgId(), pageable);
 		}
 	}
 

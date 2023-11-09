@@ -64,9 +64,6 @@ class CustomerServiceTest {
 	private Page<CustomerEntity> pageMock;
 
 	@Mock
-	private Page<CustomerDetailsEntity> pageDetailsMock;
-
-	@Mock
 	private CustomerEntity entityMock;
 
 	@InjectMocks
@@ -77,9 +74,6 @@ class CustomerServiceTest {
 
 	@Captor
 	private ArgumentCaptor<List<String>> customerOrgIdsCaptor;
-
-	@Captor
-	private ArgumentCaptor<List<String>> uuidsCaptor;
 
 	@Captor
 	private ArgumentCaptor<Pageable> pageableCaptor;
@@ -128,8 +122,13 @@ class CustomerServiceTest {
 	@Test
 	void getDetailsWithPartyIdSet() {
 		final var randomUUID = UUID.randomUUID().toString();
+		final var customerOrgId = "1020000000";
+		final var customerEngagementOrgId = "5565027223";
+		final var customerEngagementOrgname = "Elnät AB";
+		final var organizationId = "5565027223";
 
 		final var params = CustomerDetailsParameters.create();
+		params.setCustomerEngagementOrgId(customerEngagementOrgId);
 		params.setPartyId(List.of(randomUUID));
 		params.setFromDateTime(OffsetDateTime.now());
 		params.setLimit(100);
@@ -139,7 +138,9 @@ class CustomerServiceTest {
 		Page<CustomerDetailsEntity> pages = new PageImpl<>(List.of(
 				CustomerDetailsEntity.create()
 						.withUuid(randomUUID)
-						.withCustomerOrgId("102000-0000")
+						.withOrganizationId(organizationId)
+						.withOrganizationName(customerEngagementOrgname)
+						.withCustomerOrgId(customerOrgId)
 						.withCustomerId(1)
 						.withCustomerCategoryID(2)
 						.withCustomerCategoryDescription("customerCategoryDescription")
@@ -156,16 +157,18 @@ class CustomerServiceTest {
 						.withCustomerChangedFlg(true)
 						.withInstalledChangedFlg(true)));
 
-		when(customerDetailsRepositoryMock.findWithPartyIds(any(LocalDateTime.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pages);
+		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(List.of(randomUUID)), pageableCaptor.capture())).thenReturn(pages);
 
 		final var result = service.getCustomerDetails(params);
 
-		verify(customerDetailsRepositoryMock).findWithPartyIds(any(LocalDateTime.class), uuidsCaptor.capture(), pageableCaptor.capture());
+		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(List.of(randomUUID)), pageableCaptor.capture());
 
 		assertThat(result.getCustomerDetails())
 			.hasSize(1)
 			.extracting(
 				CustomerDetails::getPartyId,
+				CustomerDetails::getCustomerEngagementOrgId,
+				CustomerDetails::getCustomerEngagementOrgName,
 				CustomerDetails::getCustomerOrgNumber,
 				CustomerDetails::getCustomerCategoryID,
 				CustomerDetails::getCustomerCategoryDescription,
@@ -180,7 +183,9 @@ class CustomerServiceTest {
 				CustomerDetails::isInstalledChangedFlg)
 			.containsExactly(tuple(
 				randomUUID,
-				"102000-0000",
+				customerEngagementOrgId,
+				customerEngagementOrgname,
+				customerOrgId,
 				2,
 				"customerCategoryDescription",
 				"Name",
@@ -205,9 +210,13 @@ class CustomerServiceTest {
 	@Test
 	void getDetailsWithCustomerEngagementOrgIdSet() {
 		final var randomUUID = UUID.randomUUID().toString();
+		final var customerOrgId = "1020000000";
+		final var customerEngagementOrgId = "5565027223";
+		final var customerEngagementOrgname = "Elnät AB";
+		final var organizationId = "5565027223";
 
 		final var params = CustomerDetailsParameters.create();
-		params.setCustomerEngagementOrgId("1020000000");
+		params.setCustomerEngagementOrgId(customerOrgId);
 		params.setFromDateTime(OffsetDateTime.now());
 		params.setPage(1);
 		params.setLimit(100);
@@ -216,7 +225,9 @@ class CustomerServiceTest {
 		Page<CustomerDetailsEntity> pages = new PageImpl<>(List.of(
 				CustomerDetailsEntity.create()
 						.withUuid(randomUUID)
-						.withCustomerOrgId("102000-0000")
+						.withCustomerOrgId(customerOrgId)
+						.withOrganizationId(customerEngagementOrgId)
+						.withOrganizationName(customerEngagementOrgname)
 						.withCustomerId(1)
 						.withCustomerCategoryID(2)
 						.withCustomerCategoryDescription("customerCategoryDescription")
@@ -233,16 +244,18 @@ class CustomerServiceTest {
 						.withCustomerChangedFlg(true)
 						.withInstalledChangedFlg(true)));
 
-		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq("102000-0000"), pageableCaptor.capture())).thenReturn(pages);
+		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerOrgId), pageableCaptor.capture())).thenReturn(pages);
 
 		final var result = service.getCustomerDetails(params);
 
-		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq("102000-0000"), pageableCaptor.capture());
+		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerOrgId), pageableCaptor.capture());
 
 		assertThat(result.getCustomerDetails())
 			.hasSize(1)
 			.extracting(
 				CustomerDetails::getPartyId,
+				CustomerDetails::getCustomerEngagementOrgId,
+				CustomerDetails::getCustomerEngagementOrgName,
 				CustomerDetails::getCustomerOrgNumber,
 				CustomerDetails::getCustomerCategoryID,
 				CustomerDetails::getCustomerCategoryDescription,
@@ -257,7 +270,9 @@ class CustomerServiceTest {
 				CustomerDetails::isInstalledChangedFlg)
 			.containsExactly(tuple(
 				randomUUID,
-				"102000-0000",
+				customerEngagementOrgId,
+				customerEngagementOrgname,
+				customerOrgId,
 				2,
 				"customerCategoryDescription",
 				"Name",
@@ -339,7 +354,7 @@ class CustomerServiceTest {
 		final var params = CustomerEngagementParameters.create().withCustomerNumber(customerNumber);
 		final var customerType = CustomerType.PRIVATE;
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
 		when(entityMock.getCustomerOrgId()).thenReturn(null); // Just to show that this is the important prerequisite for this test.
@@ -367,7 +382,7 @@ class CustomerServiceTest {
 		final var params = CustomerEngagementParameters.create();
 		params.setPage(2);
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
 		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
@@ -385,34 +400,5 @@ class CustomerServiceTest {
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
 		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(1);
 		assertThat(response.getCustomerEngagements()).isEmpty();
-	}
-
-	@Test
-	void testSetBothCustomerOrgIdAndPartyIds() {
-		CustomerDetailsParameters.create()
-				.withCustomerEngagementOrgId("200701011234")
-				.withPartyId(List.of("9f395f51-b5ed-401b-b700-ef70cbb15d89", "9f395f51-b5ed-401b-b700-ef70cbb15d90"));
-		List.of(
-		CustomerDetails.create()
-				.withCustomerOrgNumber("200701011234")
-				.withPartyId("9f395f51-b5ed-401b-b700-ef70cbb15d89"),
-		CustomerDetails.create()
-				.withCustomerOrgNumber("200701011234")
-				.withPartyId("9f395f51-b5ed-401b-b700-ef70cbb15d90"),
-		CustomerDetails.create()
-				.withCustomerOrgNumber("200701011234")
-				.withPartyId("9f395f51-b5ed-401b-b700-ef70cbb15d91"),
-		CustomerDetails.create()
-				.withCustomerOrgNumber("200701011234")
-				.withPartyId(""),
-		CustomerDetails.create()
-				.withCustomerOrgNumber("no-match")
-				.withPartyId("9f395f51-b5ed-401b-b700-ef70cbb15d89"));
-	}
-
-	private CustomerDetailsParameters generateParameters() {
-		return CustomerDetailsParameters.create()
-					.withCustomerEngagementOrgId("200701011234")
-					.withPartyId(List.of("9f395f51-b5ed-401b-b700-ef70cbb15d89", "9f395f51-b5ed-401b-b700-ef70cbb15d90"));
 	}
 }

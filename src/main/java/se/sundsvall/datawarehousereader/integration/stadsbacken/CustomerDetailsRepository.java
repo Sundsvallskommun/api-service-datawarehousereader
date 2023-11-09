@@ -19,15 +19,11 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 @CircuitBreaker(name = "CustomerDetailsRepository")
 public interface CustomerDetailsRepository extends PagingAndSortingRepository<CustomerDetailsEntity, Integer>, JpaSpecificationExecutor<CustomerDetailsEntity> {
 
-	@Query(nativeQuery = true, value ="select * from kundinfo.fnCustomerDetails(:fromDate) where CustomerOrgId = :customerOrgId and uuid in :uuids")
+	@Query(nativeQuery = true, value ="select * from kundinfo.fnCustomerDetails(:fromDate, :organizationId) where uuid in :uuids")
 	Page<CustomerDetailsEntity> findWithCustomerEngagementOrgIdAndPartyIds(
-			@Param("fromDate") LocalDateTime dateTimeFrom, @Param("customerOrgId") String customerOrgId, @Param("uuids") List<String> uuids, Pageable pageable);
+			@Param("fromDate") LocalDateTime dateTimeFrom, @Param("organizationId") String organizationId, @Param("uuids") List<String> uuids, Pageable pageable);
 
-	@Query(nativeQuery = true, value ="select * from kundinfo.fnCustomerDetails(:fromDate) where CustomerOrgId = :customerOrgId")
+	@Query(nativeQuery = true, value ="select * from kundinfo.fnCustomerDetails(:fromDate, :organizationId)")
 	Page<CustomerDetailsEntity> findWithCustomerEngagementOrgId(
-			@Param("fromDate") LocalDateTime dateTimeFrom, @Param("customerOrgId") String customerOrgId, Pageable pageable);
-
-	@Query(nativeQuery = true, value ="select * from kundinfo.fnCustomerDetails(:fromDate) where uuid in :uuids")
-	Page<CustomerDetailsEntity> findWithPartyIds(
-			@Param("fromDate") LocalDateTime dateTimeFrom, @Param("uuids") List<String> uuids, Pageable pageable);
+			@Param("fromDate") LocalDateTime dateTimeFrom, @Param("organizationId") String organizationId, Pageable pageable);
 }
