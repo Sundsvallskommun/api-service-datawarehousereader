@@ -29,6 +29,8 @@ class CustomerDetailsTest {
 	void testCreatePattern() {
 
 		final var customerOrgNumber = "customerOrgNumber";
+		final var customerEngagementOrgName = "customerEngagementOrgName";
+		final var customerEngagementOrgId = "customerEngagementOrgId";
 		final var partyId = "partyId";
 		final var customerNumber = "customerNumber";
 		final var customerName = "customerName";
@@ -41,6 +43,8 @@ class CustomerDetailsTest {
 		final var emails = List.of("emailAddress1", "emailAddress2");
 
 		final var customer = CustomerDetails.create()
+				.withCustomerEngagementOrgName(customerEngagementOrgName)
+				.withCustomerEngagementOrgId(customerEngagementOrgId)
 			.withCustomerOrgNumber(customerOrgNumber)
 			.withPartyId(partyId)
 			.withCustomerCategoryDescription(customerCategoryDescription)
@@ -55,6 +59,8 @@ class CustomerDetailsTest {
 
 		assertThat(customer).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(customer.getCustomerOrgNumber()).isEqualTo(customerOrgNumber);
+		assertThat(customer.getCustomerEngagementOrgName()).isEqualTo(customerEngagementOrgName);
+		assertThat(customer.getCustomerEngagementOrgId()).isEqualTo(customerEngagementOrgId);
 		assertThat(customer.getPartyId()).isEqualTo(partyId);
 		assertThat(customer.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(customer.getCustomerName()).isEqualTo(customerName);

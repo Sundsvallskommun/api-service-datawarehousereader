@@ -1,5 +1,5 @@
 drop table if exists kundinfo.vCustomer;
-drop table if exists kundinfo.vCustomerDetails;
+drop table if exists kundinfo.vCustomerDetail;
 drop table if exists kundinfo.vInstalledBaseMetadata;
 drop table if exists kundinfo.vInstalledBase;
 drop table if exists kundinfo.vInvoiceDetail;
@@ -13,7 +13,7 @@ drop table if exists kundinfo.vMeasurementElectricityMonth;
 drop table if exists kundinfo.vAgreements;
 drop procedure if exists kundinfo.spMeasurementElectricityHour;
 drop procedure if exists kundinfo.spCustomerDetails;
-
+drop function if exists kundinfo.fnCustomerDetails;
 
 drop schema if exists kundinfo;
 create schema kundinfo;
@@ -38,11 +38,13 @@ begin
 end;
 
 
-CREATE PROCEDURE kundinfo.spCustomerDetails @fromDate datetime2
+CREATE PROCEDURE kundinfo.spCustomerDetails @fromDate datetime2, @pageOffset int, @pageSize int
 AS
 begin
 
-    SELECT DISTINCT CustomerOrgId,
+    SELECT DISTINCT Uuid,
+                    CustomerOrgId,
+                    CustomerEngagementOrgId,
                     CustomerId,
                     CustomerCategoryID,
                     CustomerCategoryDescription,
@@ -58,4 +60,7 @@ begin
                     Email2,
                     CustomerChangedFlg,
                     Installedchangedflg
-    from vCustomerDetails end;
+    from vCustomerDetail
+    order by CustomerId
+    OFFSET @pageOffset ROWS FETCH NEXT @pageSize ROWS ONLY
+end;

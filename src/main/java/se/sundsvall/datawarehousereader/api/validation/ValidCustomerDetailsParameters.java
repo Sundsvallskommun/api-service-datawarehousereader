@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
 @Constraint(validatedBy = ValidCustomerDetailsParametersConstraintValidator.class)
 public @interface ValidCustomerDetailsParameters {
 
-	String message() default "'partyId' or 'customerEngagementOrgId' must be provided";
+	String message() default "'customerEngagementOrgId' must be provided";
 
 	Class<?>[] groups() default {};
 

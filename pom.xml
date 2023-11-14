@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>se.sundsvall</groupId>
 	<artifactId>api-service-datawarehousereader</artifactId>
-	<version>3.3</version>
+	<version>3.4</version>
 	<name>api-service-datawarehousereader</name>
 	<description>A single store for fetching data used for tasks such as reporting, visualization and analytics.</description>
 	<properties>
@@ -180,26 +180,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${generated-sources-path}/${generated-sources-java-path}
-								</source>
-							</sources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>build-helper-maven-plugin</artifactId>
-				<version>${build-helper-maven-plugin.version}</version>
-				<executions>
-					<execution>
-						<id>add-generated-source</id>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>add-source</goal>
-						</goals>
-						<configuration>
-							<sources>
+								<source>${generated-sources-path}/${generated-sources-java-path}</source>
 								<source>${generated-sources-path}/annotations</source> <!-- JPAModelGen classes -->
 							</sources>
 						</configuration>

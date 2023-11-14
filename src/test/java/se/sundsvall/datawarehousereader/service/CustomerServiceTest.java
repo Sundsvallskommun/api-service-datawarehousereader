@@ -1,6 +1,22 @@
 package se.sundsvall.datawarehousereader.service;
 
-import generated.se.sundsvall.party.PartyType;
+import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
+import static generated.se.sundsvall.party.PartyType.PRIVATE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.domain.Sort.sort;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
+
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,12 +29,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
+
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
@@ -27,26 +41,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Stream;
-
-import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
-import static generated.se.sundsvall.party.PartyType.PRIVATE;
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.sort;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
+import generated.se.sundsvall.party.PartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -67,6 +62,9 @@ class CustomerServiceTest {
 
 	@Mock
 	private CustomerEntity entityMock;
+
+	@Mock
+	private CustomerDetailsEntity detailsEntityMock;
 
 	@InjectMocks
 	private CustomerService service;
@@ -92,7 +90,7 @@ class CustomerServiceTest {
 
 		final var params = CustomerEngagementParameters.create();
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pageMock);
 		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
 		when(entityMock.getCustomerOrgId()).thenReturn("customerOrgId");
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
@@ -122,230 +120,80 @@ class CustomerServiceTest {
 	}
 
 	@Test
-	void getDetailsWithPartyIdSet() {
-		final var randomUUID = UUID.randomUUID().toString();
+	void getDetailsWithPartyIdsAndCustomerEngagementOrgId() {
+		final var customerEngagementOrgId = "5564786647";
+		var parameters = CustomerDetailsParameters.create()
+				.withFromDateTime(OffsetDateTime.now())
+				.withCustomerEngagementOrgId(customerEngagementOrgId)
+				.withPartyId(List.of(RANDOM_UUID));
 
-		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
-		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
-			CustomerDetailsEntity.create()
-				.withCustomerOrgId("102000-0000")
-				.withCustomerId(1)
-				.withCustomerCategoryID(2)
-				.withCustomerCategoryDescription("customerCategoryDescription")
-				.withName("Name")
-				.withCo("co")
-				.withAddress("address")
-				.withZipcode("zipcode")
-				.withCity("city")
-				.withPhone1("phone1")
-				.withPhone2("phone2")
-				.withPhone3("phone3")
-				.withEmail1("email1")
-				.withEmail2("email2")
-				.withCustomerChangedFlg(true)
-				.withInstalledChangedFlg(true),
-			CustomerDetailsEntity.create()
-				.withCustomerOrgId("19990101-1235")
-				.withCustomerCategoryID(2)));
+		final var limit = 100;
 
-		final var params = CustomerDetailsParameters.create();
-		params.setPartyId(List.of(randomUUID));
-		params.setFromDateTime(OffsetDateTime.now());
-		params.setLimit(100);
-		params.setPage(1);
-		params.setSortBy(Collections.singletonList("customerOrgId"));
+		//Setup paging parameters
+		parameters.setPage(1);
+		parameters.setLimit(limit);
+		parameters.setSortBy(List.of("customerOrgId"));
 
-		final var result = service.getCustomerDetails(params);
+		//Instantiate page data
+		Page<CustomerDetailsEntity> pagedResponse = new PageImpl<>(List.of(detailsEntityMock, detailsEntityMock), Pageable.ofSize(limit), 1);
 
-		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
-		verify(partyProviderMock, times(1)).translateToPartyId(eq(ENTERPRISE), any());
-		verify(partyProviderMock, times(1)).translateToPartyId(eq(PRIVATE), any());
+		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(List.of(RANDOM_UUID)), pageableCaptor.capture())).thenReturn(pagedResponse);
 
-		assertThat(result.getCustomerDetails())
-			.hasSize(1)
-			.extracting(
-				CustomerDetails::getPartyId,
-				CustomerDetails::getCustomerOrgNumber,
-				CustomerDetails::getCustomerCategoryID,
-				CustomerDetails::getCustomerCategoryDescription,
-				CustomerDetails::getCustomerName,
-				CustomerDetails::getCareOf,
-				CustomerDetails::getStreet,
-				CustomerDetails::getPostalCode,
-				CustomerDetails::getCity,
-				CustomerDetails::getPhoneNumbers,
-				CustomerDetails::getEmails,
-				CustomerDetails::isCustomerChangedFlg,
-				CustomerDetails::isInstalledChangedFlg)
-			.containsExactly(tuple(
-				randomUUID,
-				"102000-0000",
-				2,
-				"customerCategoryDescription",
-				"Name",
-				"co",
-				"address",
-				"zipcode",
-				"city",
-				List.of("phone1", "phone2", "phone3"),
-				List.of("email1", "email2"),
-				true,
-				true));
+		var response = service.getCustomerDetails(parameters);
 
-		assertThat(result.getMetaData().getCount()).isEqualTo(1L);
-		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
-		assertThat(result.getMetaData().getPage()).isEqualTo(1);
-		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
-		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(1);
-		assertThat(result.getMetaData().getSortBy()).isEqualTo(Collections.singletonList("customerOrgId"));
-		assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
+		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(List.of(RANDOM_UUID)), pageableCaptor.capture());
+
+		//Assert that response data is somewhat what we send in.
+		assertThat(response.getCustomerDetails()).hasSize(2);
+
+		//Assert Page data
+		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(limit);
+		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
+		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(CustomerDetailsEntity.class).by(CustomerDetailsEntity::getCustomerOrgId).ascending());
+
+		//Assert response paging data
+		assertThat(response.getMetaData().getPage()).isEqualTo(1);
+		assertThat(response.getMetaData().getLimit()).isEqualTo(limit);
+		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(2L);
 	}
 
 	@Test
-	void testGetDetailsWithoutPartyId() {
-		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenThrow(Problem.valueOf(Status.NOT_FOUND, "Party not found"));
-		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
-			CustomerDetailsEntity.create()
-				.withCustomerOrgId("102000-0000")
-				.withCustomerId(1)
-				.withCustomerCategoryID(2)
-				.withCustomerCategoryDescription("customerCategoryDescription")
-				.withName("Name")
-				.withCo("co")
-				.withAddress("address")
-				.withZipcode("zipcode")
-				.withCity("city")
-				.withPhone1("phone1")
-				.withPhone2("phone2")
-				.withPhone3("phone3")
-				.withEmail1("email1")
-				.withEmail2("email2")
-				.withCustomerChangedFlg(true)
-				.withInstalledChangedFlg(true),
-			CustomerDetailsEntity.create()
-				.withCustomerOrgId("19990101-1235")
-				.withCustomerCategoryID(2)));
+	void getDetailsWithOnlyCustomerEngagementOrgId() {
+		final var customerEngagementOrgId = "5564786647";
+		var parameters = CustomerDetailsParameters.create()
+				.withFromDateTime(OffsetDateTime.now())
+				.withCustomerEngagementOrgId(customerEngagementOrgId);
 
-		final var params = CustomerDetailsParameters.create();
-		params.setFromDateTime(OffsetDateTime.now());
-		params.setLimit(100);
-		params.setPage(1);
-		params.setSortBy(Collections.singletonList("customerOrgId"));
+		final var limit = 100;
 
-		final var result = service.getCustomerDetails(params);
+		//Setup paging parameters
+		parameters.setPage(1);
+		parameters.setLimit(limit);
+		parameters.setSortBy(List.of("customerOrgId"));
 
-		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
-		verify(partyProviderMock, times(1)).translateToPartyId(eq(ENTERPRISE), any());
-		verify(partyProviderMock, times(1)).translateToPartyId(eq(PRIVATE), any());
+		//Instantiate page data
+		Page<CustomerDetailsEntity> pagedResponse = new PageImpl<>(List.of(detailsEntityMock, detailsEntityMock), Pageable.ofSize(limit), 1);
 
-		assertThat(result.getCustomerDetails())
-			.hasSize(2)
-			.extracting(
-				CustomerDetails::getPartyId,
-				CustomerDetails::getCustomerOrgNumber,
-				CustomerDetails::getCustomerCategoryID,
-				CustomerDetails::getCustomerCategoryDescription,
-				CustomerDetails::getCustomerName,
-				CustomerDetails::getCareOf,
-				CustomerDetails::getStreet,
-				CustomerDetails::getPostalCode,
-				CustomerDetails::getCity,
-				CustomerDetails::getPhoneNumbers,
-				CustomerDetails::getEmails,
-				CustomerDetails::isCustomerChangedFlg,
-				CustomerDetails::isInstalledChangedFlg)
-			.containsExactly(
-				tuple(null, "102000-0000", 2, "customerCategoryDescription", "Name", "co", "address", "zipcode", "city", List.of("phone1", "phone2", "phone3"), List.of("email1", "email2"), true, true),
-				tuple(null, "19990101-1235", 2, null, null, null, null, null, null, emptyList(), emptyList(), false, false));
+		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerEngagementOrgId), pageableCaptor.capture())).thenReturn(pagedResponse);
 
-		assertThat(result.getMetaData().getCount()).isEqualTo(2L);
-		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
-		assertThat(result.getMetaData().getPage()).isEqualTo(1);
-		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
-		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(2);
-		assertThat(result.getMetaData().getSortBy()).isEqualTo(Collections.singletonList("customerOrgId"));
-		assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
-	}
+		var response = service.getCustomerDetails(parameters);
 
-	@Test
-	void getDetailsWithCustomerEngagementOrgIdSet() {
-		final var randomUUID = UUID.randomUUID().toString();
+		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerEngagementOrgId), pageableCaptor.capture());
 
-		when(partyProviderMock.translateToPartyId(any(PartyType.class), any(String.class))).thenReturn(randomUUID).thenReturn("");
+		//Assert that response data is somewhat what we send in.
+		assertThat(response.getCustomerDetails()).hasSize(2);
 
-		when(customerDetailsRepositoryMock.findAllMatching(any(LocalDateTime.class))).thenReturn(List.of(
-			CustomerDetailsEntity.create()
-				.withCustomerOrgId("102000-0000")
-				.withCustomerId(1)
-				.withCustomerCategoryID(2)
-				.withCustomerCategoryDescription("customerCategoryDescription")
-				.withName("Name")
-				.withCo("co")
-				.withAddress("address")
-				.withZipcode("zipcode")
-				.withCity("city")
-				.withPhone1("phone1")
-				.withPhone2("phone2")
-				.withPhone3("phone3")
-				.withEmail1("email1")
-				.withEmail2("email2")
-				.withCustomerChangedFlg(true)
-				.withInstalledChangedFlg(true),
-			CustomerDetailsEntity.create()
-				.withCustomerOrgId("19990101-1235")
-				.withCustomerCategoryID(2)));
+		//Assert Page data
+		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(limit);
+		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
+		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(CustomerDetailsEntity.class).by(CustomerDetailsEntity::getCustomerOrgId).ascending());
 
-		final var params = CustomerDetailsParameters.create();
-		params.setCustomerEngagementOrgId("1020000000");
-		params.setFromDateTime(OffsetDateTime.now());
-		params.setLimit(100);
-		params.setPage(1);
-		params.setSortBy(Collections.singletonList("customerOrgId"));
-
-		final var result = service.getCustomerDetails(params);
-
-		verify(customerDetailsRepositoryMock).findAllMatching(any(LocalDateTime.class));
-		verify(partyProviderMock, times(1)).translateToPartyId(eq(ENTERPRISE), any());
-		verify(partyProviderMock, times(1)).translateToPartyId(eq(PRIVATE), any());
-
-		assertThat(result.getCustomerDetails())
-			.hasSize(1)
-			.extracting(
-				CustomerDetails::getPartyId,
-				CustomerDetails::getCustomerOrgNumber,
-				CustomerDetails::getCustomerCategoryID,
-				CustomerDetails::getCustomerCategoryDescription,
-				CustomerDetails::getCustomerName,
-				CustomerDetails::getCareOf,
-				CustomerDetails::getStreet,
-				CustomerDetails::getPostalCode,
-				CustomerDetails::getCity,
-				CustomerDetails::getPhoneNumbers,
-				CustomerDetails::getEmails,
-				CustomerDetails::isCustomerChangedFlg,
-				CustomerDetails::isInstalledChangedFlg)
-			.containsExactly(tuple(
-				randomUUID,
-				"102000-0000",
-				2,
-				"customerCategoryDescription",
-				"Name",
-				"co",
-				"address",
-				"zipcode",
-				"city",
-				List.of("phone1", "phone2", "phone3"),
-				List.of("email1", "email2"),
-				true,
-				true));
-
-		assertThat(result.getMetaData().getCount()).isEqualTo(1L);
-		assertThat(result.getMetaData().getLimit()).isEqualTo(100);
-		assertThat(result.getMetaData().getPage()).isEqualTo(1);
-		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
-		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(1);
-		assertThat(result.getMetaData().getSortBy()).isEqualTo(Collections.singletonList("customerOrgId"));
-		assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
+		//Assert response paging data
+		assertThat(response.getMetaData().getPage()).isEqualTo(1);
+		assertThat(response.getMetaData().getLimit()).isEqualTo(limit);
+		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(2L);
 	}
 
 	@Test
@@ -367,7 +215,7 @@ class CustomerServiceTest {
 		params.setOrganizationName(organizationName);
 		params.setPage(page);
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
 		when(entityMock.getCustomerOrgId()).thenReturn(legalId);
@@ -408,7 +256,7 @@ class CustomerServiceTest {
 		final var params = CustomerEngagementParameters.create().withCustomerNumber(customerNumber);
 		final var customerType = CustomerType.PRIVATE;
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(entityMock.getCustomerType()).thenReturn(customerType.getStadsbackenTranslation());
 		when(entityMock.getCustomerOrgId()).thenReturn(null); // Just to show that this is the important prerequisite for this test.
@@ -436,7 +284,7 @@ class CustomerServiceTest {
 		final var params = CustomerEngagementParameters.create();
 		params.setPage(2);
 
-		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.<List<String>>any(), any(Pageable.class))).thenReturn(pageMock);
+		when(repositoryMock.findAllByParameters(any(CustomerEngagementParameters.class), ArgumentMatchers.any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
 		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
