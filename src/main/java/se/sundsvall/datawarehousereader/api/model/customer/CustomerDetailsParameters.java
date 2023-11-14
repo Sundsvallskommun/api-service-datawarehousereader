@@ -27,14 +27,14 @@ public class CustomerDetailsParameters extends AbstractParameterPagingAndSorting
 	private List<@ValidUuid String> partyId;
 
 	@ValidOrganizationNumber
-	@Schema(description = "Organization id for customer engagements", requiredMode = REQUIRED)
+	@Schema(description = "Organization id for customer engagements", example = "5565027225", requiredMode = REQUIRED)
 	private String customerEngagementOrgId;
 
-	@Schema(description = "Date and time for when to search for changes from. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")
+	@Schema(description = "Date and time for when to search for changes from. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year will be returned.", example = "2000-10-31T01:30:00.000-05:00")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private OffsetDateTime fromDateTime;
 
-	@Schema(description = "Date and time for when to search for change to. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")
+	@Schema(description = "Date and time for when to search for change to. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX,", example = "2000-10-31T01:30:00.000-05:00")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private OffsetDateTime toDateTime;
 

@@ -16,7 +16,7 @@ public class CustomerDetailsEntity {
 	private Integer customerId;
 
 	@Column(name = "uuid", columnDefinition = "uniqueidentifier", insertable = false, updatable = false)
-	private String uuid;
+	private String partyId;
 
 	@Column(name = "CustomerOrgId", columnDefinition = "nvarchar(255)", insertable = false, updatable = false)
 	private String customerOrgId;
@@ -307,16 +307,16 @@ public class CustomerDetailsEntity {
 		this.installedChangedFlg = installedChangedFlg;
 	}
 
-	public String getUuid() {
-		return uuid;
+	public String getPartyId() {
+		return partyId;
 	}
 
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setPartyId(String partyId) {
+		this.partyId = partyId;
 	}
 
-	public CustomerDetailsEntity withUuid(String uuid) {
-		this.uuid = uuid;
+	public CustomerDetailsEntity withPartyId(String partyId) {
+		this.partyId = partyId;
 		return this;
 	}
 
@@ -324,7 +324,7 @@ public class CustomerDetailsEntity {
 	public String toString() {
 		return "CustomerDetailsEntity{" +
 				"customerId=" + customerId +
-				", uuid='" + uuid + '\'' +
+				", partyId='" + partyId + '\'' +
 				", customerOrgId='" + customerOrgId + '\'' +
 				", organizationId='" + organizationId + '\'' +
 				", organizationName='" + organizationName + '\'' +
@@ -350,11 +350,11 @@ public class CustomerDetailsEntity {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		CustomerDetailsEntity that = (CustomerDetailsEntity) o;
-		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(uuid, that.uuid) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(organizationId, that.organizationId) && Objects.equals(organizationName, that.organizationName) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
+		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(partyId, that.partyId) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(organizationId, that.organizationId) && Objects.equals(organizationName, that.organizationName) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, uuid, customerOrgId, organizationId, organizationName, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
+		return Objects.hash(customerId, partyId, customerOrgId, organizationId, organizationName, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
 	}
 }

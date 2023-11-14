@@ -46,8 +46,7 @@ public class CustomerResource {
 	}
 
 	@GetMapping(path = "/details", produces = { APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE })
-	@Operation(summary = "Get detailed customer information",
-			description = "Resource returns all customer details matching provided search parameters.")
+	@Operation(summary = "Get detailed customer information", description = "Resource returns all customer details matching provided search parameters")
 	@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true)
 	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = { Problem.class, ConstraintViolationProblem.class })))
 	@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))

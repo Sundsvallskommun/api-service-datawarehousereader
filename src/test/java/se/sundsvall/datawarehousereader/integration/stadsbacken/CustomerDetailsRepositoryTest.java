@@ -42,7 +42,7 @@ class CustomerDetailsRepositoryTest {
 		assertThat(result).isNotNull()
 				.hasSize(2)
 				.extracting(
-						CustomerDetailsEntity::getUuid,
+						CustomerDetailsEntity::getPartyId,
 						CustomerDetailsEntity::getCustomerId,
 						CustomerDetailsEntity::getCustomerOrgId,
 						CustomerDetailsEntity::getOrganizationId,
@@ -75,7 +75,7 @@ class CustomerDetailsRepositoryTest {
 		assertThat(result).isNotNull()
 				.hasSize(3)
 				.extracting(
-						CustomerDetailsEntity::getUuid,
+						CustomerDetailsEntity::getPartyId,
 						CustomerDetailsEntity::getCustomerId,
 						CustomerDetailsEntity::getCustomerOrgId,
 						CustomerDetailsEntity::getOrganizationId,

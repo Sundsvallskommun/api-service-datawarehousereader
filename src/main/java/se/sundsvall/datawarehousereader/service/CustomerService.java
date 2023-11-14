@@ -68,13 +68,14 @@ public class CustomerService {
 
 	/**
 	 * Fetch customer details
+	 * If fromDate in {@link CustomerDetailsParameters} is empty, we fetch last years changes.
 	 * @param parameters request parameters
 	 * @return {@link CustomerDetailsResponse}
 	 */
 	public CustomerDetailsResponse getCustomerDetails(final CustomerDetailsParameters parameters) {
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime())
 			.map(OffsetDateTime::toLocalDateTime)
-			.orElse(null);
+			.orElse(LocalDateTime.now().minusYears(1L));
 
 		var pageable = toPageRequest(parameters);
 

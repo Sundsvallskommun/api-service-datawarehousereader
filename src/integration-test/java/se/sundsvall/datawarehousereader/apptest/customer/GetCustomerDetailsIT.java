@@ -22,7 +22,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test01_getWithOrgNoAndPartyIds() {
 		setupCall()
-			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d80&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d81&customerEngagementOrgId=5564786647")
+			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d80&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d81&customerEngagementOrgId=5564786647&fromDateTime=2021-10-12T14:11:16.359Z")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -32,7 +32,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test02_getByOnlyCustomerEngagementOrgId() {
 		setupCall()
-			.withServicePath("/customer/details?customerEngagementOrgId=5564786647")
+			.withServicePath("/customer/details?customerEngagementOrgId=5564786647&fromDateTime=2021-10-12T14:11:16.359Z")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)

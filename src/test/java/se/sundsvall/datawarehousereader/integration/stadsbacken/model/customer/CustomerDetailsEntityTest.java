@@ -62,7 +62,7 @@ class CustomerDetailsEntityTest {
 			.withEmail2(email2)
 			.withCustomerChangedFlg(customerChangedFlg)
 			.withInstalledChangedFlg(installedChangedFlg)
-			.withUuid(uuid)
+			.withPartyId(uuid)
 			.withOrganizationId(organizationId)
 			.withOrganizationName(organizationName);
 
@@ -83,7 +83,7 @@ class CustomerDetailsEntityTest {
 		assertThat(entity.getEmail2()).isEqualTo(email2);
 		assertThat(entity.isCustomerChangedFlg()).isEqualTo(customerChangedFlg);
 		assertThat(entity.isInstalledChangedFlg()).isEqualTo(installedChangedFlg);
-		assertThat(entity.getUuid()).isEqualTo(uuid);
+		assertThat(entity.getPartyId()).isEqualTo(uuid);
 		assertThat(entity.getOrganizationId()).isEqualTo(organizationId);
 		assertThat(entity.getOrganizationName()).isEqualTo(organizationName);
 	}
