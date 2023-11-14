@@ -17,10 +17,10 @@ public class CustomerDetails {
 	@Schema(description = "Customer organization number, for internal use only", example = "5534567890", accessMode = READ_ONLY, hidden = true)
 	private String customerOrgNumber;
 
-	@Schema(description = "Company with which the customer has an engagement (organization number)", example = "5591962591", accessMode = READ_ONLY, hidden = true)
+	@Schema(description = "Company with which the customer has an engagement (organization number)", example = "5591962591", accessMode = READ_ONLY)
 	private String customerEngagementOrgId;
 
-	@Schema(description = "Name of the company the customer has an engagement with", example = "Sundsvall Elnät", accessMode = READ_ONLY, hidden = true)
+	@Schema(description = "Name of the company the customer has an engagement with", example = "Sundsvall Elnät", accessMode = READ_ONLY)
 	private String customerEngagementOrgName;
 
 	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
