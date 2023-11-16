@@ -52,8 +52,8 @@
         BillLocationID int not null,
         DateFrom datetime,
         DateTo datetime,
+        InstalledBaseLastChangedDate datetime,
         InternalId int not null,
-        PlacementStatusModified varchar(50),
         customerid int not null,
         CareOf varchar(255),
         City varchar(255),
@@ -201,4 +201,3 @@
         uuid uniqueidentifier,
         primary key (Usage, isInterpolted, DateFrom, customerorgid, facilityId, feedType, unit)
     );
-
