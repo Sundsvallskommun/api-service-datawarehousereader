@@ -8,7 +8,7 @@ INSERT INTO kundinfo.vCustomer (customerid, customerorgid, customertype, organiz
 	 (10335,N'5534567890', N'Enterprise', N'5565027223', N'Sundsvall Elnät');
 
 -- vInstalledBase
-INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName,PlacementStatusModified) VALUES
+INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName,InstalledBaseLastChangedDate) VALUES
 	 (1,-41159,N'Fastighetsförmedling AB',N'Sundsvall',N'Sundsvall Energi AB',10335,'2017-08-27 00:00:00.0',NULL,N'735999109144515039',N'85353',N'Vägen 1112',N'Elhandel',NULL,'2017-12-01 00:00:00.0'),
 	 (2,-38413,N'Fastighetsförmedling AB',NULL,N'Sundsvall Energi AB',10335,'2013-01-12 00:00:00.0',NULL,N'735999109232306327',NULL,N'Gatan 44',N'Elhandel',NULL,'2017-12-01 00:00:00.0'),
 	 (3,-38186,N'Fastighetsförmedling AB',N'Alnö',N'Sundsvall Energi AB',10335,'2008-02-13 00:00:00.0',NULL,N'735999109324902055',N'86532',N'Vägen 2223',N'Elhandel',NULL,'2017-12-03 00:00:00.0'),

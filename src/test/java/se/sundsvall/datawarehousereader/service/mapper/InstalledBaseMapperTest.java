@@ -25,7 +25,7 @@ class InstalledBaseMapperTest {
 	private static final int INTERNAL_ID = 456;
 	private static final String FACILITY_ID = "facilityId";
 	private static final String HOUSE_NAME = "houseName";
-	private static final LocalDate PLACEMENT_MODIFIED = LocalDate.now();
+	private static final LocalDate LAST_CHANGED_DATE = LocalDate.now();
 	private static final String POST_CODE = "postCode";
 	private static final String STREET = "street";
 	private static final String TYPE = "type";
@@ -56,7 +56,7 @@ class InstalledBaseMapperTest {
 			.withFacilityId(FACILITY_ID)
 			.withHouseName(HOUSE_NAME)
 			.withInternalId(INTERNAL_ID)
-			.withPlacementModified(PLACEMENT_MODIFIED)
+			.withLastChangedDate(LAST_CHANGED_DATE)
 			.withPostCode(POST_CODE)
 			.withStreet(STREET)
 			.withType(TYPE);
@@ -87,7 +87,7 @@ class InstalledBaseMapperTest {
 				String.valueOf(CUSTOMER_ID),
 				DATE_FROM,
 				DATE_TO,
-				PLACEMENT_MODIFIED,
+				LAST_CHANGED_DATE,
 				Collections.emptyList(),
 				FACILITY_ID,
 				INTERNAL_ID,
@@ -110,7 +110,7 @@ class InstalledBaseMapperTest {
 			.withHouseName(HOUSE_NAME)
 			.withInternalId(INTERNAL_ID)
 			.withMetaData(List.of(createEmbeddableMetaData()))
-			.withPlacementModified(PLACEMENT_MODIFIED)
+			.withLastChangedDate(LAST_CHANGED_DATE)
 			.withPostCode(POST_CODE)
 			.withStreet(STREET)
 			.withType(TYPE);
@@ -140,7 +140,7 @@ class InstalledBaseMapperTest {
 				String.valueOf(CUSTOMER_ID),
 				DATE_FROM,
 				DATE_TO,
-				PLACEMENT_MODIFIED,
+				LAST_CHANGED_DATE,
 				FACILITY_ID,
 				INTERNAL_ID,
 				POST_CODE,

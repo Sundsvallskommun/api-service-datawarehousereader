@@ -89,7 +89,7 @@ class InstalledBaseResourceFailuresTest {
 			.jsonPath("$.violations[0].field").isEqualTo("installedBaseParameters")
 			.jsonPath("$.violations[0].message").isEqualTo("""
 				One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are \
-				[facilityId, placementModified, city, type, dateFrom, internalId, houseName, careOf, street, customerId, dateTo, company, postCode, id].""");
+				[facilityId, city, type, dateFrom, internalId, houseName, careOf, street, customerId, dateTo, company, postCode, id, lastChangedDate].""");
 
 		verifyNoInteractions(serviceMock);
 	}
