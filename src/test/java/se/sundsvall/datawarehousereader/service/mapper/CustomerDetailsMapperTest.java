@@ -78,7 +78,5 @@ class CustomerDetailsMapperTest {
 				"customerCategoryDescription",
 				true,
 				true));
-
 	}
-
 }

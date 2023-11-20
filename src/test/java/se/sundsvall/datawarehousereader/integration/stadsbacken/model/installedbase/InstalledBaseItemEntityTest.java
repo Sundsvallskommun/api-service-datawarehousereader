@@ -48,7 +48,7 @@ class InstalledBaseItemEntityTest {
 		final var internalId = 321;
 		final var metaData = List.of(new InstalledBaseItemMetaDataEmbeddable());
 		final var facilityId = "facilityId";
-		final var placementModified = LocalDate.now();
+		final var lastChangedDate = LocalDate.now();
 		final var postCode = "postCode";
 		final var street = "street";
 		final var type = "type";
@@ -65,7 +65,7 @@ class InstalledBaseItemEntityTest {
 			.withHouseName(houseName)
 			.withInternalId(internalId)
 			.withMetaData(metaData)
-			.withPlacementModified(placementModified)
+			.withLastChangedDate(lastChangedDate)
 			.withPostCode(postCode)
 			.withStreet(street)
 			.withType(type);
@@ -82,7 +82,7 @@ class InstalledBaseItemEntityTest {
 		assertThat(entity.getHouseName()).isEqualTo(houseName);
 		assertThat(entity.getInternalId()).isEqualTo(internalId);
 		assertThat(entity.getMetaData()).isEqualTo(metaData);
-		assertThat(entity.getPlacementModified()).isEqualTo(placementModified);
+		assertThat(entity.getLastChangedDate()).isEqualTo(lastChangedDate);
 		assertThat(entity.getPostCode()).isEqualTo(postCode);
 		assertThat(entity.getStreet()).isEqualTo(street);
 		assertThat(entity.getType()).isEqualTo(type);

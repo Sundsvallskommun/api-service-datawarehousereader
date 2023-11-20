@@ -6,7 +6,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.ins
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.CUSTOMER_ID;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.FACILITY_ID;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.HOUSE_NAME;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.PLACEMENT_MODIFIED;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.LAST_CHANGED_DATE;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.POST_CODE;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.STREET;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.TYPE;
@@ -58,6 +58,6 @@ public interface InstalledBaseSpecification {
 	}
 
 	static Specification<InstalledBaseItemEntity> withLastModifiedDateBetween(LocalDate dateFrom, LocalDate dateTom) {
-		return BUILDER.buildDateFilter(PLACEMENT_MODIFIED, dateFrom, dateTom);
+		return BUILDER.buildDateFilter(LAST_CHANGED_DATE, dateFrom, dateTom);
 	}
 }

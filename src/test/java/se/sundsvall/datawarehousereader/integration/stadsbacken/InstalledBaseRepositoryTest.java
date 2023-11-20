@@ -179,7 +179,7 @@ class InstalledBaseRepositoryTest {
 				InstalledBaseItemEntity::getFacilityId,
 				InstalledBaseItemEntity::getStreet,
 				InstalledBaseItemEntity::getType,
-				InstalledBaseItemEntity::getPlacementModified)
+				InstalledBaseItemEntity::getLastChangedDate)
 			.containsExactly(
 				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38186, "735999109324902055", "Vägen 2223", "Elhandel", LocalDate.of(2017, 12, 3)),
 				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38126, "735999109144502091", "Gatan 21 B 4010170", "Elhandel", LocalDate.of(2017, 12, 4)),
@@ -208,7 +208,7 @@ class InstalledBaseRepositoryTest {
 				InstalledBaseItemEntity::getFacilityId,
 				InstalledBaseItemEntity::getStreet,
 				InstalledBaseItemEntity::getType,
-				InstalledBaseItemEntity::getPlacementModified)
+				InstalledBaseItemEntity::getLastChangedDate)
 			.containsExactly(
 				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, 12, 6)),
 				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36920, "735999109122811214", "Gatan 27", "Elhandel", LocalDate.of(2017, 12, 7)),

@@ -5,6 +5,7 @@ import static java.util.Optional.ofNullable;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
@@ -23,7 +24,10 @@ public class CustomerDetailsMapper {
 
 	public static CustomerDetails toCustomerDetails(final CustomerDetailsEntity entity) {
 		return CustomerDetails.create()
+			.withPartyId(Optional.ofNullable(entity.getPartyId()).map(String::toLowerCase).orElse(null))
 			.withCustomerOrgNumber(entity.getCustomerOrgId())
+			.withCustomerEngagementOrgId(entity.getOrganizationId())
+			.withCustomerEngagementOrgName(entity.getOrganizationName())
 			.withCustomerNumber(ServiceUtil.toString(entity.getCustomerId()))
 			.withCustomerName(entity.getName())
 			.withCareOf(entity.getCo())

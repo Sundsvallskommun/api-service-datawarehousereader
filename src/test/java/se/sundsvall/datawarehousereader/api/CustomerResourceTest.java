@@ -1,5 +1,18 @@
 package se.sundsvall.datawarehousereader.api;
 
+import static java.util.Optional.ofNullable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -10,25 +23,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsResponse;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
 import se.sundsvall.datawarehousereader.service.CustomerService;
-
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.UUID;
-
-import static java.util.Optional.ofNullable;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -47,6 +48,8 @@ class CustomerResourceTest {
 	private static final String CUSTOMER_NUMBER = "123";
 
 	private static final String PARTY_ID = UUID.randomUUID().toString();
+
+	private static final String CUSTOMER_ENGAGEMENT_ORG_ID = "5564786647";
 
 	private static final String ORGANIZATION_NUMBER = "organizationNumber";
 
@@ -153,6 +156,7 @@ class CustomerResourceTest {
 		parameterMap.add("page", String.valueOf(PAGE));
 		parameterMap.add("limit", String.valueOf(LIMIT));
 		parameterMap.add("partyId", PARTY_ID);
+		parameterMap.add("customerEngagementOrgId", CUSTOMER_ENGAGEMENT_ORG_ID);
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/details")
 				.queryParams(parameterMap)

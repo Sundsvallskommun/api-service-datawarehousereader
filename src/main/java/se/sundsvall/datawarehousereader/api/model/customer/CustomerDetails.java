@@ -17,6 +17,12 @@ public class CustomerDetails {
 	@Schema(description = "Customer organization number, for internal use only", example = "5534567890", accessMode = READ_ONLY, hidden = true)
 	private String customerOrgNumber;
 
+	@Schema(description = "Company with which the customer has an engagement (organization number)", example = "5591962591", accessMode = READ_ONLY)
+	private String customerEngagementOrgId;
+
+	@Schema(description = "Name of the company the customer has an engagement with", example = "Sundsvall Elnät", accessMode = READ_ONLY)
+	private String customerEngagementOrgName;
+
 	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
 	private String partyId;
 
@@ -242,29 +248,64 @@ public class CustomerDetails {
 		this.customerOrgNumber = customerOrgNumber;
 	}
 
-	@Override
-	public String toString() {
-		return "CustomerDetails{" + "customerOrgNumber='" + customerOrgNumber + '\'' + ", partyId='" + partyId + '\'' + ", customerNumber='" + customerNumber + '\'' + ", customerName='" + customerName + '\'' + ", street='" + street + '\''
-			+ ", postalCode='" + postalCode + '\'' + ", city='" + city + '\'' + ", careOf='" + careOf + '\'' + ", phoneNumbers=" + phoneNumbers + ", emails=" + emails + ", customerCategoryID=" + customerCategoryID + ", customerCategoryDescription='"
-			+ customerCategoryDescription + '\'' + ", customerChangedFlg=" + customerChangedFlg + ", installedChangedFlg=" + installedChangedFlg + '}';
+	public CustomerDetails withCustomerEngagementOrgId(String customerEngagementOrgId) {
+		this.customerEngagementOrgId = customerEngagementOrgId;
+		return this;
+	}
+
+	public String getCustomerEngagementOrgId() {
+		return customerEngagementOrgId;
+	}
+
+	public void setCustomerEngagementOrgId(String customerEngagementOrgId) {
+		this.customerEngagementOrgId = customerEngagementOrgId;
+	}
+
+	public CustomerDetails withCustomerEngagementOrgName(String customerEngagementName) {
+		this.customerEngagementOrgName = customerEngagementName;
+		return this;
+	}
+
+	public String getCustomerEngagementOrgName() {
+		return customerEngagementOrgName;
+	}
+
+	public void setCustomerEngagementOrgName(String customerEngagementOrgName) {
+		this.customerEngagementOrgName = customerEngagementOrgName;
 	}
 
 	@Override
-	public boolean equals(final Object o) {
-		if (this == o) {
-			return true;
-		}
-		if ((o == null) || (getClass() != o.getClass())) {
-			return false;
-		}
-		final CustomerDetails that = (CustomerDetails) o;
-		return (customerCategoryID == that.customerCategoryID) && (customerChangedFlg == that.customerChangedFlg) && (installedChangedFlg == that.installedChangedFlg) && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(partyId,
-			that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city)
-			&& Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription);
+	public String toString() {
+		return "CustomerDetails{" +
+				"customerOrgNumber='" + customerOrgNumber + '\'' +
+				", customerEngagementOrgId='" + customerEngagementOrgId + '\'' +
+				", customerEngagementOrgName='" + customerEngagementOrgName + '\'' +
+				", partyId='" + partyId + '\'' +
+				", customerNumber='" + customerNumber + '\'' +
+				", customerName='" + customerName + '\'' +
+				", street='" + street + '\'' +
+				", postalCode='" + postalCode + '\'' +
+				", city='" + city + '\'' +
+				", careOf='" + careOf + '\'' +
+				", phoneNumbers=" + phoneNumbers +
+				", emails=" + emails +
+				", customerCategoryID=" + customerCategoryID +
+				", customerCategoryDescription='" + customerCategoryDescription + '\'' +
+				", customerChangedFlg=" + customerChangedFlg +
+				", installedChangedFlg=" + installedChangedFlg +
+				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		CustomerDetails that = (CustomerDetails) o;
+		return customerCategoryID == that.customerCategoryID && customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(customerEngagementOrgId, that.customerEngagementOrgId) && Objects.equals(customerEngagementOrgName, that.customerEngagementOrgName) && Objects.equals(partyId, that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city) && Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerOrgNumber, partyId, customerNumber, customerName, street, postalCode, city, careOf, phoneNumbers, emails, customerCategoryID, customerCategoryDescription, customerChangedFlg, installedChangedFlg);
+		return Objects.hash(customerOrgNumber, customerEngagementOrgId, customerEngagementOrgName, partyId, customerNumber, customerName, street, postalCode, city, careOf, phoneNumbers, emails, customerCategoryID, customerCategoryDescription, customerChangedFlg, installedChangedFlg);
 	}
 }

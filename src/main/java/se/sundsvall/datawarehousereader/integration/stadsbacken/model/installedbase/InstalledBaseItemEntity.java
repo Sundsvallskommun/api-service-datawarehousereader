@@ -62,8 +62,8 @@ public class InstalledBaseItemEntity {
 	@Column(name = "DateTo", insertable = false, updatable = false, columnDefinition = "datetime")
 	private LocalDate dateTo;
 
-	@Column(name = "PlacementStatusModified", insertable = false, updatable = false, columnDefinition = "varchar(50)")
-	private LocalDate placementModified;
+	@Column(name = "InstalledBaseLastChangedDate", insertable = false, updatable = false, columnDefinition = "datetime")
+	private LocalDate lastChangedDate;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(SUBSELECT)
@@ -248,16 +248,16 @@ public class InstalledBaseItemEntity {
 		return this;
 	}
 
-	public LocalDate getPlacementModified() {
-		return placementModified;
+	public LocalDate getLastChangedDate() {
+		return lastChangedDate;
 	}
 
-	public void setPlacementModified(LocalDate placementModified) {
-		this.placementModified = placementModified;
+	public void setLastChangedDate(LocalDate lastChangedDate) {
+		this.lastChangedDate = lastChangedDate;
 	}
 
-	public InstalledBaseItemEntity withPlacementModified(LocalDate placementModified) {
-		this.placementModified = placementModified;
+	public InstalledBaseItemEntity withLastChangedDate(LocalDate lastChangedDate) {
+		this.lastChangedDate = lastChangedDate;
 		return this;
 	}
 
@@ -276,7 +276,7 @@ public class InstalledBaseItemEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(careOf, city, company, customerId, dateFrom, dateTo, facilityId, houseName, id, internalId, metaData, placementModified, postCode, street, type);
+		return Objects.hash(careOf, city, company, customerId, dateFrom, dateTo, facilityId, houseName, id, internalId, metaData, lastChangedDate, postCode, street, type);
 	}
 
 	@Override
@@ -290,7 +290,7 @@ public class InstalledBaseItemEntity {
 		InstalledBaseItemEntity other = (InstalledBaseItemEntity) obj;
 		return Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(company, other.company) && Objects.equals(customerId, other.customerId) && Objects.equals(dateFrom, other.dateFrom) && Objects.equals(dateTo,
 			other.dateTo) && Objects.equals(facilityId, other.facilityId) && Objects.equals(houseName, other.houseName) && Objects.equals(id, other.id) && Objects.equals(internalId, other.internalId) && Objects.equals(metaData, other.metaData)
-			&& Objects.equals(placementModified, other.placementModified) && Objects.equals(postCode, other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
+			&& Objects.equals(lastChangedDate, other.lastChangedDate) && Objects.equals(postCode, other.postCode) && Objects.equals(street, other.street) && Objects.equals(type, other.type);
 	}
 
 	@Override
@@ -298,7 +298,7 @@ public class InstalledBaseItemEntity {
 		StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItemEntity [id=").append(id).append(", internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(
 			careOf).append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom)
-			.append(", dateTo=").append(dateTo).append(", placementModified=").append(placementModified).append(", metaData=").append(metaData).append("]");
+			.append(", dateTo=").append(dateTo).append(", lastChangedDate=").append(lastChangedDate).append(", metaData=").append(metaData).append("]");
 		return builder.toString();
 	}
 }
