@@ -1,0 +1,45 @@
+integration:
+  party:
+    url: http://localhost:${wiremock.server.port:}/api-party
+spring:
+  cache:
+    type: none
+  datasource:
+    connectionProperties: useUnicode=true;characterEncoding=utf-8;
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+    hikari:
+      maximum-pool-size: 2
+    url: jdbc:tc:sqlserver:2017-CU12:///
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          schema-generation:
+            script:
+              append: false
+      jakarta:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            scripts:
+              action: create
+              create-target: target/database/generated-schema.sql
+  main:
+    banner-mode: 'off'
+  security:
+    oauth2:
+      client:
+        provider:
+          party:
+            token-uri: http://localhost:${wiremock.server.port:}/api-gateway/token
+        registration:
+          party:
+            client-id: the-client-id
+            client-secret: the-client-secret
+  sql:
+    init:
+      data-locations: classpath:db/scripts/initialize.sql, classpath:db/schema/schema.sql,
+        classpath:db/scripts/testdata.sql, classpath:db/scripts/functions.sql
+      encoding: utf-8
+      mode: always
