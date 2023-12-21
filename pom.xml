@@ -18,9 +18,7 @@
 		<published.container.port.test>8792</published.container.port.test>
 		<published.container.port.production>9093</published.container.port.production>
 		<!-- Service properties -->
-		<openapi-generator-maven-plugin.version>7.1.0</openapi-generator-maven-plugin.version>
 		<generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
-		<generated-sources-java-path>src/main/java</generated-sources-java-path>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -62,7 +60,6 @@
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
 		<!-- Test -->
 		<dependency>
 			<groupId>se.sundsvall.dept44</groupId>
@@ -77,7 +74,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
@@ -139,7 +136,6 @@
 			<plugin>
 				<groupId>org.openapitools</groupId>
 				<artifactId>openapi-generator-maven-plugin</artifactId>
-				<version>${openapi-generator-maven-plugin.version}</version>
 				<executions>
 					<execution>
 						<id>party-api</id>
@@ -154,7 +150,7 @@
 							<generateSupportingFiles>false</generateSupportingFiles>
 							<configOptions>
 								<useSpringBoot3>true</useSpringBoot3>
-								<sourceFolder>${generated-sources-java-path}</sourceFolder>
+								<sourceFolder>models</sourceFolder>
 								<dateLibrary>java8</dateLibrary>
 								<modelPackage>generated.se.sundsvall.party</modelPackage>
 								<openApiNullable>false</openApiNullable>
@@ -180,7 +176,7 @@
 						</goals>
 						<configuration>
 							<sources>
-								<source>${generated-sources-path}/${generated-sources-java-path}</source>
+								<source>${generated-sources-path}/models</source> <!-- API model classes -->
 								<source>${generated-sources-path}/annotations</source> <!-- JPAModelGen classes -->
 							</sources>
 						</configuration>
