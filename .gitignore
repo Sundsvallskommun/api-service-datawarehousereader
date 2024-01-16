@@ -11,6 +11,7 @@ settings.xml
 .classpath
 .settings/
 bin/
+.factorypath
 
 # IntelliJ
 .idea
@@ -39,4 +40,5 @@ hs_err_pid*
 
 # Environent variables
 .env
-/.factorypath
+application-default.*
+
