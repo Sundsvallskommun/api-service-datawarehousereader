@@ -60,7 +60,7 @@ class OpenApiSpecificationIT {
 	 * Fetches and returns the current OpenAPI specification in YAML format.
 	 *
 	 * @return the current OpenAPI specification
-	 */z
+	 */
 	private String getCurrentOpenApiSpecification() {
 		var uri = UriComponentsBuilder.fromPath("/api-docs.yaml")
 			.buildAndExpand(openApiName, openApiVersion)
