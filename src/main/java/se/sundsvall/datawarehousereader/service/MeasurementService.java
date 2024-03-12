@@ -3,7 +3,6 @@ package se.sundsvall.datawarehousereader.service;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
@@ -21,14 +20,19 @@ public class MeasurementService {
 
 	private static final String CATEGORY_NOT_IMPLEMENTED = "category '%s'";
 
-	@Autowired
-	private DistrictHeatingMeasurementProvider districtHeatingMeasurementProvider;
+	private final DistrictHeatingMeasurementProvider districtHeatingMeasurementProvider;
 
-	@Autowired
-	private ElectricityMeasurementProvider electricityMeasurementProvider;
+	private final ElectricityMeasurementProvider electricityMeasurementProvider;
 
-	@Autowired
-	private PartyProvider partyProvider;
+	private final PartyProvider partyProvider;
+
+	public MeasurementService(final DistrictHeatingMeasurementProvider districtHeatingMeasurementProvider,
+		final ElectricityMeasurementProvider electricityMeasurementProvider,
+		final PartyProvider partyProvider) {
+		this.districtHeatingMeasurementProvider = districtHeatingMeasurementProvider;
+		this.electricityMeasurementProvider = electricityMeasurementProvider;
+		this.partyProvider = partyProvider;
+	}
 
 	public MeasurementResponse getMeasurements(Category category, Aggregation aggregateOn, MeasurementParameters parameters) {
 		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyProvider::translateToLegalId).orElse(null);
@@ -36,9 +40,12 @@ public class MeasurementService {
 		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 
 		return switch (category) {
-			case DISTRICT_HEATING -> districtHeatingMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
-			case ELECTRICITY -> electricityMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
-			default -> throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
+			case DISTRICT_HEATING ->
+				districtHeatingMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
+			case ELECTRICITY ->
+				electricityMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
+			default ->
+				throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
 		};
 	}
 }

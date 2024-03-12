@@ -2,6 +2,7 @@ drop table if exists kundinfo.vCustomer;
 drop table if exists kundinfo.vCustomerDetail;
 drop table if exists kundinfo.vInstalledBaseMetadata;
 drop table if exists kundinfo.vInstalledBase;
+drop table if exists kundinfo.vInstallations;
 drop table if exists kundinfo.vInvoiceDetail;
 drop table if exists kundinfo.vInvoice;
 drop table if exists kundinfo.vMeasurementDistrictHeatingHour;

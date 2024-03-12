@@ -1,10 +1,16 @@
 package se.sundsvall.datawarehousereader.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
+
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
+
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
@@ -13,22 +19,19 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRep
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
-import java.util.Collections;
-import java.util.List;
-
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
-
 @Service
 public class InvoiceService {
 
 	private static final String INVOICE_DETAIL_NOT_FOUND = "No invoicedetails found for invoice issuer '%s' and invoicenumber '%s'";
 
-	@Autowired
-	private InvoiceRepository invoiceRepository;
+	private final InvoiceRepository invoiceRepository;
 
-	@Autowired
-	private InvoiceDetailRepository invoiceDetailRepository;
+	private final InvoiceDetailRepository invoiceDetailRepository;
+
+	public InvoiceService(final InvoiceRepository invoiceRepository, final InvoiceDetailRepository invoiceDetailRepository) {
+		this.invoiceRepository = invoiceRepository;
+		this.invoiceDetailRepository = invoiceDetailRepository;
+	}
 
 	public InvoiceResponse getInvoices(final InvoiceParameters parameters) {
 		final var matches = invoiceRepository.findAllByParameters(parameters, PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));

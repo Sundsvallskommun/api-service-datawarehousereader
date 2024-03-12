@@ -5,7 +5,6 @@ import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMappe
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +17,13 @@ import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 @Service
 public class InstalledBaseService {
 
-	@Autowired
-	private InstalledBaseRepository repository;
+	private final InstalledBaseRepository repository;
 
-	public InstalledBaseResponse getInstalledBase(InstalledBaseParameters parameters) {
+	public InstalledBaseService(final InstalledBaseRepository repository) {
+		this.repository = repository;
+	}
+
+	public InstalledBaseResponse getInstalledBase(final InstalledBaseParameters parameters) {
 		final var matches = repository.findAllByParameters(parameters, PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		// If page larger than last page is requested, a empty list is returned otherwise the current page

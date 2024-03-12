@@ -1,8 +1,14 @@
 package se.sundsvall.datawarehousereader.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
+
+import java.util.List;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
 import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementResponse;
@@ -10,20 +16,17 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementReposit
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
-import java.util.List;
-
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
-
 @Service
 public class AgreementService {
 
-	@Autowired
-	private AgreementRepository repository;
+	private final AgreementRepository repository;
 
-	@Autowired
-	private PartyProvider partyProvider;
+	private final PartyProvider partyProvider;
+
+	public AgreementService(final AgreementRepository repository, final PartyProvider partyProvider) {
+		this.repository = repository;
+		this.partyProvider = partyProvider;
+	}
 
 	public AgreementResponse getAgreements(AgreementParameters parameters) {
 		final var matches = repository.findAllByParameters(parameters, getCustomerOrgId(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
