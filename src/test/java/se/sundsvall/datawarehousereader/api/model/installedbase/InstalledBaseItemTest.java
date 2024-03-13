@@ -13,10 +13,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
+import com.google.code.beanmatchers.BeanMatchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import com.google.code.beanmatchers.BeanMatchers;
 
 class InstalledBaseItemTest {
 

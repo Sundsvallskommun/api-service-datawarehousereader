@@ -19,7 +19,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedb
 
 /**
  * Installed base repository tests.
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @DataJpaTest

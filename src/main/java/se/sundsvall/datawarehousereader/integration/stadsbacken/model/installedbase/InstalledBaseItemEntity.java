@@ -6,9 +6,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-import org.hibernate.annotations.BatchSize;
-import org.hibernate.annotations.Fetch;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -17,6 +14,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
 
 @Entity
 @Table(schema = "kundinfo", name = "vInstalledBase")
@@ -297,7 +297,7 @@ public class InstalledBaseItemEntity {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItemEntity [id=").append(id).append(", internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(
-			careOf).append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom)
+				careOf).append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom)
 			.append(", dateTo=").append(dateTo).append(", lastChangedDate=").append(lastChangedDate).append(", metaData=").append(metaData).append("]");
 		return builder.toString();
 	}

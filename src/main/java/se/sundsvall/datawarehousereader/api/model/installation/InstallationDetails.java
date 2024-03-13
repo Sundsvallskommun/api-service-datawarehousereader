@@ -32,7 +32,7 @@ public class InstallationDetails {
 	@Schema(description = "Street", example = "Storgatan 9", accessMode = READ_ONLY)
 	private String street;
 
-	@Schema(description = "Postal code", example = "85230", accessMode = READ_ONLY)
+	@Schema(description = "Post code", example = "85230", accessMode = READ_ONLY)
 	private String postCode;
 
 	@Schema(description = "City", example = "Sundsvall", accessMode = READ_ONLY)
