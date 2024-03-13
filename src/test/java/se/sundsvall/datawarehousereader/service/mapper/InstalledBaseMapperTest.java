@@ -38,13 +38,13 @@ class InstalledBaseMapperTest {
 	void toInstalledBaseItemsWithNull() {
 		assertThat(toInstalledBaseItems(null)).isEmpty();
 	}
-	
+
 	@Test
 	void toInstalledBaseItemsWithEmptyList() {
 		assertThat(toInstalledBaseItems(Collections.emptyList())).isEmpty();
 	}
-	
-	@Test 
+
+	@Test
 	void toInstalledBaseItemsWithMetaDataNull() {
 		final var entity = InstalledBaseItemEntity.create()
 			.withCareOf(CARE_OF)
@@ -60,12 +60,12 @@ class InstalledBaseMapperTest {
 			.withPostCode(POST_CODE)
 			.withStreet(STREET)
 			.withType(TYPE);
-		
+
 		final var result = toInstalledBaseItems(List.of(entity));
-		
+
 		assertThat(result)
-		.hasSize(1)
-		.extracting(
+			.hasSize(1)
+			.extracting(
 				InstalledBaseItem::getCareOf,
 				InstalledBaseItem::getCity,
 				InstalledBaseItem::getCompany,
@@ -80,8 +80,8 @@ class InstalledBaseMapperTest {
 				InstalledBaseItem::getPropertyDesignation,
 				InstalledBaseItem::getStreet,
 				InstalledBaseItem::getType)
-		.containsExactly(tuple(
-				CARE_OF, 
+			.containsExactly(tuple(
+				CARE_OF,
 				CITY,
 				COMPANY,
 				String.valueOf(CUSTOMER_ID),
@@ -97,7 +97,7 @@ class InstalledBaseMapperTest {
 				TYPE));
 	}
 
-	@Test 
+	@Test
 	void toInstalledBaseItemsWithMetaData() {
 		final var entity = InstalledBaseItemEntity.create()
 			.withCareOf(CARE_OF)
@@ -114,12 +114,12 @@ class InstalledBaseMapperTest {
 			.withPostCode(POST_CODE)
 			.withStreet(STREET)
 			.withType(TYPE);
-		
+
 		final var result = toInstalledBaseItems(List.of(entity));
-		
+
 		assertThat(result)
-		.hasSize(1)
-		.extracting(
+			.hasSize(1)
+			.extracting(
 				InstalledBaseItem::getCareOf,
 				InstalledBaseItem::getCity,
 				InstalledBaseItem::getCompany,
@@ -133,8 +133,8 @@ class InstalledBaseMapperTest {
 				InstalledBaseItem::getPropertyDesignation,
 				InstalledBaseItem::getStreet,
 				InstalledBaseItem::getType)
-		.containsExactly(tuple(
-				CARE_OF, 
+			.containsExactly(tuple(
+				CARE_OF,
 				CITY,
 				COMPANY,
 				String.valueOf(CUSTOMER_ID),
@@ -147,21 +147,21 @@ class InstalledBaseMapperTest {
 				HOUSE_NAME,
 				STREET,
 				TYPE));
-		
+
 		assertThat(result.get(0).getMetaData())
-		.hasSize(1)
-		.extracting(
+			.hasSize(1)
+			.extracting(
 				InstalledBaseItemMetaData::getDisplayName,
 				InstalledBaseItemMetaData::getKey,
 				InstalledBaseItemMetaData::getType,
 				InstalledBaseItemMetaData::getValue)
-		.containsExactly(tuple(
+			.containsExactly(tuple(
 				DISPLAY_NAME,
 				META_KEY,
 				META_TYPE,
 				META_VALUE));
 	}
-	
+
 	private static InstalledBaseItemMetaDataEmbeddable createEmbeddableMetaData() {
 		InstalledBaseItemMetaDataEmbeddable embeddable = new InstalledBaseItemMetaDataEmbeddable();
 		embeddable.setCompany(COMPANY);
@@ -169,7 +169,7 @@ class InstalledBaseMapperTest {
 		embeddable.setKey(META_KEY);
 		embeddable.setType(META_TYPE);
 		embeddable.setValue(META_VALUE);
-		
+
 		return embeddable;
 	}
 }

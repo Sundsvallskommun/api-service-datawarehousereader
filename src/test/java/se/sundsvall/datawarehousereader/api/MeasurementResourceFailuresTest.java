@@ -1,5 +1,13 @@
 package se.sundsvall.datawarehousereader.api;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
+import static org.zalando.problem.Status.BAD_REQUEST;
+
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -7,16 +15,13 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.util.UriBuilder;
+import org.zalando.problem.Problem;
+import org.zalando.problem.violations.ConstraintViolationProblem;
+
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.service.MeasurementService;
-
-import java.util.UUID;
-
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -46,115 +51,143 @@ class MeasurementResourceFailuresTest {
 
 	@Test
 	void getMeasurementsPageLessThanMinimum() {
-		webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-			.queryParam("page", 0)
-			.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
+				.queryParam("page", 0)
+				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Constraint Violation")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.violations[0].field").isEqualTo("page")
-			.jsonPath("$.violations[0].message").isEqualTo("must be greater than or equal to 1");
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("page", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsLimitLessThanMinimum() {
-		webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-			.queryParam("limit", 0)
-			.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
+				.queryParam("limit", 0)
+				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Constraint Violation")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.violations[0].field").isEqualTo("limit")
-			.jsonPath("$.violations[0].message").isEqualTo("must be greater than or equal to 1");
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("limit", "must be greater than or equal to 1"));
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsLimitMoreThanMaximum() {
-		webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-			.queryParam("limit", 1001)
-			.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
+				.queryParam("limit", 1001)
+				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Constraint Violation")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.violations[0].field").isEqualTo("limit")
-			.jsonPath("$.violations[0].message").isEqualTo("Page limit cannot be greater than 1000");
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("limit", "Page limit cannot be greater than 1000"));
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsPartyIdNotValidUUID() {
-		webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-			.replaceQueryParam("partyId", "not-valid-uuid")
-			.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
+				.replaceQueryParam("partyId", "not-valid-uuid")
+				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Constraint Violation")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.violations[0].field").isEqualTo("partyId")
-			.jsonPath("$.violations[0].message").isEqualTo("not a valid UUID");
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("partyId", "not a valid UUID"));
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsNotValidCategory() {
-		webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-			.build("not-valid-category", AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
+				.build("not-valid-category", AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Bad Request")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.detail").isEqualTo("""
-                Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]""");
+			.expectBody(Problem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Bad Request");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getDetail()).isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]");
+
+		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsNotValidAggregation() {
-		webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-			.build(CATEGORY, "not-valid-aggregation", FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
+				.build(CATEGORY, "not-valid-aggregation", FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Bad Request")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.detail").isEqualTo("""
-				Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]""");
+			.expectBody(Problem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Bad Request");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getDetail()).isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]");
+
+		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsNoValidSortBy() {
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/measurements/{category}/{aggregateOn}")
-			.queryParam("sortBy", "not-valid-property")
-			.build(CATEGORY, AGGREGATION))
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/measurements/{category}/{aggregateOn}")
+				.queryParam("sortBy", "not-valid-property")
+				.build(CATEGORY, AGGREGATION))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody()
-			.jsonPath("$.title").isEqualTo("Constraint Violation")
-			.jsonPath("$.status").isEqualTo(BAD_REQUEST.value())
-			.jsonPath("$.violations[0].field").isEqualTo("measurementParameters")
-			.jsonPath("$.violations[0].message").isEqualTo("""
-				One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are \
-				[interpolation, unit, readingSequence, facilityId, feedType, measurementTimestamp, usage, customerOrgId, uuid].""");
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("measurementParameters", "One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [interpolation, unit, readingSequence, facilityId, feedType, measurementTimestamp, usage, customerOrgId, uuid]."));
 
 		verifyNoInteractions(serviceMock);
 	}

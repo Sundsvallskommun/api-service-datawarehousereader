@@ -1,0 +1,86 @@
+{
+  "installationDetails": [
+    {
+      "company": "Sundsvall Elnät",
+      "type": "Fjärrvärme",
+      "facilityId": "223456789123456789",
+      "placementId": 32365,
+      "careOf": "Ditthus AB",
+      "street": "Testvägen 18",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2024-01-01",
+      "dateTo": "2024-01-01",
+      "dateLastModified": "2024-01-01",
+      "metaData": [
+        {
+          "key": "netarea",
+          "value": "Sundsvall",
+          "type": "location",
+          "displayName": "Nätområde"
+        }
+      ]
+    },
+    {
+      "company": "Sundsvall Elnät",
+      "type": "Fjärrkyla",
+      "facilityId": "323456789123456789",
+      "placementId": 35324,
+      "careOf": "Ditthus AB",
+      "street": "Testvägen 19",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2024-01-01",
+      "dateTo": "2024-01-01",
+      "dateLastModified": "2024-01-01",
+      "metaData": [
+        {
+          "key": "annualusage",
+          "value": "543",
+          "type": "kW",
+          "displayName": "Beräknad årlig förbrukning"
+        },
+        {
+          "key": "netarea",
+          "value": "Sundsvall",
+          "type": "location",
+          "displayName": "Nätområde"
+        }
+      ]
+    },
+    {
+      "company": "Sundsvall Elnät",
+      "type": "Tjänster",
+      "facilityId": "323456789124125889",
+      "placementId": 35284,
+      "careOf": "Ditthus AB",
+      "street": "Testvägen 43",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2023-01-01",
+      "dateTo": "2023-01-01",
+      "dateLastModified": "2023-01-01",
+      "metaData": [
+        {
+          "key": "netarea",
+          "value": "Sundsvall",
+          "type": "location",
+          "displayName": "Nätområde"
+        },
+        {
+          "key": "annualusage",
+          "value": "12315",
+          "type": "kW",
+          "displayName": "Beräknad årlig förbrukning"
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "page": 1,
+    "limit": 100,
+    "count": 3,
+    "totalRecords": 3,
+    "totalPages": 1
+  }
+}

@@ -4470,3 +4470,23 @@ INSERT INTO kundinfo.vCustomerDetail (uuid, customerId, customerOrgId, organizat
     ('9f395f51-b5ed-401b-b700-ef70cbb15d89', 123413,'20070101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson2',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test2@sundsvall.com',0,1),
     ('9f395f51-b5ed-401b-b700-ef70cbb15d90', 123414,'20070101-1234','5565027225',N'Some other Elnät', 1,'Privatperson','Test Testorsson3',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test3@sundsvall.com',0,1),
     (null,                                   123415,'20070101-1234','5565027225',N'Some other Elnät', 1,'Privatperson','Test Testorsson4',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test4@sundsvall.com',0,1);
+
+INSERT INTO kundinfo.vInstallations (BillLocationID, Company, Internalid, FacilityId, Type, Street, Postcode, City, Careof, DateFrom, DateTo, HouseName, InstallationsLastChangedDate, CustomerFlg)
+VALUES (1234557, 'Sundsvall Elnät', 8634, '123456789123456789', 'El', 'Testvägen 17', '12345', 'TESTVALL', 'Ditthus AB', '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', null, '2020-01-01 00:00:00.000', 1),
+       (2234557, 'Sundsvall Elnät', 32365, '223456789123456789', 'Fjärrvärme', 'Testvägen 18', '12345', 'TESTVALL', 'Ditthus AB', '2024-01-01 00:00:00.000', '2024-01-01 00:00:00.000', null, '2024-01-01 00:00:00.000', 1),
+       (3234557, 'Sundsvall Elnät', 35324, '323456789123456789', 'Fjärrkyla', 'Testvägen 19', '12345', 'TESTVALL', 'Ditthus AB', '2024-01-01 00:00:00.000', '2024-01-01 00:00:00.000', null, '2024-01-01 00:00:00.000', 0),
+       (4234557, 'Sundsvall Elnät', 35391, '423456789123456789', 'Avfallsvåg', 'Testvägen 20', '12345', 'TESTVALL', 'Ditthus AB', '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', null, '2020-01-01 00:00:00.000', 0),
+       (3263557, 'Sundsvall Elnät', 35284, '323456789124125889', 'Tjänster', 'Testvägen 43', '12345', 'TESTVALL', 'Ditthus AB', '2023-01-01 00:00:00.000', '2023-01-01 00:00:00.000', null, '2023-01-01 00:00:00.000', 1),
+       (4242157, 'Sundsvall Elnät', 353851, '423456789123963259', 'Elhandel', 'Testvägen 56', '12345', 'TESTVALL', 'Ditthus AB', '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', null, '2020-01-01 00:00:00.000', 0);
+
+INSERT INTO kundinfo.vInstalledBaseMetadata (company, internalId, [key], [value], [type], displayName)
+VALUES  ('Sundsvall Elnät', 8634, 'annualusage', '1234', 'kW', 'Beräknad årlig förbrukning'),
+        ('Sundsvall Elnät', 8634, 'fusesize', '3214', 'A', 'Säkringsstorlek'),
+        ('Sundsvall Elnät', 32365, 'netarea', 'Sundsvall', 'location', 'Nätområde'),
+        ('Sundsvall Elnät', 35324, 'annualusage', '543', 'kW', 'Beräknad årlig förbrukning'),
+        ('Sundsvall Elnät', 35391, 'fusesize', '21', 'A', 'Säkringsstorlek'),
+        ('Sundsvall Elnät', 35284, 'netarea', 'Sundsvall', 'location', 'Nätområde'),
+        ('Sundsvall Elnät', 353851, 'annualusage', '16000', 'kW', 'Beräknad årlig förbrukning'),
+        ('Sundsvall Elnät', 35391, 'fusesize', '12', 'A', 'Säkringsstorlek'),
+        ('Sundsvall Elnät', 35324, 'netarea', 'Sundsvall', 'location', 'Nätområde'),
+        ('Sundsvall Elnät', 35284, 'annualusage', '12315', 'kW', 'Beräknad årlig förbrukning');

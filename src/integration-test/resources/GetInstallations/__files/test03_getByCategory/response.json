@@ -1,0 +1,38 @@
+{
+  "installationDetails": [
+    {
+      "company": "Sundsvall Elnät",
+      "type": "El",
+      "facilityId": "123456789123456789",
+      "placementId": 8634,
+      "careOf": "Ditthus AB",
+      "street": "Testvägen 17",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2020-01-01",
+      "dateTo": "2020-01-01",
+      "dateLastModified": "2020-01-01",
+      "metaData": [
+        {
+          "key": "annualusage",
+          "value": "1234",
+          "type": "kW",
+          "displayName": "Beräknad årlig förbrukning"
+        },
+        {
+          "key": "fusesize",
+          "value": "3214",
+          "type": "A",
+          "displayName": "Säkringsstorlek"
+        }
+      ]
+    }
+  ],
+  "_meta": {
+    "page": 1,
+    "limit": 100,
+    "count": 1,
+    "totalRecords": 1,
+    "totalPages": 1
+  }
+}

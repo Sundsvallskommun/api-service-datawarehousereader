@@ -6,7 +6,8 @@ import static org.springframework.http.ResponseEntity.ok;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,39 +17,42 @@ import org.springframework.web.bind.annotation.RestController;
 import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceResponse;
 import se.sundsvall.datawarehousereader.service.InvoiceService;
 import se.sundsvall.dept44.common.validators.annotation.ValidOrganizationNumber;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @Validated
 @RequestMapping("/invoices")
 @Tag(name = "Invoice", description = "Invoice operations")
-public class InvoiceResource {
+class InvoiceResource {
 
-	@Autowired
-	private InvoiceService service;
+	private final InvoiceService invoiceService;
 
-	@GetMapping(produces = { APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE })
+	InvoiceResource(final InvoiceService invoiceService) {
+		this.invoiceService = invoiceService;
+	}
+
+	@GetMapping(produces = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE})
 	@Operation(summary = "Get basic invoice information", description = "Resource returns all invoices matching provided search parameters")
 	@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true)
-	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = { Problem.class, ConstraintViolationProblem.class })))
+	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = {Problem.class, ConstraintViolationProblem.class})))
 	@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	public ResponseEntity<InvoiceResponse> getInvoices(@Valid final InvoiceParameters searchParams) {
 
-		return ok(service.getInvoices(searchParams));
+		return ok(invoiceService.getInvoices(searchParams));
 	}
 
-	@GetMapping(path = "/{organizationNumber}/{invoiceNumber}/details", produces = { APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE })
+	@GetMapping(path = "/{organizationNumber}/{invoiceNumber}/details", produces = {APPLICATION_JSON_VALUE, APPLICATION_PROBLEM_JSON_VALUE})
 	@Operation(summary = "Get invoice details for invoice matching issuer of provided organization number and having invoice number matching provided invoice number")
 	@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true)
 	@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
@@ -58,6 +62,6 @@ public class InvoiceResource {
 		@Parameter(name = "organizationNumber", description = "Organization number of invoice issuer", example = "5565027223", required = true) @PathVariable(name = "organizationNumber") @ValidOrganizationNumber final String organizationNumber,
 		@Parameter(name = "invoiceNumber", description = "Invoice number", example = "805137494", required = true) @PathVariable(name = "invoiceNumber") final long invoiceNumber) {
 
-		return ok(service.getInvoiceDetails(organizationNumber, invoiceNumber));
+		return ok(invoiceService.getInvoiceDetails(organizationNumber, invoiceNumber));
 	}
 }

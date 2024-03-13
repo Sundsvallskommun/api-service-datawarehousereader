@@ -99,7 +99,7 @@ public class InvoiceEntity {
 		return invoiceNumber;
 	}
 
-	public void setInvoiceNumber(long invoiceNumber) {
+	public void setInvoiceNumber(final long invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
 	}
 
@@ -107,7 +107,7 @@ public class InvoiceEntity {
 		return invoiceDate;
 	}
 
-	public void setInvoiceDate(LocalDate invoiceDate) {
+	public void setInvoiceDate(final LocalDate invoiceDate) {
 		this.invoiceDate = invoiceDate;
 	}
 
@@ -115,7 +115,7 @@ public class InvoiceEntity {
 		return invoiceName;
 	}
 
-	public void setInvoiceName(String invoiceName) {
+	public void setInvoiceName(final String invoiceName) {
 		this.invoiceName = invoiceName;
 	}
 
@@ -123,7 +123,7 @@ public class InvoiceEntity {
 		return invoiceType;
 	}
 
-	public void setInvoiceType(String invoiceType) {
+	public void setInvoiceType(final String invoiceType) {
 		this.invoiceType = invoiceType;
 	}
 
@@ -131,7 +131,7 @@ public class InvoiceEntity {
 		return invoiceDescription;
 	}
 
-	public void setInvoiceDescription(String invoiceDescription) {
+	public void setInvoiceDescription(final String invoiceDescription) {
 		this.invoiceDescription = invoiceDescription;
 	}
 
@@ -139,7 +139,7 @@ public class InvoiceEntity {
 		return invoiceStatus;
 	}
 
-	public void setInvoiceStatus(String invoiceStatus) {
+	public void setInvoiceStatus(final String invoiceStatus) {
 		this.invoiceStatus = invoiceStatus;
 	}
 
@@ -147,7 +147,7 @@ public class InvoiceEntity {
 		return ocrNumber;
 	}
 
-	public void setOcrNumber(Long ocrNumber) {
+	public void setOcrNumber(final Long ocrNumber) {
 		this.ocrNumber = ocrNumber;
 	}
 
@@ -155,7 +155,7 @@ public class InvoiceEntity {
 		return dueDate;
 	}
 
-	public void setDueDate(LocalDate dueDate) {
+	public void setDueDate(final LocalDate dueDate) {
 		this.dueDate = dueDate;
 	}
 
@@ -163,7 +163,7 @@ public class InvoiceEntity {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(BigDecimal totalAmount) {
+	public void setTotalAmount(final BigDecimal totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
@@ -171,7 +171,7 @@ public class InvoiceEntity {
 		return amountVatIncluded;
 	}
 
-	public void setAmountVatIncluded(BigDecimal amountVatIncluded) {
+	public void setAmountVatIncluded(final BigDecimal amountVatIncluded) {
 		this.amountVatIncluded = amountVatIncluded;
 	}
 
@@ -179,7 +179,7 @@ public class InvoiceEntity {
 		return amountVatExcluded;
 	}
 
-	public void setAmountVatExcluded(BigDecimal amountVatExcluded) {
+	public void setAmountVatExcluded(final BigDecimal amountVatExcluded) {
 		this.amountVatExcluded = amountVatExcluded;
 	}
 
@@ -187,7 +187,7 @@ public class InvoiceEntity {
 		return vatEligibleAmount;
 	}
 
-	public void setVatEligibleAmount(BigDecimal vatEligibleAmount) {
+	public void setVatEligibleAmount(final BigDecimal vatEligibleAmount) {
 		this.vatEligibleAmount = vatEligibleAmount;
 	}
 
@@ -195,7 +195,7 @@ public class InvoiceEntity {
 		return rounding;
 	}
 
-	public void setRounding(BigDecimal rounding) {
+	public void setRounding(final BigDecimal rounding) {
 		this.rounding = rounding;
 	}
 
@@ -203,7 +203,7 @@ public class InvoiceEntity {
 		return vat;
 	}
 
-	public void setVat(BigDecimal vat) {
+	public void setVat(final BigDecimal vat) {
 		this.vat = vat;
 	}
 
@@ -211,7 +211,7 @@ public class InvoiceEntity {
 		return reversedVat;
 	}
 
-	public void setReversedVat(Boolean reversedVat) {
+	public void setReversedVat(final Boolean reversedVat) {
 		this.reversedVat = reversedVat;
 	}
 
@@ -219,7 +219,7 @@ public class InvoiceEntity {
 		return currency;
 	}
 
-	public void setCurrency(String currency) {
+	public void setCurrency(final String currency) {
 		this.currency = currency;
 	}
 
@@ -227,7 +227,7 @@ public class InvoiceEntity {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(final int customerId) {
 		this.customerId = customerId;
 	}
 
@@ -235,7 +235,7 @@ public class InvoiceEntity {
 		return customerType;
 	}
 
-	public void setCustomerType(String customerType) {
+	public void setCustomerType(final String customerType) {
 		this.customerType = customerType;
 	}
 
@@ -243,7 +243,7 @@ public class InvoiceEntity {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(final String facilityId) {
 		this.facilityId = facilityId;
 	}
 
@@ -251,7 +251,7 @@ public class InvoiceEntity {
 		return organizationGroup;
 	}
 
-	public void setOrganizationGroup(String organizationGroup) {
+	public void setOrganizationGroup(final String organizationGroup) {
 		this.organizationGroup = organizationGroup;
 	}
 
@@ -259,7 +259,7 @@ public class InvoiceEntity {
 		return administration;
 	}
 
-	public void setAdministration(String administration) {
+	public void setAdministration(final String administration) {
 		this.administration = administration;
 	}
 
@@ -267,7 +267,7 @@ public class InvoiceEntity {
 		return organizationId;
 	}
 
-	public void setOrganizationId(String organizationId) {
+	public void setOrganizationId(final String organizationId) {
 		this.organizationId = organizationId;
 	}
 
@@ -275,7 +275,7 @@ public class InvoiceEntity {
 		return street;
 	}
 
-	public void setStreet(String street) {
+	public void setStreet(final String street) {
 		this.street = street;
 	}
 
@@ -283,7 +283,7 @@ public class InvoiceEntity {
 		return postCode;
 	}
 
-	public void setPostCode(String postCode) {
+	public void setPostCode(final String postCode) {
 		this.postCode = postCode;
 	}
 
@@ -291,7 +291,7 @@ public class InvoiceEntity {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(final String city) {
 		this.city = city;
 	}
 
@@ -299,7 +299,7 @@ public class InvoiceEntity {
 		return careOf;
 	}
 
-	public void setCareOf(String careOf) {
+	public void setCareOf(final String careOf) {
 		this.careOf = careOf;
 	}
 
@@ -307,7 +307,7 @@ public class InvoiceEntity {
 		return pdfAvailable;
 	}
 
-	public void setPdfAvailable(Boolean pdfAvailable) {
+	public void setPdfAvailable(final Boolean pdfAvailable) {
 		this.pdfAvailable = pdfAvailable;
 	}
 

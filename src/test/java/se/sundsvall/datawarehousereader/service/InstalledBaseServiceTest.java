@@ -26,6 +26,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedb
 
 @ExtendWith(MockitoExtension.class)
 class InstalledBaseServiceTest {
+
 	@Mock
 	private InstalledBaseRepository repositoryMock;
 
