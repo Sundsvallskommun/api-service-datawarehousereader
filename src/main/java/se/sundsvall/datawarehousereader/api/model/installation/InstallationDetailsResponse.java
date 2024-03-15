@@ -7,7 +7,6 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -19,7 +18,7 @@ public class InstallationDetailsResponse {
 	@Schema(implementation = PagingAndSortingMetaData.class, accessMode = READ_ONLY)
 	private PagingAndSortingMetaData metaData;
 
-	@ArraySchema(schema = @Schema(implementation = CustomerDetails.class, accessMode = READ_ONLY))
+	@ArraySchema(schema = @Schema(implementation = InstallationDetails.class, accessMode = READ_ONLY))
 	private List<InstallationDetails> installationDetails;
 
 	public static InstallationDetailsResponse create() {

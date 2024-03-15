@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "3.5"
 servers:
-  - url: http://localhost:52812
+  - url: http://localhost:49310
     description: Generated server url
 tags:
   - name: Measurement
@@ -45,6 +45,12 @@ paths:
           schema:
             $ref: '#/components/schemas/MeasurementParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -62,12 +68,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/MeasurementResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /invoices:
     get:
       tags:
@@ -82,6 +82,12 @@ paths:
           schema:
             $ref: '#/components/schemas/InvoiceParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -99,12 +105,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/InvoiceResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /invoices/{organizationNumber}/{invoiceNumber}/details:
     get:
       tags:
@@ -129,8 +129,8 @@ paths:
             format: int64
           example: 805137494
       responses:
-        "404":
-          description: Not found
+        "500":
+          description: Internal Server error
           content:
             application/problem+json:
               schema:
@@ -148,8 +148,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/InvoiceDetail'
-        "500":
-          description: Internal Server error
+        "404":
+          description: Not found
           content:
             application/problem+json:
               schema:
@@ -174,6 +174,12 @@ paths:
           schema:
             $ref: '#/components/schemas/InstalledBaseParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -191,12 +197,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/InstalledBaseResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /installations:
     get:
       tags:
@@ -211,6 +211,12 @@ paths:
           schema:
             $ref: '#/components/schemas/InstallationParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -228,12 +234,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/InstallationDetailsResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /customer/engagements:
     get:
       tags:
@@ -249,6 +249,12 @@ paths:
           schema:
             $ref: '#/components/schemas/CustomerEngagementParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -266,12 +272,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/CustomerEngagementResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /customer/details:
     get:
       tags:
@@ -287,6 +287,12 @@ paths:
           schema:
             $ref: '#/components/schemas/CustomerDetailsParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -304,12 +310,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/CustomerDetailsResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
   /api-docs:
     get:
       tags:
@@ -340,6 +340,12 @@ paths:
           schema:
             $ref: '#/components/schemas/AgreementParameters'
       responses:
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Problem'
         "400":
           description: Bad request
           content:
@@ -357,12 +363,6 @@ paths:
             application/problem+json:
               schema:
                 $ref: '#/components/schemas/AgreementResponse'
-        "500":
-          description: Internal Server error
-          content:
-            application/problem+json:
-              schema:
-                $ref: '#/components/schemas/Problem'
 components:
   schemas:
     Category:
@@ -457,11 +457,11 @@ components:
     StatusType:
       type: object
       properties:
+        reasonPhrase:
+          type: string
         statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -1312,43 +1312,43 @@ components:
           description: Facility id
           example: "735999109151401011"
       description: Installations request parameters model
-    CustomerDetails:
+    InstallationDetails:
       type: object
       properties:
-        customerEngagementOrgId:
+        company:
           type: string
-          description: Company with which the customer has an engagement (organization
-            number)
+          description: Company
           readOnly: true
-          example: "5591962591"
-        customerEngagementOrgName:
+          example: Sundsvall Energi AB
+        type:
           type: string
-          description: Name of the company the customer has an engagement with
+          description: Type
           readOnly: true
-          example: Sundsvall Elnät
-        partyId:
+          example: Fjärrvärme
+        facilityId:
           type: string
-          description: PartyId (e.g. a personId or an organizationId)
+          description: Facility id
           readOnly: true
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
-        customerNumber:
+          example: "735999109270751042"
+        placementId:
+          type: integer
+          description: Placement id
+          format: int32
+          readOnly: true
+          example: 5263
+        careOf:
           type: string
-          description: Customer number
+          description: Care of address
           readOnly: true
-          example: "39195"
-        customerName:
-          type: string
-          description: Customer name
-          readOnly: true
-          example: Sven Svensson
+          example: Agatha Malm
         street:
           type: string
           description: Street
           readOnly: true
-          example: Storgatan 44
-        postalCode:
+          example: Storgatan 9
+        postCode:
           type: string
-          description: Postal code
+          description: Post code
           readOnly: true
           example: "85230"
         city:
@@ -1356,51 +1356,36 @@ components:
           description: City
           readOnly: true
           example: Sundsvall
-        careOf:
+        propertyDesignation:
           type: string
-          description: Care of address
+          description: Property designation
           readOnly: true
-          example: Agatha Malm
-        phoneNumbers:
+          example: Södermalm 1:27
+        dateFrom:
+          type: string
+          description: From date
+          format: date
+          readOnly: true
+          example: 2019-01-01
+        dateTo:
+          type: string
+          description: To date
+          format: date
+          readOnly: true
+          example: 2022-12-31
+        dateLastModified:
+          type: string
+          description: Date when object was last modified (or null if never modified)
+          format: date
+          readOnly: true
+          example: 2022-12-31
+        metaData:
+          maxItems: 1000
           type: array
           readOnly: true
           items:
-            type: string
-            description: List of phoneNumbers
-            readOnly: true
-            example: 076-1234567
-        emails:
-          type: array
-          readOnly: true
-          items:
-            type: string
-            description: List of emailAddresses
-            readOnly: true
-            example: test@test.se
-        customerCategoryID:
-          type: integer
-          description: Customer category ID
-          format: int32
-          readOnly: true
-          example: 1
-        customerCategoryDescription:
-          type: string
-          description: Customer category description
-          readOnly: true
-          example: Privat
-        customerChangedFlg:
-          type: boolean
-          description: Indicates if customer details have changed since the search
-            date
-          readOnly: true
-          example: false
-        installedChangedFlg:
-          type: boolean
-          description: Indicates if placement and/or equipment details have changed
-            since the search date
-          readOnly: true
-          example: true
-      description: Customer details model
+            $ref: '#/components/schemas/InstallationMetaDataEmbeddable'
+      description: Installation details model
       readOnly: true
     InstallationDetailsResponse:
       type: object
@@ -1409,9 +1394,23 @@ components:
           type: array
           readOnly: true
           items:
-            $ref: '#/components/schemas/CustomerDetails'
+            $ref: '#/components/schemas/InstallationDetails'
         _meta:
           $ref: '#/components/schemas/PagingAndSortingMetaData'
+    InstallationMetaDataEmbeddable:
+      type: object
+      properties:
+        company:
+          type: string
+        key:
+          type: string
+        value:
+          type: string
+        type:
+          type: string
+        displayName:
+          type: string
+      readOnly: true
     CustomerEngagementParameters:
       type: object
       properties:
@@ -1545,6 +1544,96 @@ components:
           format: date-time
           example: 2000-10-31T01:30:00-05:00
       description: Customer details request parameters model
+    CustomerDetails:
+      type: object
+      properties:
+        customerEngagementOrgId:
+          type: string
+          description: Company with which the customer has an engagement (organization
+            number)
+          readOnly: true
+          example: "5591962591"
+        customerEngagementOrgName:
+          type: string
+          description: Name of the company the customer has an engagement with
+          readOnly: true
+          example: Sundsvall Elnät
+        partyId:
+          type: string
+          description: PartyId (e.g. a personId or an organizationId)
+          readOnly: true
+          example: 81471222-5798-11e9-ae24-57fa13b361e1
+        customerNumber:
+          type: string
+          description: Customer number
+          readOnly: true
+          example: "39195"
+        customerName:
+          type: string
+          description: Customer name
+          readOnly: true
+          example: Sven Svensson
+        street:
+          type: string
+          description: Street
+          readOnly: true
+          example: Storgatan 44
+        postalCode:
+          type: string
+          description: Postal code
+          readOnly: true
+          example: "85230"
+        city:
+          type: string
+          description: City
+          readOnly: true
+          example: Sundsvall
+        careOf:
+          type: string
+          description: Care of address
+          readOnly: true
+          example: Agatha Malm
+        phoneNumbers:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            description: List of phoneNumbers
+            readOnly: true
+            example: 076-1234567
+        emails:
+          type: array
+          readOnly: true
+          items:
+            type: string
+            description: List of emailAddresses
+            readOnly: true
+            example: test@test.se
+        customerCategoryID:
+          type: integer
+          description: Customer category ID
+          format: int32
+          readOnly: true
+          example: 1
+        customerCategoryDescription:
+          type: string
+          description: Customer category description
+          readOnly: true
+          example: Privat
+        customerChangedFlg:
+          type: boolean
+          description: Indicates if customer details have changed since the search
+            date
+          readOnly: true
+          example: false
+        installedChangedFlg:
+          type: boolean
+          description: Indicates if placement and/or equipment details have changed
+            since the search date
+          readOnly: true
+          example: true
+      description: Customer details model
+      readOnly: true
     CustomerDetailsResponse:
       type: object
       properties:
