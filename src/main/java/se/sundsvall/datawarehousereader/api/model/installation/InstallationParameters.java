@@ -3,8 +3,6 @@ package se.sundsvall.datawarehousereader.api.model.installation;
 import java.time.LocalDate;
 import java.util.Objects;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
@@ -19,9 +17,11 @@ public class InstallationParameters extends AbstractParameterPagingAndSortingBas
 	@Schema(description = "Is the installation installed", example = "true")
 	private Boolean installed;
 
-	@Schema(description = "Last changed date. Format is YYYY-MM-DD.", example = "2022-01-01")
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-	private LocalDate dateFrom;
+	@Schema(description = "Earliest date when item was last modified", example = "2022-12-31")
+	private LocalDate lastModifiedDateFrom;
+
+	@Schema(description = "Latest date when item was last modified", example = "2022-12-31")
+	private LocalDate lastModifiedDateTo;
 
 	@Schema(description = "Category", example = "ELECTRICITY", implementation = Category.class)
 	private Category category;
@@ -46,16 +46,29 @@ public class InstallationParameters extends AbstractParameterPagingAndSortingBas
 		return this;
 	}
 
-	public LocalDate getDateFrom() {
-		return dateFrom;
+	public LocalDate getLastModifiedDateFrom() {
+		return lastModifiedDateFrom;
 	}
 
-	public void setDateFrom(final LocalDate dateFrom) {
-		this.dateFrom = dateFrom;
+	public void setLastModifiedDateFrom(final LocalDate lastModifiedDateFrom) {
+		this.lastModifiedDateFrom = lastModifiedDateFrom;
 	}
 
-	public InstallationParameters withDateFrom(final LocalDate dateFrom) {
-		this.dateFrom = dateFrom;
+	public InstallationParameters withLastModifiedDateFrom(final LocalDate lastModifiedDateFrom) {
+		this.lastModifiedDateFrom = lastModifiedDateFrom;
+		return this;
+	}
+
+	public LocalDate getLastModifiedDateTo() {
+		return lastModifiedDateTo;
+	}
+
+	public void setLastModifiedDateTo(final LocalDate lastModifiedDateTo) {
+		this.lastModifiedDateTo = lastModifiedDateTo;
+	}
+
+	public InstallationParameters withLastModifiedDateTo(final LocalDate lastModifiedDateTo) {
+		this.lastModifiedDateTo = lastModifiedDateTo;
 		return this;
 	}
 
@@ -91,20 +104,21 @@ public class InstallationParameters extends AbstractParameterPagingAndSortingBas
 		if (o == null || getClass() != o.getClass()) return false;
 		if (!super.equals(o)) return false;
 		InstallationParameters that = (InstallationParameters) o;
-		return Objects.equals(installed, that.installed) && Objects.equals(dateFrom, that.dateFrom) && Objects.equals(category, that.category) && Objects.equals(facilityId, that.facilityId);
+		return Objects.equals(installed, that.installed) && Objects.equals(lastModifiedDateFrom, that.lastModifiedDateFrom) && Objects.equals(lastModifiedDateTo, that.lastModifiedDateTo) && category == that.category && Objects.equals(facilityId, that.facilityId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), installed, dateFrom, category, facilityId);
+		return Objects.hash(super.hashCode(), installed, lastModifiedDateFrom, lastModifiedDateTo, category, facilityId);
 	}
 
 	@Override
 	public String toString() {
 		return "InstallationParameters{" +
 			"installed=" + installed +
-			", dateFrom=" + dateFrom +
-			", category='" + category + '\'' +
+			", lastModifiedDateFrom=" + lastModifiedDateFrom +
+			", lastModifiedDateTo=" + lastModifiedDateTo +
+			", category=" + category +
 			", facilityId='" + facilityId + '\'' +
 			", sortBy=" + sortBy +
 			", sortDirection=" + sortDirection +

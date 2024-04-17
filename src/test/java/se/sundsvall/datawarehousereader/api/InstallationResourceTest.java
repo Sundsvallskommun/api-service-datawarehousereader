@@ -36,7 +36,8 @@ class InstallationResourceTest {
 	private static final int LIMIT = 35;
 
 	private static final Boolean INSTALLED = false;
-	private static final LocalDate DATE_FROM = LocalDate.MIN;
+	private static final LocalDate DATE_FROM = LocalDate.parse("2020-01-01");
+	private static final LocalDate DATE_TO = LocalDate.parse("2023-01-01");
 	private static final String CATEGORY = "ELECTRICITY";
 	private static final String FACILITY_ID = "facilityId";
 
@@ -54,7 +55,7 @@ class InstallationResourceTest {
 		when(serviceMock.getInstallations(any())).thenReturn(InstallationDetailsResponse.create());
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParams(createParameterMap(PAGE, LIMIT, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM))
+				.queryParams(createParameterMap(PAGE, LIMIT, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM, DATE_TO))
 				.build())
 			.exchange()
 			.expectStatus().isOk()
@@ -69,7 +70,8 @@ class InstallationResourceTest {
 		assertThat(parameters.getFacilityId()).isEqualTo(FACILITY_ID);
 		assertThat(parameters.getCategory()).isEqualTo(Category.ELECTRICITY);
 		assertThat(parameters.getInstalled()).isEqualTo(INSTALLED);
-		assertThat(parameters.getDateFrom()).isEqualTo(DATE_FROM);
+		assertThat(parameters.getLastModifiedDateFrom()).isEqualTo(DATE_FROM);
+		assertThat(parameters.getLastModifiedDateTo()).isEqualTo(DATE_TO);
 	}
 
 	@Test
@@ -77,7 +79,7 @@ class InstallationResourceTest {
 		when(serviceMock.getInstallations(any())).thenReturn(InstallationDetailsResponse.create());
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParams(createParameterMap(null, null, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM))
+				.queryParams(createParameterMap(null, null, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM, DATE_TO))
 				.build())
 			.exchange()
 			.expectStatus().isOk()
@@ -92,7 +94,8 @@ class InstallationResourceTest {
 		assertThat(parameters.getFacilityId()).isEqualTo(FACILITY_ID);
 		assertThat(parameters.getCategory()).isEqualTo(Category.ELECTRICITY);
 		assertThat(parameters.getInstalled()).isEqualTo(INSTALLED);
-		assertThat(parameters.getDateFrom()).isEqualTo(DATE_FROM);
+		assertThat(parameters.getLastModifiedDateFrom()).isEqualTo(DATE_FROM);
+		assertThat(parameters.getLastModifiedDateTo()).isEqualTo(DATE_TO);
 	}
 
 	@Test
@@ -113,11 +116,12 @@ class InstallationResourceTest {
 		assertThat(parameters.getFacilityId()).isNull();
 		assertThat(parameters.getCategory()).isNull();
 		assertThat(parameters.getInstalled()).isNull();
-		assertThat(parameters.getDateFrom()).isNull();
+		assertThat(parameters.getLastModifiedDateTo()).isNull();
+		assertThat(parameters.getLastModifiedDateFrom()).isNull();
 	}
 
 	private MultiValueMap<String, String> createParameterMap(final Integer page, final Integer limit,
-		final String category, final Boolean installed, final String facilityId, final LocalDate dateFrom) {
+		final String category, final Boolean installed, final String facilityId, final LocalDate dateFrom, final LocalDate dateTo) {
 		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
@@ -125,7 +129,8 @@ class InstallationResourceTest {
 		ofNullable(category).ifPresent(p -> parameters.add("category", p));
 		ofNullable(installed).ifPresent(p -> parameters.add("installed", String.valueOf(p)));
 		ofNullable(facilityId).ifPresent(p -> parameters.add("facilityId", p));
-		ofNullable(dateFrom).ifPresent(p -> parameters.add("dateFrom", String.valueOf(p)));
+		ofNullable(dateFrom).ifPresent(p -> parameters.add("lastModifiedDateFrom", String.valueOf(p)));
+		ofNullable(dateTo).ifPresent(p -> parameters.add("lastModifiedDateTo", String.valueOf(p)));
 
 		return parameters;
 	}

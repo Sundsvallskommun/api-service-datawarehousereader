@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,6 +18,7 @@ import jakarta.persistence.Table;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
+import org.hibernate.type.NumericBooleanConverter;
 
 @Entity
 @Table(schema = "kundinfo", name = "vInstallations")
@@ -29,6 +31,7 @@ public class InstallationEntity {
 	@Column(name = "InternalId", nullable = false, insertable = false, updatable = false)
 	private Integer internalId;
 
+	@Convert(converter = NumericBooleanConverter.class)
 	@Column(name = "CustomerFlg", nullable = false, insertable = false, updatable = false)
 	private Boolean customerFlag;
 

@@ -3,7 +3,7 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken;
 import static java.util.Optional.ofNullable;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withCustomerFlag;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withFacilityId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withInstallationLastChangedDate;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withLastModifiedDateBetween;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withType;
 
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public interface InstallationRepository extends PagingAndSortingRepository<Insta
 
 	default Page<InstallationEntity> findAllByParameters(final InstallationParameters parameters, final Pageable pageable) {
 		return findAll(withCustomerFlag(parameters.getInstalled())
-				.and(withInstallationLastChangedDate(parameters.getDateFrom()))
+				.and(withLastModifiedDateBetween(parameters.getLastModifiedDateFrom(), parameters.getLastModifiedDateTo()))
 				.and(withType(ofNullable(parameters.getCategory()).map(Category::toStadsbackenValue).orElse(null)))
 				.and(withFacilityId(parameters.getFacilityId())),
 			pageable);
