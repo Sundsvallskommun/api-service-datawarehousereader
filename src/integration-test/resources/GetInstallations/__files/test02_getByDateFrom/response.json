@@ -3,6 +3,20 @@
     {
       "company": "Sundsvall Elnät",
       "type": "El",
+      "facilityId": "123456763123456789",
+      "placementId": 8633,
+      "careOf": "Dotthus AB",
+      "street": "Testvägen 19",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2020-01-01",
+      "dateTo": "2020-01-01",
+      "dateLastModified": "2020-01-01",
+      "metaData": []
+    },
+    {
+      "company": "Sundsvall Elnät",
+      "type": "El",
       "facilityId": "123456789123456789",
       "placementId": 8634,
       "careOf": "Ditthus AB",
@@ -106,8 +120,8 @@
   "_meta": {
     "page": 1,
     "limit": 100,
-    "count": 4,
-    "totalRecords": 4,
+    "count": 5,
+    "totalRecords": 5,
     "totalPages": 1
   }
 }

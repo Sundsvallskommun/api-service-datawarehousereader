@@ -2,13 +2,19 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_COOLING;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY_TRADE;
+import static se.sundsvall.datawarehousereader.api.model.Category.WASTE_MANAGEMENT;
 
 import java.time.LocalDate;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -25,6 +31,21 @@ class InstallationRepositoryTest {
 
 	@Autowired
 	private InstallationRepository repository;
+
+	private static Stream<Arguments> findAllByParametersInstalledArguments() {
+		return Stream.of(
+			Arguments.of(true, 5),
+			Arguments.of(false, 4));
+	}
+
+	private static Stream<Arguments> findAllByParametersCategoryArguments() {
+		return Stream.of(
+			Arguments.of(DISTRICT_COOLING, 1),
+			Arguments.of(DISTRICT_HEATING, 1),
+			Arguments.of(ELECTRICITY, 4),
+			Arguments.of(ELECTRICITY_TRADE, 1),
+			Arguments.of(WASTE_MANAGEMENT, 1));
+	}
 
 	@Test
 	void findAllByParametersNoMatch() {
@@ -51,37 +72,37 @@ class InstallationRepositoryTest {
 			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getNumberOfElements()).isEqualTo(6);
-		assertThat(page.getTotalElements()).isEqualTo(6);
-		assertThat(page.getContent()).hasSize(6);
+		assertThat(page.getNumberOfElements()).isEqualTo(9);
+		assertThat(page.getTotalElements()).isEqualTo(9);
+		assertThat(page.getContent()).hasSize(9);
 	}
 
 	@ParameterizedTest
-	@ValueSource(booleans = {true, false})
-	void findAllByParametersInstalled(final boolean installed) {
+	@MethodSource("findAllByParametersInstalledArguments")
+	void findAllByParametersInstalled(final boolean installed, final int hits) {
 		final var page = repository.findAllByParameters(
 			InstallationParameters.create()
 				.withInstalled(installed),
 			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getNumberOfElements()).isEqualTo(3);
-		assertThat(page.getTotalElements()).isEqualTo(3);
-		assertThat(page.getContent()).hasSize(3);
+		assertThat(page.getNumberOfElements()).isEqualTo(hits);
+		assertThat(page.getTotalElements()).isEqualTo(hits);
+		assertThat(page.getContent()).hasSize(hits);
 	}
 
 	@ParameterizedTest
-	@EnumSource(value = Category.class, mode = EnumSource.Mode.EXCLUDE, names = {"WATER", "COMMUNICATION"})
-	void findAllByParametersCategory(final Category category) {
+	@MethodSource("findAllByParametersCategoryArguments")
+	void findAllByParametersCategory(final Category category, final int hits) {
 		final var page = repository.findAllByParameters(
 			InstallationParameters.create()
 				.withCategory(category),
 			PageRequest.of(0, 100));
 
-		assertThat(page.getNumberOfElements()).isEqualTo(1);
 		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(1);
-		assertThat(page.getContent()).hasSize(1);
+		assertThat(page.getNumberOfElements()).isEqualTo(hits);
+		assertThat(page.getTotalElements()).isEqualTo(hits);
+		assertThat(page.getContent()).hasSize(hits);
 	}
 
 	@Test
@@ -93,9 +114,9 @@ class InstallationRepositoryTest {
 			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getNumberOfElements()).isEqualTo(4);
-		assertThat(page.getTotalElements()).isEqualTo(4);
-		assertThat(page.getContent()).hasSize(4);
+		assertThat(page.getNumberOfElements()).isEqualTo(5);
+		assertThat(page.getTotalElements()).isEqualTo(5);
+		assertThat(page.getContent()).hasSize(5);
 	}
 
 	@Test
