@@ -31,7 +31,8 @@ class InstallationRepositoryTest {
 		final var page = repository.findAllByParameters(
 			InstallationParameters.create()
 				.withInstalled(true)
-				.withDateFrom(LocalDate.now())
+				.withLastModifiedDateFrom(LocalDate.parse("2020-01-01"))
+				.withLastModifiedDateTo(LocalDate.parse("2023-01-01"))
 				.withCategory(Category.ELECTRICITY)
 				.withFacilityId("facilityId"),
 			PageRequest.of(0, 100));
@@ -45,7 +46,9 @@ class InstallationRepositoryTest {
 
 	@Test
 	void findAllByParametersNoFilters() {
-		final var page = repository.findAllByParameters(InstallationParameters.create(), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(
+			InstallationParameters.create(),
+			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
 		assertThat(page.getNumberOfElements()).isEqualTo(6);
@@ -56,7 +59,10 @@ class InstallationRepositoryTest {
 	@ParameterizedTest
 	@ValueSource(booleans = {true, false})
 	void findAllByParametersInstalled(final boolean installed) {
-		final var page = repository.findAllByParameters(InstallationParameters.create().withInstalled(installed), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(
+			InstallationParameters.create()
+				.withInstalled(installed),
+			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
 		assertThat(page.getNumberOfElements()).isEqualTo(3);
@@ -67,7 +73,10 @@ class InstallationRepositoryTest {
 	@ParameterizedTest
 	@EnumSource(value = Category.class, mode = EnumSource.Mode.EXCLUDE, names = {"WATER", "COMMUNICATION"})
 	void findAllByParametersCategory(final Category category) {
-		final var page = repository.findAllByParameters(InstallationParameters.create().withCategory(category), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(
+			InstallationParameters.create()
+				.withCategory(category),
+			PageRequest.of(0, 100));
 
 		assertThat(page.getNumberOfElements()).isEqualTo(1);
 		assertThat(page.getTotalPages()).isEqualTo(1);
@@ -76,18 +85,25 @@ class InstallationRepositoryTest {
 	}
 
 	@Test
-	void findAllByParametersDateFrom() {
-		final var page = repository.findAllByParameters(InstallationParameters.create().withDateFrom(LocalDate.parse("2023-01-01")), PageRequest.of(0, 100));
+	void findAllByDateBetween() {
+		final var page = repository.findAllByParameters(
+			InstallationParameters.create()
+				.withLastModifiedDateFrom(LocalDate.parse("2020-01-01"))
+				.withLastModifiedDateTo(LocalDate.parse("2023-01-01")),
+			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getNumberOfElements()).isEqualTo(3);
-		assertThat(page.getTotalElements()).isEqualTo(3);
-		assertThat(page.getContent()).hasSize(3);
+		assertThat(page.getNumberOfElements()).isEqualTo(4);
+		assertThat(page.getTotalElements()).isEqualTo(4);
+		assertThat(page.getContent()).hasSize(4);
 	}
 
 	@Test
 	void findAllByParametersFacilityId() {
-		final var page = repository.findAllByParameters(InstallationParameters.create().withFacilityId("323456789123456789"), PageRequest.of(0, 100));
+		final var page = repository.findAllByParameters(
+			InstallationParameters.create()
+				.withFacilityId("323456789123456789"),
+			PageRequest.of(0, 100));
 
 		assertThat(page.getTotalPages()).isEqualTo(1);
 		assertThat(page.getNumberOfElements()).isEqualTo(1);

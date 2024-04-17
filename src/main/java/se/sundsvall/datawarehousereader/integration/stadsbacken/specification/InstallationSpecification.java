@@ -19,8 +19,8 @@ public interface InstallationSpecification {
 		return BUILDER.buildEqualFilter(CUSTOMER_FLAG, flag);
 	}
 
-	static Specification<InstallationEntity> withInstallationLastChangedDate(final LocalDate installationLastChangedDate) {
-		return BUILDER.buildDateFilter(LAST_CHANGED_DATE, installationLastChangedDate, LocalDate.now());
+	static Specification<InstallationEntity> withLastModifiedDateBetween(final LocalDate dateFrom, final LocalDate dateTom) {
+		return BUILDER.buildDateFilter(LAST_CHANGED_DATE, dateFrom, dateTom);
 	}
 
 	static Specification<InstallationEntity> withType(final String type) {

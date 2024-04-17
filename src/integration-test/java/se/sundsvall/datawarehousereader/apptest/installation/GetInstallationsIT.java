@@ -32,7 +32,7 @@ class GetInstallationsIT extends AbstractAppTest {
 	@Test
 	void test02_getByDateFrom() {
 		setupCall()
-			.withServicePath("/installations?dateFrom=2022-01-01")
+			.withServicePath("/installations?lastModifiedDateFrom=2020-01-01&lastModifiedDateTo=2023-01-01")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)

@@ -2,49 +2,28 @@
   "installationDetails": [
     {
       "company": "Sundsvall Elnät",
-      "type": "Fjärrvärme",
-      "facilityId": "223456789123456789",
-      "placementId": 32365,
+      "type": "El",
+      "facilityId": "123456789123456789",
+      "placementId": 8634,
       "careOf": "Ditthus AB",
-      "street": "Testvägen 18",
+      "street": "Testvägen 17",
       "postCode": "12345",
       "city": "TESTVALL",
-      "dateFrom": "2024-01-01",
-      "dateTo": "2024-01-01",
-      "dateLastModified": "2024-01-01",
-      "metaData": [
-        {
-          "key": "netarea",
-          "value": "Sundsvall",
-          "type": "location",
-          "displayName": "Nätområde"
-        }
-      ]
-    },
-    {
-      "company": "Sundsvall Elnät",
-      "type": "Fjärrkyla",
-      "facilityId": "323456789123456789",
-      "placementId": 35324,
-      "careOf": "Ditthus AB",
-      "street": "Testvägen 19",
-      "postCode": "12345",
-      "city": "TESTVALL",
-      "dateFrom": "2024-01-01",
-      "dateTo": "2024-01-01",
-      "dateLastModified": "2024-01-01",
+      "dateFrom": "2020-01-01",
+      "dateTo": "2020-01-01",
+      "dateLastModified": "2020-01-01",
       "metaData": [
         {
           "key": "annualusage",
-          "value": "543",
+          "value": "1234",
           "type": "kW",
           "displayName": "Beräknad årlig förbrukning"
         },
         {
-          "key": "netarea",
-          "value": "Sundsvall",
-          "type": "location",
-          "displayName": "Nätområde"
+          "key": "fusesize",
+          "value": "3214",
+          "type": "A",
+          "displayName": "Säkringsstorlek"
         }
       ]
     },
@@ -74,13 +53,61 @@
           "displayName": "Beräknad årlig förbrukning"
         }
       ]
+    },
+    {
+      "company": "Sundsvall Elnät",
+      "type": "Avfallsvåg",
+      "facilityId": "423456789123456789",
+      "placementId": 35391,
+      "careOf": "Ditthus AB",
+      "street": "Testvägen 20",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2020-01-01",
+      "dateTo": "2020-01-01",
+      "dateLastModified": "2020-01-01",
+      "metaData": [
+        {
+          "key": "fusesize",
+          "value": "21",
+          "type": "A",
+          "displayName": "Säkringsstorlek"
+        },
+        {
+          "key": "fusesize",
+          "value": "12",
+          "type": "A",
+          "displayName": "Säkringsstorlek"
+        }
+      ]
+    },
+    {
+      "company": "Sundsvall Elnät",
+      "type": "Elhandel",
+      "facilityId": "423456789123963259",
+      "placementId": 353851,
+      "careOf": "Ditthus AB",
+      "street": "Testvägen 56",
+      "postCode": "12345",
+      "city": "TESTVALL",
+      "dateFrom": "2020-01-01",
+      "dateTo": "2020-01-01",
+      "dateLastModified": "2020-01-01",
+      "metaData": [
+        {
+          "key": "annualusage",
+          "value": "16000",
+          "type": "kW",
+          "displayName": "Beräknad årlig förbrukning"
+        }
+      ]
     }
   ],
   "_meta": {
     "page": 1,
     "limit": 100,
-    "count": 3,
-    "totalRecords": 3,
+    "count": 4,
+    "totalRecords": 4,
     "totalPages": 1
   }
 }
