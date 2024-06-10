@@ -5,17 +5,28 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
+import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
 
+import java.time.LocalDateTime;
+import java.util.Random;
+
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class CustomerDetailsEntityTest {
+class CustomerDetailEntityTest {
+
+	@BeforeAll
+	static void setup() {
+		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDateTime.class);
+	}
 
 	@Test
 	void testBean() {
-		assertThat(CustomerDetailsEntity.class, allOf(
+		assertThat(CustomerDetailEntity.class, allOf(
 			hasValidBeanConstructor(),
 			hasValidGettersAndSetters(),
 			hasValidBeanHashCode(),
@@ -44,8 +55,10 @@ class CustomerDetailsEntityTest {
 		final var uuid = "123893ec-3b89-4660-a316-f4b2b83c4689";
 		final var organizationId = "organizationId";
 		final var organizationName = "organizationName";
+		final var active = true;
+		final var moveInDate = LocalDateTime.now().plusDays(new Random().nextInt());
 
-		final var entity = CustomerDetailsEntity.create()
+		final var entity = CustomerDetailEntity.create()
 			.withCustomerOrgId(customerOrgId)
 			.withCustomerId(customerId)
 			.withCustomerCategoryID(customerCategoryID)
@@ -64,7 +77,9 @@ class CustomerDetailsEntityTest {
 			.withInstalledChangedFlg(installedChangedFlg)
 			.withPartyId(uuid)
 			.withOrganizationId(organizationId)
-			.withOrganizationName(organizationName);
+			.withOrganizationName(organizationName)
+			.withActive(active)
+			.withMoveInDate(moveInDate);
 
 		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerId()).isEqualTo(customerId);
@@ -86,16 +101,20 @@ class CustomerDetailsEntityTest {
 		assertThat(entity.getPartyId()).isEqualTo(uuid);
 		assertThat(entity.getOrganizationId()).isEqualTo(organizationId);
 		assertThat(entity.getOrganizationName()).isEqualTo(organizationName);
+		assertThat(entity.isActive()).isEqualTo(active);
+		assertThat(entity.getMoveInDate()).isEqualTo(moveInDate);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		assertThat(CustomerDetailsEntity.create()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg")
+		assertThat(CustomerDetailEntity.create()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg", "active")
 			.hasFieldOrPropertyWithValue("customerChangedFlg", false)
-			.hasFieldOrPropertyWithValue("installedChangedFlg", false);
-		assertThat(new CustomerDetailsEntity()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg")
+			.hasFieldOrPropertyWithValue("installedChangedFlg", false)
+			.hasFieldOrPropertyWithValue("active", false);
+		assertThat(new CustomerDetailEntity()).hasAllNullFieldsOrPropertiesExcept("customerChangedFlg", "installedChangedFlg", "active")
 			.hasFieldOrPropertyWithValue("customerChangedFlg", false)
-			.hasFieldOrPropertyWithValue("installedChangedFlg", false);
+			.hasFieldOrPropertyWithValue("installedChangedFlg", false)
+			.hasFieldOrPropertyWithValue("active", false);
 	}
 
 }

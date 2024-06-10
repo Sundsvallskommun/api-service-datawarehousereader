@@ -32,16 +32,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
-
-import generated.se.sundsvall.party.PartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {
@@ -52,7 +51,7 @@ class CustomerServiceTest {
 	private CustomerRepository repositoryMock;
 
 	@Mock
-	private CustomerDetailsRepository customerDetailsRepositoryMock;
+	private CustomerDetailRepository customerDetailRepositoryMock;
 
 	@Mock
 	private PartyProvider partyProviderMock;
@@ -64,7 +63,7 @@ class CustomerServiceTest {
 	private CustomerEntity entityMock;
 
 	@Mock
-	private CustomerDetailsEntity detailsEntityMock;
+	private CustomerDetailEntity detailsEntityMock;
 
 	@InjectMocks
 	private CustomerService service;
@@ -122,36 +121,36 @@ class CustomerServiceTest {
 	@Test
 	void getDetailsWithPartyIdsAndCustomerEngagementOrgId() {
 		final var customerEngagementOrgId = "5564786647";
-		var parameters = CustomerDetailsParameters.create()
-				.withFromDateTime(OffsetDateTime.now())
-				.withCustomerEngagementOrgId(customerEngagementOrgId)
-				.withPartyId(List.of(RANDOM_UUID));
+		final var parameters = CustomerDetailsParameters.create()
+			.withFromDateTime(OffsetDateTime.now())
+			.withCustomerEngagementOrgId(customerEngagementOrgId)
+			.withPartyId(List.of(RANDOM_UUID));
 
 		final var limit = 100;
 
-		//Setup paging parameters
+		// Setup paging parameters
 		parameters.setPage(1);
 		parameters.setLimit(limit);
 		parameters.setSortBy(List.of("customerOrgId"));
 
-		//Instantiate page data
-		Page<CustomerDetailsEntity> pagedResponse = new PageImpl<>(List.of(detailsEntityMock, detailsEntityMock), Pageable.ofSize(limit), 1);
+		// Instantiate page data
+		final Page<CustomerDetailEntity> pagedResponse = new PageImpl<>(List.of(detailsEntityMock, detailsEntityMock), Pageable.ofSize(limit), 1);
 
-		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(List.of(RANDOM_UUID)), pageableCaptor.capture())).thenReturn(pagedResponse);
+		when(customerDetailRepositoryMock.findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(RANDOM_UUID), pageableCaptor.capture())).thenReturn(pagedResponse);
 
-		var response = service.getCustomerDetails(parameters);
+		final var response = service.getCustomerDetails(parameters);
 
-		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(List.of(RANDOM_UUID)), pageableCaptor.capture());
+		verify(customerDetailRepositoryMock).findWithCustomerEngagementOrgIdAndPartyIds(any(LocalDateTime.class), eq(customerEngagementOrgId), eq(RANDOM_UUID), pageableCaptor.capture());
 
-		//Assert that response data is somewhat what we send in.
+		// Assert that response data is somewhat what we send in.
 		assertThat(response.getCustomerDetails()).hasSize(2);
 
-		//Assert Page data
+		// Assert Page data
 		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(limit);
 		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
-		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(CustomerDetailsEntity.class).by(CustomerDetailsEntity::getCustomerOrgId).ascending());
+		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(CustomerDetailEntity.class).by(CustomerDetailEntity::getCustomerOrgId).ascending());
 
-		//Assert response paging data
+		// Assert response paging data
 		assertThat(response.getMetaData().getPage()).isEqualTo(1);
 		assertThat(response.getMetaData().getLimit()).isEqualTo(limit);
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
@@ -161,35 +160,35 @@ class CustomerServiceTest {
 	@Test
 	void getDetailsWithOnlyCustomerEngagementOrgId() {
 		final var customerEngagementOrgId = "5564786647";
-		var parameters = CustomerDetailsParameters.create()
-				.withFromDateTime(OffsetDateTime.now())
-				.withCustomerEngagementOrgId(customerEngagementOrgId);
+		final var parameters = CustomerDetailsParameters.create()
+			.withFromDateTime(OffsetDateTime.now())
+			.withCustomerEngagementOrgId(customerEngagementOrgId);
 
 		final var limit = 100;
 
-		//Setup paging parameters
+		// Setup paging parameters
 		parameters.setPage(1);
 		parameters.setLimit(limit);
 		parameters.setSortBy(List.of("customerOrgId"));
 
-		//Instantiate page data
-		Page<CustomerDetailsEntity> pagedResponse = new PageImpl<>(List.of(detailsEntityMock, detailsEntityMock), Pageable.ofSize(limit), 1);
+		// Instantiate page data
+		final Page<CustomerDetailEntity> pagedResponse = new PageImpl<>(List.of(detailsEntityMock, detailsEntityMock), Pageable.ofSize(limit), 1);
 
-		when(customerDetailsRepositoryMock.findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerEngagementOrgId), pageableCaptor.capture())).thenReturn(pagedResponse);
+		when(customerDetailRepositoryMock.findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerEngagementOrgId), pageableCaptor.capture())).thenReturn(pagedResponse);
 
-		var response = service.getCustomerDetails(parameters);
+		final var response = service.getCustomerDetails(parameters);
 
-		verify(customerDetailsRepositoryMock).findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerEngagementOrgId), pageableCaptor.capture());
+		verify(customerDetailRepositoryMock).findWithCustomerEngagementOrgId(any(LocalDateTime.class), eq(customerEngagementOrgId), pageableCaptor.capture());
 
-		//Assert that response data is somewhat what we send in.
+		// Assert that response data is somewhat what we send in.
 		assertThat(response.getCustomerDetails()).hasSize(2);
 
-		//Assert Page data
+		// Assert Page data
 		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(limit);
 		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
-		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(CustomerDetailsEntity.class).by(CustomerDetailsEntity::getCustomerOrgId).ascending());
+		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(CustomerDetailEntity.class).by(CustomerDetailEntity::getCustomerOrgId).ascending());
 
-		//Assert response paging data
+		// Assert response paging data
 		assertThat(response.getMetaData().getPage()).isEqualTo(1);
 		assertThat(response.getMetaData().getLimit()).isEqualTo(limit);
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
@@ -226,7 +225,6 @@ class CustomerServiceTest {
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
 		when(partyProviderMock.translateToLegalId(partyId)).thenReturn(legalId);
-
 
 		final var response = service.getCustomerEngagements(params);
 

@@ -17,7 +17,9 @@
     );
 
     create table kundinfo.vCustomer (
+        active varchar(1) not null,
         customerid int not null,
+        moveindate datetime,
         customerorgid varchar(255),
         customertype varchar(10) not null,
         organizationid varchar(10) not null,
@@ -26,10 +28,12 @@
     );
 
     create table kundinfo.vCustomerDetail (
+        Active varchar(1) not null,
         CustomerCategoryID int,
         CustomerChangedFlg bit,
         Customerid int not null,
         Installedchangedflg bit,
+        MoveInDate datetime,
         Address nvarchar(255),
         City nvarchar(255),
         CustomerCategoryDescription nvarchar(255),

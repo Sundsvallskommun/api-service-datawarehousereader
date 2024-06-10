@@ -11,8 +11,8 @@ import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 
 /**
  * Get customer details tests
- * 
- * @see src/test/resources/db/scripts/initialize.sql for data setup. Uses the function "kundinfo.fnCustomerDetails".
+ *
+ * @see src/test/resources/db/scripts/initialize.sql for data setup. Uses the function "kundinfo.fnCustomerDetail".
  */
 @WireMockAppTestSuite(files = "classpath:/GetCustomerDetails/", classes = Application.class)
 class GetCustomerDetailsIT extends AbstractAppTest {

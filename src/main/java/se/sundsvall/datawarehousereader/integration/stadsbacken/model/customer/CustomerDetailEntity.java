@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -9,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(schema = "kundinfo", name = "vCustomerDetail")
-public class CustomerDetailsEntity {
+public class CustomerDetailEntity {
 
 	@Id
 	@Column(name = "Customerid", nullable = false, insertable = false, updatable = false)
@@ -69,13 +70,14 @@ public class CustomerDetailsEntity {
 	@Column(name = "Installedchangedflg", insertable = false, updatable = false)
 	private boolean installedChangedFlg;
 
-	public static CustomerDetailsEntity create() {
-		return new CustomerDetailsEntity();
-	}
+	@Column(name = "Active", columnDefinition = "varchar(1)", nullable = false, insertable = false, updatable = false)
+	private boolean active;
 
-	public CustomerDetailsEntity withCustomerOrgId(String customerOrgId) {
-		this.customerOrgId = customerOrgId;
-		return this;
+	@Column(name = "MoveInDate", insertable = false, updatable = false, columnDefinition = "datetime")
+	private LocalDateTime moveInDate;
+
+	public static CustomerDetailEntity create() {
+		return new CustomerDetailEntity();
 	}
 
 	public String getCustomerOrgId() {
@@ -86,8 +88,8 @@ public class CustomerDetailsEntity {
 		this.customerOrgId = customerOrgId;
 	}
 
-	public CustomerDetailsEntity withOrganizationId(String organizationId) {
-		this.organizationId = organizationId;
+	public CustomerDetailEntity withCustomerOrgId(String customerOrgId) {
+		this.customerOrgId = customerOrgId;
 		return this;
 	}
 
@@ -99,8 +101,8 @@ public class CustomerDetailsEntity {
 		this.organizationId = organizationId;
 	}
 
-	public CustomerDetailsEntity withOrganizationName(String organizationName) {
-		this.organizationName = organizationName;
+	public CustomerDetailEntity withOrganizationId(String organizationId) {
+		this.organizationId = organizationId;
 		return this;
 	}
 
@@ -112,8 +114,8 @@ public class CustomerDetailsEntity {
 		this.organizationName = organizationName;
 	}
 
-	public CustomerDetailsEntity withCustomerId(Integer customerId) {
-		this.customerId = customerId;
+	public CustomerDetailEntity withOrganizationName(String organizationName) {
+		this.organizationName = organizationName;
 		return this;
 	}
 
@@ -125,8 +127,8 @@ public class CustomerDetailsEntity {
 		this.customerId = customerId;
 	}
 
-	public CustomerDetailsEntity withCustomerCategoryID(Integer customerCategoryID) {
-		this.customerCategoryID = customerCategoryID;
+	public CustomerDetailEntity withCustomerId(Integer customerId) {
+		this.customerId = customerId;
 		return this;
 	}
 
@@ -138,8 +140,8 @@ public class CustomerDetailsEntity {
 		this.customerCategoryID = customerCategoryID;
 	}
 
-	public CustomerDetailsEntity withCustomerCategoryDescription(String customerCategoryDescription) {
-		this.customerCategoryDescription = customerCategoryDescription;
+	public CustomerDetailEntity withCustomerCategoryID(Integer customerCategoryID) {
+		this.customerCategoryID = customerCategoryID;
 		return this;
 	}
 
@@ -151,8 +153,8 @@ public class CustomerDetailsEntity {
 		this.customerCategoryDescription = customerCategoryDescription;
 	}
 
-	public CustomerDetailsEntity withName(String name) {
-		this.name = name;
+	public CustomerDetailEntity withCustomerCategoryDescription(String customerCategoryDescription) {
+		this.customerCategoryDescription = customerCategoryDescription;
 		return this;
 	}
 
@@ -164,8 +166,8 @@ public class CustomerDetailsEntity {
 		this.name = name;
 	}
 
-	public CustomerDetailsEntity withCo(String co) {
-		this.co = co;
+	public CustomerDetailEntity withName(String name) {
+		this.name = name;
 		return this;
 	}
 
@@ -177,8 +179,8 @@ public class CustomerDetailsEntity {
 		this.co = co;
 	}
 
-	public CustomerDetailsEntity withAddress(String address) {
-		this.address = address;
+	public CustomerDetailEntity withCo(String co) {
+		this.co = co;
 		return this;
 	}
 
@@ -190,8 +192,8 @@ public class CustomerDetailsEntity {
 		this.address = address;
 	}
 
-	public CustomerDetailsEntity withZipcode(String zipcode) {
-		this.zipcode = zipcode;
+	public CustomerDetailEntity withAddress(String address) {
+		this.address = address;
 		return this;
 	}
 
@@ -203,8 +205,8 @@ public class CustomerDetailsEntity {
 		this.zipcode = zipcode;
 	}
 
-	public CustomerDetailsEntity withCity(String city) {
-		this.city = city;
+	public CustomerDetailEntity withZipcode(String zipcode) {
+		this.zipcode = zipcode;
 		return this;
 	}
 
@@ -216,8 +218,8 @@ public class CustomerDetailsEntity {
 		this.city = city;
 	}
 
-	public CustomerDetailsEntity withPhone1(String phone1) {
-		this.phone1 = phone1;
+	public CustomerDetailEntity withCity(String city) {
+		this.city = city;
 		return this;
 	}
 
@@ -229,8 +231,8 @@ public class CustomerDetailsEntity {
 		this.phone1 = phone1;
 	}
 
-	public CustomerDetailsEntity withPhone2(String phone2) {
-		this.phone2 = phone2;
+	public CustomerDetailEntity withPhone1(String phone1) {
+		this.phone1 = phone1;
 		return this;
 	}
 
@@ -242,8 +244,8 @@ public class CustomerDetailsEntity {
 		this.phone2 = phone2;
 	}
 
-	public CustomerDetailsEntity withPhone3(String phone3) {
-		this.phone3 = phone3;
+	public CustomerDetailEntity withPhone2(String phone2) {
+		this.phone2 = phone2;
 		return this;
 	}
 
@@ -255,8 +257,8 @@ public class CustomerDetailsEntity {
 		this.phone3 = phone3;
 	}
 
-	public CustomerDetailsEntity withEmail1(String email1) {
-		this.email1 = email1;
+	public CustomerDetailEntity withPhone3(String phone3) {
+		this.phone3 = phone3;
 		return this;
 	}
 
@@ -268,8 +270,8 @@ public class CustomerDetailsEntity {
 		this.email1 = email1;
 	}
 
-	public CustomerDetailsEntity withEmail2(String email2) {
-		this.email2 = email2;
+	public CustomerDetailEntity withEmail1(String email1) {
+		this.email1 = email1;
 		return this;
 	}
 
@@ -281,8 +283,8 @@ public class CustomerDetailsEntity {
 		this.email2 = email2;
 	}
 
-	public CustomerDetailsEntity withCustomerChangedFlg(boolean customerChangedFlg) {
-		this.customerChangedFlg = customerChangedFlg;
+	public CustomerDetailEntity withEmail2(String email2) {
+		this.email2 = email2;
 		return this;
 	}
 
@@ -294,8 +296,8 @@ public class CustomerDetailsEntity {
 		this.customerChangedFlg = customerChangedFlg;
 	}
 
-	public CustomerDetailsEntity withInstalledChangedFlg(boolean installedChangedFlg) {
-		this.installedChangedFlg = installedChangedFlg;
+	public CustomerDetailEntity withCustomerChangedFlg(boolean customerChangedFlg) {
+		this.customerChangedFlg = customerChangedFlg;
 		return this;
 	}
 
@@ -307,6 +309,11 @@ public class CustomerDetailsEntity {
 		this.installedChangedFlg = installedChangedFlg;
 	}
 
+	public CustomerDetailEntity withInstalledChangedFlg(boolean installedChangedFlg) {
+		this.installedChangedFlg = installedChangedFlg;
+		return this;
+	}
+
 	public String getPartyId() {
 		return partyId;
 	}
@@ -315,46 +322,66 @@ public class CustomerDetailsEntity {
 		this.partyId = partyId;
 	}
 
-	public CustomerDetailsEntity withPartyId(String partyId) {
+	public CustomerDetailEntity withPartyId(String partyId) {
 		this.partyId = partyId;
 		return this;
 	}
 
-	@Override
-	public String toString() {
-		return "CustomerDetailsEntity{" +
-				"customerId=" + customerId +
-				", partyId='" + partyId + '\'' +
-				", customerOrgId='" + customerOrgId + '\'' +
-				", organizationId='" + organizationId + '\'' +
-				", organizationName='" + organizationName + '\'' +
-				", customerCategoryID=" + customerCategoryID +
-				", customerCategoryDescription='" + customerCategoryDescription + '\'' +
-				", name='" + name + '\'' +
-				", co='" + co + '\'' +
-				", address='" + address + '\'' +
-				", zipcode='" + zipcode + '\'' +
-				", city='" + city + '\'' +
-				", phone1='" + phone1 + '\'' +
-				", phone2='" + phone2 + '\'' +
-				", phone3='" + phone3 + '\'' +
-				", email1='" + email1 + '\'' +
-				", email2='" + email2 + '\'' +
-				", customerChangedFlg=" + customerChangedFlg +
-				", installedChangedFlg=" + installedChangedFlg +
-				'}';
+	public boolean isActive() {
+		return active;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		CustomerDetailsEntity that = (CustomerDetailsEntity) o;
-		return customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerId, that.customerId) && Objects.equals(partyId, that.partyId) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(organizationId, that.organizationId) && Objects.equals(organizationName, that.organizationName) && Objects.equals(customerCategoryID, that.customerCategoryID) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription) && Objects.equals(name, that.name) && Objects.equals(co, that.co) && Objects.equals(address, that.address) && Objects.equals(zipcode, that.zipcode) && Objects.equals(city, that.city) && Objects.equals(phone1, that.phone1) && Objects.equals(phone2, that.phone2) && Objects.equals(phone3, that.phone3) && Objects.equals(email1, that.email1) && Objects.equals(email2, that.email2);
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
+
+	public CustomerDetailEntity withActive(boolean active) {
+		this.active = active;
+		return this;
+	}
+
+	public LocalDateTime getMoveInDate() {
+		return moveInDate;
+	}
+
+	public void setMoveInDate(LocalDateTime moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+
+	public CustomerDetailEntity withMoveInDate(LocalDateTime moveInDate) {
+		this.moveInDate = moveInDate;
+		return this;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, partyId, customerOrgId, organizationId, organizationName, customerCategoryID, customerCategoryDescription, name, co, address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg);
+		return Objects.hash(active, address, city, co, customerCategoryDescription, customerCategoryID, customerChangedFlg, customerId, customerOrgId, email1, email2, installedChangedFlg, moveInDate, name, organizationId, organizationName, partyId,
+			phone1, phone2, phone3, zipcode);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof final CustomerDetailEntity other)) {
+			return false;
+		}
+		return active == other.active && Objects.equals(address, other.address) && Objects.equals(city, other.city) && Objects.equals(co, other.co) && Objects.equals(customerCategoryDescription, other.customerCategoryDescription) && Objects.equals(
+			customerCategoryID, other.customerCategoryID) && customerChangedFlg == other.customerChangedFlg && Objects.equals(customerId, other.customerId) && Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(email1, other.email1)
+			&& Objects.equals(email2, other.email2) && installedChangedFlg == other.installedChangedFlg && Objects.equals(moveInDate, other.moveInDate) && Objects.equals(name, other.name) && Objects.equals(organizationId, other.organizationId)
+			&& Objects.equals(organizationName, other.organizationName) && Objects.equals(partyId, other.partyId) && Objects.equals(phone1, other.phone1) && Objects.equals(phone2, other.phone2) && Objects.equals(phone3, other.phone3) && Objects
+				.equals(zipcode, other.zipcode);
+	}
+
+	@Override
+	public String toString() {
+		final var builder = new StringBuilder();
+		builder.append("CustomerDetailEntity [customerId=").append(customerId).append(", partyId=").append(partyId).append(", customerOrgId=").append(customerOrgId).append(", organizationId=").append(organizationId).append(", organizationName=")
+			.append(organizationName).append(", customerCategoryID=").append(customerCategoryID).append(", customerCategoryDescription=").append(customerCategoryDescription).append(", name=").append(name).append(", co=").append(co).append(
+				", address=").append(address).append(", zipcode=").append(zipcode).append(", city=").append(city).append(", phone1=").append(phone1).append(", phone2=").append(phone2).append(", phone3=").append(phone3).append(", email1=").append(
+					email1).append(", email2=").append(email2).append(", customerChangedFlg=").append(customerChangedFlg).append(", installedChangedFlg=").append(installedChangedFlg).append(", active=").append(active).append(", moveInDate=").append(
+						moveInDate).append("]");
+		return builder.toString();
 	}
 }

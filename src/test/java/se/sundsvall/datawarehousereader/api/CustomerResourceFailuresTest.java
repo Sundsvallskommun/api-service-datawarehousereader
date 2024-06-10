@@ -33,8 +33,8 @@ class CustomerResourceFailuresTest {
 	@Test
 	void getCustomerEngagementsPageLessThanMinimum() {
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-				.queryParam("page", 0)
-				.build())
+			.queryParam("page", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -54,8 +54,8 @@ class CustomerResourceFailuresTest {
 	@Test
 	void getCustomerEngagementsLimitLessThanMinimum() {
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-				.queryParam("limit", 0)
-				.build())
+			.queryParam("limit", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -75,8 +75,8 @@ class CustomerResourceFailuresTest {
 	@Test
 	void getCustomerEngagementsLimitMoreThanMaximum() {
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-				.queryParam("limit", 1001)
-				.build())
+			.queryParam("limit", 1001)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -96,8 +96,8 @@ class CustomerResourceFailuresTest {
 	@Test
 	void getCustomerEngagementsPartyIdNotValidUUID() {
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-				.queryParam("partyId", "not-valid-uuid")
-				.build())
+			.queryParam("partyId", "not-valid-uuid")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -117,8 +117,8 @@ class CustomerResourceFailuresTest {
 	@Test
 	void getCustomerEngagementsNoValidSortBy() {
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
-				.queryParam("sortBy", "not-valid-property")
-				.build())
+			.queryParam("sortBy", "not-valid-property")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -130,7 +130,8 @@ class CustomerResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("customerEngagementParameters", "One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [organizationId, customerType, organizationName, customerId, customerOrgId]."));
+			tuple("customerEngagementParameters",
+				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [organizationId, customerType, organizationName, moveInDate, customerId, customerOrgId, active]."));
 
 		verifyNoInteractions(serviceMock);
 	}
@@ -139,8 +140,9 @@ class CustomerResourceFailuresTest {
 	void getCustomerDetailsNoPartyIdAndCustomerEngagementOrgId() {
 		when(serviceMock.getCustomerDetails(any())).thenReturn(CustomerDetailsResponse.create());
 
-		final var response = webTestClient.get()
-			.uri("/customer/details")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/details")
+			.queryParam("sortBy", "not-valid-property")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -152,7 +154,11 @@ class CustomerResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("customerEngagementOrgId", "must match the regular expression ^([1235789][\\d][2-9]\\d{7})$"),
 			tuple("customerDetailsParameters", "'customerEngagementOrgId' must be provided"),
-			tuple("customerEngagementOrgId", "must match the regular expression ^([1235789][\\d][2-9]\\d{7})$"));
+			tuple("customerDetailsParameters",
+				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [installedChangedFlg, address, organizationName, city, phone2, phone3, active, customerCategoryID, co, customerChangedFlg, phone1, organizationId, zipcode, email2, email1, customerCategoryDescription, moveInDate, customerId, name, customerOrgId, partyId]."));
+
+		verifyNoInteractions(serviceMock);
 	}
 }

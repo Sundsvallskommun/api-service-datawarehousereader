@@ -9,7 +9,7 @@ import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import se.sundsvall.datawarehousereader.api.validation.ValidCustomerDetailsParameters;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidOrganizationNumber;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Customer details request parameters model")
-@ValidSortByProperty(CustomerDetailsEntity.class)
+@ValidSortByProperty(CustomerDetailEntity.class)
 @ValidCustomerDetailsParameters
 public class CustomerDetailsParameters extends AbstractParameterPagingAndSortingBase {
 

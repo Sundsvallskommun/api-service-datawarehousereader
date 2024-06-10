@@ -13,8 +13,7 @@ drop table if exists kundinfo.vMeasurementElectricityDay;
 drop table if exists kundinfo.vMeasurementElectricityMonth;
 drop table if exists kundinfo.vAgreements;
 drop procedure if exists kundinfo.spMeasurementElectricityHour;
-drop procedure if exists kundinfo.spCustomerDetails;
-drop function if exists kundinfo.fnCustomerDetails;
+drop function if exists kundinfo.fnCustomerDetail;
 
 drop schema if exists kundinfo;
 create schema kundinfo;
@@ -36,32 +35,4 @@ begin
        or @datum_start <= DateAndTime)
       and (@datum_stop is null
        or @datum_stop >= DateAndTime)
-end;
-
-
-CREATE PROCEDURE kundinfo.spCustomerDetails @fromDate datetime2, @pageOffset int, @pageSize int
-AS
-begin
-
-    SELECT DISTINCT Uuid,
-                    CustomerOrgId,
-                    CustomerEngagementOrgId,
-                    CustomerId,
-                    CustomerCategoryID,
-                    CustomerCategoryDescription,
-                    Name,
-                    [c/o],
-                    Address,
-                    Zipcode,
-                    City,
-                    Phone1,
-                    Phone2,
-                    Phone3,
-                    Email1,
-                    Email2,
-                    CustomerChangedFlg,
-                    Installedchangedflg
-    from vCustomerDetail
-    order by CustomerId
-    OFFSET @pageOffset ROWS FETCH NEXT @pageSize ROWS ONLY
 end;

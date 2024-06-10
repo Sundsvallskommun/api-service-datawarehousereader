@@ -2,7 +2,7 @@ package se.sundsvall.datawarehousereader.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailsMapper.toCustomerDetails;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toCustomerDetails;
 
 import java.util.Collections;
 import java.util.List;
@@ -10,13 +10,13 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 
-class CustomerDetailsMapperTest {
+class CustomerDetailMapperTest {
 
 	@Test
 	void toCustomerDetailsWithNullList() {
-		assertThat(toCustomerDetails((List<CustomerDetailsEntity>) null)).isEmpty();
+		assertThat(toCustomerDetails((List<CustomerDetailEntity>) null)).isEmpty();
 	}
 
 	@Test
@@ -26,7 +26,7 @@ class CustomerDetailsMapperTest {
 
 	@Test
 	void toDetails() {
-		final var entity = CustomerDetailsEntity.create()
+		final var entity = CustomerDetailEntity.create()
 			.withCustomerOrgId("customerOrgId")
 			.withCustomerId(1)
 			.withCustomerCategoryID(2)

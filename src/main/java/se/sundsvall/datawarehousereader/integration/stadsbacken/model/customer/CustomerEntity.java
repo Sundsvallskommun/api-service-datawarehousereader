@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -29,6 +30,12 @@ public class CustomerEntity {
 
 	@Column(name = "organizationname", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String organizationName;
+
+	@Column(name = "active", columnDefinition = "varchar(1)", nullable = false, insertable = false, updatable = false)
+	private boolean active;
+
+	@Column(name = "moveindate", insertable = false, updatable = false, columnDefinition = "datetime")
+	private LocalDateTime moveInDate;
 
 	public static CustomerEntity create() {
 		return new CustomerEntity();
@@ -99,9 +106,35 @@ public class CustomerEntity {
 		return this;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(final boolean active) {
+		this.active = active;
+	}
+
+	public CustomerEntity withActive(boolean active) {
+		this.active = active;
+		return this;
+	}
+
+	public LocalDateTime getMoveInDate() {
+		return moveInDate;
+	}
+
+	public void setMoveInDate(LocalDateTime moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+
+	public CustomerEntity withMoveInDate(LocalDateTime moveInDate) {
+		this.moveInDate = moveInDate;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerId, customerOrgId, customerType, organizationId, organizationName);
+		return Objects.hash(active, customerId, customerOrgId, customerType, moveInDate, organizationId, organizationName);
 	}
 
 	@Override
@@ -109,25 +142,18 @@ public class CustomerEntity {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (!(obj instanceof final CustomerEntity other)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final CustomerEntity other = (CustomerEntity) obj;
-		return Objects.equals(customerId, other.customerId) && Objects.equals(customerOrgId, other.customerOrgId)
-			&& Objects.equals(customerType, other.customerType)
-			&& Objects.equals(organizationId, other.organizationId)
-			&& Objects.equals(organizationName, other.organizationName);
+		return active == other.active && Objects.equals(customerId, other.customerId) && Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(customerType, other.customerType) && Objects.equals(moveInDate, other.moveInDate) && Objects
+			.equals(organizationId, other.organizationId) && Objects.equals(organizationName, other.organizationName);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("CustomerEntity [customerId=").append(customerId).append(", customerOrgId=")
-			.append(customerOrgId).append(", customerType=").append(customerType).append(", organizationId=")
-			.append(organizationId).append(", organizationName=").append(organizationName).append("]");
+		final var builder = new StringBuilder();
+		builder.append("CustomerEntity [customerId=").append(customerId).append(", organizationId=").append(organizationId).append(", customerOrgId=").append(customerOrgId).append(", customerType=").append(customerType).append(", organizationName=")
+			.append(organizationName).append(", active=").append(active).append(", moveInDate=").append(moveInDate).append("]");
 		return builder.toString();
 	}
 }
