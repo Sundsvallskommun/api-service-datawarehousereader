@@ -9,20 +9,20 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
-public class CustomerDetailsMapper {
+public class CustomerDetailMapper {
 
-	private CustomerDetailsMapper() {}
+	private CustomerDetailMapper() {}
 
-	public static List<CustomerDetails> toCustomerDetails(List<CustomerDetailsEntity> entities) {
+	public static List<CustomerDetails> toCustomerDetails(List<CustomerDetailEntity> entities) {
 		return ofNullable(entities).orElse(emptyList()).stream()
-			.map(CustomerDetailsMapper::toCustomerDetails)
+			.map(CustomerDetailMapper::toCustomerDetails)
 			.toList();
 	}
 
-	public static CustomerDetails toCustomerDetails(final CustomerDetailsEntity entity) {
+	public static CustomerDetails toCustomerDetails(final CustomerDetailEntity entity) {
 		return CustomerDetails.create()
 			.withPartyId(Optional.ofNullable(entity.getPartyId()).map(String::toLowerCase).orElse(null))
 			.withCustomerOrgNumber(entity.getCustomerOrgId())
@@ -42,14 +42,14 @@ public class CustomerDetailsMapper {
 			.withInstalledChangedFlg(entity.isInstalledChangedFlg());
 	}
 
-	private static List<String> extractPhoneNumbers(final CustomerDetailsEntity entity) {
+	private static List<String> extractPhoneNumbers(final CustomerDetailEntity entity) {
 		return Stream.of(entity.getPhone1(), entity.getPhone2(), entity.getPhone3())
 			.filter(Objects::nonNull)
 			.toList();
 
 	}
 
-	private static List<String> extractEmails(final CustomerDetailsEntity entity) {
+	private static List<String> extractEmails(final CustomerDetailEntity entity) {
 		return Stream.of(entity.getEmail1(), entity.getEmail2())
 			.filter(Objects::nonNull)
 			.toList();

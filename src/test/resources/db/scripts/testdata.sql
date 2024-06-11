@@ -1,11 +1,11 @@
 -- vCustomer
-INSERT INTO kundinfo.vCustomer (customerid, customerorgid, customertype, organizationid, organizationname) VALUES
-	 (600606,N'5512345678', N'Enterprise', N'5564786647', N'Sundsvall Energi AB'),
-	 (38308,N'5523456789', N'Enterprise', N'5564786647', N'Sundsvall Energi AB'),
-	 (691071,N'197706010123', N'Private', N'5564786647', N'Sundsvall Energi AB'),
-	 (600675,N'2020001000', N'Enterprise', N'5564786647', N'Sundsvall Energi AB'),
-	 (10335,N'5534567890', N'Enterprise', N'5564786647', N'Sundsvall Energi AB'),
-	 (10335,N'5534567890', N'Enterprise', N'5565027223', N'Sundsvall Elnät');
+INSERT INTO kundinfo.vCustomer (customerid, customerorgid, customertype, organizationid, organizationname, active, moveInDate) VALUES
+	 (600606,N'5512345678',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-01 00:00:00.0'),
+	 (38308,N'5523456789',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-02 00:00:00.0'),
+	 (691071,N'197706010123',N'Private',N'5564786647',N'Sundsvall Energi AB','1','2017-12-03 00:00:00.0'),
+	 (600675,N'2020001000',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-04 00:00:00.0'),
+	 (10335,N'5534567890',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-05 00:00:00.0'),
+	 (10335,N'5534567890',N'Enterprise',N'5565027223',N'Sundsvall Elnät','0','2095-01-01 00:00:00.0');
 
 -- vInstalledBase
 INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName,InstalledBaseLastChangedDate) VALUES
@@ -4455,21 +4455,22 @@ INSERT INTO kundinfo.vAgreements (uuid,customerorgid,customerId,facilityId,categ
 	 (NULL,N'5560012345',104282,N'735999109144605280',N'El',2054933,49364,N'Dröjsmålsränta',N'true',N'false',NULL,'2012-08-16 00:00:00.0',NULL),
 	 (N'7B07AE3C-E51C-48E9-90E5-DAC8F1369B61',N'197412312345',649901,N'735999109124504015',N'El',2052508,46939,N'Fastpris 2 år',N'true',N'false',NULL,'1950-01-01 00:00:00.0',NULL),
 	 (N'7B07AE3C-E51C-48E9-90E5-DAC8F1369B61',N'197412312345',633630,N'735999109232307027',N'El',2047778,42590,N'Fastpris 2 år',N'true',N'false',NULL,'2017-05-16 00:00:00.0',NULL);
--- Important! This is not used when fetching CustomerDetails, the data is loaded into the function and not the table.
-INSERT INTO kundinfo.vCustomerDetail (uuid, customerId, customerOrgId, organizationid, organizationname, customerCategoryID, customerCategoryDescription, name, "c/o", address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg) VALUES
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d79', 123454,'102000-0000','5564786647', 'Sundsvall Energi AB', 2,N'Företag1','Test Testorsson','c/o Testorsson',N'Testvägen12 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d80', 123455,'102000-0000','5564786647', 'Sundsvall Energi AB', 2,N'Företag2','Test Testorsson','c/o Testorsson',N'Testvägen11 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d81', 123456,'102000-0000','5564786647', 'Sundsvall Energi AB', 2,N'Företag','Test Testorsson','c/o Testorsson',N'Testvägen10 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d82', 123457,'20000101-1234','5565027223', N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen21',85234,'Sundsvall','+46761234567','+46761234567',NULL,'test@sundsvall.com','test2@sundsvall.com',0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d83', 123458,'20010101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen2',85234,'Sundsvall','+46761234567',NULL,NULL,'test@sundsvall.com','test2@sundsvall.com',1,0),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d84', 123459,'20020101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen21 E',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,'test2@sundsvall.com',0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d85', 123450,'20030101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen65 A',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,'test2@sundsvall.com',1,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d86', 123410,'20040101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen60',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,NULL,0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d87', 123411,'20050101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen12',85234,'SUNDSVALL','+46761234567',NULL,NULL,'test@sundsvall.com',NULL,0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d88', 123412,'20060101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen2 Lgh 6',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,NULL,1,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d89', 123413,'20070101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson2',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test2@sundsvall.com',0,1),
-    ('9f395f51-b5ed-401b-b700-ef70cbb15d90', 123414,'20070101-1234','5565027225',N'Some other Elnät', 1,'Privatperson','Test Testorsson3',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test3@sundsvall.com',0,1),
-    (null,                                   123415,'20070101-1234','5565027225',N'Some other Elnät', 1,'Privatperson','Test Testorsson4',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test4@sundsvall.com',0,1);
+
+-- Important! This table is indirectly used when fetching CustomerDetails, the data is fetched via the function fnCustomerDetail and not the table.
+INSERT INTO kundinfo.vCustomerDetail (uuid, customerId, customerOrgId, organizationid, organizationname, customerCategoryID, customerCategoryDescription, name, "c/o", address, zipcode, city, phone1, phone2, phone3, email1, email2, customerChangedFlg, installedChangedFlg, active, moveInDate) VALUES
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d79', 123454,'102000-0000','5564786647', 'Sundsvall Energi AB', 2,N'Företag1','Test Testorsson','c/o Testorsson',N'Testvägen12 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1,1,'2024-01-01 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d80', 123455,'102000-0000','5564786647', 'Sundsvall Energi AB', 2,N'Företag2','Test Testorsson','c/o Testorsson',N'Testvägen11 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1,1,'2024-01-02 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d81', 123456,'102000-0000','5564786647', 'Sundsvall Energi AB', 2,N'Företag','Test Testorsson','c/o Testorsson',N'Testvägen10 c lgh 1005',85234,'Sundsvall','+46761234567',NULL,'+46761234567',NULL,NULL,0,1,1,'2024-01-03 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d82', 123457,'20000101-1234','5565027223', N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen21',85234,'Sundsvall','+46761234567','+46761234567',NULL,'test@sundsvall.com','test2@sundsvall.com',0,1,1,'2024-01-04 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d83', 123458,'20010101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen2',85234,'Sundsvall','+46761234567',NULL,NULL,'test@sundsvall.com','test2@sundsvall.com',1,0,1,'2024-01-05 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d84', 123459,'20020101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen21 E',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,'test2@sundsvall.com',0,1,1,'2024-01-06 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d85', 123450,'20030101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen65 A',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,'test2@sundsvall.com',1,1,1,'2024-01-07 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d86', 123410,'20040101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen60',85234,'Sundsvall','+46761234567',NULL,NULL,NULL,NULL,0,1,1,'2024-01-08 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d87', 123411,'20050101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen12',85234,'SUNDSVALL','+46761234567',NULL,NULL,'test@sundsvall.com',NULL,0,1,1,'2024-01-09 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d88', 123412,'20060101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson',NULL,N'Testvägen2 Lgh 6',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,NULL,1,1,1,'2024-01-10 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d89', 123413,'20070101-1234','5565027223',N'Sundsvall Elnät', 1,'Privatperson','Test Testorsson2',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test2@sundsvall.com',0,1,1,'2024-01-11 00:00:00.000'),
+    ('9f395f51-b5ed-401b-b700-ef70cbb15d90', 123414,'20070101-1234','5565027225',N'Some other Elnät', 1,'Privatperson','Test Testorsson3',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test3@sundsvall.com',0,1,0,'2095-01-01 00:00:00.000'),
+    (null,                                   123415,'20070101-1234','5565027225',N'Some other Elnät', 1,'Privatperson','Test Testorsson4',NULL,N'Testvägen106',85234,'Sundsvall',NULL,'+46761234567',NULL,NULL,'test4@sundsvall.com',0,1,0,'2095-01-01 00:00:00.000');
 
 INSERT INTO kundinfo.vInstallations (BillLocationID, Company, Internalid, FacilityId, Type, Street, Postcode, City, Careof, DateFrom, DateTo, HouseName, InstallationsLastChangedDate, CustomerFlg)
 VALUES (1234557, 'Sundsvall Elnät', 8634, '123456789123456789', 'El', 'Testvägen 17', '12345', 'TESTVALL', 'Ditthus AB', '2020-01-01 00:00:00.000', '2020-01-01 00:00:00.000', null, '2020-01-01 00:00:00.000', 1),

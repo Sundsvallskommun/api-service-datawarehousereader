@@ -27,34 +27,33 @@ import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsRespon
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementResponse;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailsRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailsEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
-import se.sundsvall.datawarehousereader.service.mapper.CustomerDetailsMapper;
+import se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
-
 
 @Service
 public class CustomerService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
-	private final CustomerRepository repository;
+	private final CustomerRepository customerRepository;
 
-	private final CustomerDetailsRepository detailsRepository;
+	private final CustomerDetailRepository customerDetailRepository;
 
 	private final PartyProvider partyProvider;
 
-	public CustomerService(final CustomerDetailsRepository detailsRepository,
-			final CustomerRepository repository, final PartyProvider partyProvider) {
-		this.detailsRepository = detailsRepository;
-		this.repository = repository;
+	public CustomerService(final CustomerDetailRepository customerDetailRepository,
+		final CustomerRepository customerRepository, final PartyProvider partyProvider) {
+		this.customerDetailRepository = customerDetailRepository;
+		this.customerRepository = customerRepository;
 		this.partyProvider = partyProvider;
 	}
 
 	public CustomerEngagementResponse getCustomerEngagements(final CustomerEngagementParameters parameters) {
-		final var matches = repository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
+		final var matches = customerRepository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		LOGGER.debug("Database query results: {} with content: {}", matches, matches.getContent());
 
@@ -69,6 +68,7 @@ public class CustomerService {
 	/**
 	 * Fetch customer details
 	 * If fromDate in {@link CustomerDetailsParameters} is empty, we fetch last years changes.
+	 *
 	 * @param parameters request parameters
 	 * @return {@link CustomerDetailsResponse}
 	 */
@@ -77,32 +77,32 @@ public class CustomerService {
 			.map(OffsetDateTime::toLocalDateTime)
 			.orElse(LocalDateTime.now().minusYears(1L));
 
-		var pageable = toPageRequest(parameters);
-
-		var pagedResult = getCustomerDetailsWithParameters(fromDateTime, parameters, pageable);
+		final var pageable = toPageRequest(parameters);
+		final var pagedResult = getCustomerDetailsWithParameters(fromDateTime, parameters, pageable);
 
 		return CustomerDetailsResponse.create()
 			.withMetadata(PagingAndSortingMetaData.create().withPageData(pagedResult))
 			.withCustomerDetails(mapCustomerDetailsEntities(pagedResult));
 	}
 
-	//Since we can't use specifications, make sure we only query data that we have.
-	private Page<CustomerDetailsEntity> getCustomerDetailsWithParameters(final LocalDateTime fromDateTime, final CustomerDetailsParameters parameters, Pageable pageable) {
-		//We have both orgId and partyIds
+	// Since we can't use specifications, make sure we only query data that we have.
+	private Page<CustomerDetailEntity> getCustomerDetailsWithParameters(final LocalDateTime fromDateTime, final CustomerDetailsParameters parameters, Pageable pageable) {
+		// We have both orgId and partyIds
 		if (!isEmpty(parameters.getPartyId())) {
-			return detailsRepository.findWithCustomerEngagementOrgIdAndPartyIds(fromDateTime, parameters.getCustomerEngagementOrgId(), parameters.getPartyId(), pageable);
+			return customerDetailRepository.findWithCustomerEngagementOrgIdAndPartyIds(
+				fromDateTime,
+				parameters.getCustomerEngagementOrgId(),
+				String.join(",", parameters.getPartyId()),
+				pageable);
 		}
-		//We have only orgId
-		else {
-			return detailsRepository.findWithCustomerEngagementOrgId(fromDateTime, parameters.getCustomerEngagementOrgId(), pageable);
-		}
+		return customerDetailRepository.findWithCustomerEngagementOrgId(fromDateTime, parameters.getCustomerEngagementOrgId(), pageable);
 	}
 
-	private List<CustomerDetails> mapCustomerDetailsEntities(Page<CustomerDetailsEntity> matches) {
-		var details = matches.getContent();
+	private List<CustomerDetails> mapCustomerDetailsEntities(Page<CustomerDetailEntity> matches) {
+		final var details = matches.getContent();
 		return details.stream()
-				.map(CustomerDetailsMapper::toCustomerDetails)
-				.toList();
+			.map(CustomerDetailMapper::toCustomerDetails)
+			.toList();
 	}
 
 	private PageRequest toPageRequest(final CustomerDetailsParameters parameters) {
