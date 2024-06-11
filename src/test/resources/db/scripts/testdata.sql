@@ -1,11 +1,11 @@
 -- vCustomer
-INSERT INTO kundinfo.vCustomer (customerid, customerorgid, customertype, organizationid, organizationname, active) VALUES
-	 (600606,N'5512345678', N'Enterprise', N'5564786647', N'Sundsvall Energi AB', '1'),
-	 (38308,N'5523456789', N'Enterprise', N'5564786647', N'Sundsvall Energi AB', '1'),
-	 (691071,N'197706010123', N'Private', N'5564786647', N'Sundsvall Energi AB', '1'),
-	 (600675,N'2020001000', N'Enterprise', N'5564786647', N'Sundsvall Energi AB', '1'),
-	 (10335,N'5534567890', N'Enterprise', N'5564786647', N'Sundsvall Energi AB', '1'),
-	 (10335,N'5534567890', N'Enterprise', N'5565027223', N'Sundsvall Elnät', '0');
+INSERT INTO kundinfo.vCustomer (customerid, customerorgid, customertype, organizationid, organizationname, active, moveInDate) VALUES
+	 (600606,N'5512345678',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-01 00:00:00.0'),
+	 (38308,N'5523456789',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-02 00:00:00.0'),
+	 (691071,N'197706010123',N'Private',N'5564786647',N'Sundsvall Energi AB','1','2017-12-03 00:00:00.0'),
+	 (600675,N'2020001000',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-04 00:00:00.0'),
+	 (10335,N'5534567890',N'Enterprise',N'5564786647',N'Sundsvall Energi AB','1','2017-12-05 00:00:00.0'),
+	 (10335,N'5534567890',N'Enterprise',N'5565027223',N'Sundsvall Elnät','0','2095-01-01 00:00:00.0');
 
 -- vInstalledBase
 INSERT INTO kundinfo.vInstalledBase (BillLocationID,InternalId,CareOf,City,Company,customerid,DateFrom,DateTo,FacilityId,Postcode,Street,[Type],HouseName,InstalledBaseLastChangedDate) VALUES

@@ -1,5 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -9,13 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
-
-import java.util.List;
-
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
  * Customer repository tests.
@@ -51,14 +52,15 @@ class CustomerRepositoryTest {
 		assertThat(page.getTotalElements()).isEqualTo(6);
 		assertThat(page.getContent())
 			.hasSize(6)
-			.extracting(CustomerEntity::getCustomerId, CustomerEntity::getCustomerOrgId, CustomerEntity::getCustomerType, CustomerEntity::getOrganizationId, CustomerEntity::getOrganizationName)
+			.extracting(CustomerEntity::getCustomerId, CustomerEntity::getCustomerOrgId, CustomerEntity::getCustomerType, CustomerEntity::getOrganizationId, CustomerEntity::getOrganizationName,
+				CustomerEntity::isActive, CustomerEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
-				tuple(691071, "197706010123", "Private", "5564786647", "Sundsvall Energi AB"),
-				tuple(600606, "5512345678", "Enterprise", "5564786647", "Sundsvall Energi AB"),
-				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB"),
-				tuple(600675, "2020001000", "Enterprise", "5564786647", "Sundsvall Energi AB"),
-				tuple(10335, "5534567890", "Enterprise", "5564786647", "Sundsvall Energi AB"),
-				tuple(10335, "5534567890", "Enterprise", "5565027223", "Sundsvall Elnät"));
+				tuple(691071, "197706010123", "Private", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 3, 0, 0)),
+				tuple(600606, "5512345678", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 1, 0, 0)),
+				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 2, 0, 0)),
+				tuple(600675, "2020001000", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 4, 0, 0)),
+				tuple(10335, "5534567890", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 5, 0, 0)),
+				tuple(10335, "5534567890", "Enterprise", "5565027223", "Sundsvall Elnät", false, LocalDateTime.of(2095, 1, 1, 0, 0)));
 	}
 
 	@Test
