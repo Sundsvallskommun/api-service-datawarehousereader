@@ -2,8 +2,11 @@ package se.sundsvall.datawarehousereader.api.model.customer;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -61,6 +64,13 @@ public class CustomerDetails {
 
 	@Schema(description = "Indicates if placement and/or equipment details have changed since the search date", example = "true", accessMode = READ_ONLY)
 	private boolean installedChangedFlg;
+
+	@Schema(description = "Indicates customer status, if not active then the moveInDate holds information on when the customer will be activated", example = "true", accessMode = READ_ONLY)
+	private boolean active;
+
+	@Schema(description = "The prospective customer's move-in date", accessMode = READ_ONLY)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	private LocalDate moveInDate;
 
 	public static CustomerDetails create() {
 		return new CustomerDetails();
@@ -274,38 +284,60 @@ public class CustomerDetails {
 		this.customerEngagementOrgName = customerEngagementOrgName;
 	}
 
-	@Override
-	public String toString() {
-		return "CustomerDetails{" +
-				"customerOrgNumber='" + customerOrgNumber + '\'' +
-				", customerEngagementOrgId='" + customerEngagementOrgId + '\'' +
-				", customerEngagementOrgName='" + customerEngagementOrgName + '\'' +
-				", partyId='" + partyId + '\'' +
-				", customerNumber='" + customerNumber + '\'' +
-				", customerName='" + customerName + '\'' +
-				", street='" + street + '\'' +
-				", postalCode='" + postalCode + '\'' +
-				", city='" + city + '\'' +
-				", careOf='" + careOf + '\'' +
-				", phoneNumbers=" + phoneNumbers +
-				", emails=" + emails +
-				", customerCategoryID=" + customerCategoryID +
-				", customerCategoryDescription='" + customerCategoryDescription + '\'' +
-				", customerChangedFlg=" + customerChangedFlg +
-				", installedChangedFlg=" + installedChangedFlg +
-				'}';
+	public boolean isActive() {
+		return active;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		CustomerDetails that = (CustomerDetails) o;
-		return customerCategoryID == that.customerCategoryID && customerChangedFlg == that.customerChangedFlg && installedChangedFlg == that.installedChangedFlg && Objects.equals(customerOrgNumber, that.customerOrgNumber) && Objects.equals(customerEngagementOrgId, that.customerEngagementOrgId) && Objects.equals(customerEngagementOrgName, that.customerEngagementOrgName) && Objects.equals(partyId, that.partyId) && Objects.equals(customerNumber, that.customerNumber) && Objects.equals(customerName, that.customerName) && Objects.equals(street, that.street) && Objects.equals(postalCode, that.postalCode) && Objects.equals(city, that.city) && Objects.equals(careOf, that.careOf) && Objects.equals(phoneNumbers, that.phoneNumbers) && Objects.equals(emails, that.emails) && Objects.equals(customerCategoryDescription, that.customerCategoryDescription);
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public CustomerDetails withActive(boolean active) {
+		this.active = active;
+		return this;
+	}
+
+	public LocalDate getMoveInDate() {
+		return moveInDate;
+	}
+
+	public void setMoveInDate(LocalDate moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+
+	public CustomerDetails withMoveInDate(LocalDate moveInDate) {
+		this.moveInDate = moveInDate;
+		return this;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerOrgNumber, customerEngagementOrgId, customerEngagementOrgName, partyId, customerNumber, customerName, street, postalCode, city, careOf, phoneNumbers, emails, customerCategoryID, customerCategoryDescription, customerChangedFlg, installedChangedFlg);
+		return Objects.hash(active, careOf, city, customerCategoryDescription, customerCategoryID, customerChangedFlg, customerEngagementOrgId, customerEngagementOrgName, customerName, customerNumber, customerOrgNumber, emails, installedChangedFlg,
+			moveInDate, partyId, phoneNumbers, postalCode, street);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof final CustomerDetails other)) {
+			return false;
+		}
+		return active == other.active && Objects.equals(careOf, other.careOf) && Objects.equals(city, other.city) && Objects.equals(customerCategoryDescription, other.customerCategoryDescription) && customerCategoryID == other.customerCategoryID
+			&& customerChangedFlg == other.customerChangedFlg && Objects.equals(customerEngagementOrgId, other.customerEngagementOrgId) && Objects.equals(customerEngagementOrgName, other.customerEngagementOrgName) && Objects.equals(customerName,
+				other.customerName) && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(customerOrgNumber, other.customerOrgNumber) && Objects.equals(emails, other.emails) && installedChangedFlg == other.installedChangedFlg
+			&& Objects.equals(moveInDate, other.moveInDate) && Objects.equals(partyId, other.partyId) && Objects.equals(phoneNumbers, other.phoneNumbers) && Objects.equals(postalCode, other.postalCode) && Objects.equals(street, other.street);
+	}
+
+	@Override
+	public String toString() {
+		final var builder = new StringBuilder();
+		builder.append("CustomerDetails [customerOrgNumber=").append(customerOrgNumber).append(", customerEngagementOrgId=").append(customerEngagementOrgId).append(", customerEngagementOrgName=").append(customerEngagementOrgName).append(", partyId=")
+			.append(partyId).append(", customerNumber=").append(customerNumber).append(", customerName=").append(customerName).append(", street=").append(street).append(", postalCode=").append(postalCode).append(", city=").append(city).append(
+				", careOf=").append(careOf).append(", phoneNumbers=").append(phoneNumbers).append(", emails=").append(emails).append(", customerCategoryID=").append(customerCategoryID).append(", customerCategoryDescription=").append(
+					customerCategoryDescription).append(", customerChangedFlg=").append(customerChangedFlg).append(", installedChangedFlg=").append(installedChangedFlg).append(", active=").append(active).append(", moveInDate=").append(moveInDate)
+			.append("]");
+		return builder.toString();
 	}
 }

@@ -2,6 +2,7 @@ package se.sundsvall.datawarehousereader.service.mapper;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
 import java.util.List;
 import java.util.Objects;
@@ -39,7 +40,9 @@ public class CustomerDetailMapper {
 			.withCustomerCategoryID(entity.getCustomerCategoryID())
 			.withCustomerCategoryDescription(entity.getCustomerCategoryDescription())
 			.withCustomerChangedFlg(entity.isCustomerChangedFlg())
-			.withInstalledChangedFlg(entity.isInstalledChangedFlg());
+			.withInstalledChangedFlg(entity.isInstalledChangedFlg())
+			.withActive(entity.isActive())
+			.withMoveInDate(toLocalDate(entity.getMoveInDate()));
 	}
 
 	private static List<String> extractPhoneNumbers(final CustomerDetailEntity entity) {

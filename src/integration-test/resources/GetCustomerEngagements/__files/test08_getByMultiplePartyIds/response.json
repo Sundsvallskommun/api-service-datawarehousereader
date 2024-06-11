@@ -1,43 +1,48 @@
 {
 	"customerEngagements": [
 		{
-			"partyId": "318b7ec8-aab8-41e2-82f5-796bdd5cebf2",
-			"customerType": "Enterprise",
-			"customerNumber": "10335",
+			"partyId": "10e69eb7-3cb4-442f-8cdb-2e998080dbb1",
+			"customerType": "Private",
+			"customerNumber": "691071",
 			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB"
-		},
-		{
-			"partyId": "318b7ec8-aab8-41e2-82f5-796bdd5cebf2",
-			"customerType": "Enterprise",
-			"customerNumber": "10335",
-			"organizationNumber": "5565027223",
-			"organizationName": "Sundsvall Elnät"
+			"organizationName": "Sundsvall Energi AB",
+			"active": true
 		},
 		{
 			"partyId": "70933c1c-2094-44e6-9abe-57b8a3c0ecd9",
 			"customerType": "Enterprise",
 			"customerNumber": "38308",
 			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB"
+			"organizationName": "Sundsvall Energi AB",
+			"active": true
 		},
 		{
-			"partyId": "10e69eb7-3cb4-442f-8cdb-2e998080dbb1",
-			"customerType": "Private",
-			"customerNumber": "691071",
+			"partyId": "318b7ec8-aab8-41e2-82f5-796bdd5cebf2",
+			"customerType": "Enterprise",
+			"customerNumber": "10335",
 			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB"
+			"organizationName": "Sundsvall Energi AB",
+			"active": true
+		},
+		{
+			"partyId": "318b7ec8-aab8-41e2-82f5-796bdd5cebf2",
+			"customerType": "Enterprise",
+			"customerNumber": "10335",
+			"organizationNumber": "5565027223",
+			"organizationName": "Sundsvall Elnät",
+			"active": false,
+			"moveInDate": "2095-01-01"
 		}
 	],
 	"_meta": {
 		"page": 1,
 		"limit": 100,
 		"count": 4,
+		"totalRecords": 4,
+		"totalPages": 1,
 		"sortBy": [
 			"customerOrgId"
 		],
-		"sortDirection": "ASC",
-		"totalRecords": 4,
-		"totalPages": 1
+		"sortDirection": "ASC"
 	}
 }

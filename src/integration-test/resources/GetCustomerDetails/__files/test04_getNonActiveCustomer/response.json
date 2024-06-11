@@ -1,0 +1,33 @@
+{
+	"customerDetails": [
+		{
+			"customerEngagementOrgId": "5565027225",
+			"customerEngagementOrgName": "Some other Elnät",
+			"partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d90",
+			"customerNumber": "123414",
+			"customerName": "Test Testorsson3",
+			"street": "Testvägen106",
+			"postalCode": "85234",
+			"city": "Sundsvall",
+			"phoneNumbers": [
+				"+46761234567"
+			],
+			"emails": [
+				"test3@sundsvall.com"
+			],
+			"customerCategoryID": 1,
+			"customerCategoryDescription": "Privatperson",
+			"customerChangedFlg": false,
+			"installedChangedFlg": true,
+			"active": false,
+			"moveInDate": "2095-01-01"
+		}
+	],
+	"_meta": {
+		"page": 1,
+		"limit": 100,
+		"count": 1,
+		"totalRecords": 1,
+		"totalPages": 1
+	}
+}

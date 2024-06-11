@@ -55,11 +55,11 @@ class CustomerRepositoryTest {
 			.extracting(CustomerEntity::getCustomerId, CustomerEntity::getCustomerOrgId, CustomerEntity::getCustomerType, CustomerEntity::getOrganizationId, CustomerEntity::getOrganizationName,
 				CustomerEntity::isActive, CustomerEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
-				tuple(691071, "197706010123", "Private", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 3, 0, 0)),
-				tuple(600606, "5512345678", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 1, 0, 0)),
-				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 2, 0, 0)),
-				tuple(600675, "2020001000", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 4, 0, 0)),
-				tuple(10335, "5534567890", "Enterprise", "5564786647", "Sundsvall Energi AB", true, LocalDateTime.of(2017, 12, 5, 0, 0)),
+				tuple(691071, "197706010123", "Private", "5564786647", "Sundsvall Energi AB", true, null),
+				tuple(600606, "5512345678", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
+				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
+				tuple(600675, "2020001000", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
+				tuple(10335, "5534567890", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
 				tuple(10335, "5534567890", "Enterprise", "5565027223", "Sundsvall Elnät", false, LocalDateTime.of(2095, 1, 1, 0, 0)));
 	}
 

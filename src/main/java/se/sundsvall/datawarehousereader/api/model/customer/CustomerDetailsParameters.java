@@ -8,15 +8,14 @@ import java.util.Objects;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import se.sundsvall.datawarehousereader.api.validation.ValidCustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidOrganizationNumber;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Customer details request parameters model")
 @ValidSortByProperty(CustomerDetailEntity.class)
@@ -33,10 +32,6 @@ public class CustomerDetailsParameters extends AbstractParameterPagingAndSorting
 	@Schema(description = "Date and time for when to search for changes from. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year will be returned.", example = "2000-10-31T01:30:00.000-05:00")
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private OffsetDateTime fromDateTime;
-
-	@Schema(description = "Date and time for when to search for change to. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX,", example = "2000-10-31T01:30:00.000-05:00")
-	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-	private OffsetDateTime toDateTime;
 
 	public static CustomerDetailsParameters create() {
 		return new CustomerDetailsParameters();
@@ -81,26 +76,12 @@ public class CustomerDetailsParameters extends AbstractParameterPagingAndSorting
 		this.fromDateTime = fromDateTime;
 	}
 
-	public CustomerDetailsParameters withToDateTime(OffsetDateTime toDateTime) {
-		this.toDateTime = toDateTime;
-		return this;
-	}
-
-	public OffsetDateTime getToDateTime() {
-		return toDateTime;
-	}
-
-	public void setToDateTime(final OffsetDateTime toDateTime) {
-		this.toDateTime = toDateTime;
-	}
-
 	@Override
 	public String toString() {
 		return "CustomerDetailsParameters{" +
 			"partyId=" + partyId +
 			", customerEngagementOrgId=" + customerEngagementOrgId +
 			", fromDateTime=" + fromDateTime +
-			", toDateTime=" + toDateTime +
 			", page=" + page +
 			", limit=" + limit +
 			", sortBy=" + sortBy +
@@ -113,21 +94,17 @@ public class CustomerDetailsParameters extends AbstractParameterPagingAndSorting
 		if (this == o) {
 			return true;
 		}
-		if ((o == null) || (getClass() != o.getClass())) {
+		if ((o == null) || (getClass() != o.getClass()) || !super.equals(o)) {
 			return false;
 		}
-		if (!super.equals(o)) {
-			return false;
-		}
-		final CustomerDetailsParameters that = (CustomerDetailsParameters) o;
+		final var that = (CustomerDetailsParameters) o;
 		return Objects.equals(partyId, that.partyId) &&
 			Objects.equals(customerEngagementOrgId, that.customerEngagementOrgId) &&
-			Objects.equals(fromDateTime, that.fromDateTime) &&
-			Objects.equals(toDateTime, that.toDateTime);
+			Objects.equals(fromDateTime, that.fromDateTime);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(super.hashCode(), partyId, customerEngagementOrgId, fromDateTime, toDateTime);
+		return Objects.hash(super.hashCode(), partyId, customerEngagementOrgId, fromDateTime);
 	}
 }

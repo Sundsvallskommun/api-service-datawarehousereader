@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.groups.Tuple.tuple;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toCustomerDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -26,6 +27,8 @@ class CustomerDetailMapperTest {
 
 	@Test
 	void toDetails() {
+		final var moveInDate = LocalDateTime.now();
+
 		final var entity = CustomerDetailEntity.create()
 			.withCustomerOrgId("customerOrgId")
 			.withCustomerId(1)
@@ -42,7 +45,9 @@ class CustomerDetailMapperTest {
 			.withEmail1("email1")
 			.withEmail2("email2")
 			.withCustomerChangedFlg(true)
-			.withInstalledChangedFlg(true);
+			.withInstalledChangedFlg(true)
+			.withActive(true)
+			.withMoveInDate(moveInDate);
 
 		final var result = toCustomerDetails(List.of(entity));
 
@@ -62,7 +67,9 @@ class CustomerDetailMapperTest {
 				CustomerDetails::getCustomerCategoryID,
 				CustomerDetails::getCustomerCategoryDescription,
 				CustomerDetails::isCustomerChangedFlg,
-				CustomerDetails::isInstalledChangedFlg)
+				CustomerDetails::isInstalledChangedFlg,
+				CustomerDetails::isActive,
+				CustomerDetails::getMoveInDate)
 			.containsExactly(tuple(
 				"customerOrgId",
 				null,
@@ -77,6 +84,8 @@ class CustomerDetailMapperTest {
 				2,
 				"customerCategoryDescription",
 				true,
-				true));
+				true,
+				true,
+				moveInDate.toLocalDate()));
 	}
 }

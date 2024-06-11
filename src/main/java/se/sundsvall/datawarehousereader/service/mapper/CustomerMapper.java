@@ -5,6 +5,7 @@ import static java.util.Optional.ofNullable;
 import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
 import java.util.List;
 
@@ -37,6 +38,8 @@ public class CustomerMapper {
 			.withCustomerOrgNumber(entity.getCustomerOrgId())
 			.withCustomerType(fromValue(entity.getCustomerType(), INTERNAL_SERVER_ERROR, UNKNOWN_CUSTOMER_TYPE))
 			.withOrganizationNumber(entity.getOrganizationId())
-			.withOrganizationName(entity.getOrganizationName());
+			.withOrganizationName(entity.getOrganizationName())
+			.withActive(entity.isActive())
+			.withMoveInDate(toLocalDate(entity.getMoveInDate()));
 	}
 }

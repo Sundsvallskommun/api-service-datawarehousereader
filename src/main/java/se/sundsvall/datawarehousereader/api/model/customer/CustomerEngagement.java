@@ -2,7 +2,10 @@ package se.sundsvall.datawarehousereader.api.model.customer;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
+import java.time.LocalDate;
 import java.util.Objects;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
@@ -27,6 +30,13 @@ public class CustomerEngagement {
 
 	@Schema(description = "Organization name for counterpart of engagement", example = "Sundsvall Elnät", accessMode = READ_ONLY)
 	private String organizationName;
+
+	@Schema(description = "Indicates customer status, if not active then the moveInDate holds information on when the customer will be activated", example = "true", accessMode = READ_ONLY)
+	private boolean active;
+
+	@Schema(description = "The prospective customer's move-in date", accessMode = READ_ONLY)
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	private LocalDate moveInDate;
 
 	public static CustomerEngagement create() {
 		return new CustomerEngagement();
@@ -110,10 +120,35 @@ public class CustomerEngagement {
 		return this;
 	}
 
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
+	public CustomerEngagement withActive(boolean active) {
+		this.active = active;
+		return this;
+	}
+
+	public LocalDate getMoveInDate() {
+		return moveInDate;
+	}
+
+	public void setMoveInDate(LocalDate moveInDate) {
+		this.moveInDate = moveInDate;
+	}
+
+	public CustomerEngagement withMoveInDate(LocalDate moveInDate) {
+		this.moveInDate = moveInDate;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerNumber, customerOrgNumber, customerType, organizationName, organizationNumber,
-			partyId);
+		return Objects.hash(active, customerNumber, customerOrgNumber, customerType, moveInDate, organizationName, organizationNumber, partyId);
 	}
 
 	@Override
@@ -121,27 +156,18 @@ public class CustomerEngagement {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
+		if (!(obj instanceof final CustomerEngagement other)) {
 			return false;
 		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final CustomerEngagement other = (CustomerEngagement) obj;
-		return Objects.equals(customerNumber, other.customerNumber)
-			&& Objects.equals(customerOrgNumber, other.customerOrgNumber) && (customerType == other.customerType)
-			&& Objects.equals(organizationName, other.organizationName)
-			&& Objects.equals(organizationNumber, other.organizationNumber)
-			&& Objects.equals(partyId, other.partyId);
+		return active == other.active && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(customerOrgNumber, other.customerOrgNumber) && customerType == other.customerType && Objects.equals(moveInDate, other.moveInDate)
+			&& Objects.equals(organizationName, other.organizationName) && Objects.equals(organizationNumber, other.organizationNumber) && Objects.equals(partyId, other.partyId);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("CustomerEngagement [partyId=").append(partyId).append(", customerOrgNumber=")
-			.append(customerOrgNumber).append(", customerType=").append(customerType).append(", customerNumber=")
-			.append(customerNumber).append(", organizationNumber=").append(organizationNumber)
-			.append(", organizationName=").append(organizationName).append("]");
+		final var builder = new StringBuilder();
+		builder.append("CustomerEngagement [partyId=").append(partyId).append(", customerOrgNumber=").append(customerOrgNumber).append(", customerType=").append(customerType).append(", customerNumber=").append(customerNumber).append(
+			", organizationNumber=").append(organizationNumber).append(", organizationName=").append(organizationName).append(", active=").append(active).append(", moveInDate=").append(moveInDate).append("]");
 		return builder.toString();
 	}
 }

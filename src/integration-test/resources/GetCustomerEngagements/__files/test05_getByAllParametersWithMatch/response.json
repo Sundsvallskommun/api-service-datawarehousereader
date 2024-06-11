@@ -5,18 +5,19 @@
 			"customerType": "Private",
 			"customerNumber": "691071",
 			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB"
+			"organizationName": "Sundsvall Energi AB",
+			"active": true
 		}
 	],
 	"_meta": {
 		"page": 1,
 		"limit": 100,
 		"count": 1,
+		"totalRecords": 1,
+		"totalPages": 1,
 		"sortBy": [
 			"customerOrgId"
 		],
-		"sortDirection": "ASC",
-		"totalRecords": 1,
-		"totalPages": 1
+		"sortDirection": "ASC"
 	}
 }
