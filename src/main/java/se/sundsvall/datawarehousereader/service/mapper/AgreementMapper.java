@@ -3,6 +3,7 @@ package se.sundsvall.datawarehousereader.service.mapper;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -44,13 +45,7 @@ public class AgreementMapper {
 	private static Boolean isActive(AgreementEntity entity) {
 		final var startDateHasOccurred = nonNull(entity.getFromDate()) && (entity.getFromDate().isBefore(LocalDate.now().atTime(LocalTime.MAX)) || entity.getFromDate().isEqual(LocalDate.now().atTime(LocalTime.MAX)));
 		final var endDateHasNotOccurred = ofNullable(entity.getToDate()).orElse(LocalDateTime.now()).isAfter(LocalDate.now().atStartOfDay()) || ofNullable(entity.getToDate()).orElse(LocalDateTime.now()).isEqual(LocalDate.now().atStartOfDay());
-		return startDateHasOccurred	&& endDateHasNotOccurred;
-	}
-
-	private static LocalDate toLocalDate(LocalDateTime localDateTime) {
-		return ofNullable(localDateTime)
-			.map(LocalDateTime::toLocalDate)
-			.orElse(null);
+		return startDateHasOccurred && endDateHasNotOccurred;
 	}
 
 	private static Category getCategory(String category) {

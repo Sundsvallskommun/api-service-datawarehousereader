@@ -63,9 +63,9 @@ class CustomerDetailRepositoryTest {
 				CustomerDetailEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
 				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D79", 123454, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag1", "Test Testorsson", "c/o Testorsson", "Testvägen12 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, LocalDateTime.of(2024, 1, 1, 0, 0)),
+					"+46761234567", null, null, false, true, true, null),
 				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D80", 123455, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag2", "Test Testorsson", "c/o Testorsson", "Testvägen11 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, LocalDateTime.of(2024, 1, 2, 0, 0)));
+					"+46761234567", null, null, false, true, true, null));
 	}
 
 	@Test
@@ -100,11 +100,11 @@ class CustomerDetailRepositoryTest {
 				CustomerDetailEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
 				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D79", 123454, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag1", "Test Testorsson", "c/o Testorsson", "Testvägen12 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, LocalDateTime.of(2024, 1, 1, 0, 0)),
+					"+46761234567", null, null, false, true, true, null),
 				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D80", 123455, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag2", "Test Testorsson", "c/o Testorsson", "Testvägen11 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, LocalDateTime.of(2024, 1, 2, 0, 0)),
+					"+46761234567", null, null, false, true, true, null),
 				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D81", 123456, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag", "Test Testorsson", "c/o Testorsson", "Testvägen10 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, LocalDateTime.of(2024, 1, 3, 0, 0)));
+					"+46761234567", null, null, false, true, true, null));
 	}
 
 	@Test

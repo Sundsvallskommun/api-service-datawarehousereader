@@ -2,6 +2,8 @@ package se.sundsvall.datawarehousereader.service.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -66,7 +68,7 @@ class ServiceUtilTest {
 
 	@Test
 	void testStringToInteger() {
-		String nullString = null;
+		final String nullString = null;
 		assertThat(ServiceUtil.toInteger(nullString)).isNull();
 		assertThat(ServiceUtil.toInteger("1337")).isEqualTo(Integer.valueOf(1337));
 	}
@@ -74,20 +76,26 @@ class ServiceUtilTest {
 	@Test
 	void testStringsToIntegers() {
 		assertThat(ServiceUtil.toIntegers(null)).isEmpty();
-		assertThat(ServiceUtil.toIntegers(List.of("1337", "1338"))).isEqualTo(List.of(Integer.valueOf(1337), Integer.valueOf(1338)));
+		assertThat(ServiceUtil.toIntegers(List.of("1337", "1338"))).isEqualTo(List.of(1337, 1338));
 	}
 
 	@Test
 	void testIntegerToString() {
-		Integer nullInteger = null;
+		final Integer nullInteger = null;
 		assertThat(ServiceUtil.toString(nullInteger)).isNull();
-		assertThat(ServiceUtil.toString(Integer.valueOf(1337))).isEqualTo("1337");
+		assertThat(ServiceUtil.toString(1337)).isEqualTo("1337");
 	}
 
 	@Test
 	void testBooleanToString() {
-		Boolean nullBoolean = null;
+		final Boolean nullBoolean = null;
 		assertThat(ServiceUtil.toString(nullBoolean)).isNull();
 		assertThat(ServiceUtil.toString(Boolean.TRUE)).isEqualTo("true");
+	}
+
+	@Test
+	void testToLocalDate() {
+		assertThat(ServiceUtil.toLocalDate(null)).isNull();
+		assertThat(ServiceUtil.toLocalDate(LocalDateTime.now())).isEqualTo(LocalDate.now());
 	}
 }

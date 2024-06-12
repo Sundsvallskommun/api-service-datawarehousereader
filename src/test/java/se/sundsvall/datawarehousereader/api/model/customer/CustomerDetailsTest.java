@@ -5,15 +5,25 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
+import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
+import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class CustomerDetailsTest {
+
+	@BeforeAll
+	static void setup() {
+		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+	}
 
 	@Test
 	void testBean() {
@@ -41,10 +51,12 @@ class CustomerDetailsTest {
 		final var careOf = "careOf";
 		final var phoneNumbers = List.of("phoneNumber1", "phoneNumer2");
 		final var emails = List.of("emailAddress1", "emailAddress2");
+		final var active = true;
+		final var moveInDate = LocalDate.now();
 
 		final var customer = CustomerDetails.create()
-				.withCustomerEngagementOrgName(customerEngagementOrgName)
-				.withCustomerEngagementOrgId(customerEngagementOrgId)
+			.withCustomerEngagementOrgName(customerEngagementOrgName)
+			.withCustomerEngagementOrgId(customerEngagementOrgId)
 			.withCustomerOrgNumber(customerOrgNumber)
 			.withPartyId(partyId)
 			.withCustomerCategoryDescription(customerCategoryDescription)
@@ -55,7 +67,9 @@ class CustomerDetailsTest {
 			.withCity(city)
 			.withCareOf(careOf)
 			.withPhoneNumbers(phoneNumbers)
-			.withEmailAddresses(emails);
+			.withEmailAddresses(emails)
+			.withActive(active)
+			.withMoveInDate(moveInDate);
 
 		assertThat(customer).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(customer.getCustomerOrgNumber()).isEqualTo(customerOrgNumber);
@@ -70,17 +84,21 @@ class CustomerDetailsTest {
 		assertThat(customer.getCareOf()).isEqualTo(careOf);
 		assertThat(customer.getPhoneNumbers()).isEqualTo(phoneNumbers);
 		assertThat(customer.getEmails()).isEqualTo(emails);
+		assertThat(customer.isActive()).isEqualTo(active);
+		assertThat(customer.getMoveInDate()).isEqualTo(moveInDate);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		assertThat(CustomerDetails.create()).hasAllNullFieldsOrPropertiesExcept("customerCategoryID", "customerChangedFlg", "installedChangedFlg")
+		assertThat(CustomerDetails.create()).hasAllNullFieldsOrPropertiesExcept("customerCategoryID", "customerChangedFlg", "installedChangedFlg", "active")
 			.hasFieldOrPropertyWithValue("customerCategoryID", 0)
 			.hasFieldOrPropertyWithValue("customerChangedFlg", false)
-			.hasFieldOrPropertyWithValue("installedChangedFlg", false);
-		assertThat(new CustomerDetails()).hasAllNullFieldsOrPropertiesExcept("customerCategoryID", "customerChangedFlg", "installedChangedFlg")
+			.hasFieldOrPropertyWithValue("installedChangedFlg", false)
+			.hasFieldOrPropertyWithValue("active", false);
+		assertThat(new CustomerDetails()).hasAllNullFieldsOrPropertiesExcept("customerCategoryID", "customerChangedFlg", "installedChangedFlg", "active")
 			.hasFieldOrPropertyWithValue("customerCategoryID", 0)
 			.hasFieldOrPropertyWithValue("customerChangedFlg", false)
-			.hasFieldOrPropertyWithValue("installedChangedFlg", false);
+			.hasFieldOrPropertyWithValue("installedChangedFlg", false)
+			.hasFieldOrPropertyWithValue("active", false);
 	}
 }

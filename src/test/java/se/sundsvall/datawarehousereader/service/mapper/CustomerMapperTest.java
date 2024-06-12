@@ -6,6 +6,7 @@ import static org.assertj.core.groups.Tuple.tuple;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,12 +22,6 @@ import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 
 class CustomerMapperTest {
-
-	static final int CUSTOMER_ID = 123;
-	static final String CUSTOMER_ORG_ID = "customerOrgId";
-	static final String CUSTOMER_TYPE = CustomerType.ENTERPRISE.toString();
-	static final String ORGANIZATION_ID = "organizationId";
-	static final String ORGANIZATION_NAME = "organizationName";
 
 	@Test
 	void toCustomersWithNull() {
@@ -46,12 +41,22 @@ class CustomerMapperTest {
 
 	@Test
 	void toCustomers() {
+		final var customerId = 123;
+		final var customerOrgId = "customerOrgId";
+		final var customerType = CustomerType.ENTERPRISE.toString();
+		final var organizationId = "organizationId";
+		final var organizationName = "organizationName";
+		final var active = true;
+		final var moveInDate = LocalDateTime.now();
+
 		final var entity = CustomerEntity.create()
-			.withCustomerId(CUSTOMER_ID)
-			.withCustomerOrgId(CUSTOMER_ORG_ID)
-			.withCustomerType(CUSTOMER_TYPE)
-			.withOrganizationId(ORGANIZATION_ID)
-			.withOrganizationName(ORGANIZATION_NAME);
+			.withCustomerId(customerId)
+			.withCustomerOrgId(customerOrgId)
+			.withCustomerType(customerType)
+			.withOrganizationId(organizationId)
+			.withOrganizationName(organizationName)
+			.withActive(active)
+			.withMoveInDate(moveInDate);
 
 		final var result = toCustomerEngagements(List.of(entity));
 
@@ -63,14 +68,18 @@ class CustomerMapperTest {
 				CustomerEngagement::getCustomerType,
 				CustomerEngagement::getOrganizationNumber,
 				CustomerEngagement::getOrganizationName,
-				CustomerEngagement::getPartyId)
+				CustomerEngagement::getPartyId,
+				CustomerEngagement::isActive,
+				CustomerEngagement::getMoveInDate)
 			.containsExactly(tuple(
-				valueOf(CUSTOMER_ID),
-				CUSTOMER_ORG_ID,
+				valueOf(customerId),
+				customerOrgId,
 				CustomerType.ENTERPRISE,
-				ORGANIZATION_ID,
-				ORGANIZATION_NAME,
-				null));
+				organizationId,
+				organizationName,
+				null,
+				active,
+				moveInDate.toLocalDate()));
 	}
 
 	private static Stream<Arguments> toPartyTypeTestArguments() {

@@ -41,18 +41,15 @@ class CustomerDetailsParametersTest {
 		final var partyId = List.of("partyId1", "partyId2");
 		final var customerEngagementOrgId = "someCustomerEngagementOrgId";
 		final var fromDateTime = OffsetDateTime.now();
-		final var toDateTime = OffsetDateTime.now().plusDays(1);
 
 		final var parameters = CustomerDetailsParameters.create()
 			.withPartyId(partyId)
 			.withCustomerEngagementOrgId(customerEngagementOrgId)
-			.withToDateTime(toDateTime)
 			.withFromDateTime(fromDateTime);
 
 		assertThat(parameters).isNotNull().hasNoNullFieldsOrPropertiesExcept("sortBy");
 		assertThat(parameters.getPartyId()).isEqualTo(partyId);
 		assertThat(parameters.getCustomerEngagementOrgId()).isEqualTo(customerEngagementOrgId);
-		assertThat(parameters.getToDateTime()).isEqualTo(toDateTime);
 		assertThat(parameters.getFromDateTime()).isEqualTo(fromDateTime);
 	}
 

@@ -48,4 +48,14 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test04_getNonActiveCustomer() {
+		setupCall()
+			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d90&customerEngagementOrgId=5565027225&fromDateTime=2021-10-12T14:11:16.359Z")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }
