@@ -46,6 +46,7 @@ import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 class CustomerServiceTest {
 
 	private static final String RANDOM_UUID = UUID.randomUUID().toString();
+	private static final String MUNICIPALITY_ID = "2281";
 
 	@Mock
 	private CustomerRepository repositoryMock;
@@ -99,11 +100,11 @@ class CustomerServiceTest {
 		when(pageMock.getNumberOfElements()).thenReturn(1);
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
-		when(partyProviderMock.translateToPartyId(eq(partyType), any())).thenReturn(RANDOM_UUID);
+		when(partyProviderMock.translateToPartyId(eq(partyType), eq(MUNICIPALITY_ID), any())).thenReturn(RANDOM_UUID);
 
-		final var response = service.getCustomerEngagements(params);
+		final var response = service.getCustomerEngagements(MUNICIPALITY_ID, params);
 
-		verify(partyProviderMock).translateToPartyId(eq(partyType), any());
+		verify(partyProviderMock).translateToPartyId(eq(partyType), eq(MUNICIPALITY_ID), any());
 		verify(repositoryMock).findAllByParameters(customerParameterCaptor.capture(), customerOrgIdsCaptor.capture(), pageableCaptor.capture());
 
 		assertThat(customerOrgIdsCaptor.getValue()).isEmpty();
@@ -224,12 +225,12 @@ class CustomerServiceTest {
 		when(pageMock.getNumberOfElements()).thenReturn(1);
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
-		when(partyProviderMock.translateToLegalId(partyId)).thenReturn(legalId);
+		when(partyProviderMock.translateToLegalId(MUNICIPALITY_ID, partyId)).thenReturn(legalId);
 
-		final var response = service.getCustomerEngagements(params);
+		final var response = service.getCustomerEngagements(MUNICIPALITY_ID, params);
 
-		verify(partyProviderMock).translateToLegalId(partyId);
-		verify(partyProviderMock).translateToPartyId(toPartyType(CustomerType.PRIVATE), legalId);
+		verify(partyProviderMock).translateToLegalId(MUNICIPALITY_ID, partyId);
+		verify(partyProviderMock).translateToPartyId(toPartyType(CustomerType.PRIVATE), MUNICIPALITY_ID, legalId);
 		verify(repositoryMock).findAllByParameters(customerParameterCaptor.capture(), customerOrgIdsCaptor.capture(), pageableCaptor.capture());
 
 		assertThat(customerParameterCaptor.getValue().getCustomerNumber()).isEqualTo(customerNumber);
@@ -265,7 +266,7 @@ class CustomerServiceTest {
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
 
-		service.getCustomerEngagements(params);
+		service.getCustomerEngagements(MUNICIPALITY_ID, params);
 
 		verify(repositoryMock).findAllByParameters(customerParameterCaptor.capture(), customerOrgIdsCaptor.capture(), pageableCaptor.capture());
 		verifyNoInteractions(partyProviderMock);
@@ -290,7 +291,7 @@ class CustomerServiceTest {
 		when(pageMock.getSize()).thenReturn(params.getLimit());
 		when(pageMock.getSort()).thenReturn(params.sort());
 
-		final var response = service.getCustomerEngagements(params);
+		final var response = service.getCustomerEngagements(MUNICIPALITY_ID, params);
 
 		verify(repositoryMock).findAllByParameters(any(), any(), any());
 

@@ -34,6 +34,7 @@ import se.sundsvall.datawarehousereader.service.InvoiceService;
 @ActiveProfiles("junit")
 class InvoiceResourceTest {
 
+	private static final String PATH = "/2281/invoices";
 	private static final int DEFAULT_PAGE = 1;
 	private static final int DEFAULT_LIMIT = 100;
 	private static final int PAGE = 3;
@@ -67,7 +68,7 @@ class InvoiceResourceTest {
 	void getInvoicesAllParams() {
 		when(serviceMock.getInvoices(any())).thenReturn(InvoiceResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(PAGE, LIMIT, CUSTOMER_NUMBER, CUSTOMER_TYPE.getStadsbackenTranslation(), FACILITY_ID, INVOICE_NUMBER, INVOICE_DATE_FROM, INVOICE_DATE_TO, INVOICE_NAME, INVOICE_TYPE,
 				INVOICE_STATUS, OCR_NUMBER, DUE_DATE_FROM, DUE_DATE_TO, ORGANIZATION_GROUP, ADMINISTRATION))
 			.build())
@@ -101,7 +102,7 @@ class InvoiceResourceTest {
 	void getInvoicesDefaultValues() {
 		when(serviceMock.getInvoices(any())).thenReturn(InvoiceResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(null, null, CUSTOMER_NUMBER, CUSTOMER_TYPE.getStadsbackenTranslation(), FACILITY_ID, INVOICE_NUMBER, INVOICE_DATE_FROM, INVOICE_DATE_TO, INVOICE_NAME, INVOICE_TYPE,
 				INVOICE_STATUS, OCR_NUMBER, DUE_DATE_FROM, DUE_DATE_TO, ORGANIZATION_GROUP, ADMINISTRATION))
 			.build())
@@ -135,7 +136,7 @@ class InvoiceResourceTest {
 	void getInvoicesNoParams() {
 		when(serviceMock.getInvoices(any())).thenReturn(InvoiceResponse.create());
 
-		webTestClient.get().uri("/invoices")
+		webTestClient.get().uri(PATH)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -166,7 +167,7 @@ class InvoiceResourceTest {
 	void getInvoicesDetails() {
 		when(serviceMock.getInvoiceDetails(ORGANIZATION_NUMBER, INVOICE_NUMBER)).thenReturn(List.of(InvoiceDetail.create()));
 
-		webTestClient.get().uri("/invoices/{organizationNumber}/{invoiceNumber}/details", ORGANIZATION_NUMBER, INVOICE_NUMBER)
+		webTestClient.get().uri(PATH + "/{organizationNumber}/{invoiceNumber}/details", ORGANIZATION_NUMBER, INVOICE_NUMBER)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)

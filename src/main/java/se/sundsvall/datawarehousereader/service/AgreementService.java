@@ -23,26 +23,25 @@ public class AgreementService {
 
 	private final PartyProvider partyProvider;
 
-	public AgreementService(final AgreementRepository repository, final PartyProvider partyProvider) {
+	AgreementService(final AgreementRepository repository, final PartyProvider partyProvider) {
 		this.repository = repository;
 		this.partyProvider = partyProvider;
 	}
 
-	public AgreementResponse getAgreements(AgreementParameters parameters) {
-		final var matches = repository.findAllByParameters(parameters, getCustomerOrgId(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
+	public AgreementResponse getAgreements(String municipalityId, AgreementParameters parameters) {
+		final var matches = repository.findAllByParameters(parameters, getCustomerOrgId(municipalityId, parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		// If page larger than last page is requested, a empty list is returned otherwise the current page
 		final List<Agreement> agreements = matches.getTotalPages() < parameters.getPage() ? emptyList() : toAgreements(matches.getContent());
-
 
 		return AgreementResponse.create()
 			.withAgreements(agreements)
 			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches));
 	}
 
-	private String getCustomerOrgId(String partyId) {
+	private String getCustomerOrgId(String municipalityId, String partyId) {
 		return ofNullable(partyId)
-			.map(partyProvider::translateToLegalId)
+			.map(p -> partyProvider.translateToLegalId(municipalityId, p))
 			.orElse(null);
 	}
 }

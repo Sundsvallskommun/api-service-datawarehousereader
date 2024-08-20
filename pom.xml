@@ -11,15 +11,13 @@
     </parent>
     <groupId>se.sundsvall</groupId>
     <artifactId>api-service-datawarehousereader</artifactId>
-    <version>3.7</version>
+    <version>4.0</version>
     <name>api-service-datawarehousereader</name>
-    <description>A single store for fetching data used for tasks such as reporting, visualization
-        and analytics.
+    <description>A single store for fetching data used for tasks such as reporting, visualization and analytics.
     </description>
     <properties>
         <!-- Service properties -->
-        <generated-sources-path>${project.build.directory}/generated-sources
-        </generated-sources-path>
+        <generated-sources-path>${project.build.directory}/generated-sources</generated-sources-path>
     </properties>
     <dependencies>
         <dependency>
@@ -70,11 +68,6 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>mssqlserver</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -183,10 +176,10 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>${generated-sources-path}/models
-                                </source> <!-- API model classes -->
-                                <source>${generated-sources-path}/annotations
-                                </source> <!-- JPAModelGen classes -->
+                            	<!-- API model classes -->
+                                <source>${generated-sources-path}/models</source>
+                                <!-- JPAModelGen classes -->
+                                <source>${generated-sources-path}/annotations</source> 
                             </sources>
                         </configuration>
                     </execution>

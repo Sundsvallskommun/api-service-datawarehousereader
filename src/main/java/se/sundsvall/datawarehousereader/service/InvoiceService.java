@@ -28,7 +28,7 @@ public class InvoiceService {
 
 	private final InvoiceDetailRepository invoiceDetailRepository;
 
-	public InvoiceService(final InvoiceRepository invoiceRepository, final InvoiceDetailRepository invoiceDetailRepository) {
+	InvoiceService(final InvoiceRepository invoiceRepository, final InvoiceDetailRepository invoiceDetailRepository) {
 		this.invoiceRepository = invoiceRepository;
 		this.invoiceDetailRepository = invoiceDetailRepository;
 	}

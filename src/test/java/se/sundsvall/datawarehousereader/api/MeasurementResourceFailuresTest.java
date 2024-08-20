@@ -27,6 +27,8 @@ import se.sundsvall.datawarehousereader.service.MeasurementService;
 @ActiveProfiles("junit")
 class MeasurementResourceFailuresTest {
 
+	private static final String PATH = "/{municipalityId}/measurements/{category}/{aggregateOn}";
+	private static final String MUNICIPALITY_ID = "2281";
 	private static final String PARTY_ID = UUID.randomUUID().toString();
 	private static final String FACILITY_ID = "facilityId";
 	private static final Category CATEGORY = Category.DISTRICT_HEATING;
@@ -51,9 +53,9 @@ class MeasurementResourceFailuresTest {
 
 	@Test
 	void getMeasurementsPageLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-				.queryParam("page", 0)
-				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
+			.queryParam("page", 0)
+			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -72,9 +74,9 @@ class MeasurementResourceFailuresTest {
 
 	@Test
 	void getMeasurementsLimitLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-				.queryParam("limit", 0)
-				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
+			.queryParam("limit", 0)
+			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -93,9 +95,9 @@ class MeasurementResourceFailuresTest {
 
 	@Test
 	void getMeasurementsLimitMoreThanMaximum() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-				.queryParam("limit", 1001)
-				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
+			.queryParam("limit", 1001)
+			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -114,9 +116,9 @@ class MeasurementResourceFailuresTest {
 
 	@Test
 	void getMeasurementsPartyIdNotValidUUID() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-				.replaceQueryParam("partyId", "not-valid-uuid")
-				.build(CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
+			.replaceQueryParam("partyId", "not-valid-uuid")
+			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -135,8 +137,8 @@ class MeasurementResourceFailuresTest {
 
 	@Test
 	void getMeasurementsNotValidCategory() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-				.build("not-valid-category", AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
+			.build(MUNICIPALITY_ID, "not-valid-category", AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -147,15 +149,16 @@ class MeasurementResourceFailuresTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getTitle()).isEqualTo("Bad Request");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getDetail()).isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]");
+		assertThat(response.getDetail()).isEqualTo(
+			"Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]");
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsNotValidAggregation() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path("/measurements/{category}/{aggregateOn}"))
-				.build(CATEGORY, "not-valid-aggregation", FROM_DATE_TIME, TO_DATE_TIME))
+		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
+			.build(MUNICIPALITY_ID, CATEGORY, "not-valid-aggregation", FROM_DATE_TIME, TO_DATE_TIME))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -166,16 +169,17 @@ class MeasurementResourceFailuresTest {
 		assertThat(response).isNotNull();
 		assertThat(response.getTitle()).isEqualTo("Bad Request");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getDetail()).isEqualTo("Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]");
+		assertThat(response.getDetail()).isEqualTo(
+			"Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]");
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getMeasurementsNoValidSortBy() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/measurements/{category}/{aggregateOn}")
-				.queryParam("sortBy", "not-valid-property")
-				.build(CATEGORY, AGGREGATION))
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("sortBy", "not-valid-property")
+			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION))
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -187,7 +191,8 @@ class MeasurementResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("measurementParameters", "One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [interpolation, unit, readingSequence, facilityId, feedType, measurementTimestamp, usage, customerOrgId, uuid]."));
+			tuple("measurementParameters",
+				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [interpolation, unit, readingSequence, facilityId, feedType, measurementTimestamp, usage, customerOrgId, uuid]."));
 
 		verifyNoInteractions(serviceMock);
 	}

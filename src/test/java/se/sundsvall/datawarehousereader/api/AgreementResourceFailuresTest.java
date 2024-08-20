@@ -21,6 +21,8 @@ import se.sundsvall.datawarehousereader.service.AgreementService;
 @ActiveProfiles("junit")
 class AgreementResourceFailuresTest {
 
+	private static final String PATH = "/2281/agreements";
+
 	@MockBean
 	private AgreementService serviceMock;
 
@@ -29,9 +31,9 @@ class AgreementResourceFailuresTest {
 
 	@Test
 	void getAgreementsPageLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
-				.queryParam("page", 0)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("page", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -50,9 +52,9 @@ class AgreementResourceFailuresTest {
 
 	@Test
 	void getAgreementsLimitLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
-				.queryParam("limit", 0)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("limit", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -71,9 +73,9 @@ class AgreementResourceFailuresTest {
 
 	@Test
 	void getCustomerEngagementsLimitMoreThanMaximum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
-				.queryParam("limit", 1001)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("limit", 1001)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -92,9 +94,9 @@ class AgreementResourceFailuresTest {
 
 	@Test
 	void getAgreementsPartyIdNotValidUUID() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
-				.queryParam("partyId", "not-valid-uuid")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("partyId", "not-valid-uuid")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -113,9 +115,9 @@ class AgreementResourceFailuresTest {
 
 	@Test
 	void getAgreementsNoValidCategory() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
-				.queryParam("category", "not-valid-category")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("category", "not-valid-category")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -137,9 +139,9 @@ class AgreementResourceFailuresTest {
 
 	@Test
 	void getAgreementsNoValidSortBy() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
-				.queryParam("sortBy", "not-valid-property")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("sortBy", "not-valid-property")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -151,8 +153,9 @@ class AgreementResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("agreementParameters", """
-				One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [mainAgreement, billingId, facilityId, toDate, description, binding, uuid, fromDate, agreementId, customerId, customerOrgId, category, bindingRule]."""));
+			tuple("agreementParameters",
+				"""
+					One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [mainAgreement, billingId, facilityId, toDate, description, binding, uuid, fromDate, agreementId, customerId, customerOrgId, category, bindingRule]."""));
 
 		verifyNoInteractions(serviceMock);
 	}

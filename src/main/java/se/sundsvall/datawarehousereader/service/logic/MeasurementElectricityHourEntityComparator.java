@@ -28,7 +28,7 @@ public class MeasurementElectricityHourEntityComparator implements Comparator<Me
 		return new MeasurementElectricityHourEntityComparator(sortBy, direction);
 	}
 
-	private MeasurementElectricityHourEntityComparator(List<String> sortBy, Direction direction) {
+	MeasurementElectricityHourEntityComparator(List<String> sortBy, Direction direction) {
 		this.sortBy = sortBy;
 		this.direction = direction;
 	}
@@ -56,7 +56,8 @@ public class MeasurementElectricityHourEntityComparator implements Comparator<Me
 		}
 		if (isNull(value1)) {
 			return -1;
-		} else if (isNull(value2)) {
+		}
+		if (isNull(value2)) {
 			return 1;
 		} else {
 			return doComparison(value1, value2);
@@ -69,7 +70,8 @@ public class MeasurementElectricityHourEntityComparator implements Comparator<Me
 		}
 		if (object1 instanceof final Integer integer1 && object2 instanceof final Integer integer2) {
 			return integer1.compareTo(integer2);
-		} else if (object1 instanceof final BigDecimal bigDecimal1 && object2 instanceof final BigDecimal bigDecimal2) {
+		}
+		if (object1 instanceof final BigDecimal bigDecimal1 && object2 instanceof final BigDecimal bigDecimal2) {
 			return bigDecimal1.compareTo(bigDecimal2);
 		}
 

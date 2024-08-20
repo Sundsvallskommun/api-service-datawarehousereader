@@ -22,7 +22,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test01_getWithOrgNoAndPartyIds() {
 		setupCall()
-			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d80&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d81&customerEngagementOrgId=5564786647&fromDateTime=2021-10-12T14:11:16.359Z")
+			.withServicePath("/2281/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d80&partyId=9f395f51-b5ed-401b-b700-ef70cbb15d81&customerEngagementOrgId=5564786647&fromDateTime=2021-10-12T14:11:16.359Z")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -32,7 +32,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test02_getByOnlyCustomerEngagementOrgId() {
 		setupCall()
-			.withServicePath("/customer/details?customerEngagementOrgId=5564786647&fromDateTime=2021-10-12T14:11:16.359Z")
+			.withServicePath("/2281/customer/details?customerEngagementOrgId=5564786647&fromDateTime=2021-10-12T14:11:16.359Z")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -42,7 +42,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test03_getWithPaging() {
 		setupCall()
-			.withServicePath("/customer/details??page=1&limit=2&fromDateTime=2021-10-12T14:11:16.359Z&customerEngagementOrgId=5564786647")
+			.withServicePath("/2281/customer/details??page=1&limit=2&fromDateTime=2021-10-12T14:11:16.359Z&customerEngagementOrgId=5564786647")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -52,7 +52,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	@Test
 	void test04_getNonActiveCustomer() {
 		setupCall()
-			.withServicePath("/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d90&customerEngagementOrgId=5565027225&fromDateTime=2021-10-12T14:11:16.359Z")
+			.withServicePath("/2281/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d90&customerEngagementOrgId=5565027225&fromDateTime=2021-10-12T14:11:16.359Z")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)

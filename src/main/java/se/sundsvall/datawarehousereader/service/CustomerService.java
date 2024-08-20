@@ -40,25 +40,26 @@ public class CustomerService {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CustomerService.class);
 
 	private final CustomerRepository customerRepository;
-
 	private final CustomerDetailRepository customerDetailRepository;
-
 	private final PartyProvider partyProvider;
 
-	public CustomerService(final CustomerDetailRepository customerDetailRepository,
-		final CustomerRepository customerRepository, final PartyProvider partyProvider) {
+	CustomerService(
+		final CustomerDetailRepository customerDetailRepository,
+		final CustomerRepository customerRepository,
+		final PartyProvider partyProvider) {
+
 		this.customerDetailRepository = customerDetailRepository;
 		this.customerRepository = customerRepository;
 		this.partyProvider = partyProvider;
 	}
 
-	public CustomerEngagementResponse getCustomerEngagements(final CustomerEngagementParameters parameters) {
-		final var matches = customerRepository.findAllByParameters(parameters, getCustomerOrgIdList(parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
+	public CustomerEngagementResponse getCustomerEngagements(final String municipalityId, final CustomerEngagementParameters parameters) {
+		final var matches = customerRepository.findAllByParameters(parameters, getCustomerOrgIdList(municipalityId, parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
 		LOGGER.debug("Database query results: {} with content: {}", matches, matches.getContent());
 
 		// If page larger than last page is requested, an empty list is returned otherwise the current page
-		final List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(toCustomerEngagements(matches.getContent()));
+		final List<CustomerEngagement> customerEngagements = matches.getTotalPages() < parameters.getPage() ? emptyList() : switchToPartyId(municipalityId, toCustomerEngagements(matches.getContent()));
 
 		return CustomerEngagementResponse.create()
 			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches))
@@ -69,8 +70,8 @@ public class CustomerService {
 	 * Fetch customer details
 	 * If fromDate in {@link CustomerDetailsParameters} is empty, we fetch last years changes.
 	 *
-	 * @param parameters request parameters
-	 * @return {@link CustomerDetailsResponse}
+	 * @param  parameters request parameters
+	 * @return            {@link CustomerDetailsResponse}
 	 */
 	public CustomerDetailsResponse getCustomerDetails(final CustomerDetailsParameters parameters) {
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime())
@@ -109,25 +110,25 @@ public class CustomerService {
 		return PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort());
 	}
 
-	private List<String> getCustomerOrgIdList(final List<String> partyIds) {
+	private List<String> getCustomerOrgIdList(final String municipalityId, final List<String> partyIds) {
 		return ofNullable(partyIds).orElse(emptyList()).stream()
-			.map(partyProvider::translateToLegalId)
+			.map(partyId -> partyProvider.translateToLegalId(municipalityId, partyId))
 			.toList();
 	}
 
-	private List<CustomerEngagement> switchToPartyId(final List<CustomerEngagement> customerEngagements) {
+	private List<CustomerEngagement> switchToPartyId(final String municipalityId, final List<CustomerEngagement> customerEngagements) {
 		customerEngagements.forEach(engagement -> engagement
-			.withPartyId(fetchPartyId(engagement.getCustomerType(), engagement.getCustomerOrgNumber()))
+			.withPartyId(fetchPartyId(engagement.getCustomerType(), municipalityId, engagement.getCustomerOrgNumber()))
 			.withCustomerOrgNumber(null)); // Needs to be reset to not expose person/organization number in response
 
 		return customerEngagements;
 	}
 
-	private String fetchPartyId(final CustomerType type, final String orgNumber) {
+	private String fetchPartyId(final CustomerType type, final String municipalityId, final String orgNumber) {
 		if (!hasText(orgNumber)) {
 			LOGGER.info("CustomerEngagement did not contain a 'customerOrgNumber'. Skipping call to Party-service. {}", orgNumber);
 			return null;
 		}
-		return partyProvider.translateToPartyId(toPartyType(type), removeHyphen(orgNumber));
+		return partyProvider.translateToPartyId(toPartyType(type), municipalityId, removeHyphen(orgNumber));
 	}
 }

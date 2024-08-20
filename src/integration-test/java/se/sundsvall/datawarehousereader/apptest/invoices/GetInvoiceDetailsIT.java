@@ -18,7 +18,7 @@ import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 @WireMockAppTestSuite(files = "classpath:/GetInvoiceDetails/", classes = Application.class)
 class GetInvoiceDetailsIT extends AbstractAppTest {
 
-	private static final String PATH = "/invoices/%s/%s/details";
+	private static final String PATH = "/2281/invoices/%s/%s/details";
 	private static final String RESPONSE_FILE = "response.json";
 
 	@Test

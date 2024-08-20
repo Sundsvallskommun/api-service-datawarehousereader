@@ -24,6 +24,9 @@ import se.sundsvall.datawarehousereader.service.CustomerService;
 @ActiveProfiles("junit")
 class CustomerResourceFailuresTest {
 
+	private static final String PATH_CUSTOMER_ENGAGEMENTS = "/2281/customer/engagements";
+	private static final String PATH_CUSTOMER_DETAILS = "/2281/customer/details";
+
 	@MockBean
 	private CustomerService serviceMock;
 
@@ -32,7 +35,7 @@ class CustomerResourceFailuresTest {
 
 	@Test
 	void getCustomerEngagementsPageLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH_CUSTOMER_ENGAGEMENTS)
 			.queryParam("page", 0)
 			.build())
 			.exchange()
@@ -53,7 +56,7 @@ class CustomerResourceFailuresTest {
 
 	@Test
 	void getCustomerEngagementsLimitLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH_CUSTOMER_ENGAGEMENTS)
 			.queryParam("limit", 0)
 			.build())
 			.exchange()
@@ -74,7 +77,7 @@ class CustomerResourceFailuresTest {
 
 	@Test
 	void getCustomerEngagementsLimitMoreThanMaximum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH_CUSTOMER_ENGAGEMENTS)
 			.queryParam("limit", 1001)
 			.build())
 			.exchange()
@@ -95,7 +98,7 @@ class CustomerResourceFailuresTest {
 
 	@Test
 	void getCustomerEngagementsPartyIdNotValidUUID() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH_CUSTOMER_ENGAGEMENTS)
 			.queryParam("partyId", "not-valid-uuid")
 			.build())
 			.exchange()
@@ -116,7 +119,7 @@ class CustomerResourceFailuresTest {
 
 	@Test
 	void getCustomerEngagementsNoValidSortBy() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/engagements")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH_CUSTOMER_ENGAGEMENTS)
 			.queryParam("sortBy", "not-valid-property")
 			.build())
 			.exchange()
@@ -140,7 +143,7 @@ class CustomerResourceFailuresTest {
 	void getCustomerDetailsNoPartyIdAndCustomerEngagementOrgId() {
 		when(serviceMock.getCustomerDetails(any())).thenReturn(CustomerDetailsResponse.create());
 
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/customer/details")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH_CUSTOMER_DETAILS)
 			.queryParam("sortBy", "not-valid-property")
 			.build())
 			.exchange()

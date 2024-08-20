@@ -1,10 +1,5 @@
 package se.sundsvall.datawarehousereader.apptest.measurment;
 
-import org.junit.jupiter.api.Test;
-import se.sundsvall.datawarehousereader.Application;
-import se.sundsvall.dept44.test.AbstractAppTest;
-import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
-
 import static java.lang.String.format;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
@@ -12,6 +7,12 @@ import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATI
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.DAY;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.HOUR;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.MONTH;
+
+import org.junit.jupiter.api.Test;
+
+import se.sundsvall.datawarehousereader.Application;
+import se.sundsvall.dept44.test.AbstractAppTest;
+import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 
 /**
  * Read district-heating-measurements tests
@@ -21,7 +22,7 @@ import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation
 @WireMockAppTestSuite(files = "classpath:/GetMeasurementsDistrictHeating/", classes = Application.class)
 class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 
-	private static final String PATH = "/measurements/%s/%s";
+	private static final String PATH = "/2281/measurements/%s/%s";
 	private static final String RESPONSE_FILE = "response.json";
 
 	@Test

@@ -35,6 +35,8 @@ import se.sundsvall.datawarehousereader.service.MeasurementService;
 @ActiveProfiles("junit")
 class MeasurementResourceTest {
 
+	private static final String PATH = "/{municipalityId}/measurements/{category}/{aggregateOn}";
+	private static final String MUNICIPALITY_ID = "2281";
 	private static final Category CATEGORY = Category.DISTRICT_HEATING;
 	private static final Aggregation AGGREGATION = Aggregation.MONTH;
 	private static final int DEFAULT_PAGE = 1;
@@ -57,16 +59,16 @@ class MeasurementResourceTest {
 
 	@Test
 	void getMeasurementsWithNoParameters() {
-		when(serviceMock.getMeasurements(any(), any(), any())).thenReturn(MeasurementResponse.create());
+		when(serviceMock.getMeasurements(any(), any(), any(), any())).thenReturn(MeasurementResponse.create());
 
-		webTestClient.get().uri("/measurements/{category}/{aggregateOn}", CATEGORY, AGGREGATION)
+		webTestClient.get().uri(PATH, MUNICIPALITY_ID, CATEGORY, AGGREGATION)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON_VALUE)
 			.expectBody().json("{}");
 
-		verify(serviceMock).getMeasurements(eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
-		MeasurementParameters parameters = parametersCaptor.getValue();
+		verify(serviceMock).getMeasurements(eq(MUNICIPALITY_ID), eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
+		final MeasurementParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getPartyId()).isNull();
 		assertThat(parameters.getFacilityId()).isNull();
 		assertThat(parameters.getFromDateTime()).isNull();
@@ -77,11 +79,11 @@ class MeasurementResourceTest {
 
 	@Test
 	void getMeasurementsWithCustomCapitalizationOnCategoryAndAggregation() {
-		when(serviceMock.getMeasurements(any(), any(), any())).thenReturn(MeasurementResponse.create());
+		when(serviceMock.getMeasurements(any(), any(), any(), any())).thenReturn(MeasurementResponse.create());
 
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/measurements/{category}/{aggregateOn}")
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(PAGE, LIMIT, PARTY_ID, FACILITY_ID, FROM_DATE_TIME, TO_DATE_TIME))
-			.build(CATEGORY.name().toLowerCase(), AGGREGATION.name().toLowerCase()))
+			.build(MUNICIPALITY_ID, CATEGORY.name().toLowerCase(), AGGREGATION.name().toLowerCase()))
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON_VALUE)
@@ -90,8 +92,8 @@ class MeasurementResourceTest {
 			.getResponseBody();
 
 		assertThat(response).isNotNull().isEqualTo(MeasurementResponse.create());
-		verify(serviceMock).getMeasurements(eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
-		MeasurementParameters parameters = parametersCaptor.getValue();
+		verify(serviceMock).getMeasurements(eq(MUNICIPALITY_ID), eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
+		final MeasurementParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getPage()).isEqualTo(PAGE);
 		assertThat(parameters.getLimit()).isEqualTo(LIMIT);
 		assertThat(parameters.getFacilityId()).isEqualTo(FACILITY_ID);
@@ -103,7 +105,7 @@ class MeasurementResourceTest {
 	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String partyId, String facilityId, OffsetDateTime fromDateTime,
 		OffsetDateTime toDateTime) {
 
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", valueOf(p)));
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", valueOf(p)));

@@ -19,7 +19,7 @@ public class InstallationService {
 
 	private final InstallationRepository repository;
 
-	public InstallationService(final InstallationRepository repository) {
+	InstallationService(final InstallationRepository repository) {
 		this.repository = repository;
 	}
 

@@ -1,6 +1,12 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.beans.support.PagedListHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -8,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
+
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
@@ -19,24 +26,22 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measuremen
 import se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
-
 @Component
 public class ElectricityMeasurementProvider {
 
-	@Autowired
-	private MeasurementElectricityMonthRepository electricityMonthRepository;
+	private final MeasurementElectricityHourRepository electricityHourRepository;
+	private final MeasurementElectricityDayRepository electricityDayRepositoryRepository;
+	private final MeasurementElectricityMonthRepository electricityMonthRepository;
 
-	@Autowired
-	private MeasurementElectricityHourRepository electricityHourRepository;
+	ElectricityMeasurementProvider(
+		MeasurementElectricityHourRepository electricityHourRepository,
+		MeasurementElectricityDayRepository electricityDayRepositoryRepository,
+		MeasurementElectricityMonthRepository electricityMonthRepository) {
 
-	@Autowired
-	private MeasurementElectricityDayRepository electricityDayRepositoryRepository;
+		this.electricityHourRepository = electricityHourRepository;
+		this.electricityDayRepositoryRepository = electricityDayRepositoryRepository;
+		this.electricityMonthRepository = electricityMonthRepository;
+	}
 
 	private static final String AGGREGATION_NOT_IMPLEMENTED = "aggregation '%s' and category '%s'";
 	private static final String MAXIMUM_HOURLY_MEASUREMENT_RANGE_VIOLATION = "Date range exceeds maximum range. Range can max be one year when asking for hourly electricity measurements.";

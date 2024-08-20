@@ -2,7 +2,7 @@
 	"name": "api-party-legalId",
 	"request": {
 		"method": "GET",
-		"urlPath": "/api-party/ENTERPRISE/B1EDEA3C-1083-4E1A-81FB-7D95E505E102/legalId",
+		"urlPath": "/api-party/2281/ENTERPRISE/B1EDEA3C-1083-4E1A-81FB-7D95E505E102/legalId",
 		"headers": {
 			"Authorization": {
 				"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"

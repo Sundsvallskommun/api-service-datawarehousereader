@@ -26,7 +26,7 @@ public class MeasurementService {
 
 	private final PartyProvider partyProvider;
 
-	public MeasurementService(final DistrictHeatingMeasurementProvider districtHeatingMeasurementProvider,
+	MeasurementService(final DistrictHeatingMeasurementProvider districtHeatingMeasurementProvider,
 		final ElectricityMeasurementProvider electricityMeasurementProvider,
 		final PartyProvider partyProvider) {
 		this.districtHeatingMeasurementProvider = districtHeatingMeasurementProvider;
@@ -34,18 +34,15 @@ public class MeasurementService {
 		this.partyProvider = partyProvider;
 	}
 
-	public MeasurementResponse getMeasurements(Category category, Aggregation aggregateOn, MeasurementParameters parameters) {
-		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyProvider::translateToLegalId).orElse(null);
+	public MeasurementResponse getMeasurements(String municipalityId, Category category, Aggregation aggregateOn, MeasurementParameters parameters) {
+		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyId -> partyProvider.translateToLegalId(municipalityId, partyId)).orElse(null);
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 
 		return switch (category) {
-			case DISTRICT_HEATING ->
-				districtHeatingMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
-			case ELECTRICITY ->
-				electricityMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
-			default ->
-				throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
+			case DISTRICT_HEATING -> districtHeatingMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
+			case ELECTRICITY -> electricityMeasurementProvider.getMeasurements(legalId, aggregateOn, fromDateTime, toDateTime, parameters);
+			default -> throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
 		};
 	}
 }

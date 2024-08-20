@@ -3,6 +3,7 @@ package se.sundsvall.datawarehousereader.api;
 import static java.util.Optional.ofNullable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -36,6 +37,7 @@ class AgreementResourceTest {
 	private static final int LIMIT = 50;
 	private static final int DEFAULT_LIMIT = 100;
 	private static final int DEFAULT_PAGE = 1;
+	private static final String MUNICIPALITY_ID = "2281";
 	private static final String AGREEMENT_ID = "agreementId";
 	private static final String BILLING_ID = "billingId";
 	private static final String CUSTOMER_NUMBER = "customerNumber";
@@ -48,6 +50,7 @@ class AgreementResourceTest {
 	private static final String BINDING_RULE = "bindingRule";
 	private static final LocalDate FROM_DATE = LocalDate.now().minusMonths(10L);
 	private static final LocalDate TO_DATE = LocalDate.now();
+	private static final String PATH = "/" + MUNICIPALITY_ID + "/agreements";
 
 	@MockBean
 	private AgreementService serviceMock;
@@ -60,9 +63,9 @@ class AgreementResourceTest {
 
 	@Test
 	void getAgreementsAllParams() {
-		when(serviceMock.getAgreements(any())).thenReturn(AgreementResponse.create());
+		when(serviceMock.getAgreements(any(), any())).thenReturn(AgreementResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(PAGE, LIMIT, AGREEMENT_ID, BILLING_ID, CUSTOMER_NUMBER, PARTY_ID, CATEGORY, FACILITY_ID, DESCRIPTION, MAIN_AGREEMENT, BINDING, BINDING_RULE, FROM_DATE, TO_DATE))
 			.build())
 			.exchange()
@@ -71,8 +74,8 @@ class AgreementResourceTest {
 			.expectBody(AgreementResponse.class)
 			.isEqualTo(AgreementResponse.create());
 
-		verify(serviceMock).getAgreements(parametersCaptor.capture());
-		AgreementParameters parameters = parametersCaptor.getValue();
+		verify(serviceMock).getAgreements(eq(MUNICIPALITY_ID), parametersCaptor.capture());
+		final AgreementParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getCustomerNumber()).isEqualTo(CUSTOMER_NUMBER);
 		assertThat(parameters.getPartyId()).isEqualTo(PARTY_ID);
 		assertThat(parameters.getLimit()).isEqualTo(LIMIT);
@@ -92,9 +95,9 @@ class AgreementResourceTest {
 	@Test
 	void getAgreementsDefaultValues() {
 
-		when(serviceMock.getAgreements(any())).thenReturn(AgreementResponse.create());
+		when(serviceMock.getAgreements(any(), any())).thenReturn(AgreementResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(null, null, null, null, null, null, CATEGORY, FACILITY_ID, null, null, null, null, null, null))
 			.build())
 			.exchange()
@@ -103,8 +106,8 @@ class AgreementResourceTest {
 			.expectBody(AgreementResponse.class)
 			.isEqualTo(AgreementResponse.create());
 
-		verify(serviceMock).getAgreements(parametersCaptor.capture());
-		AgreementParameters parameters = parametersCaptor.getValue();
+		verify(serviceMock).getAgreements(eq(MUNICIPALITY_ID), parametersCaptor.capture());
+		final AgreementParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getCustomerNumber()).isNull();
 		assertThat(parameters.getPartyId()).isNull();
 		assertThat(parameters.getLimit()).isEqualTo(DEFAULT_LIMIT);
@@ -126,9 +129,9 @@ class AgreementResourceTest {
 		final var inParams = createParameterMap(null, null, null, null, null, null, CATEGORY, FACILITY_ID, null, null, null, null, null, null);
 		inParams.add("category", Category.WASTE_MANAGEMENT.toString());
 
-		when(serviceMock.getAgreements(any())).thenReturn(AgreementResponse.create());
+		when(serviceMock.getAgreements(any(), any())).thenReturn(AgreementResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/agreements")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(inParams)
 			.build())
 			.exchange()
@@ -137,8 +140,8 @@ class AgreementResourceTest {
 			.expectBody(AgreementResponse.class)
 			.isEqualTo(AgreementResponse.create());
 
-		verify(serviceMock).getAgreements(parametersCaptor.capture());
-		AgreementParameters parameters = parametersCaptor.getValue();
+		verify(serviceMock).getAgreements(eq(MUNICIPALITY_ID), parametersCaptor.capture());
+		final AgreementParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getCustomerNumber()).isNull();
 		assertThat(parameters.getPartyId()).isNull();
 		assertThat(parameters.getLimit()).isEqualTo(DEFAULT_LIMIT);
@@ -153,15 +156,14 @@ class AgreementResourceTest {
 		assertThat(parameters.getFromDate()).isNull();
 		assertThat(parameters.getToDate()).isNull();
 		assertThat(parameters.getPage()).isEqualTo(DEFAULT_PAGE);
-
 	}
 
 	@Test
 	void getAgreementsNoParams() {
-		when(serviceMock.getAgreements(any())).thenReturn(AgreementResponse.create());
+		when(serviceMock.getAgreements(any(), any())).thenReturn(AgreementResponse.create());
 
 		webTestClient.get()
-			.uri("/agreements")
+			.uri(PATH)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -171,7 +173,7 @@ class AgreementResourceTest {
 
 	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String agreementId, String billingId, String customerNumber, String partyId, Category category, String facilityId, String description, Boolean mainAgreement,
 		Boolean binding, String bindingRule, LocalDate fromDate, LocalDate toDate) {
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));

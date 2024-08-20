@@ -13,9 +13,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installati
 
 public final class InstallationMapper {
 
-	private InstallationMapper() {
-		// Prevent instantiation
-	}
+	private InstallationMapper() {}
 
 	public static List<InstallationDetails> toInstallationDetailsList(final List<InstallationEntity> entities) {
 		return ofNullable(entities).orElse(emptyList()).stream()

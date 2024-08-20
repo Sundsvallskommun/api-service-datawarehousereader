@@ -19,7 +19,7 @@ public class InstalledBaseService {
 
 	private final InstalledBaseRepository repository;
 
-	public InstalledBaseService(final InstalledBaseRepository repository) {
+	InstalledBaseService(final InstalledBaseRepository repository) {
 		this.repository = repository;
 	}
 
