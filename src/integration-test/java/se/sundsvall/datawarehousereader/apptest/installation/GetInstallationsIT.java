@@ -22,7 +22,7 @@ class GetInstallationsIT extends AbstractAppTest {
 	@Test
 	void test01_getByInstalled() {
 		setupCall()
-			.withServicePath("/installations?installed=true")
+			.withServicePath("/2281/installations?installed=true")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -32,7 +32,7 @@ class GetInstallationsIT extends AbstractAppTest {
 	@Test
 	void test02_getByDateFrom() {
 		setupCall()
-			.withServicePath("/installations?lastModifiedDateFrom=2020-01-01&lastModifiedDateTo=2023-01-01")
+			.withServicePath("/2281/installations?lastModifiedDateFrom=2020-01-01&lastModifiedDateTo=2023-01-01")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -42,7 +42,7 @@ class GetInstallationsIT extends AbstractAppTest {
 	@Test
 	void test03_getByCategory() {
 		setupCall()
-			.withServicePath("/installations?category=ELECTRICITY")
+			.withServicePath("/2281/installations?category=ELECTRICITY")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -52,7 +52,7 @@ class GetInstallationsIT extends AbstractAppTest {
 	@Test
 	void test04_getByFacilityId() {
 		setupCall()
-			.withServicePath("/installations?facilityId=223456789123456789")
+			.withServicePath("/2281/installations?facilityId=223456789123456789")
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)

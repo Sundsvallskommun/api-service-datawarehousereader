@@ -2,7 +2,7 @@
 	"name": "api-party-enterprise-partyId-3",
 	"request": {
 		"method": "GET",
-		"urlPath": "/api-party/ENTERPRISE/2020001000/partyId",
+		"urlPath": "/api-party/2281/ENTERPRISE/2020001000/partyId",
 		"headers": {
 			"Authorization": {
 				"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"

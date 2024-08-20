@@ -2,6 +2,8 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 import static java.util.Optional.ofNullable;
 import static org.springframework.data.jpa.domain.Specification.not;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.AGREEMENT_ID;
@@ -20,7 +22,6 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agr
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.data.jpa.domain.Specification;
 
@@ -53,8 +54,8 @@ public interface AgreementSpecification {
 
 	static Specification<AgreementEntity> withCategories(List<Category> categories) {
 		final var stadsbackenCategories = ofNullable(categories).orElse(emptyList()).stream()
-											  .map(Category::toStadsbackenValue)
-											  .toList();
+			.map(Category::toStadsbackenValue)
+			.toList();
 		return BUILDER.buildInFilterForString(CATEGORY, stadsbackenCategories);
 	}
 
@@ -75,24 +76,23 @@ public interface AgreementSpecification {
 	}
 
 	static Specification<AgreementEntity> withFromDate(LocalDate date) {
-		return Objects.nonNull(date) ? BUILDER.buildDateFilter(FROM_DATE, date.atStartOfDay(), null) : (root, query, criteriaBuilder) -> criteriaBuilder.and();
+		return nonNull(date) ? BUILDER.buildDateFilter(FROM_DATE, date.atStartOfDay(), null) : (root, query, criteriaBuilder) -> criteriaBuilder.and();
 	}
 
 	static Specification<AgreementEntity> withToDate(LocalDate date) {
-		return Objects.nonNull(date) ? BUILDER.buildDateFilter(TO_DATE, null, date.atTime(LocalTime.MAX)) : (root, query, criteriaBuilder) -> criteriaBuilder.and();
+		return nonNull(date) ? BUILDER.buildDateFilter(TO_DATE, null, date.atTime(LocalTime.MAX)) : (root, query, criteriaBuilder) -> criteriaBuilder.and();
 	}
 
 	static Specification<AgreementEntity> withActive(Boolean active) {
-		if(Objects.isNull(active)) {
+		if (isNull(active)) {
 			return (root, query, criteriaBuilder) -> criteriaBuilder.and();
-		} else {
-			return TRUE.equals(active) ? isActive() : not(isActive());
 		}
+
+		return TRUE.equals(active) ? isActive() : not(isActive());
 	}
 
 	static Specification<AgreementEntity> isActive() {
 		return BUILDER.buildDateFilter(FROM_DATE, null, LocalDate.now().atTime(LocalTime.MAX))
-			.and((entity, cq, cb) ->
-			cb.or(cb.isNull(entity.get(TO_DATE)), cb.greaterThanOrEqualTo(entity.get(TO_DATE), LocalDate.now().atStartOfDay())));
+			.and((entity, cq, cb) -> cb.or(cb.isNull(entity.get(TO_DATE)), cb.greaterThanOrEqualTo(entity.get(TO_DATE), LocalDate.now().atStartOfDay())));
 	}
 }

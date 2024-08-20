@@ -21,6 +21,8 @@ import se.sundsvall.datawarehousereader.service.InstallationService;
 @ActiveProfiles("junit")
 class InstallationResourceFailuresTest {
 
+	private static final String PATH = "/2281/installations";
+
 	@MockBean
 	private InstallationService serviceMock;
 
@@ -29,9 +31,9 @@ class InstallationResourceFailuresTest {
 
 	@Test
 	void getInstallationDetailsPageLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParam("page", 0)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("page", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -50,9 +52,9 @@ class InstallationResourceFailuresTest {
 
 	@Test
 	void getInstallationDetailsLimitLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParam("limit", 0)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("limit", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -71,9 +73,9 @@ class InstallationResourceFailuresTest {
 
 	@Test
 	void getInstallationDetailsLimitMoreThanMaximum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParam("limit", 1001)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("limit", 1001)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -92,9 +94,9 @@ class InstallationResourceFailuresTest {
 
 	@Test
 	void getInstallationDetailsNoValidSortBy() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParam("sortBy", "not-valid-property")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("sortBy", "not-valid-property")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -106,7 +108,8 @@ class InstallationResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("installationParameters", "One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [facilityId, city, customerFlag, type, dateFrom, internalId, houseName, careOf, street, dateTo, company, postCode, id, lastChangedDate]."));
+			tuple("installationParameters",
+				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [facilityId, city, customerFlag, type, dateFrom, internalId, houseName, careOf, street, dateTo, company, postCode, id, lastChangedDate]."));
 
 		verifyNoInteractions(serviceMock);
 	}

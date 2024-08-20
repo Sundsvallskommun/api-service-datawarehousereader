@@ -11,13 +11,13 @@ import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 
 /**
  * Read invoices tests
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @WireMockAppTestSuite(files = "classpath:/GetInvoices/", classes = Application.class)
 class GetInvoicesIT extends AbstractAppTest {
 
-	private static final String PATH = "/invoices";
+	private static final String PATH = "/2281/invoices";
 	private static final String RESPONSE_FILE = "response.json";
 
 	@Test
@@ -154,18 +154,19 @@ class GetInvoicesIT extends AbstractAppTest {
 	void test14_getByCombinationWithMatches() {
 		setupCall()
 			.withServicePath(PATH.concat(
-				"?customerId=10335" +
-					"&customerType=Enterprise" +
-					"&facilityIds=735999109224602000" +
-					"&invoiceNumber=139346993" +
-					"&invoiceDateFrom=2019-10-10" +
-					"&invoiceName=139346993.pdf" +
-					"&invoiceType=Faktura" +
-					"&invoiceStatus=Skickad" +
-					"&ocrNumber=139346993" +
-					"&dueDateTo=2019-11-11" +
-					"&organizationGroup=stadsbacken" +
-					"&administration=Sundsvall Elnät"))
+				"""
+					?customerId=10335\
+					&customerType=Enterprise\
+					&facilityIds=735999109224602000\
+					&invoiceNumber=139346993\
+					&invoiceDateFrom=2019-10-10\
+					&invoiceName=139346993.pdf\
+					&invoiceType=Faktura\
+					&invoiceStatus=Skickad\
+					&ocrNumber=139346993\
+					&dueDateTo=2019-11-11\
+					&organizationGroup=stadsbacken\
+					&administration=Sundsvall Elnät"""))
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -176,18 +177,19 @@ class GetInvoicesIT extends AbstractAppTest {
 	void test15_getByCombinationWithoutMatches() {
 		setupCall()
 			.withServicePath(PATH.concat(
-				"?customerId=10335" +
-					"&customerType=Enterprise" +
-					"&facilityIds=735999109224602000" +
-					"&invoiceNumber=139346993" +
-					"&invoiceDateFrom=2019-10-10" +
-					"&invoiceName=139346993.pdf" +
-					"&invoiceType=Faktura" +
-					"&invoiceStatus=Skickad" +
-					"&ocrNumber=139346993" +
-					"&dueDateTo=2019-11-10" +
-					"&organizationGroup=stadsbacken" +
-					"&administration=Sundsvall Elnät"))
+				"""
+					?customerId=10335\
+					&customerType=Enterprise\
+					&facilityIds=735999109224602000\
+					&invoiceNumber=139346993\
+					&invoiceDateFrom=2019-10-10\
+					&invoiceName=139346993.pdf\
+					&invoiceType=Faktura\
+					&invoiceStatus=Skickad\
+					&ocrNumber=139346993\
+					&dueDateTo=2019-11-10\
+					&organizationGroup=stadsbacken\
+					&administration=Sundsvall Elnät"""))
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)

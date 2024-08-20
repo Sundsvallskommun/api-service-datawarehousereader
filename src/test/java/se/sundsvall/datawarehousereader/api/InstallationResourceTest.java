@@ -30,6 +30,8 @@ import se.sundsvall.datawarehousereader.service.InstallationService;
 @ActiveProfiles("junit")
 class InstallationResourceTest {
 
+	private static final String PATH = "/2281/installations";
+
 	private static final int DEFAULT_PAGE = 1;
 	private static final int DEFAULT_LIMIT = 100;
 	private static final int PAGE = 6;
@@ -54,9 +56,9 @@ class InstallationResourceTest {
 	void getInstallationDetailsAllParameters() {
 		when(serviceMock.getInstallations(any())).thenReturn(InstallationDetailsResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParams(createParameterMap(PAGE, LIMIT, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM, DATE_TO))
-				.build())
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParams(createParameterMap(PAGE, LIMIT, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM, DATE_TO))
+			.build())
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -78,9 +80,9 @@ class InstallationResourceTest {
 	void getInstalledBaseDefaultValues() {
 		when(serviceMock.getInstallations(any())).thenReturn(InstallationDetailsResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installations")
-				.queryParams(createParameterMap(null, null, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM, DATE_TO))
-				.build())
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParams(createParameterMap(null, null, CATEGORY, INSTALLED, FACILITY_ID, DATE_FROM, DATE_TO))
+			.build())
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -102,7 +104,7 @@ class InstallationResourceTest {
 	void getInstalledBaseNoParams() {
 		when(serviceMock.getInstallations(any())).thenReturn(InstallationDetailsResponse.create());
 
-		webTestClient.get().uri("/installations")
+		webTestClient.get().uri(PATH)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -122,7 +124,7 @@ class InstallationResourceTest {
 
 	private MultiValueMap<String, String> createParameterMap(final Integer page, final Integer limit,
 		final String category, final Boolean installed, final String facilityId, final LocalDate dateFrom, final LocalDate dateTo) {
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));

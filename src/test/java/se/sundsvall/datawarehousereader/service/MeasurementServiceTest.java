@@ -44,6 +44,8 @@ class MeasurementServiceTest {
 
 	@Test
 	void testGetMeasurementsDistrictHeatingMonthPartyIdIsNotSet() {
+
+		final var municipalityId = "municipalityId";
 		final var category = DISTRICT_HEATING;
 		final var aggregateOn = MONTH;
 		final var fromDateTimeOffset = OffsetDateTime.now().minusMonths(1L);
@@ -57,7 +59,7 @@ class MeasurementServiceTest {
 
 		when(districtHeatingMeasurementProviderMock.getMeasurements(null, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams)).thenReturn(MeasurementResponse.create());
 
-		final var measurementResponse = service.getMeasurements(category, aggregateOn, searchParams);
+		final var measurementResponse = service.getMeasurements(municipalityId, category, aggregateOn, searchParams);
 
 		verify(districtHeatingMeasurementProviderMock).getMeasurements(null, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams);
 
@@ -67,6 +69,8 @@ class MeasurementServiceTest {
 
 	@Test
 	void testGetMeasurementsDistrictHeatingMonthPartyIdIsSet() {
+
+		final var municipalityId = "municipalityId";
 		final var category = DISTRICT_HEATING;
 		final var aggregateOn = MONTH;
 		final var partyId = "partyId";
@@ -81,19 +85,21 @@ class MeasurementServiceTest {
 		searchParams.setToDateTime(toDateTimeOffset);
 		searchParams.setPartyId("partyId");
 
-		when(partyProviderMock.translateToLegalId(partyId)).thenReturn(legalId);
+		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
 		when(districtHeatingMeasurementProviderMock.getMeasurements(legalId, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams)).thenReturn(MeasurementResponse.create());
 
-		final var measurementResponse = service.getMeasurements(category, aggregateOn, searchParams);
+		final var measurementResponse = service.getMeasurements(municipalityId, category, aggregateOn, searchParams);
 
 		verify(districtHeatingMeasurementProviderMock).getMeasurements(legalId, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams);
-		verify(partyProviderMock).translateToLegalId(partyId);
+		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
 
 		assertThat(measurementResponse).isNotNull().isEqualTo(MeasurementResponse.create());
 	}
 
 	@Test
 	void testGetMeasurementsElectricityMonthPartyIdIsNotSet() {
+
+		final var municipalityId = "municipalityId";
 		final var category = ELECTRICITY;
 		final var aggregateOn = MONTH;
 		final var fromDateTimeOffset = OffsetDateTime.now().minusMonths(1L);
@@ -107,7 +113,7 @@ class MeasurementServiceTest {
 
 		when(electricityMeasurementProviderMock.getMeasurements(null, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams)).thenReturn(MeasurementResponse.create());
 
-		final var measurementResponse = service.getMeasurements(category, aggregateOn, searchParams);
+		final var measurementResponse = service.getMeasurements(municipalityId, category, aggregateOn, searchParams);
 
 		verify(electricityMeasurementProviderMock).getMeasurements(null, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams);
 
@@ -117,6 +123,8 @@ class MeasurementServiceTest {
 
 	@Test
 	void testGetMeasurementsElectricityDayPartyIdIsNotSet() {
+
+		final var municipalityId = "municipalityId";
 		final var category = ELECTRICITY;
 		final var aggregateOn = DAY;
 		final var fromDateTimeOffset = OffsetDateTime.now().minusMonths(1L);
@@ -130,7 +138,7 @@ class MeasurementServiceTest {
 
 		when(electricityMeasurementProviderMock.getMeasurements(null, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams)).thenReturn(MeasurementResponse.create());
 
-		final var measurementResponse = service.getMeasurements(category, aggregateOn, searchParams);
+		final var measurementResponse = service.getMeasurements(municipalityId, category, aggregateOn, searchParams);
 
 		verify(electricityMeasurementProviderMock).getMeasurements(null, aggregateOn, fromDateTimeLocal, toDateTimeLocal, searchParams);
 
@@ -140,11 +148,13 @@ class MeasurementServiceTest {
 
 	@Test
 	void testProblemIsThrownWhenNotSupportedCategory() {
+
+		final var municipalityId = "municipalityId";
 		final var category = WASTE_MANAGEMENT;
 		final var aggregateOn = DAY;
 		final var searchParams = MeasurementParameters.create();
 
-		ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> service.getMeasurements(category, aggregateOn, searchParams));
+		final ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> service.getMeasurements(municipalityId, category, aggregateOn, searchParams));
 		assertThat(e.getStatus()).isEqualTo(NOT_IMPLEMENTED);
 		assertThat(e.getMessage()).isEqualTo("Not Implemented: category 'WASTE_MANAGEMENT'");
 

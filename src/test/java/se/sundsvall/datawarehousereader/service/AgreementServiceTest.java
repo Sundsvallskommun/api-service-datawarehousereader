@@ -22,8 +22,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.domain.Sort;
+
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
@@ -32,6 +32,7 @@ import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 
 @ExtendWith(MockitoExtension.class)
 class AgreementServiceTest {
+
 	@Mock
 	private AgreementRepository repositoryMock;
 
@@ -52,6 +53,9 @@ class AgreementServiceTest {
 
 	@Test
 	void testWithEmptyParameters() {
+
+		final var municipalityId = "municipalityId";
+
 		when(repositoryMock.findAllByParameters(ArgumentMatchers.any(), isNull(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(1);
@@ -61,9 +65,9 @@ class AgreementServiceTest {
 		when(pageMock.getNumber()).thenReturn(0);
 		when(pageMock.getSort()).thenReturn(Sort.unsorted());
 
-		final var response = service.getAgreements(AgreementParameters.create());
+		final var response = service.getAgreements(municipalityId, AgreementParameters.create());
 
-		verify(partyProviderMock, never()).translateToLegalId("partyId");
+		verify(partyProviderMock, never()).translateToLegalId(any(), any());
 		verify(repositoryMock).findAllByParameters(eq(AgreementParameters.create()), isNull(), pageableCaptor.capture());
 
 		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
@@ -79,6 +83,8 @@ class AgreementServiceTest {
 
 	@Test
 	void testWithAllParametersSet() {
+
+		final var municipalityId = "municipalityId";
 		final var limit = 1;
 		final var page = 2;
 		final var params = AgreementParameters.create()
@@ -96,7 +102,7 @@ class AgreementServiceTest {
 		params.setLimit(limit);
 		params.setPage(page);
 
-		when(partyProviderMock.translateToLegalId("partyId")).thenReturn("legalId");
+		when(partyProviderMock.translateToLegalId(municipalityId, params.getPartyId())).thenReturn("legalId");
 		when(repositoryMock.findAllByParameters(ArgumentMatchers.any(), eq("legalId"), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getContent()).thenReturn(List.of(entityMock));
 		when(pageMock.getTotalPages()).thenReturn(2);
@@ -106,9 +112,9 @@ class AgreementServiceTest {
 		when(pageMock.getNumber()).thenReturn(page - 1);
 		when(pageMock.getSort()).thenReturn(Sort.unsorted());
 
-		final var response = service.getAgreements(params);
+		final var response = service.getAgreements(municipalityId, params);
 
-		verify(partyProviderMock).translateToLegalId("partyId");
+		verify(partyProviderMock).translateToLegalId(municipalityId, params.getPartyId());
 		verify(repositoryMock).findAllByParameters(eq(params), eq("legalId"), pageableCaptor.capture());
 
 		assertThat(pageableCaptor.getValue().getPageNumber()).isEqualTo(page - 1);
@@ -125,6 +131,9 @@ class AgreementServiceTest {
 
 	@Test
 	void testForPageLargerThanResultsMaxPage() {
+
+		final var municipalityId = "municipalityId";
+
 		when(repositoryMock.findAllByParameters(any(), any(), any(Pageable.class))).thenReturn(pageMock);
 		when(pageMock.getTotalPages()).thenReturn(1);
 		when(pageMock.getTotalElements()).thenReturn(1L);
@@ -136,9 +145,9 @@ class AgreementServiceTest {
 		final var params = AgreementParameters.create();
 		params.setPage(2);
 
-		final var response = service.getAgreements(params);
+		final var response = service.getAgreements(municipalityId, params);
 
-		verify(partyProviderMock, never()).translateToLegalId("partyId");
+		verify(partyProviderMock, never()).translateToLegalId(any(), any());
 		verify(repositoryMock).findAllByParameters(eq(params), isNull(), pageableCaptor.capture());
 
 		assertThat(response.getMetaData().getCount()).isZero();

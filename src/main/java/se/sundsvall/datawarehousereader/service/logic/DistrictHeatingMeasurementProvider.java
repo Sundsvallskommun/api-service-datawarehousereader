@@ -1,10 +1,20 @@
 package se.sundsvall.datawarehousereader.service.logic;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
+import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.decorateMeasurement;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
+
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementMetaData;
@@ -20,27 +30,22 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measuremen
 import se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
-import static se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper.decorateMeasurement;
-
 @Component
 public class DistrictHeatingMeasurementProvider {
 
-	@Autowired
-	private MeasurementDistrictHeatingHourRepository districtHeatingHourRepository;
+	private final MeasurementDistrictHeatingHourRepository districtHeatingHourRepository;
+	private final MeasurementDistrictHeatingDayRepository districtHeatingDayRepository;
+	private final MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository;
 
-	@Autowired
-	private MeasurementDistrictHeatingDayRepository districtHeatingDayRepository;
+	DistrictHeatingMeasurementProvider(
+		MeasurementDistrictHeatingHourRepository districtHeatingHourRepository,
+		MeasurementDistrictHeatingDayRepository districtHeatingDayRepository,
+		MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository) {
 
-	@Autowired
-	private MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository;
+		this.districtHeatingHourRepository = districtHeatingHourRepository;
+		this.districtHeatingDayRepository = districtHeatingDayRepository;
+		this.districtHeatingMonthRepository = districtHeatingMonthRepository;
+	}
 
 	private static final String AGGREGATION_NOT_IMPLEMENTED = "aggregation '%s' and category '%s'";
 	private static final String READING_SEQUENCE_KEY = "readingSequence";
@@ -79,7 +84,12 @@ public class DistrictHeatingMeasurementProvider {
 
 	private List<MeasurementMetaData> toMetadata(DefaultMeasurementAttributesInterface entity, Aggregation aggregation) {
 
-		return switch (aggregation) { case HOUR -> { final var hourEntity = (MeasurementDistrictHeatingHourEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(hourEntity.getReadingSequence()))); } case DAY -> { final var dayEntity = (MeasurementDistrictHeatingDayEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(dayEntity.getReadingSequence()))); } case MONTH -> { final var monthEntity = (MeasurementDistrictHeatingMonthEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(monthEntity.getReadingSequence()))); } default -> emptyList(); };
+		return switch (aggregation) {
+			case HOUR -> { final var hourEntity = (MeasurementDistrictHeatingHourEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(hourEntity.getReadingSequence()))); }
+			case DAY -> { final var dayEntity = (MeasurementDistrictHeatingDayEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(dayEntity.getReadingSequence()))); }
+			case MONTH -> { final var monthEntity = (MeasurementDistrictHeatingMonthEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(monthEntity.getReadingSequence()))); }
+			default -> emptyList();
+		};
 	}
 
 	private String toString(Integer value) {

@@ -27,6 +27,8 @@ import se.sundsvall.datawarehousereader.service.InstalledBaseService;
 @ActiveProfiles("junit")
 class InstalledBaseResourceTest {
 
+	private static final String PATH = "/2281/installedbase";
+
 	private static final int DEFAULT_PAGE = 1;
 	private static final int DEFAULT_LIMIT = 100;
 	private static final int PAGE = 6;
@@ -53,7 +55,7 @@ class InstalledBaseResourceTest {
 	void getInstalledBaseAllParams() {
 		when(serviceMock.getInstalledBase(any())).thenReturn(InstalledBaseResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installedbase")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(PAGE, LIMIT, COMPANY, CUSTOMER_NUMBER, TYPE, CARE_OF, STREET, FACILITY_ID, POST_CODE, CITY))
 			.build())
 			.exchange()
@@ -63,7 +65,7 @@ class InstalledBaseResourceTest {
 			.isEqualTo(InstalledBaseResponse.create());
 
 		verify(serviceMock).getInstalledBase(parametersCaptor.capture());
-		InstalledBaseParameters parameters = parametersCaptor.getValue();
+		final InstalledBaseParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getCareOf()).isEqualTo(CARE_OF);
 		assertThat(parameters.getCity()).isEqualTo(CITY);
 		assertThat(parameters.getCompany()).isEqualTo(COMPANY);
@@ -80,7 +82,7 @@ class InstalledBaseResourceTest {
 	void getInstalledBaseDefaultValues() {
 		when(serviceMock.getInstalledBase(any())).thenReturn(InstalledBaseResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path("/installedbase")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(null, null, COMPANY, CUSTOMER_NUMBER, TYPE, CARE_OF, STREET, FACILITY_ID, POST_CODE, CITY))
 			.build())
 			.exchange()
@@ -90,7 +92,7 @@ class InstalledBaseResourceTest {
 			.isEqualTo(InstalledBaseResponse.create());
 
 		verify(serviceMock).getInstalledBase(parametersCaptor.capture());
-		InstalledBaseParameters parameters = parametersCaptor.getValue();
+		final InstalledBaseParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getCareOf()).isEqualTo(CARE_OF);
 		assertThat(parameters.getCity()).isEqualTo(CITY);
 		assertThat(parameters.getCompany()).isEqualTo(COMPANY);
@@ -107,7 +109,7 @@ class InstalledBaseResourceTest {
 	void getInstalledBaseNoParams() {
 		when(serviceMock.getInstalledBase(any())).thenReturn(InstalledBaseResponse.create());
 
-		webTestClient.get().uri("/installedbase")
+		webTestClient.get().uri(PATH)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -115,7 +117,7 @@ class InstalledBaseResourceTest {
 			.isEqualTo(InstalledBaseResponse.create());
 
 		verify(serviceMock).getInstalledBase(parametersCaptor.capture());
-		InstalledBaseParameters parameters = parametersCaptor.getValue();
+		final InstalledBaseParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getCareOf()).isNull();
 		assertThat(parameters.getCity()).isNull();
 		assertThat(parameters.getCompany()).isNull();
@@ -129,7 +131,7 @@ class InstalledBaseResourceTest {
 	}
 
 	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String company, String customerNumber, String type, String careOf, String street, String number, String postCode, String city) {
-		MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+		final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));

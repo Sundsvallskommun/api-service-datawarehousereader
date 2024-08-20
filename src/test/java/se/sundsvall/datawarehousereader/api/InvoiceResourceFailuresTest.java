@@ -21,6 +21,8 @@ import se.sundsvall.datawarehousereader.service.InvoiceService;
 @ActiveProfiles("junit")
 class InvoiceResourceFailuresTest {
 
+	private static final String PATH = "/2281/invoices";
+
 	@MockBean
 	private InvoiceService serviceMock;
 
@@ -29,9 +31,9 @@ class InvoiceResourceFailuresTest {
 
 	@Test
 	void getInvoicesPageLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-				.queryParam("page", 0)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("page", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -50,9 +52,9 @@ class InvoiceResourceFailuresTest {
 
 	@Test
 	void getInvoicesLimitLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-				.queryParam("limit", 0)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("limit", 0)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -71,9 +73,9 @@ class InvoiceResourceFailuresTest {
 
 	@Test
 	void getInvoicesLimitMoreThanMaximum() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-				.queryParam("limit", 1001)
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("limit", 1001)
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -92,10 +94,10 @@ class InvoiceResourceFailuresTest {
 
 	@Test
 	void getInvoicesWithNotNumericValues() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-				.queryParam("invoiceNumber", "not-numeric")
-				.queryParam("ocrNumber", "not-numeric")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("invoiceNumber", "not-numeric")
+			.queryParam("ocrNumber", "not-numeric")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -115,12 +117,12 @@ class InvoiceResourceFailuresTest {
 
 	@Test
 	void getInvoicesWithInvalidDates() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-				.queryParam("invoiceDateFrom", "not-valid-date")
-				.queryParam("invoiceDateTo", "not-valid-date")
-				.queryParam("dueDateFrom", "not-valid-date")
-				.queryParam("dueDateTo", "not-valid-date")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("invoiceDateFrom", "not-valid-date")
+			.queryParam("invoiceDateTo", "not-valid-date")
+			.queryParam("dueDateFrom", "not-valid-date")
+			.queryParam("dueDateTo", "not-valid-date")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -132,19 +134,23 @@ class InvoiceResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("dueDateFrom", "Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'dueDateFrom'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"),
-			tuple("dueDateTo", "Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'dueDateTo'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"),
-			tuple("invoiceDateFrom", "Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'invoiceDateFrom'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"),
-			tuple("invoiceDateTo", "Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'invoiceDateTo'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"));
+			tuple("dueDateFrom",
+				"Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'dueDateFrom'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"),
+			tuple("dueDateTo",
+				"Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'dueDateTo'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"),
+			tuple("invoiceDateFrom",
+				"Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'invoiceDateFrom'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"),
+			tuple("invoiceDateTo",
+				"Failed to convert property value of type 'java.lang.String' to required type 'java.time.LocalDate' for property 'invoiceDateTo'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.media.Schema @org.springframework.format.annotation.DateTimeFormat java.time.LocalDate] for value [not-valid-date]"));
 
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getInvoicesNoValidSortBy() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invoices")
-				.queryParam("sortBy", "not-valid-property")
-				.build())
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
+			.queryParam("sortBy", "not-valid-property")
+			.build())
 			.exchange()
 			.expectStatus().isBadRequest()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
@@ -156,13 +162,14 @@ class InvoiceResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("invoiceParameters", "One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [invoiceName, ocrNumber, invoiceDescription, city, administration, dueDate, organizationId, customerType, street, invoiceNumber, customerId, invoiceType, currency, organizationGroup, facilityId, amountVatIncluded, vat, vatEligibleAmount, rounding, invoiceDate, totalAmount, reversedVat, pdfAvailable, careOf, postCode, invoiceStatus, amountVatExcluded]."));
+			tuple("invoiceParameters",
+				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [invoiceName, ocrNumber, invoiceDescription, city, administration, dueDate, organizationId, customerType, street, invoiceNumber, customerId, invoiceType, currency, organizationGroup, facilityId, amountVatIncluded, vat, vatEligibleAmount, rounding, invoiceDate, totalAmount, reversedVat, pdfAvailable, careOf, postCode, invoiceStatus, amountVatExcluded]."));
 		verifyNoInteractions(serviceMock);
 	}
 
 	@Test
 	void getInvoicesDetailsInvalidOrganizationNumber() {
-		final var response = webTestClient.get().uri("/invoices/{organizationNumber}/{invoiceNumber}/details", "INVALID_ORG_NUMBER", "123")
+		final var response = webTestClient.get().uri(PATH + "/{organizationNumber}/{invoiceNumber}/details", "INVALID_ORG_NUMBER", "123")
 			.exchange()
 			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
 			.expectBody(ConstraintViolationProblem.class)
