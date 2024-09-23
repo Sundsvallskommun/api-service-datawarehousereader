@@ -5,7 +5,7 @@ spring:
   cache:
     type: none
   datasource:
-    connectionProperties: useUnicode=true;characterEncoding=utf-8;
+    connectionProperties: useUnicode=true;characterEncoding=utf-8;encrypt=true;trustServerCertificate=true;
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     hikari:
       maximum-pool-size: 2
