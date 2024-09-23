@@ -5,11 +5,11 @@ spring:
   cache:
     type: none
   datasource:
-    connectionProperties: useUnicode=true;characterEncoding=utf-8;encrypt=true;trustServerCertificate=true;
+    connectionProperties: useUnicode=true;characterEncoding=utf-8;
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     hikari:
       maximum-pool-size: 2
-    url: jdbc:tc:sqlserver:2017-CU12:///
+    url: jdbc:tc:sqlserver:2017-latest:///;encrypt=true;trustServerCertificate=true
   jpa:
     properties:
       hibernate:
