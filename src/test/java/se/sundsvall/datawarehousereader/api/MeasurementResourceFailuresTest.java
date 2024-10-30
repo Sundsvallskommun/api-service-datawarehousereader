@@ -1,13 +1,5 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
-import static org.zalando.problem.Status.BAD_REQUEST;
-
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +9,18 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.util.UriBuilder;
 import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.service.MeasurementService;
+
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
+import static org.zalando.problem.Status.BAD_REQUEST;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
@@ -42,7 +41,7 @@ class MeasurementResourceFailuresTest {
 	@MockBean
 	private MeasurementService serviceMock;
 
-	private UriBuilder setupDefaultParams(UriBuilder uriBuilder) {
+	private UriBuilder setupDefaultParams(final UriBuilder uriBuilder) {
 		uriBuilder.queryParam("partyId", PARTY_ID);
 		uriBuilder.queryParam("facilityId", FACILITY_ID);
 		uriBuilder.queryParam("fromDateTime", "{FROM_DATE_TIME}");
@@ -150,7 +149,7 @@ class MeasurementResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Bad Request");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getDetail()).isEqualTo(
-			"Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]");
+			"Method parameter 'category': Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.Category'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.Category] for value [not-valid-category]");
 
 		verifyNoInteractions(serviceMock);
 	}
@@ -170,7 +169,7 @@ class MeasurementResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Bad Request");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getDetail()).isEqualTo(
-			"Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]");
+			"Method parameter 'aggregateOn': Failed to convert value of type 'java.lang.String' to required type 'se.sundsvall.datawarehousereader.api.model.measurement.Aggregation'; Failed to convert from type [java.lang.String] to type [@io.swagger.v3.oas.annotations.Parameter @org.springframework.web.bind.annotation.PathVariable se.sundsvall.datawarehousereader.api.model.measurement.Aggregation] for value [not-valid-aggregation]");
 
 		verifyNoInteractions(serviceMock);
 	}

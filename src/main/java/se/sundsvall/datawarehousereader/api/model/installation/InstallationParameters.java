@@ -100,11 +100,15 @@ public class InstallationParameters extends AbstractParameterPagingAndSortingBas
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		if (!super.equals(o))
+			return false;
 		InstallationParameters that = (InstallationParameters) o;
-		return Objects.equals(installed, that.installed) && Objects.equals(lastModifiedDateFrom, that.lastModifiedDateFrom) && Objects.equals(lastModifiedDateTo, that.lastModifiedDateTo) && category == that.category && Objects.equals(facilityId, that.facilityId);
+		return Objects.equals(installed, that.installed) && Objects.equals(lastModifiedDateFrom, that.lastModifiedDateFrom) && Objects.equals(lastModifiedDateTo, that.lastModifiedDateTo) && category == that.category && Objects.equals(facilityId,
+			that.facilityId);
 	}
 
 	@Override

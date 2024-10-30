@@ -28,7 +28,9 @@ public interface PartyClient {
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("legalIds")
-	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = { TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE })
+	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = {
+		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
+	})
 	Optional<String> getLegalId(
 		@PathVariable("type") PartyType partyType,
 		@PathVariable("municipalityId") String municipalityId,
@@ -46,7 +48,9 @@ public interface PartyClient {
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("partyIds")
-	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = { TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE })
+	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = {
+		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
+	})
 	Optional<String> getPartyId(
 		@PathVariable("type") PartyType partyType,
 		@PathVariable("municipalityId") String municipalityId,

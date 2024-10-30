@@ -15,7 +15,6 @@ import org.junit.jupiter.api.Test;
 
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
-
 class MeasurementResponseTest {
 
 	@Test

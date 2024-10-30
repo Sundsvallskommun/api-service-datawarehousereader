@@ -279,10 +279,14 @@ public class InstallationEntity {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		InstallationEntity that = (InstallationEntity) o;
-		return Objects.equals(id, that.id) && Objects.equals(internalId, that.internalId) && Objects.equals(customerFlag, that.customerFlag) && Objects.equals(company, that.company) && Objects.equals(type, that.type) && Objects.equals(careOf, that.careOf) && Objects.equals(street, that.street) && Objects.equals(facilityId, that.facilityId) && Objects.equals(postCode, that.postCode) && Objects.equals(city, that.city) && Objects.equals(houseName, that.houseName) && Objects.equals(dateFrom, that.dateFrom) && Objects.equals(dateTo, that.dateTo) && Objects.equals(lastChangedDate, that.lastChangedDate) && Objects.equals(metaData, that.metaData);
+		return Objects.equals(id, that.id) && Objects.equals(internalId, that.internalId) && Objects.equals(customerFlag, that.customerFlag) && Objects.equals(company, that.company) && Objects.equals(type, that.type) && Objects.equals(careOf, that.careOf)
+			&& Objects.equals(street, that.street) && Objects.equals(facilityId, that.facilityId) && Objects.equals(postCode, that.postCode) && Objects.equals(city, that.city) && Objects.equals(houseName, that.houseName) && Objects.equals(dateFrom,
+				that.dateFrom) && Objects.equals(dateTo, that.dateTo) && Objects.equals(lastChangedDate, that.lastChangedDate) && Objects.equals(metaData, that.metaData);
 	}
 
 	@Override

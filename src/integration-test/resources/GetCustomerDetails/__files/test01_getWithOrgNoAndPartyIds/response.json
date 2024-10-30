@@ -1,53 +1,53 @@
 {
-	"customerDetails": [
-		{
-			"customerEngagementOrgId": "5564786647",
-			"customerEngagementOrgName": "Sundsvall Energi AB",
-			"partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d80",
-			"customerNumber": "123455",
-			"customerName": "Test Testorsson",
-			"street": "Testvägen11 c lgh 1005",
-			"postalCode": "85234",
-			"city": "Sundsvall",
-			"careOf": "c/o Testorsson",
-			"phoneNumbers": [
-				"+46761234567",
-				"+46761234567"
-			],
-			"emails": [],
-			"customerCategoryID": 2,
-			"customerCategoryDescription": "Företag2",
-			"customerChangedFlg": false,
-			"installedChangedFlg": true,
-			"active": true
-		},
-		{
-			"customerEngagementOrgId": "5564786647",
-			"customerEngagementOrgName": "Sundsvall Energi AB",
-			"partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d81",
-			"customerNumber": "123456",
-			"customerName": "Test Testorsson",
-			"street": "Testvägen10 c lgh 1005",
-			"postalCode": "85234",
-			"city": "Sundsvall",
-			"careOf": "c/o Testorsson",
-			"phoneNumbers": [
-				"+46761234567",
-				"+46761234567"
-			],
-			"emails": [],
-			"customerCategoryID": 2,
-			"customerCategoryDescription": "Företag",
-			"customerChangedFlg": false,
-			"installedChangedFlg": true,
-			"active": true
-		}
-	],
 	"_meta": {
-		"page": 1,
+		"totalRecords": 2,
 		"limit": 100,
 		"count": 2,
-		"totalRecords": 2,
-		"totalPages": 1
-	}
+		"totalPages": 1,
+		"page": 1
+	},
+	"customerDetails": [
+		{
+			"customerEngagementOrgName": "Sundsvall Energi AB",
+			"installedChangedFlg": true,
+			"city": "Sundsvall",
+			"postalCode": "85234",
+			"active": true,
+			"customerNumber": "123455",
+			"customerCategoryID": 2,
+			"customerChangedFlg": false,
+			"customerEngagementOrgId": "5564786647",
+			"customerName": "Test Testorsson",
+			"phoneNumbers": [
+				"+46761234567",
+				"+46761234567"
+			],
+			"emails": [],
+			"careOf": "c/o Testorsson",
+			"customerCategoryDescription": "Företag2",
+			"street": "Testvägen11 c lgh 1005",
+			"partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d80"
+		},
+		{
+			"customerEngagementOrgName": "Sundsvall Energi AB",
+			"installedChangedFlg": true,
+			"city": "Sundsvall",
+			"postalCode": "85234",
+			"active": true,
+			"customerNumber": "123456",
+			"customerCategoryID": 2,
+			"customerChangedFlg": false,
+			"customerEngagementOrgId": "5564786647",
+			"customerName": "Test Testorsson",
+			"phoneNumbers": [
+				"+46761234567",
+				"+46761234567"
+			],
+			"emails": [],
+			"careOf": "c/o Testorsson",
+			"customerCategoryDescription": "Företag",
+			"street": "Testvägen10 c lgh 1005",
+			"partyId": "9f395f51-b5ed-401b-b700-ef70cbb15d81"
+		}
+	]
 }

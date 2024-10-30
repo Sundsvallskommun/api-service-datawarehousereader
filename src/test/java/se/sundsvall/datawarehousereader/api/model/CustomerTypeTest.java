@@ -41,7 +41,9 @@ class CustomerTypeTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = { "", " ", "	" })
+	@ValueSource(strings = {
+		"", " ", "	"
+	})
 	void testEmptyValues(String value) {
 		assertThat(CustomerType.fromValue(value, null, null)).isNull();
 	}

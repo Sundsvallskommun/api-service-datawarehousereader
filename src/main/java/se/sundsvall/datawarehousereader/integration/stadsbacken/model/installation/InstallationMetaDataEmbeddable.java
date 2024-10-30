@@ -97,8 +97,10 @@ public class InstallationMetaDataEmbeddable implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		InstallationMetaDataEmbeddable that = (InstallationMetaDataEmbeddable) o;
 		return Objects.equals(company, that.company) && Objects.equals(key, that.key) && Objects.equals(value, that.value) && Objects.equals(type, that.type) && Objects.equals(displayName, that.displayName);
 	}

@@ -1,279 +1,277 @@
 {
-	"measurements": [
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.06,
-			"timestamp": "2022-04-11T00:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T01:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.07,
-			"timestamp": "2022-04-11T02:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.01,
-			"timestamp": "2022-04-11T03:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.03,
-			"timestamp": "2022-04-11T04:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.04,
-			"timestamp": "2022-04-11T05:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.04,
-			"timestamp": "2022-04-11T06:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.06,
-			"timestamp": "2022-04-11T07:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.01,
-			"timestamp": "2022-04-11T08:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T09:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.03,
-			"timestamp": "2022-04-11T10:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T11:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T12:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T13:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T14:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.04,
-			"timestamp": "2022-04-11T15:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T16:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.03,
-			"timestamp": "2022-04-11T17:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.02,
-			"timestamp": "2022-04-11T18:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.06,
-			"timestamp": "2022-04-11T19:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.01,
-			"timestamp": "2022-04-11T20:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.03,
-			"timestamp": "2022-04-11T21:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.05,
-			"timestamp": "2022-04-11T22:00:00+02:00",
-			"interpolation": 0
-		},
-		{
-			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
-			"facilityId": "735999109320425015",
-			"category": "ELECTRICITY",
-			"aggregatedOn": "HOUR",
-			"measurementType": "Energy",
-			"unit": "kWh",
-			"value": 0.04,
-			"timestamp": "2022-04-11T23:00:00+02:00",
-			"interpolation": 0
-		}
-	],
 	"_meta": {
-		"page": 1,
+		"totalRecords": 24,
+		"sortDirection": "ASC",
 		"limit": 100,
 		"count": 24,
-		"totalRecords": 24,
 		"totalPages": 1,
-		"sortBy": [
-			"measurementTimestamp"
-		],
-		"sortDirection": "ASC"
-	}
+		"sortBy": ["measurementTimestamp"],
+		"page": 1
+	},
+	"measurements": [
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.06,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T00:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T01:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.07,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T02:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.01,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T03:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.03,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T04:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.04,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T05:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.04,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T06:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.06,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T07:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.01,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T08:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T09:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.03,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T10:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T11:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T12:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T13:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T14:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.04,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T15:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T16:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.03,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T17:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.02,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T18:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.06,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T19:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.01,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T20:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.03,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T21:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.05,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T22:00:00+02:00"
+		},
+		{
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "735999109320425015",
+			"measurementType": "Energy",
+			"partyId": "62743983-9C08-4CB4-A7F6-1DAAE3889733",
+			"category": "ELECTRICITY",
+			"value": 0.04,
+			"aggregatedOn": "HOUR",
+			"timestamp": "2022-04-11T23:00:00+02:00"
+		}
+	]
 }

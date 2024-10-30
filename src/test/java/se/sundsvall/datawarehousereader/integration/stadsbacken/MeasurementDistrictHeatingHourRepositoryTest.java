@@ -35,8 +35,8 @@ class MeasurementDistrictHeatingHourRepositoryTest {
 	void testResponseForMeasurementOfOneHour() {
 		final var customerOrgNbr = "5591561234";
 		final var facilityId = "9115803075";
-		final var dateTimeFrom = LocalDateTime.of(2022, 1, 1, 22, 0, 0)	;
-		final var dateTimeTo = LocalDateTime.of(2022, 1, 1, 22,0,0);
+		final var dateTimeFrom = LocalDateTime.of(2022, 1, 1, 22, 0, 0);
+		final var dateTimeTo = LocalDateTime.of(2022, 1, 1, 22, 0, 0);
 
 		final var page = repository.findAllMatching(customerOrgNbr, facilityId, dateTimeFrom, dateTimeTo, PageRequest.of(0, 100));
 
@@ -78,17 +78,17 @@ class MeasurementDistrictHeatingHourRepositoryTest {
 				MeasurementDistrictHeatingHourEntity::getUsage,
 				MeasurementDistrictHeatingHourEntity::getUuid)
 			.containsExactly(
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,3,0), 161995441, "kWh", toBigDecimal(7913.97), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,4,0), 161995441, "kWh", toBigDecimal(7914.12), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,5,0), 161995441, "kWh", toBigDecimal(7914.25), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,6,0), 161995441, "kWh", toBigDecimal(7914.39), "A0B52C5B-93AC-480B-821D-E238C8F4D952"));
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 3, 0), 161995441, "kWh", toBigDecimal(7913.97), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 4, 0), 161995441, "kWh", toBigDecimal(7914.12), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 5, 0), 161995441, "kWh", toBigDecimal(7914.25), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 6, 0), 161995441, "kWh", toBigDecimal(7914.39), "A0B52C5B-93AC-480B-821D-E238C8F4D952"));
 	}
 
 	@Test
 	void testResponseSortedDescendingOnMeasurementTimestamp() {
 		final var customerOrgNbr = "5591561234";
 		final var facilityId = "9115803075";
-		final var dateTimeFrom = LocalDateTime.of(2022, 1, 2, 3,0);
+		final var dateTimeFrom = LocalDateTime.of(2022, 1, 2, 3, 0);
 		final var dateTimeTo = LocalDateTime.of(2022, 1, 2, 6, 0);
 
 		final var page = repository.findAllMatching(customerOrgNbr, facilityId, dateTimeFrom, dateTimeTo, PageRequest.of(0, 100).withSort(by(DESC, "measurementTimestamp")));
@@ -105,10 +105,10 @@ class MeasurementDistrictHeatingHourRepositoryTest {
 				MeasurementDistrictHeatingHourEntity::getUsage,
 				MeasurementDistrictHeatingHourEntity::getUuid)
 			.containsExactly(
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,6,0), 161995441, "kWh", toBigDecimal(7914.39), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,5,0), 161995441, "kWh", toBigDecimal(7914.25), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,4,0), 161995441, "kWh", toBigDecimal(7914.12), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2,3,0), 161995441, "kWh", toBigDecimal(7913.97), "A0B52C5B-93AC-480B-821D-E238C8F4D952"));
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 6, 0), 161995441, "kWh", toBigDecimal(7914.39), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 5, 0), 161995441, "kWh", toBigDecimal(7914.25), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 4, 0), 161995441, "kWh", toBigDecimal(7914.12), "A0B52C5B-93AC-480B-821D-E238C8F4D952"),
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 2, 3, 0), 161995441, "kWh", toBigDecimal(7913.97), "A0B52C5B-93AC-480B-821D-E238C8F4D952"));
 
 	}
 
@@ -138,7 +138,7 @@ class MeasurementDistrictHeatingHourRepositoryTest {
 				MeasurementDistrictHeatingHourEntity::getUsage,
 				MeasurementDistrictHeatingHourEntity::getUuid)
 			.containsExactly(
-				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 1, 9,0), 147129828, "kWh", toBigDecimal(7911.17), "A0B52C5B-93AC-480B-821D-E238C8F4D952"));
+				tuple(customerOrgNbr, facilityId, "Aktiv", 0, LocalDateTime.of(2022, 1, 1, 9, 0), 147129828, "kWh", toBigDecimal(7911.17), "A0B52C5B-93AC-480B-821D-E238C8F4D952"));
 	}
 
 	@Test

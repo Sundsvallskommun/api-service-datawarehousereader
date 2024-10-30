@@ -42,7 +42,7 @@ public interface InvoiceSpecification {
 	static Specification<InvoiceEntity> withAdministration(String administration) {
 		return BUILDER.buildEqualFilter(ADMINISTRATION, administration);
 	}
-	
+
 	static Specification<InvoiceEntity> withOcrNumber(Long ocrNumber) {
 		return BUILDER.buildEqualFilter(OCR_NUMBER, ocrNumber);
 	}
@@ -54,7 +54,7 @@ public interface InvoiceSpecification {
 	static Specification<InvoiceEntity> withInvoiceName(String invoiceName) {
 		return BUILDER.buildEqualFilter(INVOICE_NAME, invoiceName);
 	}
-	
+
 	static Specification<InvoiceEntity> withInvoiceNumber(Long invoiceNumber) {
 		return BUILDER.buildEqualFilter(INVOICE_NUMBER, invoiceNumber);
 	}
