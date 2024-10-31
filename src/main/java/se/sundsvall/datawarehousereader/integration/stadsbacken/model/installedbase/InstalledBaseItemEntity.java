@@ -297,7 +297,7 @@ public class InstalledBaseItemEntity {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("InstalledBaseItemEntity [id=").append(id).append(", internalId=").append(internalId).append(", customerId=").append(customerId).append(", company=").append(company).append(", type=").append(type).append(", careOf=").append(
-				careOf).append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom)
+			careOf).append(", street=").append(street).append(", facilityId=").append(facilityId).append(", postCode=").append(postCode).append(", city=").append(city).append(", houseName=").append(houseName).append(", dateFrom=").append(dateFrom)
 			.append(", dateTo=").append(dateTo).append(", lastChangedDate=").append(lastChangedDate).append(", metaData=").append(metaData).append("]");
 		return builder.toString();
 	}

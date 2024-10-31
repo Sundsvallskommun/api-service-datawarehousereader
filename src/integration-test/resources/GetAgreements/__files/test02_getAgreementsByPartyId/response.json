@@ -1,24 +1,22 @@
 {
-	"agreements": [
-		{
-			"partyId": "336EC35A-3335-4FA3-B792-60061222B0E9",
-			"customerNumber": "632096",
-			"facilityId": "2455",
-			"category": "DISTRICT_HEATING",
-			"billingId": "2045420",
-			"agreementId": "40798",
-			"description": "Fastpris 2 år",
-			"mainAgreement": true,
-			"binding": false,
-			"fromDate": "2016-10-04",
-			"active": true
-		}
-	],
+	"agreements": [{
+		"fromDate": "2016-10-04",
+		"mainAgreement": true,
+		"facilityId": "2455",
+		"billingId": "2045420",
+		"agreementId": "40798",
+		"description": "Fastpris 2 år",
+		"binding": false,
+		"active": true,
+		"partyId": "336EC35A-3335-4FA3-B792-60061222B0E9",
+		"customerNumber": "632096",
+		"category": "DISTRICT_HEATING"
+	}],
 	"_meta": {
-		"page": 1,
+		"totalRecords": 1,
 		"limit": 100,
 		"count": 1,
-		"totalRecords": 1,
-		"totalPages": 1
+		"totalPages": 1,
+		"page": 1
 	}
 }

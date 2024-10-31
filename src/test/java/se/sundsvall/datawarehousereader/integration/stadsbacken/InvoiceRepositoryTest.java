@@ -240,35 +240,35 @@ class InvoiceRepositoryTest {
 		assertThat(page.getTotalPages()).isEqualTo(1);
 		assertThat(page.getTotalElements()).isEqualTo(6);
 		assertThat(page.getContent())
-				.hasSize(6)
-				.extracting(
-						InvoiceEntity::getAdministration,
-						InvoiceEntity::getOrganizationId,
-						InvoiceEntity::getAmountVatExcluded,
-						InvoiceEntity::getAmountVatIncluded,
-						InvoiceEntity::getCareOf,
-						InvoiceEntity::getCity,
-						InvoiceEntity::getCurrency,
-						InvoiceEntity::getCustomerId,
-						InvoiceEntity::getCustomerType,
-						InvoiceEntity::getDueDate,
-						InvoiceEntity::getFacilityId,
-						InvoiceEntity::getInvoiceDate,
-						InvoiceEntity::getInvoiceDescription,
-						InvoiceEntity::getInvoiceName)
-				.containsExactlyInAnyOrder(
+			.hasSize(6)
+			.extracting(
+				InvoiceEntity::getAdministration,
+				InvoiceEntity::getOrganizationId,
+				InvoiceEntity::getAmountVatExcluded,
+				InvoiceEntity::getAmountVatIncluded,
+				InvoiceEntity::getCareOf,
+				InvoiceEntity::getCity,
+				InvoiceEntity::getCurrency,
+				InvoiceEntity::getCustomerId,
+				InvoiceEntity::getCustomerType,
+				InvoiceEntity::getDueDate,
+				InvoiceEntity::getFacilityId,
+				InvoiceEntity::getInvoiceDate,
+				InvoiceEntity::getInvoiceDescription,
+				InvoiceEntity::getInvoiceName)
+			.containsExactlyInAnyOrder(
 				tuple("Sundsvall Energi AB", "5564786647", toBigDecimal(2652.40), toBigDecimal(3315.50), "Statlig instutition", "SUNDSVALL", "sek", 600675, "Enterprise", LocalDate.of(2019, 11, 8), "735999109111805057", LocalDate.of(2019, 10, 9),
-								"Fjärrvärme", "138042593.pdf"),
+					"Fjärrvärme", "138042593.pdf"),
 				tuple("Sundsvall Elnät", "5565027223", toBigDecimal(1085.8900), toBigDecimal(1357.3600), "Fräscha fastigheter AB", "FRÖSÖN", "sek", 600606, "Enterprise", LocalDate.of(2019, 10, 29), "735999109261218707", LocalDate.of(2019, 10, 9),
-								"El", "137968194.pdf"),
+					"El", "137968194.pdf"),
 				tuple("Sundsvall Elnät", "5565027223", toBigDecimal(38904.8100), toBigDecimal(48631.0100), "Fräscha fastigheter AB", "FRÖSÖN", "sek", 600606, "Enterprise", LocalDate.of(2019, 10, 29), "735999109140205897", LocalDate.of(2019, 10, 9),
-								"El", "137968293.pdf"),
+					"El", "137968293.pdf"),
 				tuple("Sundsvall Elnät", "5565027223", toBigDecimal(9647.9900), toBigDecimal(12059.9900), "Fräscha fastigheter AB", "FRÖSÖN", "sek", 600606, "Enterprise", LocalDate.of(2019, 10, 29), "735999109144630886", LocalDate.of(2019, 10, 9),
-								"El", "137968392.pdf"),
+					"El", "137968392.pdf"),
 				tuple("Sundsvall Elnät", "5565027223", toBigDecimal(1520.0000), toBigDecimal(1900.0000), "Fräscha fastigheter AB", "FRÖSÖN", "sek", 600606, "Enterprise", LocalDate.of(2019, 11, 1), "600606", LocalDate.of(2019, 10, 2),
-								"El", "765386099.pdf"),
+					"El", "765386099.pdf"),
 				tuple("Sundsvall Elnät", "5565027223", toBigDecimal(-1520.0000), toBigDecimal(-1900.0000), "Fräscha fastigheter AB", "FRÖSÖN", "sek", 600606, "Enterprise", LocalDate.of(2019, 10, 31), "600606", LocalDate.of(2019, 10, 14),
-								"El", "767916190.pdf"));
+					"El", "767916190.pdf"));
 	}
 
 	@Test
@@ -370,27 +370,27 @@ class InvoiceRepositoryTest {
 		assertThat(page.getTotalPages()).isEqualTo(1);
 		assertThat(page.getTotalElements()).isEqualTo(2);
 		assertThat(page.getContent())
-				.hasSize(2)
-				.extracting(
-						InvoiceEntity::getAdministration,
-						InvoiceEntity::getOrganizationId,
-						InvoiceEntity::getAmountVatExcluded,
-						InvoiceEntity::getAmountVatIncluded,
-						InvoiceEntity::getCareOf,
-						InvoiceEntity::getCity,
-						InvoiceEntity::getCurrency,
-						InvoiceEntity::getCustomerId,
-						InvoiceEntity::getCustomerType,
-						InvoiceEntity::getDueDate,
-						InvoiceEntity::getFacilityId,
-						InvoiceEntity::getInvoiceDate,
-						InvoiceEntity::getInvoiceDescription,
-						InvoiceEntity::getInvoiceName)
-				.containsExactlyInAnyOrder(
+			.hasSize(2)
+			.extracting(
+				InvoiceEntity::getAdministration,
+				InvoiceEntity::getOrganizationId,
+				InvoiceEntity::getAmountVatExcluded,
+				InvoiceEntity::getAmountVatIncluded,
+				InvoiceEntity::getCareOf,
+				InvoiceEntity::getCity,
+				InvoiceEntity::getCurrency,
+				InvoiceEntity::getCustomerId,
+				InvoiceEntity::getCustomerType,
+				InvoiceEntity::getDueDate,
+				InvoiceEntity::getFacilityId,
+				InvoiceEntity::getInvoiceDate,
+				InvoiceEntity::getInvoiceDescription,
+				InvoiceEntity::getInvoiceName)
+			.containsExactlyInAnyOrder(
 				tuple("Sundsvall Energi AB", "5564786647", toBigDecimal(1306.98), toBigDecimal(1633.73), "Fastighetsförmedling AB", "SUNDSVALL", "sek", 10335, "Enterprise", LocalDate.of(2019, 11, 8), "735999109324119255", LocalDate.of(2019, 10, 9),
-								"Fjärrvärme", "138023999.pdf"),
+					"Fjärrvärme", "138023999.pdf"),
 				tuple("Sundsvall Elnät", "5565027223", toBigDecimal(1058.2500), toBigDecimal(1322.8100), "Fastighetsförmedling AB", "SUNDSVALL", "sek", 10335, "Enterprise", LocalDate.of(2019, 11, 11), "735999109451436027", LocalDate.of(2019, 10, 10),
-								"El", "139349898.pdf"));
+					"El", "139349898.pdf"));
 	}
 
 	private static InvoiceParameters createParameters(String adminstration, List<String> customerNumber, LocalDate dueDateFrom, LocalDate dueDateTo, Long invoiceNumber, Long ocrNumber, List<String> facilityId) {

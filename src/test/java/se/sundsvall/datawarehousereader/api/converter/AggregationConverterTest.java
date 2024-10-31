@@ -33,7 +33,9 @@ class AggregationConverterTest {
 	}
 
 	@ParameterizedTest
-	@ValueSource(strings = { "", " " })
+	@ValueSource(strings = {
+		"", " "
+	})
 	void testEmptyValues(String category) {
 		assertThat(CONVERTER.convert(category)).isNull();
 	}

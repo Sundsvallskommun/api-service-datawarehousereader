@@ -1,10 +1,10 @@
 {
 	"agreements": [],
 	"_meta": {
-		"page": 2,
+		"totalRecords": 1,
 		"limit": 100,
 		"count": 0,
-		"totalRecords": 1,
-		"totalPages": 1
+		"totalPages": 1,
+		"page": 2
 	}
 }

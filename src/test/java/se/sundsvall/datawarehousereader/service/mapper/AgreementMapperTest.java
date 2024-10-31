@@ -36,7 +36,7 @@ class AgreementMapperTest {
 
 	@Test
 	void toAgreementsWithNull() {
-		assertThat( toAgreements(null)).isEmpty();
+		assertThat(toAgreements(null)).isEmpty();
 	}
 
 	@Test
@@ -112,7 +112,7 @@ class AgreementMapperTest {
 				Agreement::getToDate,
 				Agreement::getActive)
 			.containsExactly(tuple(
-					fromDate,
+				fromDate,
 				null,
 				true));
 	}

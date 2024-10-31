@@ -1,19 +1,17 @@
 {
-	"name": "api-party-private-legalId-notfound-1",
 	"request": {
+		"headers": {"Authorization": {"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"}},
 		"method": "GET",
-		"urlPath": "/api-party/2281/PRIVATE/318b7ec8-aab8-41e2-82f5-796bdd5cebf2/legalId",
-		"headers": {
-			"Authorization": {
-				"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"
-			}
-		}
+		"urlPath": "/api-party/2281/PRIVATE/318b7ec8-aab8-41e2-82f5-796bdd5cebf2/legalId"
 	},
 	"response": {
-		"headers": {
-			"Content-Type": "text/plain"
+		"headers": {"Content-Type": "text/plain"},
+		"jsonBody": {
+			"detail": "citizenmapping error: {status=404 Not Found, title=Not Found}",
+			"title": "Not Found",
+			"status": 404
 		},
-		"status": 404,
-		"jsonBody": {"title":"Not Found","status":404,"detail":"citizenmapping error: {status=404 Not Found, title=Not Found}"}
-	}
+		"status": 404
+	},
+	"name": "api-party-private-legalId-notfound-1"
 }

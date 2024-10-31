@@ -94,7 +94,9 @@ class ElectricityMeasurementProviderTest {
 	private ElectricityMeasurementProvider provider;
 
 	@ParameterizedTest
-	@EnumSource(value = Aggregation.class, names = { "YEAR" }, mode = EnumSource.Mode.EXCLUDE)
+	@EnumSource(value = Aggregation.class, names = {
+		"YEAR"
+	}, mode = EnumSource.Mode.EXCLUDE)
 	void testWithEmptyParameters(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
 
@@ -167,7 +169,9 @@ class ElectricityMeasurementProviderTest {
 	}
 
 	@ParameterizedTest
-	@EnumSource(value = Aggregation.class, names = { "YEAR" }, mode = EnumSource.Mode.EXCLUDE)
+	@EnumSource(value = Aggregation.class, names = {
+		"YEAR"
+	}, mode = EnumSource.Mode.EXCLUDE)
 	void testWithAllParametersSet(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
 		final var legalId = "legalId";
@@ -248,7 +252,9 @@ class ElectricityMeasurementProviderTest {
 	}
 
 	@ParameterizedTest
-	@EnumSource(value = Aggregation.class, names = { "YEAR" }, mode = EnumSource.Mode.EXCLUDE)
+	@EnumSource(value = Aggregation.class, names = {
+		"YEAR"
+	}, mode = EnumSource.Mode.EXCLUDE)
 	void testForPageLargerThanResultsMaxPage(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
 		searchParams.setPage(101);

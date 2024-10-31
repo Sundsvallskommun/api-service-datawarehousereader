@@ -1,44 +1,40 @@
 {
-	"invoices": [
-		{
-			"customerNumber": "691071",
-			"customerType": "Private",
-			"facilityId": "735999226000059909",
-			"invoiceNumber": 766763197,
-			"invoiceDate": "2019-10-08",
-			"invoiceName": "766763197.pdf",
-			"invoiceType": "Faktura",
-			"invoiceDescription": "Fjärrkyla",
-			"invoiceStatus": "Skickad",
-			"ocrNumber": 766763197,
-			"dueDate": "2019-10-30",
-			"totalAmount": 344.0,
-			"amountVatIncluded": 343.7,
-			"amountVatExcluded": 274.96,
-			"vatEligibleAmount": 274.96,
-			"rounding": 0.3,
-			"vat": 274.96,
-			"reversedVat": false,
-			"currency": "sek",
-			"organizationGroup": "stadsbacken",
-			"organizationNumber": "5564786647",
-			"administration": "Sundsvall Energi AB",
-			"street": "Flugeby Hammersdal",
-			"postCode": "50199",
-			"city": "Vetlanda",
-			"careOf": "Pettson Findus",
-			"pdfAvailable": false
-		}
-	],
+	"invoices": [{
+		"invoiceName": "766763197.pdf",
+		"ocrNumber": 766763197,
+		"invoiceDescription": "Fjärrkyla",
+		"city": "Vetlanda",
+		"administration": "Sundsvall Energi AB",
+		"dueDate": "2019-10-30",
+		"customerType": "Private",
+		"street": "Flugeby Hammersdal",
+		"invoiceNumber": 766763197,
+		"invoiceType": "Faktura",
+		"currency": "sek",
+		"organizationGroup": "stadsbacken",
+		"facilityId": "735999226000059909",
+		"organizationNumber": "5564786647",
+		"amountVatIncluded": 343.7,
+		"vat": 274.96,
+		"vatEligibleAmount": 274.96,
+		"rounding": 0.3,
+		"customerNumber": "691071",
+		"invoiceDate": "2019-10-08",
+		"totalAmount": 344,
+		"reversedVat": false,
+		"pdfAvailable": false,
+		"careOf": "Pettson Findus",
+		"postCode": "50199",
+		"invoiceStatus": "Skickad",
+		"amountVatExcluded": 274.96
+	}],
 	"_meta": {
-		"page": 1,
-		"limit": 100,
-		"count": 1,
-		"sortBy": [
-			"invoiceDate"
-		],
 		"sortDirection": "ASC",
 		"totalRecords": 1,
-		"totalPages": 1
+		"limit": 100,
+		"count": 1,
+		"totalPages": 1,
+		"sortBy": ["invoiceDate"],
+		"page": 1
 	}
 }

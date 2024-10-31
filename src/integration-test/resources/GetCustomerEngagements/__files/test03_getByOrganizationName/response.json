@@ -1,55 +1,53 @@
 {
 	"customerEngagements": [
 		{
-			"partyId": "10e69eb7-3cb4-442f-8cdb-2e998080dbb1",
 			"customerType": "Private",
-			"customerNumber": "691071",
-			"organizationNumber": "5564786647",
 			"organizationName": "Sundsvall Energi AB",
-			"active": true
+			"organizationNumber": "5564786647",
+			"active": true,
+			"partyId": "10e69eb7-3cb4-442f-8cdb-2e998080dbb1",
+			"customerNumber": "691071"
 		},
 		{
+			"customerType": "Enterprise",
+			"organizationName": "Sundsvall Energi AB",
+			"organizationNumber": "5564786647",
+			"active": true,
 			"partyId": "992d7740-6d87-473b-85b5-42b414cb4742",
-			"customerType": "Enterprise",
-			"customerNumber": "600675",
-			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB",
-			"active": true
+			"customerNumber": "600675"
 		},
 		{
+			"customerType": "Enterprise",
+			"organizationName": "Sundsvall Energi AB",
+			"organizationNumber": "5564786647",
+			"active": true,
 			"partyId": "1aeb8dfe-f4d3-4f25-a143-82608af27a14",
-			"customerType": "Enterprise",
-			"customerNumber": "600606",
-			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB",
-			"active": true
+			"customerNumber": "600606"
 		},
 		{
+			"customerType": "Enterprise",
+			"organizationName": "Sundsvall Energi AB",
+			"organizationNumber": "5564786647",
+			"active": true,
 			"partyId": "5ff79977-a61f-4ca8-96d7-03a46d2ab7dd",
-			"customerType": "Enterprise",
-			"customerNumber": "38308",
-			"organizationNumber": "5564786647",
-			"organizationName": "Sundsvall Energi AB",
-			"active": true
+			"customerNumber": "38308"
 		},
 		{
-			"partyId": "318b7ec8-aab8-41e2-82f5-796bdd5cebf2",
 			"customerType": "Enterprise",
-			"customerNumber": "10335",
-			"organizationNumber": "5564786647",
 			"organizationName": "Sundsvall Energi AB",
-			"active": true
+			"organizationNumber": "5564786647",
+			"active": true,
+			"partyId": "318b7ec8-aab8-41e2-82f5-796bdd5cebf2",
+			"customerNumber": "10335"
 		}
 	],
 	"_meta": {
-		"page": 1,
+		"totalRecords": 5,
+		"sortDirection": "ASC",
 		"limit": 100,
 		"count": 5,
-		"totalRecords": 5,
 		"totalPages": 1,
-		"sortBy": [
-			"customerOrgId"
-		],
-		"sortDirection": "ASC"
+		"sortBy": ["customerOrgId"],
+		"page": 1
 	}
 }

@@ -40,7 +40,7 @@ public interface InstalledBaseSpecification {
 	static Specification<InstalledBaseItemEntity> withFacilityId(String facilityId) {
 		return BUILDER.buildEqualFilter(FACILITY_ID, facilityId);
 	}
-	
+
 	static Specification<InstalledBaseItemEntity> withPostCode(String postCode) {
 		return BUILDER.buildEqualFilter(POST_CODE, postCode);
 	}

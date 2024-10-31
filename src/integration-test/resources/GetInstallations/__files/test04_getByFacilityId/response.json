@@ -1,32 +1,28 @@
 {
-  "installationDetails": [
-    {
-      "company": "Sundsvall Elnät",
-      "type": "Fjärrvärme",
-      "facilityId": "223456789123456789",
-      "placementId": 32365,
-      "careOf": "Ditthus AB",
-      "street": "Testvägen 18",
-      "postCode": "12345",
-      "city": "TESTVALL",
-      "dateFrom": "2024-01-01",
-      "dateTo": "2024-01-01",
-      "dateLastModified": "2024-01-01",
-      "metaData": [
-        {
-          "key": "netarea",
-          "value": "Sundsvall",
-          "type": "location",
-          "displayName": "Nätområde"
-        }
-      ]
-    }
-  ],
-  "_meta": {
-    "page": 1,
-    "limit": 100,
-    "count": 1,
-    "totalRecords": 1,
-    "totalPages": 1
-  }
+	"_meta": {
+		"totalRecords": 1,
+		"limit": 100,
+		"count": 1,
+		"totalPages": 1,
+		"page": 1
+	},
+	"installationDetails": [{
+		"metaData": [{
+			"displayName": "Nätområde",
+			"type": "location",
+			"value": "Sundsvall",
+			"key": "netarea"
+		}],
+		"facilityId": "223456789123456789",
+		"dateLastModified": "2024-01-01",
+		"placementId": 32365,
+		"careOf": "Ditthus AB",
+		"city": "TESTVALL",
+		"street": "Testvägen 18",
+		"dateTo": "2024-01-01",
+		"company": "Sundsvall Elnät",
+		"postCode": "12345",
+		"type": "Fjärrvärme",
+		"dateFrom": "2024-01-01"
+	}]
 }

@@ -49,7 +49,7 @@ class MeasurementDistrictHeatingHourEntityTest {
 		final var readingDetailId = Long.valueOf(1234567890);
 
 		final var entity = MeasurementDistrictHeatingHourEntity.create()
-			 .withReadingDetailId(readingDetailId)
+			.withReadingDetailId(readingDetailId)
 			.withCustomerOrgId(customerOrgId)
 			.withFacilityId(facilityId)
 			.withFeedType(feedType)

@@ -24,9 +24,9 @@ public interface InstallationRepository extends PagingAndSortingRepository<Insta
 
 	default Page<InstallationEntity> findAllByParameters(final InstallationParameters parameters, final Pageable pageable) {
 		return findAll(withCustomerFlag(parameters.getInstalled())
-				.and(withLastModifiedDateBetween(parameters.getLastModifiedDateFrom(), parameters.getLastModifiedDateTo()))
-				.and(withType(ofNullable(parameters.getCategory()).map(Category::toStadsbackenValue).orElse(null)))
-				.and(withFacilityId(parameters.getFacilityId())),
+			.and(withLastModifiedDateBetween(parameters.getLastModifiedDateFrom(), parameters.getLastModifiedDateTo()))
+			.and(withType(ofNullable(parameters.getCategory()).map(Category::toStadsbackenValue).orElse(null)))
+			.and(withFacilityId(parameters.getFacilityId())),
 			pageable);
 	}
 }

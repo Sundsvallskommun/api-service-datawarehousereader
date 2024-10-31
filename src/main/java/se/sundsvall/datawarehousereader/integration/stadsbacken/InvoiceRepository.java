@@ -30,18 +30,9 @@ import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toIntege
 public interface InvoiceRepository extends PagingAndSortingRepository<InvoiceEntity, Integer>, JpaSpecificationExecutor<InvoiceEntity> {
 
 	default Page<InvoiceEntity> findAllByParameters(InvoiceParameters parameters, Pageable pageable) {
-		return this.findAll(withAdministration(parameters.getAdministration()).
-			and(withCustomerIds(toIntegers(parameters.getCustomerNumber())).
-			and(withCustomerType(parameters.getCustomerType())).
-			and(withDueDate(parameters.getDueDateFrom(), parameters.getDueDateTo())).
-			and(withFacilityIds(parameters.getFacilityId()))).
-			and(withInvoiceDate(parameters.getInvoiceDateFrom(), parameters.getInvoiceDateTo())).
-			and(withInvoiceName(parameters.getInvoiceName())).
-			and(withInvoiceNumber(parameters.getInvoiceNumber())).
-			and(withInvoiceStatus(parameters.getInvoiceStatus())).
-			and(withInvoiceType(parameters.getInvoiceType())).
-			and(withOcrNumber(parameters.getOcrNumber())).
-			and(withOrganizationGroup(parameters.getOrganizationGroup())).
-			and(withOrganizationId(parameters.getOrganizationNumber())), pageable);
+		return this.findAll(withAdministration(parameters.getAdministration()).and(withCustomerIds(toIntegers(parameters.getCustomerNumber())).and(withCustomerType(parameters.getCustomerType())).and(withDueDate(parameters.getDueDateFrom(), parameters
+			.getDueDateTo())).and(withFacilityIds(parameters.getFacilityId()))).and(withInvoiceDate(parameters.getInvoiceDateFrom(), parameters.getInvoiceDateTo())).and(withInvoiceName(parameters.getInvoiceName())).and(withInvoiceNumber(parameters
+				.getInvoiceNumber())).and(withInvoiceStatus(parameters.getInvoiceStatus())).and(withInvoiceType(parameters.getInvoiceType())).and(withOcrNumber(parameters.getOcrNumber())).and(withOrganizationGroup(parameters.getOrganizationGroup())).and(
+					withOrganizationId(parameters.getOrganizationNumber())), pageable);
 	}
 }

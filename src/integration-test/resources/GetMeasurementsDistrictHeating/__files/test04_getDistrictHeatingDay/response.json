@@ -1,66 +1,58 @@
 {
-	"measurements": [
-		{
-			"partyId": "A0B52C5B-93AC-480B-821D-E238C8F4D95",
-			"facilityId": "9261219043",
-			"category": "DISTRICT_HEATING",
-			"aggregatedOn": "DAY",
-			"measurementType": "energy",
-			"unit": "kWh",
-			"value": 1393.0,
-			"timestamp": "2022-03-23T00:00:00+01:00",
-			"metaData": [
-				{
-					"key": "readingSequence",
-					"value": "158221639"
-				}
-			],
-			"interpolation": 0
-		},
-		{
-			"partyId": "A0B52C5B-93AC-480B-821D-E238C8F4D95",
-			"facilityId": "9261219043",
-			"category": "DISTRICT_HEATING",
-			"aggregatedOn": "DAY",
-			"measurementType": "energy",
-			"unit": "kWh",
-			"value": 1403.0,
-			"timestamp": "2022-03-24T00:00:00+01:00",
-			"metaData": [
-				{
-					"key": "readingSequence",
-					"value": "149689424"
-				}
-			],
-			"interpolation": 0
-		},
-		{
-			"partyId": "A0B52C5B-93AC-480B-821D-E238C8F4D95",
-			"facilityId": "9261219043",
-			"category": "DISTRICT_HEATING",
-			"aggregatedOn": "DAY",
-			"measurementType": "energy",
-			"unit": "kWh",
-			"value": 1567.0,
-			"timestamp": "2022-03-25T00:00:00+01:00",
-			"metaData": [
-				{
-					"key": "readingSequence",
-					"value": "148483730"
-				}
-			],
-			"interpolation": 0
-		}
-	],
 	"_meta": {
-		"page": 1,
+		"totalRecords": 3,
+		"sortDirection": "ASC",
 		"limit": 100,
 		"count": 3,
-		"totalRecords": 3,
 		"totalPages": 1,
-		"sortBy": [
-			"measurementTimestamp"
-		],
-		"sortDirection": "ASC"
-	}
+		"sortBy": ["measurementTimestamp"],
+		"page": 1
+	},
+	"measurements": [
+		{
+			"metaData": [{
+				"value": "158221639",
+				"key": "readingSequence"
+			}],
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "9261219043",
+			"measurementType": "energy",
+			"partyId": "A0B52C5B-93AC-480B-821D-E238C8F4D95",
+			"category": "DISTRICT_HEATING",
+			"value": 1393,
+			"aggregatedOn": "DAY",
+			"timestamp": "2022-03-23T00:00:00+01:00"
+		},
+		{
+			"metaData": [{
+				"value": "149689424",
+				"key": "readingSequence"
+			}],
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "9261219043",
+			"measurementType": "energy",
+			"partyId": "A0B52C5B-93AC-480B-821D-E238C8F4D95",
+			"category": "DISTRICT_HEATING",
+			"value": 1403,
+			"aggregatedOn": "DAY",
+			"timestamp": "2022-03-24T00:00:00+01:00"
+		},
+		{
+			"metaData": [{
+				"value": "148483730",
+				"key": "readingSequence"
+			}],
+			"unit": "kWh",
+			"interpolation": 0,
+			"facilityId": "9261219043",
+			"measurementType": "energy",
+			"partyId": "A0B52C5B-93AC-480B-821D-E238C8F4D95",
+			"category": "DISTRICT_HEATING",
+			"value": 1567,
+			"aggregatedOn": "DAY",
+			"timestamp": "2022-03-25T00:00:00+01:00"
+		}
+	]
 }

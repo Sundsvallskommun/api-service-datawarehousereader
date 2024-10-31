@@ -20,11 +20,11 @@ public interface CustomerDetailRepository extends PagingAndSortingRepository<Cus
 	/**
 	 * Method for returning all customer engagements connected to sent in organization id
 	 *
-	 * @param dateTimeFrom   from date to filter on
-	 * @param organizationId organization id to filter on
-	 * @param uuids          comma separated list of uuids to filter on
-	 * @param pageable       object containing paging information for request
-	 * @return page of customer details matching sent in parameters
+	 * @param  dateTimeFrom   from date to filter on
+	 * @param  organizationId organization id to filter on
+	 * @param  uuids          comma separated list of uuids to filter on
+	 * @param  pageable       object containing paging information for request
+	 * @return                page of customer details matching sent in parameters
 	 */
 	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail(:fromDate, :organizationId, :uuids)")
 	Page<CustomerDetailEntity> findWithCustomerEngagementOrgIdAndPartyIds(
@@ -33,10 +33,10 @@ public interface CustomerDetailRepository extends PagingAndSortingRepository<Cus
 	/**
 	 * Method for returning all customer engagements connected to sent in organization id
 	 *
-	 * @param dateTimeFrom   from date to filter on
-	 * @param organizationId organization id to filter on
-	 * @param pageable       object containing paging information for request
-	 * @return page of customer details matching sent in parameters
+	 * @param  dateTimeFrom   from date to filter on
+	 * @param  organizationId organization id to filter on
+	 * @param  pageable       object containing paging information for request
+	 * @return                page of customer details matching sent in parameters
 	 */
 	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail(:fromDate, :organizationId, null)")
 	Page<CustomerDetailEntity> findWithCustomerEngagementOrgId(

@@ -53,8 +53,10 @@ public class InstallationDetailsResponse {
 
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		InstallationDetailsResponse that = (InstallationDetailsResponse) o;
 		return Objects.equals(metaData, that.metaData) && Objects.equals(installationDetails, that.installationDetails);
 	}

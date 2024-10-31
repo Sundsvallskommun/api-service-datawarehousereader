@@ -32,7 +32,6 @@ class InstallationMapperTest {
 		.withType("type")
 		.withMetaData(List.of(InstallationMetaDataEmbeddable.create().withValue("value").withKey("key").withDisplayName("displayName").withCompany("company").withType("type")));
 
-
 	@Test
 	void toInstallationDetailsWithNull() {
 		assertThat(toInstallationDetails(null)).isNull();
@@ -77,6 +76,5 @@ class InstallationMapperTest {
 			.containsExactlyInAnyOrder(
 				tuple("displayName", "key", "value", "type"));
 	}
-
 
 }
