@@ -12,8 +12,8 @@ import static org.mockito.quality.Strictness.LENIENT;
 import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 import static org.zalando.problem.Status.NOT_FOUND;
 
+import generated.se.sundsvall.party.PartyType;
 import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,8 +24,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ThrowableProblem;
-
-import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.integration.party.PartyClient;
 
 @ExtendWith(MockitoExtension.class)

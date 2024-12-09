@@ -6,17 +6,15 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withLastModifiedDateBetween;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withType;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "installationRepository")

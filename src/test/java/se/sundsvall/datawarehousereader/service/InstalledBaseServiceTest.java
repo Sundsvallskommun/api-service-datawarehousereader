@@ -8,7 +8,6 @@ import static org.springframework.data.domain.Sort.unsorted;
 import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -19,7 +18,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstalledBaseRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;

@@ -6,9 +6,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.ins
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity_.TYPE;
 
 import java.time.LocalDate;
-
 import org.springframework.data.jpa.domain.Specification;
-
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 
 public interface InstallationSpecification {

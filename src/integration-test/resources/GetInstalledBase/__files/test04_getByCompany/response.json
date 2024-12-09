@@ -1,12 +1,14 @@
 {
 	"installedBase": [
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Medelpad Lokal",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Medelpad Lokal",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144515039",
 			"dateLastModified": "2017-12-01",
 			"placementId": -41159,
@@ -20,12 +22,14 @@
 			"dateFrom": "2017-08-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109232306327",
 			"dateLastModified": "2017-12-01",
 			"placementId": -38413,
@@ -37,12 +41,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109324902055",
 			"dateLastModified": "2017-12-03",
 			"placementId": -38186,
@@ -56,12 +62,14 @@
 			"dateFrom": "2008-02-13"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144502091",
 			"dateLastModified": "2017-12-04",
 			"placementId": -38126,
@@ -73,12 +81,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144515107",
 			"dateLastModified": "2017-12-05",
 			"placementId": -37817,
@@ -92,12 +102,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144517538",
 			"dateLastModified": "2017-12-06",
 			"placementId": -37402,
@@ -109,12 +121,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109122811214",
 			"dateLastModified": "2017-12-07",
 			"placementId": -36920,
@@ -126,12 +140,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109140702235",
 			"dateLastModified": "2017-12-07",
 			"placementId": -36827,
@@ -143,12 +159,14 @@
 			"dateFrom": "2005-10-13"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109141108111",
 			"dateLastModified": "2017-12-08",
 			"placementId": -36437,
@@ -162,12 +180,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109141106155",
 			"dateLastModified": "2017-12-08",
 			"placementId": -36019,
@@ -181,12 +201,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109114706085",
 			"placementId": -34515,
 			"careOf": "Fastighetsförmedling AB",
@@ -199,12 +221,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109231807177",
 			"placementId": -34473,
 			"careOf": "Fastighetsförmedling AB",
@@ -217,12 +241,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144512212",
 			"placementId": -34083,
 			"careOf": "Fastighetsförmedling AB",
@@ -235,12 +261,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109197501485",
 			"placementId": -33087,
 			"careOf": "Fastighetsförmedling AB",
@@ -251,12 +279,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144609882",
 			"placementId": -32702,
 			"careOf": "Fastighetsförmedling AB",
@@ -269,12 +299,14 @@
 			"dateFrom": "2008-02-13"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144509472",
 			"placementId": -32679,
 			"careOf": "Fastighetsförmedling AB",
@@ -286,12 +318,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144517408",
 			"placementId": -32445,
 			"careOf": "Fastighetsförmedling AB",
@@ -302,12 +336,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109141107459",
 			"placementId": -32132,
 			"careOf": "Fastighetsförmedling AB",
@@ -318,12 +354,14 @@
 			"dateFrom": "2017-08-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109232301315",
 			"placementId": -31188,
 			"careOf": "Fastighetsförmedling AB",
@@ -334,12 +372,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144512236",
 			"placementId": -30966,
 			"careOf": "Fastighetsförmedling AB",
@@ -350,12 +390,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109232306020",
 			"placementId": -30606,
 			"careOf": "Fastighetsförmedling AB",
@@ -366,12 +408,14 @@
 			"dateFrom": "2017-08-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109114706030",
 			"placementId": -29789,
 			"careOf": "Fastighetsförmedling AB",
@@ -384,12 +428,14 @@
 			"dateFrom": "1997-03-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144502114",
 			"placementId": -29547,
 			"careOf": "Fastighetsförmedling AB",
@@ -401,12 +447,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109141107350",
 			"placementId": -29358,
 			"careOf": "Fastighetsförmedling AB",
@@ -490,12 +538,14 @@
 			"dateFrom": "1997-03-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sollentuna",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sollentuna",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9412001019",
 			"placementId": 1886,
 			"careOf": "Privat företag AB",
@@ -506,12 +556,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Malmö-Burlöv",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Malmö-Burlöv",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9111003092",
 			"placementId": 2658,
 			"careOf": "Fastighetsförmedling AB",
@@ -523,12 +575,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Småland Norra lokalnät",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Småland Norra lokalnät",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9111803038",
 			"placementId": 2660,
 			"careOf": "Fastighetsförmedling AB",
@@ -541,12 +595,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skåne Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skåne Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9114603054",
 			"placementId": 2662,
 			"careOf": "Fastighetsförmedling AB",
@@ -558,12 +614,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skåne Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skåne Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9116017014",
 			"placementId": 2663,
 			"careOf": "Fastighetsförmedling AB",
@@ -575,12 +633,14 @@
 			"dateFrom": "2008-02-13"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Småland Södra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Småland Södra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9122804017",
 			"placementId": 2664,
 			"careOf": "Fastighetsförmedling AB",
@@ -592,12 +652,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Småland Södra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Småland Södra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9122811012",
 			"placementId": 2665,
 			"careOf": "Fastighetsförmedling AB",
@@ -609,12 +671,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Malmö-Burlöv",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Malmö-Burlöv",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9127101013",
 			"placementId": 2666,
 			"careOf": "Fastighetsförmedling AB",
@@ -626,12 +690,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skåne Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skåne Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9130902555",
 			"placementId": 2667,
 			"careOf": "Fastighetsförmedling AB",
@@ -643,12 +709,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Småland Södra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Småland Södra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9131606015",
 			"placementId": 2669,
 			"careOf": "Fastighetsförmedling AB",
@@ -660,12 +728,14 @@
 			"dateFrom": "2013-10-30"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Medelpad Lokal",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Medelpad Lokal",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9140707135",
 			"placementId": 2670,
 			"careOf": "Fastighetsförmedling AB",
@@ -677,12 +747,14 @@
 			"dateFrom": "2009-02-28"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Östra Götaland",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Östra Götaland",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9141104159",
 			"placementId": 2671,
 			"careOf": "Fastighetsförmedling AB",
@@ -694,12 +766,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Malmö-Burlöv",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Malmö-Burlöv",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9141401274",
 			"placementId": 2672,
 			"careOf": "Fastighetsförmedling AB",
@@ -712,12 +786,14 @@
 			"dateFrom": "2001-01-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Småland Södra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Småland Södra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9141701012",
 			"placementId": 2673,
 			"careOf": "Fastighetsförmedling AB",
@@ -730,12 +806,14 @@
 			"dateFrom": "2011-11-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skåne Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skåne Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144502011",
 			"placementId": 2674,
 			"careOf": "Fastighetsförmedling AB",
@@ -747,12 +825,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Tidaholm",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Tidaholm",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144504017",
 			"placementId": 2675,
 			"careOf": "Fastighetsförmedling AB",
@@ -764,12 +844,14 @@
 			"dateFrom": "2010-07-03"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Småland Södra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Småland Södra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144507010",
 			"placementId": 2676,
 			"careOf": "Fastighetsförmedling AB",
@@ -781,12 +863,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skåne Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skåne Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144509016",
 			"placementId": 2677,
 			"careOf": "Fastighetsförmedling AB",
@@ -798,12 +882,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Medelpad Lokal",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Medelpad Lokal",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144517019",
 			"placementId": 2678,
 			"careOf": "Fastighetsförmedling AB",
@@ -815,12 +901,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Östra Götaland",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Östra Götaland",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144603017",
 			"placementId": 2679,
 			"careOf": "Fastighetsförmedling AB",
@@ -832,12 +920,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Östra Götaland",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Östra Götaland",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9144606010",
 			"placementId": 2680,
 			"careOf": "Fastighetsförmedling AB",
@@ -849,12 +939,14 @@
 			"dateFrom": "2015-04-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Tidaholm",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Tidaholm",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9162201017",
 			"placementId": 2690,
 			"careOf": "Fastighetsförmedling AB",
@@ -866,12 +958,14 @@
 			"dateFrom": "2013-12-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppsala",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppsala",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9163605034",
 			"placementId": 2691,
 			"careOf": "Fastighetsförmedling AB",
@@ -883,12 +977,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppsala",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppsala",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9163801013",
 			"placementId": 2692,
 			"careOf": "Fastighetsförmedling AB",
@@ -900,12 +996,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Drefviken",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Drefviken",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9165604019",
 			"placementId": 2693,
 			"careOf": "Fastighetsförmedling AB",
@@ -917,12 +1015,14 @@
 			"dateFrom": "2015-04-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Drefviken",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Drefviken",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9170504055",
 			"placementId": 2694,
 			"careOf": "Fastighetsförmedling AB",
@@ -934,12 +1034,14 @@
 			"dateFrom": "2013-12-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Vätterbygden",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Vätterbygden",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9170511027",
 			"placementId": 2695,
 			"careOf": "Fastighetsförmedling AB",
@@ -951,12 +1053,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Vätterbygden",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Vätterbygden",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9170903109",
 			"placementId": 2696,
 			"careOf": "Fastighetsförmedling AB",
@@ -967,12 +1071,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppsala",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppsala",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9170906052",
 			"placementId": 2697,
 			"careOf": "Fastighetsförmedling AB",
@@ -984,12 +1090,14 @@
 			"dateFrom": "2005-10-13"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppsala",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppsala",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9171403067",
 			"placementId": 2698,
 			"careOf": "Fastighetsförmedling AB",
@@ -1001,12 +1109,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Dalsland med omnejd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Dalsland med omnejd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9171406300",
 			"placementId": 2699,
 			"careOf": "Fastighetsförmedling AB",
@@ -1018,12 +1128,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Värmdö",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Värmdö",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9173007015",
 			"placementId": 2700,
 			"careOf": "Fastighetsförmedling AB",
@@ -1035,12 +1147,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Huvudsta",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Huvudsta",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9173513012",
 			"placementId": 2701,
 			"careOf": "Fastighetsförmedling AB",
@@ -1052,12 +1166,14 @@
 			"dateFrom": "2015-04-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Huvudsta",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Huvudsta",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9173703019",
 			"placementId": 2702,
 			"careOf": "Fastighetsförmedling AB",
@@ -1069,12 +1185,14 @@
 			"dateFrom": "2017-08-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Drefviken",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Drefviken",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9184006113",
 			"placementId": 2703,
 			"careOf": "Fastighetsförmedling AB",
@@ -1086,12 +1204,14 @@
 			"dateFrom": "2010-07-03"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Värmdö",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Värmdö",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9196101555",
 			"placementId": 2704,
 			"careOf": "Fastighetsförmedling AB",
@@ -1103,12 +1223,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Värmdö",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Värmdö",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9196801014",
 			"placementId": 2705,
 			"careOf": "Fastighetsförmedling AB",
@@ -1121,12 +1243,14 @@
 			"dateFrom": "2001-01-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Avesta",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Avesta",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9197501019",
 			"placementId": 2706,
 			"careOf": "Fastighetsförmedling AB",
@@ -1138,12 +1262,14 @@
 			"dateFrom": "2015-04-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Vätterbygden",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Vätterbygden",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9197501027",
 			"placementId": 2707,
 			"careOf": "Fastighetsförmedling AB",
@@ -1155,12 +1281,14 @@
 			"dateFrom": "1997-03-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Vagnhärad",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Vagnhärad",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9197601033",
 			"placementId": 2708,
 			"careOf": "Fastighetsförmedling AB",
@@ -1172,12 +1300,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Vätterbygden",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Vätterbygden",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9198001324",
 			"placementId": 2709,
 			"careOf": "Fastighetsförmedling AB",
@@ -1189,12 +1319,14 @@
 			"dateFrom": "2017-08-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Dalsland med omnejd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Dalsland med omnejd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9224601014",
 			"placementId": 2710,
 			"careOf": "Fastighetsförmedling AB",
@@ -1207,12 +1339,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Huddinge",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Huddinge",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9231802019",
 			"placementId": 2711,
 			"careOf": "Fastighetsförmedling AB",
@@ -1224,12 +1358,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Värmdö",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Värmdö",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9232007014",
 			"placementId": 2712,
 			"careOf": "Fastighetsförmedling AB",
@@ -1241,12 +1377,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skövde Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skövde Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9232306028",
 			"placementId": 2713,
 			"careOf": "Fastighetsförmedling AB",
@@ -1258,12 +1396,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skövde Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skövde Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9232404179",
 			"placementId": 2714,
 			"careOf": "Fastighetsförmedling AB",
@@ -1275,12 +1415,14 @@
 			"dateFrom": "1997-03-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppland Västra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppland Västra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9323707035",
 			"placementId": 2715,
 			"careOf": "Fastighetsförmedling AB",
@@ -1292,12 +1434,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppland Västra",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppland Västra",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9323712027",
 			"placementId": 2716,
 			"careOf": "Fastighetsförmedling AB",
@@ -1309,12 +1453,14 @@
 			"dateFrom": "2013-01-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sjuhärad",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sjuhärad",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9323715012",
 			"placementId": 2717,
 			"careOf": "Fastighetsförmedling AB",
@@ -1326,12 +1472,14 @@
 			"dateFrom": "2013-12-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sjuhärad",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sjuhärad",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9323720012",
 			"placementId": 2718,
 			"careOf": "Fastighetsförmedling AB",
@@ -1343,12 +1491,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Höganäs",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Höganäs",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9323724014",
 			"placementId": 2719,
 			"careOf": "Fastighetsförmedling AB",
@@ -1360,12 +1510,14 @@
 			"dateFrom": "2013-12-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Olseröd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Olseröd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9323728015",
 			"placementId": 2720,
 			"careOf": "Fastighetsförmedling AB",
@@ -1377,12 +1529,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sjöbo",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sjöbo",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9324119255",
 			"placementId": 2721,
 			"careOf": "Fastighetsförmedling AB",
@@ -1394,12 +1548,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Herrljunga",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Herrljunga",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9324908202",
 			"placementId": 2722,
 			"careOf": "Fastighetsförmedling AB",
@@ -1411,12 +1567,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Hjärtum",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Hjärtum",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9420817018",
 			"placementId": 2723,
 			"careOf": "Fastighetsförmedling AB",
@@ -1428,12 +1586,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Bromölla",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Bromölla",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9420818040",
 			"placementId": 2724,
 			"careOf": "Fastighetsförmedling AB",
@@ -1445,12 +1605,14 @@
 			"dateFrom": "2015-04-12"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Stockholm",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Stockholm",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9420818065",
 			"placementId": 2725,
 			"careOf": "Fastighetsförmedling AB",
@@ -1463,12 +1625,14 @@
 			"dateFrom": "2001-01-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Östra Götaland",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Östra Götaland",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9451436019",
 			"placementId": 2726,
 			"careOf": "Fastighetsförmedling AB",
@@ -1480,12 +1644,14 @@
 			"dateFrom": "1997-03-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Skåne Landsbygd",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Skåne Landsbygd",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9452603013",
 			"placementId": 2727,
 			"careOf": "Fastighetsförmedling AB",
@@ -1497,12 +1663,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Stockholm",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Stockholm",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9452901011",
 			"placementId": 2728,
 			"careOf": "Fastighetsförmedling AB",
@@ -1514,12 +1682,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Malung",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Malung",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9513779018",
 			"placementId": 2729,
 			"careOf": "Fastighetsförmedling AB",
@@ -1531,12 +1701,14 @@
 			"dateFrom": "2010-10-13"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Malmö-Burlöv",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Malmö-Burlöv",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9513784018",
 			"placementId": 2730,
 			"careOf": "Fastighetsförmedling AB",
@@ -1548,12 +1720,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Täby",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Täby",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9120601050",
 			"placementId": 3619,
 			"careOf": "Fräscha fastigheter AB",
@@ -1564,12 +1738,14 @@
 			"dateFrom": "2004-04-14"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Täby",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Täby",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9140205031",
 			"placementId": 3620,
 			"careOf": "Fräscha fastigheter AB",
@@ -1582,12 +1758,14 @@
 			"dateFrom": "2006-05-23"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Täby",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Täby",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9140205056",
 			"placementId": 3621,
 			"careOf": "Fräscha fastigheter AB",
@@ -1600,12 +1778,14 @@
 			"dateFrom": "2001-07-11"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Vätterbygden",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Vätterbygden",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "7170511021",
 			"placementId": 4789,
 			"careOf": "Fastighetsförmedling AB",
@@ -1638,12 +1818,14 @@
 			"dateFrom": "2013-02-25"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Uppsala",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Uppsala",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9128203404",
 			"placementId": 5128,
 			"careOf": "Fastighetsförmedling AB",
@@ -1655,12 +1837,14 @@
 			"dateFrom": "2019-11-06"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Värnamo",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Värnamo",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "9128203412",
 			"placementId": 5129,
 			"careOf": "Fastighetsförmedling AB",
@@ -1702,12 +1886,14 @@
 			"dateFrom": "2016-11-22"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Söderhamn",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Söderhamn",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144606294",
 			"placementId": 5295,
 			"careOf": "Fastighetsförmedling AB",

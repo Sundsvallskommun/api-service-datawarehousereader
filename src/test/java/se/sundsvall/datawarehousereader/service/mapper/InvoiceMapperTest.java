@@ -7,9 +7,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;

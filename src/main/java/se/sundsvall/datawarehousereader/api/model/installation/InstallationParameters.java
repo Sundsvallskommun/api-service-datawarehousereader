@@ -1,14 +1,12 @@
 package se.sundsvall.datawarehousereader.api.model.installation;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.Objects;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Installations request parameters model")
 @ValidSortByProperty(InstallationEntity.class)

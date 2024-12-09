@@ -5,9 +5,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.mea
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingDayEntity_.MEASUREMENT_TIMESTAMP;
 
 import java.time.LocalDateTime;
-
 import org.springframework.data.jpa.domain.Specification;
-
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingDayEntity;
 
 public interface MeasurementDistrictHeatingDaySpecification {

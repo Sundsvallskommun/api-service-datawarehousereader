@@ -6,15 +6,13 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withOrganizationId;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withOrganizationName;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerKey;

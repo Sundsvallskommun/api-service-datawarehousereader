@@ -6,9 +6,7 @@ import static se.sundsvall.dept44.util.DateUtils.toOffsetDateTimeWithLocalOffset
 
 import java.util.List;
 import java.util.Objects;
-
 import org.apache.commons.lang3.StringUtils;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;

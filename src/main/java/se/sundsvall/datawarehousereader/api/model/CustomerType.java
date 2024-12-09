@@ -3,14 +3,11 @@ package se.sundsvall.datawarehousereader.api.model;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.stream.Stream;
-
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-
-import com.fasterxml.jackson.annotation.JsonValue;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Customer type", enumAsRef = true, example = "Enterprise")
 public enum CustomerType {

@@ -2,13 +2,12 @@ package se.sundsvall.datawarehousereader.api.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import se.sundsvall.datawarehousereader.api.validation.impl.ValidCustomerDetailsParametersConstraintValidator;
-
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import se.sundsvall.datawarehousereader.api.validation.impl.ValidCustomerDetailsParametersConstraintValidator;
 
 @Documented
 @Target({

@@ -16,7 +16,6 @@ import static se.sundsvall.datawarehousereader.api.model.Category.WATER;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Sort;

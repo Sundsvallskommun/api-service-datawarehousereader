@@ -2,11 +2,9 @@ package se.sundsvall.datawarehousereader.service;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;

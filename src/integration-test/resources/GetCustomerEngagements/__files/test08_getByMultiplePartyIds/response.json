@@ -40,7 +40,9 @@
 		"limit": 100,
 		"count": 4,
 		"totalPages": 1,
-		"sortBy": ["customerOrgId"],
+		"sortBy": [
+			"customerOrgId"
+		],
 		"page": 1
 	}
 }

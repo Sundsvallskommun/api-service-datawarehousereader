@@ -12,9 +12,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.ins
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.TYPE;
 
 import java.time.LocalDate;
-
 import org.springframework.data.jpa.domain.Specification;
-
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 
 public interface InstalledBaseSpecification {

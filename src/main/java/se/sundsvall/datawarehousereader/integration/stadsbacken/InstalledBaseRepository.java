@@ -11,13 +11,12 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withStreet;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withType;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
-
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;

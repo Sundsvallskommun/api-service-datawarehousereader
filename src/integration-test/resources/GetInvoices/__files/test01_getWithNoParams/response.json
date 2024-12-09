@@ -2907,7 +2907,9 @@
 		"limit": 100,
 		"count": 100,
 		"totalPages": 2,
-		"sortBy": ["invoiceDate"],
+		"sortBy": [
+			"invoiceDate"
+		],
 		"page": 1
 	}
 }

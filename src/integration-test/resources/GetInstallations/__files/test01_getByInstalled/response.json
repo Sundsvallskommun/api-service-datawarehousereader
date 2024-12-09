@@ -62,12 +62,14 @@
 			"dateFrom": "2020-01-01"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "223456789123456789",
 			"dateLastModified": "2024-01-01",
 			"placementId": 32365,

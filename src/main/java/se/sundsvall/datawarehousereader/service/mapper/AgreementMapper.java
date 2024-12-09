@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;

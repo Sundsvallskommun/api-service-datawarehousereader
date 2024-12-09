@@ -6,11 +6,9 @@ import static org.zalando.problem.Status.BAD_REQUEST;
 import static se.sundsvall.datawarehousereader.Constants.INVALID_PARAMETER_AGGREGATION;
 
 import java.util.stream.Stream;
-
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
-
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 
 @Component

@@ -13,7 +13,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.zalando.problem.violations.ConstraintViolationProblem;
-
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.service.InvoiceService;
 

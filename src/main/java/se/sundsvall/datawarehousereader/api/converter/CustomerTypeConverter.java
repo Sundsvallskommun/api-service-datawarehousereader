@@ -5,7 +5,6 @@ import static se.sundsvall.datawarehousereader.Constants.INVALID_PARAMETER_CUSTO
 
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 
 @Component

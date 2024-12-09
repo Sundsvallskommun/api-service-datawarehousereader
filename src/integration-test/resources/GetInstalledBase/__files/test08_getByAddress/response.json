@@ -1,12 +1,14 @@
 {
 	"installedBase": [
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Medelpad Lokal",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Medelpad Lokal",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144515039",
 			"dateLastModified": "2017-12-01",
 			"placementId": -41159,
@@ -20,12 +22,14 @@
 			"dateFrom": "2017-08-27"
 		},
 		{
-			"metaData": [{
-				"displayName": "Nätområde",
-				"type": "location",
-				"value": "Sundsvall tätort",
-				"key": "netarea"
-			}],
+			"metaData": [
+				{
+					"displayName": "Nätområde",
+					"type": "location",
+					"value": "Sundsvall tätort",
+					"key": "netarea"
+				}
+			],
 			"facilityId": "735999109144515107",
 			"dateLastModified": "2017-12-05",
 			"placementId": -37817,

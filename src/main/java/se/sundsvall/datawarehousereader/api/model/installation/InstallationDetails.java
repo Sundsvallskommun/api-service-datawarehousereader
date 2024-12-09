@@ -2,14 +2,12 @@ package se.sundsvall.datawarehousereader.api.model.installation;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationMetaDataEmbeddable;
-
-import io.swagger.v3.oas.annotations.media.ArraySchema;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Installation details model")
 public class InstallationDetails {

@@ -8,11 +8,10 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetter
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.google.code.beanmatchers.BeanMatchers;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
-
-import com.google.code.beanmatchers.BeanMatchers;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

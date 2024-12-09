@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
-
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;

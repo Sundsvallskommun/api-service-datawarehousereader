@@ -1,16 +1,15 @@
 package se.sundsvall.datawarehousereader.api.model.measurement;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.OffsetDateTime;
+import java.util.List;
+import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
-
-import java.time.OffsetDateTime;
-import java.util.List;
-import java.util.Objects;
 
 @Schema(description = "Measurement request parameters model")
 @ValidSortByProperty(MeasurementElectricityDayEntity.class)

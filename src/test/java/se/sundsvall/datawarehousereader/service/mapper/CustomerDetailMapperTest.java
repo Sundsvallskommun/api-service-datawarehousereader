@@ -7,9 +7,7 @@ import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapp
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 

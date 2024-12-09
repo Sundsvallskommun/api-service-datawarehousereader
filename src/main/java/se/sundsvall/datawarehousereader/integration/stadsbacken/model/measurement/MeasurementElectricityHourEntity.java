@@ -1,15 +1,14 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vMeasurementElectricityHour")

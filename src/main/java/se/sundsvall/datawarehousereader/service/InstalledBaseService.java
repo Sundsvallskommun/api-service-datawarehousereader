@@ -4,10 +4,8 @@ import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMappe
 
 import java.util.Collections;
 import java.util.List;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItem;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseResponse;
