@@ -2,16 +2,15 @@ package se.sundsvall.datawarehousereader.api.model.agreement;
 
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
 
 @Schema(description = "Agreement request parameters model")
 @ValidSortByProperty(AgreementEntity.class)

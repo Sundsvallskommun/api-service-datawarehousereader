@@ -5,15 +5,19 @@
 		"limit": 100,
 		"count": 23,
 		"totalPages": 1,
-		"sortBy": ["measurementTimestamp"],
+		"sortBy": [
+			"measurementTimestamp"
+		],
 		"page": 1
 	},
 	"measurements": [
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -25,10 +29,12 @@
 			"timestamp": "2022-01-01T01:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -40,10 +46,12 @@
 			"timestamp": "2022-01-01T02:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -55,10 +63,12 @@
 			"timestamp": "2022-01-01T03:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -70,10 +80,12 @@
 			"timestamp": "2022-01-01T04:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -85,10 +97,12 @@
 			"timestamp": "2022-01-01T05:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -100,10 +114,12 @@
 			"timestamp": "2022-01-01T06:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -115,10 +131,12 @@
 			"timestamp": "2022-01-01T07:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -130,10 +148,12 @@
 			"timestamp": "2022-01-01T08:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -145,10 +165,12 @@
 			"timestamp": "2022-01-01T09:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -160,10 +182,12 @@
 			"timestamp": "2022-01-01T10:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -175,10 +199,12 @@
 			"timestamp": "2022-01-01T11:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -190,10 +216,12 @@
 			"timestamp": "2022-01-01T12:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -205,10 +233,12 @@
 			"timestamp": "2022-01-01T13:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -220,10 +250,12 @@
 			"timestamp": "2022-01-01T14:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -235,10 +267,12 @@
 			"timestamp": "2022-01-01T15:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -250,10 +284,12 @@
 			"timestamp": "2022-01-01T16:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -265,10 +301,12 @@
 			"timestamp": "2022-01-01T17:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -280,10 +318,12 @@
 			"timestamp": "2022-01-01T18:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -295,10 +335,12 @@
 			"timestamp": "2022-01-01T19:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -310,10 +352,12 @@
 			"timestamp": "2022-01-01T20:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -325,10 +369,12 @@
 			"timestamp": "2022-01-01T21:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",
@@ -340,10 +386,12 @@
 			"timestamp": "2022-01-01T22:00:00+01:00"
 		},
 		{
-			"metaData": [{
-				"value": "147129828",
-				"key": "readingSequence"
-			}],
+			"metaData": [
+				{
+					"value": "147129828",
+					"key": "readingSequence"
+				}
+			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9115803075",

@@ -2,9 +2,8 @@ package se.sundsvall.datawarehousereader.api.model.installation;
 
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
-import java.util.Objects;
-
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Objects;
 
 @Schema(description = "Installation metadata model")
 public class InstallationMetaData {

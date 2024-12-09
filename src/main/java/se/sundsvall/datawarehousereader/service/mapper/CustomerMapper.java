@@ -7,9 +7,8 @@ import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
-import java.util.List;
-
 import generated.se.sundsvall.party.PartyType;
+import java.util.List;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;

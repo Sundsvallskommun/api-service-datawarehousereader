@@ -2,10 +2,6 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installed
 
 import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Objects;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -14,7 +10,9 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
-
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 

@@ -152,7 +152,9 @@
 		"limit": 100,
 		"count": 5,
 		"totalPages": 1,
-		"sortBy": ["invoiceDate"],
+		"sortBy": [
+			"invoiceDate"
+		],
 		"page": 1
 	}
 }

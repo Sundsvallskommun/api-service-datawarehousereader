@@ -7,13 +7,11 @@ import static java.util.Optional.empty;
 import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 import static org.zalando.problem.Status.NOT_FOUND;
 
+import generated.se.sundsvall.party.PartyType;
 import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ThrowableProblem;
-
-import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.integration.party.PartyClient;
 
 @Component

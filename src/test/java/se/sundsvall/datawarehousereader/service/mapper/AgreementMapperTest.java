@@ -1,22 +1,20 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import org.junit.jupiter.api.Test;
-
-import se.sundsvall.datawarehousereader.api.model.Category;
-import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
+import static java.lang.String.valueOf;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
+import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
-import static java.lang.String.valueOf;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
-import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
+import org.junit.jupiter.api.Test;
+import se.sundsvall.datawarehousereader.api.model.Category;
+import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 
 class AgreementMapperTest {
 

@@ -1,13 +1,12 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Objects;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(schema = "kundinfo", name = "vInvoice")

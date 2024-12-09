@@ -13,14 +13,12 @@ import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.MONTH;
 
 import java.time.OffsetDateTime;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.zalando.problem.ThrowableProblem;
-
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
 import se.sundsvall.datawarehousereader.service.logic.DistrictHeatingMeasurementProvider;

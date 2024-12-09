@@ -11,12 +11,12 @@ import static org.mockito.Mockito.when;
 import static org.springframework.data.domain.Sort.sort;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
+import generated.se.sundsvall.party.PartyType;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,8 +31,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-
-import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;

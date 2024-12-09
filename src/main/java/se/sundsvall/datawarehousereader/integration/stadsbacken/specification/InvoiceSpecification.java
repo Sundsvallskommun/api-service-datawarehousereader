@@ -17,9 +17,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.inv
 
 import java.time.LocalDate;
 import java.util.List;
-
 import org.springframework.data.jpa.domain.Specification;
-
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 

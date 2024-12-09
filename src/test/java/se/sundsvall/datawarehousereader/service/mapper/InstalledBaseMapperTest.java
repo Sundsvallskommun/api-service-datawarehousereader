@@ -7,9 +7,7 @@ import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMappe
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
-
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItem;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItemMetaData;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;

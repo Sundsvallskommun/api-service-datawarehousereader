@@ -210,7 +210,9 @@
 		"limit": 10,
 		"count": 7,
 		"totalPages": 18,
-		"sortBy": ["invoiceDate"],
+		"sortBy": [
+			"invoiceDate"
+		],
 		"page": 18
 	}
 }

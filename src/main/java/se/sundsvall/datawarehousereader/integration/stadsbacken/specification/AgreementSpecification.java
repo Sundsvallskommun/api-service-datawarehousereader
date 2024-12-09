@@ -22,9 +22,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agr
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
 import org.springframework.data.jpa.domain.Specification;
-
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 

@@ -5,7 +5,9 @@
 		"limit": 2,
 		"count": 2,
 		"totalPages": 3,
-		"sortBy": ["measurementTimestamp"],
+		"sortBy": [
+			"measurementTimestamp"
+		],
 		"page": 2
 	},
 	"measurements": [

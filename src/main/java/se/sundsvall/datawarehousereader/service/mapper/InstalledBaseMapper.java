@@ -4,7 +4,6 @@ import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 
 import java.util.List;
-
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItem;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItemMetaData;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;

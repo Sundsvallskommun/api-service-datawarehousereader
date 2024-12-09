@@ -10,13 +10,11 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 
+import com.google.code.beanmatchers.BeanMatchers;
 import java.time.LocalDate;
 import java.util.Random;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import com.google.code.beanmatchers.BeanMatchers;
 
 class AgreementTest {
 

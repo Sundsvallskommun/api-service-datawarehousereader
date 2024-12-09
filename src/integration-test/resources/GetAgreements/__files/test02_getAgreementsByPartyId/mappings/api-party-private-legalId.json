@@ -1,11 +1,17 @@
 {
 	"request": {
-		"headers": {"Authorization": {"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"}},
+		"headers": {
+			"Authorization": {
+				"equalTo": "Bearer MTQ0NjJkZmQ5OTM2NDE1ZTZjNGZmZjI3"
+			}
+		},
 		"method": "GET",
 		"urlPath": "/api-party/2281/PRIVATE/336EC35A-3335-4FA3-B792-60061222B0E9/legalId"
 	},
 	"response": {
-		"headers": {"Content-Type": "text/plain"},
+		"headers": {
+			"Content-Type": "text/plain"
+		},
 		"body": "193807289012",
 		"status": 200
 	},

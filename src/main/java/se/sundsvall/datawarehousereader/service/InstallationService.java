@@ -4,10 +4,8 @@ import static java.util.Collections.emptyList;
 import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetailsList;
 
 import java.util.List;
-
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationDetails;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationDetailsResponse;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;

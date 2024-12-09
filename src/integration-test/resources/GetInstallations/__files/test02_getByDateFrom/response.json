@@ -103,12 +103,14 @@
 			"dateFrom": "2020-01-01"
 		},
 		{
-			"metaData": [{
-				"displayName": "Beräknad årlig förbrukning",
-				"type": "kW",
-				"value": "16000",
-				"key": "annualusage"
-			}],
+			"metaData": [
+				{
+					"displayName": "Beräknad årlig förbrukning",
+					"type": "kW",
+					"value": "16000",
+					"key": "annualusage"
+				}
+			],
 			"facilityId": "423456789123963259",
 			"dateLastModified": "2020-01-01",
 			"placementId": 353851,

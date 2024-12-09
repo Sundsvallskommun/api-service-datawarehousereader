@@ -6,17 +6,15 @@ import static org.assertj.core.groups.Tuple.tuple;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
+import generated.se.sundsvall.party.PartyType;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import generated.se.sundsvall.party.PartyType;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;

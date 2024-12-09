@@ -6,7 +6,9 @@
 		"limit": 100,
 		"count": 0,
 		"totalPages": 0,
-		"sortBy": ["customerOrgId"],
+		"sortBy": [
+			"customerOrgId"
+		],
 		"page": 1
 	}
 }
