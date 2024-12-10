@@ -16,8 +16,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -53,7 +53,7 @@ class InvoiceResourceTest {
 	private static final String ORGANIZATION_NUMBER = "5565027223";
 	private static final String ADMINISTRATION = "administration";
 
-	@MockBean
+	@MockitoBean
 	private InvoiceService serviceMock;
 
 	@Captor

@@ -18,8 +18,8 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -48,7 +48,7 @@ class CustomerResourceTest {
 	private static final String PATH_CUSTOMER_ENGAGEMENTS = "/" + MUNICIPALITY_ID + "/customer/engagements";
 	private static final String PATH_CUSTOMER_DETAILS = "/" + MUNICIPALITY_ID + "/customer/details";
 
-	@MockBean
+	@MockitoBean
 	private CustomerService serviceMock;
 
 	@Captor
