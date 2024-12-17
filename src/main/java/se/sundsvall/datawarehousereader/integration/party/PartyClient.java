@@ -1,10 +1,10 @@
 package se.sundsvall.datawarehousereader.integration.party;
 
-import static org.springframework.http.MediaType.APPLICATION_PROBLEM_JSON_VALUE;
 import static org.springframework.http.MediaType.TEXT_PLAIN_VALUE;
 import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT_ID;
 
 import generated.se.sundsvall.party.PartyType;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.Optional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration;
 
 @FeignClient(name = CLIENT_ID, url = "${integration.party.url}", configuration = PartyConfiguration.class)
+@CircuitBreaker(name = CLIENT_ID)
 public interface PartyClient {
 
 	/**
@@ -26,9 +27,7 @@ public interface PartyClient {
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("legalIds")
-	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = {
-		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
-	})
+	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = TEXT_PLAIN_VALUE)
 	Optional<String> getLegalId(
 		@PathVariable("type") PartyType partyType,
 		@PathVariable("municipalityId") String municipalityId,
@@ -46,9 +45,7 @@ public interface PartyClient {
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
 	@Cacheable("partyIds")
-	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = {
-		TEXT_PLAIN_VALUE, APPLICATION_PROBLEM_JSON_VALUE
-	})
+	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = TEXT_PLAIN_VALUE)
 	Optional<String> getPartyId(
 		@PathVariable("type") PartyType partyType,
 		@PathVariable("municipalityId") String municipalityId,
