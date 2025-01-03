@@ -18,11 +18,10 @@ class CategoryConverterTest {
 
 	@Test
 	void testDefinedCategories() {
-
 		// Verify that all defined categories can be converted by the converter (i.e. no exceptions are thrown)
 		Stream.of(Category.values())
 			.map(Category::toString)
-			.map(string -> assertDoesNotThrow(() -> CONVERTER.convert(string)));
+			.forEach(string -> assertDoesNotThrow(() -> CONVERTER.convert(string)));
 	}
 
 	@Test

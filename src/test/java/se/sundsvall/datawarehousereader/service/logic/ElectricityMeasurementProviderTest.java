@@ -99,9 +99,7 @@ class ElectricityMeasurementProviderTest {
 		final var searchParams = MeasurementParameters.create();
 
 		switch (aggregateOn) {
-			case HOUR -> {
-				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock)));
-			}
+			case HOUR -> when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock)));
 			case DAY -> {
 				when(electricityDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
 				when(pageDayMock.getContent()).thenReturn(List.of(entityDayMock));
@@ -182,9 +180,7 @@ class ElectricityMeasurementProviderTest {
 		searchParams.setLimit(1);
 
 		switch (aggregateOn) {
-			case HOUR -> {
-				when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock, entityHourMock)));
-			}
+			case HOUR -> when(electricityHourRepositoryMock.findAllMatching(any(), any(), any(), any())).thenReturn(new ArrayList<>(List.of(entityHourMock, entityHourMock)));
 			case DAY -> {
 				when(electricityDayRepositoryMock.findAllMatching(any(), any(), any(), any(), any())).thenReturn(pageDayMock);
 				when(pageDayMock.getContent()).thenReturn(List.of(entityDayMock));
