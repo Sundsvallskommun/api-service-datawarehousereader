@@ -18,11 +18,10 @@ class AggregationConverterTest {
 
 	@Test
 	void testDefinedAggregations() {
-
 		// Verify that all defined aggregations can be converted by the converter (i.e. no exceptions are thrown)
 		Stream.of(Aggregation.values())
 			.map(Aggregation::toString)
-			.map(string -> assertDoesNotThrow(() -> CONVERTER.convert(string)));
+			.forEach(string -> assertDoesNotThrow(() -> CONVERTER.convert(string)));
 	}
 
 	@Test

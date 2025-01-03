@@ -22,7 +22,7 @@ class CustomerTypeConverterTest {
 		// Verify that all defined customer types can be converted by the converter (i.e. no exceptions are thrown)
 		Stream.of(CustomerType.values())
 			.map(CustomerType::toString)
-			.map(string -> assertDoesNotThrow(() -> CONVERTER.convert(string)));
+			.forEach(string -> assertDoesNotThrow(() -> CONVERTER.convert(string)));
 	}
 
 	@Test

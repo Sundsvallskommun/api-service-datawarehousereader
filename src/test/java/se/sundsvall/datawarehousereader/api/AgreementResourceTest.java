@@ -175,16 +175,16 @@ class AgreementResourceTest {
 
 		ofNullable(page).ifPresent(p -> parameters.add("page", p.toString()));
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));
-		ofNullable(agreementId).ifPresent(p -> parameters.add("agreementId", p));
-		ofNullable(billingId).ifPresent(p -> parameters.add("billingId", p));
-		ofNullable(customerNumber).ifPresent(p -> parameters.add("customerNumber", p));
+		ofNullable(agreementId).ifPresent(p -> parameters.add(AGREEMENT_ID, p));
+		ofNullable(billingId).ifPresent(p -> parameters.add(BILLING_ID, p));
+		ofNullable(customerNumber).ifPresent(p -> parameters.add(CUSTOMER_NUMBER, p));
 		ofNullable(partyId).ifPresent(p -> parameters.add("partyId", p));
 		ofNullable(category).ifPresent(p -> parameters.add("category", p.name()));
-		ofNullable(facilityId).ifPresent(p -> parameters.add("facilityId", p));
-		ofNullable(description).ifPresent(p -> parameters.add("description", p));
+		ofNullable(facilityId).ifPresent(p -> parameters.add(FACILITY_ID, p));
+		ofNullable(description).ifPresent(p -> parameters.add(DESCRIPTION, p));
 		ofNullable(mainAgreement).ifPresent(p -> parameters.add("mainAgreement", p.toString()));
 		ofNullable(binding).ifPresent(p -> parameters.add("binding", p.toString()));
-		ofNullable(bindingRule).ifPresent(p -> parameters.add("bindingRule", p));
+		ofNullable(bindingRule).ifPresent(p -> parameters.add(BINDING_RULE, p));
 		ofNullable(fromDate).ifPresent(p -> parameters.add("fromDate", p.toString()));
 		ofNullable(toDate).ifPresent(p -> parameters.add("toDate", p.toString()));
 

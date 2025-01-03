@@ -90,8 +90,8 @@ class CustomerResourceTest {
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", p.toString()));
 		ofNullable(customerNumber).ifPresent(p -> parameters.add("customerNumber", p));
 		ofNullable(customerOrgId).ifPresent(p -> parameters.add("partyId", p));
-		ofNullable(organizationId).ifPresent(p -> parameters.add("organizationNumber", p));
-		ofNullable(organizationName).ifPresent(p -> parameters.add("organizationName", p));
+		ofNullable(organizationId).ifPresent(p -> parameters.add(ORGANIZATION_NUMBER, p));
+		ofNullable(organizationName).ifPresent(p -> parameters.add(ORGANIZATION_NAME, p));
 
 		return parameters;
 	}
