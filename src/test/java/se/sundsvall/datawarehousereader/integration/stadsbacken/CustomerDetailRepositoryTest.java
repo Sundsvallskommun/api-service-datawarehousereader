@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
@@ -26,14 +23,13 @@ class CustomerDetailRepositoryTest {
 	private CustomerDetailRepository repository;
 
 	private final LocalDateTime now = LocalDateTime.now();
-	private final Pageable pageable = PageRequest.of(0, 100, Sort.Direction.ASC, "uuid");
 
 	@Test
 	void findWithCustomerEngagementOrgIdAndPartyIds() {
 		final var uuids = "9f395f51-b5ed-401b-b700-ef70cbb15d79,9f395f51-b5ed-401b-b700-ef70cbb15d80";
 		final var customerEngagementOrgId = "5564786647";
 
-		final var result = repository.findWithCustomerEngagementOrgIdAndPartyIds(now, customerEngagementOrgId, uuids, pageable);
+		final var result = repository.findWithCustomerEngagementOrgIdAndPartyIds(now, customerEngagementOrgId, uuids, 0, 100, "uuid");
 
 		assertThat(result).isNotNull()
 			.hasSize(2)
@@ -70,7 +66,7 @@ class CustomerDetailRepositoryTest {
 	void testFindWithCustomerEngagementOrgId() {
 		final var customerEngagementOrgId = "5564786647";
 
-		final var result = repository.findWithCustomerEngagementOrgId(now, customerEngagementOrgId, pageable);
+		final var result = repository.findWithCustomerEngagementOrgId(now, customerEngagementOrgId, 0, 100, "uuid");
 
 		assertThat(result).isNotNull()
 			.hasSize(3)
@@ -109,7 +105,7 @@ class CustomerDetailRepositoryTest {
 	void testFindNonActive() {
 		final var customerEngagementOrgId = "5565027225";
 
-		final var result = repository.findWithCustomerEngagementOrgId(now, customerEngagementOrgId, pageable);
+		final var result = repository.findWithCustomerEngagementOrgId(now, customerEngagementOrgId, 0, 100, "uuid");
 
 		assertThat(result).isNotNull()
 			.hasSize(2)

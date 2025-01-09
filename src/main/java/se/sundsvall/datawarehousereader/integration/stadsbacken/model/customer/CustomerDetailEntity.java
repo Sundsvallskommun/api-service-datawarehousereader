@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -72,8 +73,11 @@ public class CustomerDetailEntity {
 	@Column(name = "Active", columnDefinition = "varchar(1)", nullable = false, insertable = false, updatable = false)
 	private boolean active;
 
-	@Column(name = "MoveInDate", insertable = false, updatable = false, columnDefinition = "datetime")
+	@Column(name = "MoveInDate", columnDefinition = "datetime", insertable = false, updatable = false)
 	private LocalDateTime moveInDate;
+
+	@Embedded
+	private MetadataEmbeddable metadata;
 
 	public static CustomerDetailEntity create() {
 		return new CustomerDetailEntity();
@@ -352,35 +356,45 @@ public class CustomerDetailEntity {
 		return this;
 	}
 
+	public MetadataEmbeddable getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(MetadataEmbeddable metadata) {
+		this.metadata = metadata;
+	}
+
+	public CustomerDetailEntity withMetadata(MetadataEmbeddable metadata) {
+		this.metadata = metadata;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(active, address, city, co, customerCategoryDescription, customerCategoryID, customerChangedFlg, customerId, customerOrgId, email1, email2, installedChangedFlg, moveInDate, name, organizationId, organizationName, partyId,
-			phone1, phone2, phone3, zipcode);
+		return Objects.hash(active, address, city, co, customerCategoryDescription, customerCategoryID, customerChangedFlg, customerId, customerOrgId, email1, email2, installedChangedFlg, metadata, moveInDate, name, organizationId, organizationName,
+			partyId, phone1, phone2, phone3, zipcode);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!(obj instanceof final CustomerDetailEntity other)) {
-			return false;
-		}
+		if (this == obj) { return true; }
+		if (!(obj instanceof final CustomerDetailEntity other)) { return false; }
 		return active == other.active && Objects.equals(address, other.address) && Objects.equals(city, other.city) && Objects.equals(co, other.co) && Objects.equals(customerCategoryDescription, other.customerCategoryDescription) && Objects.equals(
 			customerCategoryID, other.customerCategoryID) && customerChangedFlg == other.customerChangedFlg && Objects.equals(customerId, other.customerId) && Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(email1, other.email1)
-			&& Objects.equals(email2, other.email2) && installedChangedFlg == other.installedChangedFlg && Objects.equals(moveInDate, other.moveInDate) && Objects.equals(name, other.name) && Objects.equals(organizationId, other.organizationId)
-			&& Objects.equals(organizationName, other.organizationName) && Objects.equals(partyId, other.partyId) && Objects.equals(phone1, other.phone1) && Objects.equals(phone2, other.phone2) && Objects.equals(phone3, other.phone3) && Objects
-				.equals(zipcode, other.zipcode);
+			&& Objects.equals(email2, other.email2) && installedChangedFlg == other.installedChangedFlg && Objects.equals(metadata, other.metadata) && Objects.equals(moveInDate, other.moveInDate) && Objects.equals(name, other.name) && Objects.equals(
+				organizationId, other.organizationId) && Objects.equals(organizationName, other.organizationName) && Objects.equals(partyId, other.partyId) && Objects.equals(phone1, other.phone1) && Objects.equals(phone2, other.phone2) && Objects.equals(
+					phone3, other.phone3) && Objects.equals(zipcode, other.zipcode);
 	}
 
 	@Override
 	public String toString() {
 		final var builder = new StringBuilder();
-		builder.append("CustomerDetailEntity [customerId=").append(customerId).append(", partyId=").append(partyId).append(", customerOrgId=").append(customerOrgId).append(", organizationId=").append(organizationId).append(", organizationName=")
-			.append(organizationName).append(", customerCategoryID=").append(customerCategoryID).append(", customerCategoryDescription=").append(customerCategoryDescription).append(", name=").append(name).append(", co=").append(co).append(
-				", address=").append(address).append(", zipcode=").append(zipcode).append(", city=").append(city).append(", phone1=").append(phone1).append(", phone2=").append(phone2).append(", phone3=").append(phone3).append(", email1=").append(
-					email1).append(", email2=").append(email2).append(", customerChangedFlg=").append(customerChangedFlg).append(", installedChangedFlg=").append(installedChangedFlg).append(", active=").append(active).append(", moveInDate=").append(
-						moveInDate).append("]");
+		builder.append("CustomerDetailEntity [customerId=").append(customerId).append(", partyId=").append(partyId).append(", customerOrgId=").append(customerOrgId).append(", organizationId=").append(organizationId).append(", organizationName=").append(
+			organizationName).append(", customerCategoryID=").append(customerCategoryID).append(", customerCategoryDescription=").append(customerCategoryDescription).append(", name=").append(name).append(", co=").append(co).append(", address=").append(
+				address).append(", zipcode=").append(zipcode).append(", city=").append(city).append(", phone1=").append(phone1).append(", phone2=").append(phone2).append(", phone3=").append(phone3).append(", email1=").append(email1).append(", email2=")
+			.append(email2).append(", customerChangedFlg=").append(customerChangedFlg).append(", installedChangedFlg=").append(installedChangedFlg).append(", active=").append(active).append(", moveInDate=").append(moveInDate).append(", metadata=").append(
+				metadata).append("]");
 		return builder.toString();
 	}
+
 }

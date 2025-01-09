@@ -2,15 +2,22 @@ package se.sundsvall.datawarehousereader.service.mapper;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
 import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.springframework.data.domain.Sort.Direction;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
+import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.MetadataEmbeddable;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 public class CustomerDetailMapper {
 
@@ -55,6 +62,23 @@ public class CustomerDetailMapper {
 		return Stream.of(entity.getEmail1(), entity.getEmail2())
 			.filter(Objects::nonNull)
 			.toList();
+	}
+
+	public static PagingAndSortingMetaData toPagingAndSortingMetaData(final CustomerDetailsParameters parameters, final MetadataEmbeddable metadata) {
+		return PagingAndSortingMetaData.create()
+			.withCount(metadata.getCount())
+			.withLimit(parameters.getLimit())
+			.withPage(parameters.getPage())
+			.withTotalPages(metadata.getTotalPages())
+			.withTotalRecords(metadata.getTotalRecords())
+			.withSortBy(parameters.getSortBy())
+			.withSortDirection(isEmpty(parameters.getSortBy()) ? null : parameters.getSortDirection());
+	}
+
+	public static String toSortString(final List<String> sortBy, final Direction direction) {
+		return ofNullable(sortBy).orElse(Collections.emptyList()).stream()
+			.map(column -> column + (direction.isDescending() ? "#" : ""))
+			.collect(Collectors.joining(", "));
 	}
 
 }

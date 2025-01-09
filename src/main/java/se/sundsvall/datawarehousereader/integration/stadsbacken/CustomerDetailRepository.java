@@ -2,41 +2,55 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.time.LocalDateTime;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "CustomerDetailRepository")
-public interface CustomerDetailRepository extends PagingAndSortingRepository<CustomerDetailEntity, Integer>, JpaSpecificationExecutor<CustomerDetailEntity> {
+public interface CustomerDetailRepository extends JpaRepository<CustomerDetailEntity, Integer> {
 
 	/**
+	 * /**
 	 * Method for returning all customer engagements connected to sent in organization id
 	 *
 	 * @param  dateTimeFrom   from date to filter on
 	 * @param  organizationId organization id to filter on
 	 * @param  uuids          comma separated list of uuids to filter on
-	 * @param  pageable       object containing paging information for request
-	 * @return                page of customer details matching sent in parameters
+	 * @param  pageNumber     the page number to fetch
+	 * @param  pageSize       the number of items to fetch
+	 * @param  sortBy         a comma separated string with the column(s) to sort by (if column is suffixed by '#' it will
+	 *                        be sorted descending, otherwise its sorted ascending)
+	 * @return                list of customer details matching sent in parameters
 	 */
-	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail(:fromDate, :organizationId, :uuids)")
-	Page<CustomerDetailEntity> findWithCustomerEngagementOrgIdAndPartyIds(
-		@Param("fromDate") LocalDateTime dateTimeFrom, @Param("organizationId") String organizationId, @Param("uuids") String uuids, Pageable pageable);
+	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail_test_241211_paginering_sort(:fromDate, :organizationId, :uuid, :pageNumber, :pageSize, :sortBy)")
+	List<CustomerDetailEntity> findWithCustomerEngagementOrgIdAndPartyIds(
+		@Param("fromDate") LocalDateTime dateTimeFrom,
+		@Param("organizationId") String organizationId,
+		@Param("uuid") String uuids,
+		@Param("pageNumber") int pageNumber,
+		@Param("pageSize") int pageSize,
+		@Param("sortBy") String sortBy);
 
 	/**
 	 * Method for returning all customer engagements connected to sent in organization id
 	 *
 	 * @param  dateTimeFrom   from date to filter on
 	 * @param  organizationId organization id to filter on
-	 * @param  pageable       object containing paging information for request
-	 * @return                page of customer details matching sent in parameters
+	 * @param  pageNumber     the page number to fetch
+	 * @param  pageSize       the number of items to fetch
+	 * @param  sortBy         a comma separated string with the column(s) to sort by (if column is suffixed by '#' it will
+	 *                        be sorted descending, otherwise its sorted ascending)
+	 * @return                list of customer details matching sent in parameters
 	 */
-	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail(:fromDate, :organizationId, null)")
-	Page<CustomerDetailEntity> findWithCustomerEngagementOrgId(
-		@Param("fromDate") LocalDateTime dateTimeFrom, @Param("organizationId") String organizationId, Pageable pageable);
+	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail_test_241211_paginering_sort(:fromDate, :organizationId, null, :pageNumber, :pageSize, :sortBy)")
+	List<CustomerDetailEntity> findWithCustomerEngagementOrgId(
+		@Param("fromDate") LocalDateTime dateTimeFrom,
+		@Param("organizationId") String organizationId,
+		@Param("pageNumber") int pageNumber,
+		@Param("pageSize") int pageSize,
+		@Param("sortBy") String sortBy);
 }

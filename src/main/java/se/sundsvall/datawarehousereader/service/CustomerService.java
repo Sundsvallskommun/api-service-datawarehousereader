@@ -4,6 +4,8 @@ import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static org.springframework.util.CollectionUtils.isEmpty;
 import static org.springframework.util.StringUtils.hasText;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toPagingAndSortingMetaData;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toSortString;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
 import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
@@ -14,9 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
@@ -28,6 +28,7 @@ import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementRes
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.MetadataEmbeddable;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 import se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
@@ -76,36 +77,34 @@ public class CustomerService {
 			.map(OffsetDateTime::toLocalDateTime)
 			.orElse(LocalDateTime.now().minusYears(1L));
 
-		final var pageable = toPageRequest(parameters);
-		final var pagedResult = getCustomerDetailsWithParameters(fromDateTime, parameters, pageable);
+		final var result = getCustomerDetailsWithParameters(fromDateTime, parameters);
+		final var metadata = result.isEmpty() ? MetadataEmbeddable.create() : result.getFirst().getMetadata();
 
 		return CustomerDetailsResponse.create()
-			.withMetadata(PagingAndSortingMetaData.create().withPageData(pagedResult))
-			.withCustomerDetails(mapCustomerDetailsEntities(pagedResult));
+			.withMetadata(toPagingAndSortingMetaData(parameters, metadata))
+			.withCustomerDetails(mapCustomerDetailsEntities(result));
 	}
 
 	// Since we can't use specifications, make sure we only query data that we have.
-	private Page<CustomerDetailEntity> getCustomerDetailsWithParameters(final LocalDateTime fromDateTime, final CustomerDetailsParameters parameters, Pageable pageable) {
+	private List<CustomerDetailEntity> getCustomerDetailsWithParameters(final LocalDateTime fromDateTime, final CustomerDetailsParameters parameters) {
 		// We have both orgId and partyIds
 		if (!isEmpty(parameters.getPartyId())) {
-			return customerDetailRepository.findWithCustomerEngagementOrgIdAndPartyIds(
-				fromDateTime,
-				parameters.getCustomerEngagementOrgId(),
-				String.join(",", parameters.getPartyId()),
-				pageable);
+			return customerDetailRepository.findWithCustomerEngagementOrgIdAndPartyIds(fromDateTime, parameters.getCustomerEngagementOrgId(), String.join(",", parameters.getPartyId()),
+				parameters.getPage(),
+				parameters.getLimit(),
+				toSortString(parameters.getSortBy(), parameters.getSortDirection()));
+
 		}
-		return customerDetailRepository.findWithCustomerEngagementOrgId(fromDateTime, parameters.getCustomerEngagementOrgId(), pageable);
+		return customerDetailRepository.findWithCustomerEngagementOrgId(fromDateTime, parameters.getCustomerEngagementOrgId(),
+			parameters.getPage(),
+			parameters.getLimit(),
+			toSortString(parameters.getSortBy(), parameters.getSortDirection()));
 	}
 
-	private List<CustomerDetails> mapCustomerDetailsEntities(Page<CustomerDetailEntity> matches) {
-		final var details = matches.getContent();
-		return details.stream()
+	private List<CustomerDetails> mapCustomerDetailsEntities(List<CustomerDetailEntity> matches) {
+		return matches.stream()
 			.map(CustomerDetailMapper::toCustomerDetails)
 			.toList();
-	}
-
-	private PageRequest toPageRequest(final CustomerDetailsParameters parameters) {
-		return PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort());
 	}
 
 	private List<String> getCustomerOrgIdList(final String municipalityId, final List<String> partyIds) {

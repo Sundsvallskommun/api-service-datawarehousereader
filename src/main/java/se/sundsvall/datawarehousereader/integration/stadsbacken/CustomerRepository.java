@@ -23,7 +23,7 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 public interface CustomerRepository extends PagingAndSortingRepository<CustomerEntity, CustomerKey>, JpaSpecificationExecutor<CustomerEntity> {
 
 	default Page<CustomerEntity> findAllByParameters(CustomerEngagementParameters customerParameters, List<String> customerOrgIds, Pageable pageable) {
-		final CustomerEngagementParameters parameters = ofNullable(customerParameters).orElse(CustomerEngagementParameters.create());
+		final var parameters = ofNullable(customerParameters).orElse(CustomerEngagementParameters.create());
 		return this.findAll(withCustomerId(ServiceUtil.toInteger(parameters.getCustomerNumber()))
 			.and(withCustomerOrgIds(customerOrgIds))
 			.and(withOrganizationId(parameters.getOrganizationNumber()))

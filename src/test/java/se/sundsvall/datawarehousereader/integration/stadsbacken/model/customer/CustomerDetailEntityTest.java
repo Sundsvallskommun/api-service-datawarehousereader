@@ -56,6 +56,7 @@ class CustomerDetailEntityTest {
 		final var organizationName = "organizationName";
 		final var active = true;
 		final var moveInDate = LocalDateTime.now().plusDays(new Random().nextInt());
+		final var metadata = MetadataEmbeddable.create();
 
 		final var entity = CustomerDetailEntity.create()
 			.withCustomerOrgId(customerOrgId)
@@ -78,7 +79,8 @@ class CustomerDetailEntityTest {
 			.withOrganizationId(organizationId)
 			.withOrganizationName(organizationName)
 			.withActive(active)
-			.withMoveInDate(moveInDate);
+			.withMoveInDate(moveInDate)
+			.withMetadata(metadata);
 
 		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(entity.getCustomerId()).isEqualTo(customerId);
@@ -102,6 +104,7 @@ class CustomerDetailEntityTest {
 		assertThat(entity.getOrganizationName()).isEqualTo(organizationName);
 		assertThat(entity.isActive()).isEqualTo(active);
 		assertThat(entity.getMoveInDate()).isEqualTo(moveInDate);
+		assertThat(entity.getMetadata()).isEqualTo(metadata);
 	}
 
 	@Test
