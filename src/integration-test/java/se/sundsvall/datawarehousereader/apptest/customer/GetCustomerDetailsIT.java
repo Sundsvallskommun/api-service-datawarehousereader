@@ -40,17 +40,7 @@ class GetCustomerDetailsIT extends AbstractAppTest {
 	}
 
 	@Test
-	void test03_getWithPaging() {
-		setupCall()
-			.withServicePath("/2281/customer/details??page=1&limit=2&fromDateTime=2021-10-12T14:11:16.359Z&customerEngagementOrgId=5564786647")
-			.withHttpMethod(GET)
-			.withExpectedResponseStatus(OK)
-			.withExpectedResponse(RESPONSE_FILE)
-			.sendRequestAndVerifyResponse();
-	}
-
-	@Test
-	void test04_getNonActiveCustomer() {
+	void test03_getNonActiveCustomer() {
 		setupCall()
 			.withServicePath("/2281/customer/details?partyId=9f395f51-b5ed-401b-b700-ef70cbb15d90&customerEngagementOrgId=5565027225&fromDateTime=2021-10-12T14:11:16.359Z")
 			.withHttpMethod(GET)

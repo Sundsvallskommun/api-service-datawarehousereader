@@ -29,10 +29,13 @@
 
     create table kundinfo.vCustomerDetail (
         Active varchar(1) not null,
+        Count int,
         CustomerCategoryID int,
         CustomerChangedFlg bit,
         Customerid int not null,
         Installedchangedflg bit,
+        TotalPages int,
+        TotalRecords int,
         MoveInDate datetime,
         Address nvarchar(255),
         City nvarchar(255),
