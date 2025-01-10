@@ -1,5 +1,5 @@
 -- Not how it works in datalagret but for us to be able to use the function we use the data from the view. Also Count and TotalRecords are faked to provide support for all tests
-create function kundinfo.fnCustomerDetail_test_241211_paginering_sort(@fromDate as datetime2, @orgId as varchar(50), @uuids as varchar(255), @pageNumber as int, @pageSize as int, @sortBy as varchar(255))
+create function kundinfo.fnCustomerDetailWithPagingAndSort(@fromDate as datetime2, @orgId as varchar(50), @uuids as varchar(255), @pageNumber as int, @pageSize as int, @sortBy as varchar(255))
 	returns table as 
 	return (
 		select 

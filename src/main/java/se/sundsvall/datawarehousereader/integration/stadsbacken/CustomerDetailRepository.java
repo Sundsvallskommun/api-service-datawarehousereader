@@ -26,7 +26,7 @@ public interface CustomerDetailRepository extends JpaRepository<CustomerDetailEn
 	 *                        be sorted descending, otherwise its sorted ascending)
 	 * @return                list of customer details matching sent in parameters
 	 */
-	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail_test_241211_paginering_sort(:fromDate, :organizationId, :uuid, :pageNumber, :pageSize, :sortBy)")
+	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetailWithPagingAndSort(:fromDate, :organizationId, :uuid, :pageNumber, :pageSize, :sortBy)")
 	List<CustomerDetailEntity> findWithCustomerEngagementOrgIdAndPartyIds(
 		@Param("fromDate") LocalDateTime dateTimeFrom,
 		@Param("organizationId") String organizationId,
@@ -46,7 +46,7 @@ public interface CustomerDetailRepository extends JpaRepository<CustomerDetailEn
 	 *                        be sorted descending, otherwise its sorted ascending)
 	 * @return                list of customer details matching sent in parameters
 	 */
-	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetail_test_241211_paginering_sort(:fromDate, :organizationId, null, :pageNumber, :pageSize, :sortBy)")
+	@Query(nativeQuery = true, value = "select * from kundinfo.fnCustomerDetailWithPagingAndSort(:fromDate, :organizationId, null, :pageNumber, :pageSize, :sortBy)")
 	List<CustomerDetailEntity> findWithCustomerEngagementOrgId(
 		@Param("fromDate") LocalDateTime dateTimeFrom,
 		@Param("organizationId") String organizationId,

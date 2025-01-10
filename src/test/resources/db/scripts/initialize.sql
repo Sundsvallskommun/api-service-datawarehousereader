@@ -13,7 +13,7 @@ drop table if exists kundinfo.vMeasurementElectricityDay;
 drop table if exists kundinfo.vMeasurementElectricityMonth;
 drop table if exists kundinfo.vAgreements;
 drop procedure if exists kundinfo.spMeasurementElectricityHour;
-drop function if exists kundinfo.fnCustomerDetail_test_241211_paginering_sort;
+drop function if exists kundinfo.fnCustomerDetailWithPagingAndSort;
 
 drop schema if exists kundinfo;
 create schema kundinfo;
