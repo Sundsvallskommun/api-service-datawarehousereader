@@ -31,10 +31,19 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 public interface AgreementRepository extends PagingAndSortingRepository<AgreementEntity, AgreementKey>, JpaSpecificationExecutor<AgreementEntity> {
 
 	default Page<AgreementEntity> findAllByParameters(AgreementParameters agreementParameters, String customerOrgId, Pageable pageable) {
-		AgreementParameters parameters = ofNullable(agreementParameters).orElse(AgreementParameters.create());
-		return this.findAll(withAgreementId(ServiceUtil.toInteger(parameters.getAgreementId())).and(withBillingId(ServiceUtil.toInteger(parameters.getBillingId()))).and(withBinding(ServiceUtil.toString(parameters.getBinding()))).and(withBindingRule(
-			parameters.getBindingRule())).and(withCategories(parameters.getCategory())).and(withCustomerId(ServiceUtil.toInteger(parameters.getCustomerNumber()))).and(withCustomerOrgId(customerOrgId)).and(withDescription(parameters.getDescription())).and(
-				withFacilityId(parameters.getFacilityId())).and(withFromDate(parameters.getFromDate())).and(withMainAgreement(ServiceUtil.toString(parameters.getMainAgreement()))).and(withToDate(parameters.getToDate())).and(withActive(parameters
-					.getActive())), pageable);
+		final var parameters = ofNullable(agreementParameters).orElse(AgreementParameters.create());
+		return this.findAll(withAgreementId(ServiceUtil.toInteger(parameters.getAgreementId()))
+			.and(withBillingId(ServiceUtil.toInteger(parameters.getBillingId())))
+			.and(withBinding(ServiceUtil.toString(parameters.getBinding())))
+			.and(withBindingRule(parameters.getBindingRule()))
+			.and(withCategories(parameters.getCategory()))
+			.and(withCustomerId(ServiceUtil.toInteger(parameters.getCustomerNumber())))
+			.and(withCustomerOrgId(customerOrgId))
+			.and(withDescription(parameters.getDescription()))
+			.and(withFacilityId(parameters.getFacilityId()))
+			.and(withFromDate(parameters.getFromDate()))
+			.and(withMainAgreement(ServiceUtil.toString(parameters.getMainAgreement())))
+			.and(withToDate(parameters.getToDate()))
+			.and(withActive(parameters.getActive())), pageable);
 	}
 }

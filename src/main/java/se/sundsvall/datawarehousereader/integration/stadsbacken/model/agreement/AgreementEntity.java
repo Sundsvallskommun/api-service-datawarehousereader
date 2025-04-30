@@ -48,6 +48,18 @@ public class AgreementEntity {
 	@Column(name = "bindingRule", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String bindingRule;
 
+	@Column(name = "PlacementStatus", nullable = false, updatable = false, columnDefinition = "nvarchar(255)")
+	private String placementStatus;
+
+	@Column(name = "NetAreaId", nullable = true, updatable = false, columnDefinition = "nvarchar(255)")
+	private String netAreaId;
+
+	@Column(name = "SiteAddress", nullable = true, updatable = false, columnDefinition = "varchar(MAX)")
+	private String siteAddress;
+
+	@Column(name = "IsProduction", nullable = true, updatable = false, columnDefinition = "varchar(5)")
+	private String isProduction;
+
 	@Column(name = "fromDate", insertable = false, updatable = false, columnDefinition = "datetime")
 	private LocalDateTime fromDate;
 
@@ -227,34 +239,80 @@ public class AgreementEntity {
 		return this;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(agreementId, uuid, customerOrgId, customerId, facilityId, category, billingId, description, mainAgreement, binding, bindingRule, fromDate, toDate);
+	public String getPlacementStatus() {
+		return placementStatus;
+	}
+
+	public void setPlacementStatus(String placementStatus) {
+		this.placementStatus = placementStatus;
+	}
+
+	public AgreementEntity withPlacementStatus(String placementStatus) {
+		this.placementStatus = placementStatus;
+		return this;
+	}
+
+	public String getNetAreaId() {
+		return netAreaId;
+	}
+
+	public void setNetAreaId(String netAreaId) {
+		this.netAreaId = netAreaId;
+	}
+
+	public AgreementEntity withNetAreaId(String netAreaId) {
+		this.netAreaId = netAreaId;
+		return this;
+	}
+
+	public String getSiteAddress() {
+		return siteAddress;
+	}
+
+	public void setSiteAddress(String siteAddress) {
+		this.siteAddress = siteAddress;
+	}
+
+	public AgreementEntity withSiteAddress(String siteAddress) {
+		this.siteAddress = siteAddress;
+		return this;
+	}
+
+	public String getIsProduction() {
+		return isProduction;
+	}
+
+	public void setIsProduction(String isProduction) {
+		this.isProduction = isProduction;
+	}
+
+	public AgreementEntity withIsProduction(String isProduction) {
+		this.isProduction = isProduction;
+		return this;
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if ((o == null) || (getClass() != o.getClass())) {
-			return false;
-		}
-		final AgreementEntity that = (AgreementEntity) o;
-		return Objects.equals(agreementId, that.agreementId) && Objects.equals(uuid, that.uuid) && Objects.equals(customerOrgId, that.customerOrgId) && Objects.equals(customerId, that.customerId) && Objects.equals(facilityId, that.facilityId)
-			&& Objects.equals(category, that.category) && Objects.equals(billingId, that.billingId) && Objects.equals(description, that.description) && Objects.equals(mainAgreement, that.mainAgreement) && Objects.equals(binding, that.binding)
-			&& Objects.equals(bindingRule, that.bindingRule) && Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate);
+	public int hashCode() {
+		return Objects.hash(agreementId, billingId, binding, bindingRule, category, customerId, customerOrgId, description, facilityId, fromDate, isProduction, mainAgreement, netAreaId, placementStatus, siteAddress, toDate, uuid);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) { return true; }
+		if (!(obj instanceof final AgreementEntity other)) { return false; }
+		return Objects.equals(agreementId, other.agreementId) && Objects.equals(billingId, other.billingId) && Objects.equals(binding, other.binding) && Objects.equals(bindingRule, other.bindingRule) && Objects.equals(category, other.category) && Objects
+			.equals(customerId, other.customerId) && Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(description, other.description) && Objects.equals(facilityId, other.facilityId) && Objects.equals(fromDate, other.fromDate) && Objects
+				.equals(isProduction, other.isProduction) && Objects.equals(mainAgreement, other.mainAgreement) && Objects.equals(netAreaId, other.netAreaId) && Objects.equals(placementStatus, other.placementStatus) && Objects.equals(siteAddress,
+					other.siteAddress) && Objects.equals(toDate, other.toDate) && Objects.equals(uuid, other.uuid);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		return builder.append("AgreementEntity [agreementId=").append(agreementId)
-			.append(", uuid='").append(uuid).append(", customerOrgId='").append(customerOrgId)
-			.append(", customerId='").append(customerId).append(", facilityId='").append(facilityId)
-			.append(", category='").append(category).append(", billingId=").append(billingId)
-			.append(", description='").append(description).append(", mainAgreement='").append(mainAgreement).append(", binding='").append(binding)
-			.append(", bindingRule='").append(bindingRule).append(", fromDate=").append(fromDate)
-			.append(", toDate=").append(toDate).append("]").toString();
+		final var builder = new StringBuilder();
+		builder.append("AgreementEntity [agreementId=").append(agreementId).append(", billingId=").append(billingId).append(", uuid=").append(uuid).append(", customerOrgId=").append(customerOrgId).append(", customerId=").append(customerId).append(
+			", facilityId=").append(facilityId).append(", category=").append(category).append(", description=").append(description).append(", mainAgreement=").append(mainAgreement).append(", binding=").append(binding).append(", bindingRule=").append(
+				bindingRule).append(", placementStatus=").append(placementStatus).append(", netAreaId=").append(netAreaId).append(", siteAddress=").append(siteAddress).append(", isProduction=").append(isProduction).append(", fromDate=").append(fromDate)
+			.append(", toDate=").append(toDate).append("]");
+		return builder.toString();
 	}
 }

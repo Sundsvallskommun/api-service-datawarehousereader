@@ -46,6 +46,10 @@ class AgreementEntityTest {
 		final var mainAgreement = "mainAgreement";
 		final var binding = "binding";
 		final var bindingRule = "bindingRule";
+		final var isProduction = "isProduction";
+		final var netAreaId = "netAreaId";
+		final var placementStatus = "placementStatus";
+		final var siteAddress = "siteAddress";
 		final var fromDate = LocalDateTime.now().minusDays(7);
 		final var toDate = LocalDateTime.now();
 
@@ -61,6 +65,10 @@ class AgreementEntityTest {
 			.withMainAgreement(mainAgreement)
 			.withBinding(binding)
 			.withBindingRule(bindingRule)
+			.withIsProduction(isProduction)
+			.withNetAreaId(netAreaId)
+			.withPlacementStatus(placementStatus)
+			.withSiteAddress(siteAddress)
 			.withFromDate(fromDate)
 			.withToDate(toDate);
 
@@ -76,6 +84,10 @@ class AgreementEntityTest {
 		assertThat(entity.getMainAgreement()).isEqualTo(mainAgreement);
 		assertThat(entity.getBinding()).isEqualTo(binding);
 		assertThat(entity.getBindingRule()).isEqualTo(bindingRule);
+		assertThat(entity.getIsProduction()).isEqualTo(isProduction);
+		assertThat(entity.getNetAreaId()).isEqualTo(netAreaId);
+		assertThat(entity.getPlacementStatus()).isEqualTo(placementStatus);
+		assertThat(entity.getSiteAddress()).isEqualTo(siteAddress);
 		assertThat(entity.getFromDate()).isEqualTo(fromDate);
 		assertThat(entity.getToDate()).isEqualTo(toDate);
 	}
