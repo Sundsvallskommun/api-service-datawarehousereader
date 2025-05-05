@@ -16,7 +16,10 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agr
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.DESCRIPTION;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.FACILITY_ID;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.FROM_DATE;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.IS_PRODUCTION;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.MAIN_AGREEMENT;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.NET_AREA_ID;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.PLACEMENT_STATUS;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.TO_DATE;
 
 import java.time.LocalDate;
@@ -71,6 +74,22 @@ public interface AgreementSpecification {
 
 	static Specification<AgreementEntity> withBindingRule(String bindingRule) {
 		return BUILDER.buildEqualFilter(BINDING_RULE, bindingRule);
+	}
+
+	static Specification<AgreementEntity> withPlacementStatus(String placementStatus) {
+		return BUILDER.buildEqualFilter(PLACEMENT_STATUS, placementStatus);
+	}
+
+	static Specification<AgreementEntity> withNetAreaId(String netAreaId) {
+		return BUILDER.buildEqualFilter(NET_AREA_ID, netAreaId);
+	}
+
+	static Specification<AgreementEntity> withSiteAddress(String siteAddress) {
+		return BUILDER.buildEqualIgnoreCaseFilter(siteAddress, siteAddress);
+	}
+
+	static Specification<AgreementEntity> withProduction(Boolean production) {
+		return BUILDER.buildEqualFilter(IS_PRODUCTION, production);
 	}
 
 	static Specification<AgreementEntity> withFromDate(LocalDate date) {

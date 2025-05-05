@@ -24,6 +24,18 @@ public class SpecificationBuilder<T> {
 	}
 
 	/**
+	 * Method builds an equal filter if value is not null. If value is null, method returns
+	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 *
+	 * @param  attribute name that will be used in filter
+	 * @param  value     value (or null) to compare against
+	 * @return           Specification<T> matching sent in comparison
+	 */
+	public Specification<T> buildEqualIgnoreCaseFilter(String attribute, String value) {
+		return (entity, cq, cb) -> nonNull(value) ? cb.equal(cb.lower(entity.get(attribute)), value.toLowerCase()) : cb.and();
+	}
+
+	/**
 	 * Method builds a filter depending on sent in time stamps. If both values are null, method returns
 	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
 	 *
@@ -40,7 +52,8 @@ public class SpecificationBuilder<T> {
 			}
 			if (nonNull(dateTimeFrom)) {
 				return cb.greaterThanOrEqualTo(entity.get(attribute), dateTimeFrom);
-			} else if (nonNull(dateTimeTo)) {
+			}
+			if (nonNull(dateTimeTo)) {
 				return cb.lessThanOrEqualTo(entity.get(attribute), dateTimeTo);
 			}
 
@@ -66,7 +79,8 @@ public class SpecificationBuilder<T> {
 			}
 			if (nonNull(dateFrom)) {
 				return cb.greaterThanOrEqualTo(invoiceEntity.get(attribute), dateFrom);
-			} else if (nonNull(dateTom)) {
+			}
+			if (nonNull(dateTom)) {
 				return cb.lessThanOrEqualTo(invoiceEntity.get(attribute), dateTom);
 			}
 

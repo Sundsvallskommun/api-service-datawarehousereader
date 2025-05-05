@@ -45,6 +45,10 @@ class AgreementTest {
 		final var mainAgreement = false;
 		final var binding = true;
 		final var bindingRule = "bindingRule";
+		final var placementStatus = "placementStatus";
+		final var netAreaId = "netAreaId";
+		final var siteAddress = "siteAddress";
+		final var production = true;
 		final var fromDate = LocalDate.now().minusMonths(10L);
 		final var toDate = LocalDate.now();
 		final var active = Boolean.TRUE;
@@ -60,6 +64,10 @@ class AgreementTest {
 			.withMainAgreement(mainAgreement)
 			.withBinding(binding)
 			.withBindingRule(bindingRule)
+			.withPlacementStatus(placementStatus)
+			.withNetAreaId(netAreaId)
+			.withSiteAddress(siteAddress)
+			.withProduction(production)
 			.withFromDate(fromDate)
 			.withToDate(toDate)
 			.withActive(active);
@@ -75,6 +83,10 @@ class AgreementTest {
 		assertThat(agreement.getMainAgreement()).isEqualTo(mainAgreement);
 		assertThat(agreement.getBinding()).isEqualTo(binding);
 		assertThat(agreement.getBindingRule()).isEqualTo(bindingRule);
+		assertThat(agreement.getPlacementStatus()).isEqualTo(placementStatus);
+		assertThat(agreement.getNetAreaId()).isEqualTo(netAreaId);
+		assertThat(agreement.getSiteAddress()).isEqualTo(siteAddress);
+		assertThat(agreement.getProduction()).isEqualTo(production);
 		assertThat(agreement.getFromDate()).isEqualTo(fromDate);
 		assertThat(agreement.getToDate()).isEqualTo(toDate);
 		assertThat(agreement.getActive()).isEqualTo(active);

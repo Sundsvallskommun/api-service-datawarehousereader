@@ -13,6 +13,10 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withFacilityId;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withFromDate;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withMainAgreement;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withNetAreaId;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withPlacementStatus;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withProduction;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withSiteAddress;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.AgreementSpecification.withToDate;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -43,6 +47,10 @@ public interface AgreementRepository extends PagingAndSortingRepository<Agreemen
 			.and(withFacilityId(parameters.getFacilityId()))
 			.and(withFromDate(parameters.getFromDate()))
 			.and(withMainAgreement(ServiceUtil.toString(parameters.getMainAgreement())))
+			.and(withNetAreaId(parameters.getNetAreaId()))
+			.and(withSiteAddress(parameters.getSiteAddress()))
+			.and(withPlacementStatus(parameters.getPlacementStatus()))
+			.and(withProduction(parameters.getProduction()))
 			.and(withToDate(parameters.getToDate()))
 			.and(withActive(parameters.getActive())), pageable);
 	}
