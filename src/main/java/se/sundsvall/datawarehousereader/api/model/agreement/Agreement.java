@@ -41,6 +41,18 @@ public class Agreement {
 	@Schema(description = "Rule of binding if exists", example = "10 mån binding", accessMode = READ_ONLY)
 	private String bindingRule;
 
+	@Schema(description = "Placement status for agreement", example = "Tillkopplad", accessMode = READ_ONLY)
+	private String placementStatus;
+
+	@Schema(description = "Net area id for agreement", example = "SUV", accessMode = READ_ONLY)
+	private String netAreaId;
+
+	@Schema(description = "Site address connected to the agreement", example = "Första gatan 2", accessMode = READ_ONLY)
+	private String siteAddress;
+
+	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", example = "true", accessMode = READ_ONLY)
+	private Boolean production;
+
 	@Schema(description = "From-date in validity of agreement", accessMode = READ_ONLY)
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDate fromDate;
@@ -186,6 +198,58 @@ public class Agreement {
 		return this;
 	}
 
+	public String getPlacementStatus() {
+		return this.placementStatus;
+	}
+
+	public void setPlacementStatus(String placementStatus) {
+		this.placementStatus = placementStatus;
+	}
+
+	public Agreement withPlacementStatus(String placementStatus) {
+		this.placementStatus = placementStatus;
+		return this;
+	}
+
+	public String getNetAreaId() {
+		return netAreaId;
+	}
+
+	public void setNetAreaId(String netAreaId) {
+		this.netAreaId = netAreaId;
+	}
+
+	public Agreement withNetAreaId(String netAreaId) {
+		this.netAreaId = netAreaId;
+		return this;
+	}
+
+	public String getSiteAddress() {
+		return siteAddress;
+	}
+
+	public void setSiteAddress(String siteAddress) {
+		this.siteAddress = siteAddress;
+	}
+
+	public Agreement withSiteAddress(String siteAddress) {
+		this.siteAddress = siteAddress;
+		return this;
+	}
+
+	public Boolean getProduction() {
+		return this.production;
+	}
+
+	public void setProduction(Boolean production) {
+		this.production = production;
+	}
+
+	public Agreement withProduction(Boolean production) {
+		this.production = production;
+		return this;
+	}
+
 	public LocalDate getFromDate() {
 		return fromDate;
 	}
@@ -227,42 +291,26 @@ public class Agreement {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(partyId, customerNumber, facilityId, category, billingId, agreementId,
-			description, mainAgreement, binding, bindingRule, fromDate, toDate, active);
+		return Objects.hash(active, agreementId, billingId, binding, bindingRule, category, customerNumber, description, facilityId, fromDate, mainAgreement, netAreaId, partyId, placementStatus, production, siteAddress, toDate);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if ((o == null) || (getClass() != o.getClass())) {
-			return false;
-		}
-		final Agreement agreement = (Agreement) o;
-		return Objects.equals(mainAgreement, agreement.mainAgreement) && Objects.equals(binding, agreement.binding) && Objects.equals(partyId, agreement.partyId) && Objects.equals(customerNumber, agreement.customerNumber) && Objects.equals(facilityId,
-			agreement.facilityId)
-			&& Objects.equals(category, agreement.category) && Objects.equals(billingId, agreement.billingId) && Objects.equals(agreementId, agreement.agreementId) && Objects.equals(description, agreement.description) && Objects.equals(bindingRule,
-				agreement.bindingRule) && Objects.equals(fromDate, agreement.fromDate) && Objects.equals(toDate, agreement.toDate) && Objects.equals(active, agreement.active);
+	public boolean equals(Object obj) {
+		if (this == obj) { return true; }
+		if (!(obj instanceof final Agreement other)) { return false; }
+		return Objects.equals(active, other.active) && Objects.equals(agreementId, other.agreementId) && Objects.equals(billingId, other.billingId) && Objects.equals(binding, other.binding) && Objects.equals(bindingRule, other.bindingRule)
+			&& category == other.category && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(description, other.description) && Objects.equals(facilityId, other.facilityId) && Objects.equals(fromDate, other.fromDate) && Objects
+				.equals(mainAgreement, other.mainAgreement) && Objects.equals(netAreaId, other.netAreaId) && Objects.equals(partyId, other.partyId) && Objects.equals(placementStatus, other.placementStatus) && Objects.equals(production, other.production)
+			&& Objects.equals(siteAddress, other.siteAddress) && Objects.equals(toDate, other.toDate);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("Agreement [partyId=").append(partyId)
-			.append(", customerNumber=").append(customerNumber)
-			.append(", facilityId=").append(facilityId)
-			.append(", billingId=").append(billingId)
-			.append(", description=").append(description)
-			.append(", mainAgreement=").append(mainAgreement)
-			.append(", binding=").append(binding)
-			.append(", bindingRule=").append(bindingRule)
-			.append(", fromDate=").append(fromDate)
-			.append(", toDate=").append(toDate)
-			.append(", category=").append(category)
-			.append(", agreementId=").append(agreementId)
-			.append(", active=").append(active)
-			.append("]");
+		final var builder = new StringBuilder();
+		builder.append("Agreement [partyId=").append(partyId).append(", customerNumber=").append(customerNumber).append(", facilityId=").append(facilityId).append(", category=").append(category).append(", billingId=").append(billingId).append(
+			", agreementId=").append(agreementId).append(", description=").append(description).append(", mainAgreement=").append(mainAgreement).append(", binding=").append(binding).append(", bindingRule=").append(bindingRule).append(", placementStatus=")
+			.append(placementStatus).append(", netAreaId=").append(netAreaId).append(", siteAddress=").append(siteAddress).append(", production=").append(production).append(", fromDate=").append(fromDate).append(", toDate=").append(toDate).append(
+				", active=").append(active).append("]");
 		return builder.toString();
 	}
 }

@@ -20,38 +20,50 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1")
 	private String partyId;
 
-	@Schema(description = "Customer number", example = "10007")
+	@Schema(description = "Customer number", example = "10007", nullable = true)
 	private String customerNumber;
 
-	@Schema(description = "Facility Id", example = "1223334")
+	@Schema(description = "Facility Id", example = "1223334", nullable = true)
 	private String facilityId;
 
 	@ArraySchema(schema = @Schema(implementation = Category.class))
 	private List<Category> category;
 
-	@Schema(description = "Billing Id", example = "222333")
+	@Schema(description = "Billing Id", example = "222333", nullable = true)
 	private String billingId;
 
-	@Schema(description = "Agreement Id", example = "333444")
+	@Schema(description = "Agreement Id", example = "333444", nullable = true)
 	private String agreementId;
 
-	@Schema(description = "Description", example = "Avtalet avser fjärrvärme")
+	@Schema(description = "Description", example = "Avtalet avser fjärrvärme", nullable = true)
 	private String description;
 
-	@Schema(description = "Shows if agreement is a main-agreement or not", example = "true")
+	@Schema(description = "Shows if agreement is a main-agreement or not", example = "true", nullable = true)
 	private Boolean mainAgreement;
 
-	@Schema(description = "Shows if agreement include binding or not", example = "false")
+	@Schema(description = "Shows if agreement include binding or not", example = "false", nullable = true)
 	private Boolean binding;
 
-	@Schema(description = "Rule of binding if exists", example = "10 mån binding")
+	@Schema(description = "Rule of binding if exists", example = "10 mån binding", nullable = true)
 	private String bindingRule;
 
-	@Schema(description = "From-date in validity of agreement")
+	@Schema(description = "Placement status for agreement", example = "Tillkopplad", nullable = true)
+	private String placementStatus;
+
+	@Schema(description = "Net area id for agreement", example = "SUV", nullable = true)
+	private String netAreaId;
+
+	@Schema(description = "Site address connected to the agreement", example = "Första gatan 2", nullable = true)
+	private String siteAddress;
+
+	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", example = "true", nullable = true)
+	private Boolean production;
+
+	@Schema(description = "From-date in validity of agreement", nullable = true)
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate fromDate;
 
-	@Schema(description = "To-date in validity of agreement")
+	@Schema(description = "To-date in validity of agreement", nullable = true)
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate toDate;
 
@@ -192,6 +204,58 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 		return this;
 	}
 
+	public String getPlacementStatus() {
+		return this.placementStatus;
+	}
+
+	public void setPlacementStatus(String placementStatus) {
+		this.placementStatus = placementStatus;
+	}
+
+	public AgreementParameters withPlacementStatus(String placementStatus) {
+		this.placementStatus = placementStatus;
+		return this;
+	}
+
+	public String getNetAreaId() {
+		return netAreaId;
+	}
+
+	public void setNetAreaId(String netAreaId) {
+		this.netAreaId = netAreaId;
+	}
+
+	public AgreementParameters withNetAreaId(String netAreaId) {
+		this.netAreaId = netAreaId;
+		return this;
+	}
+
+	public String getSiteAddress() {
+		return siteAddress;
+	}
+
+	public void setSiteAddress(String siteAddress) {
+		this.siteAddress = siteAddress;
+	}
+
+	public AgreementParameters withSiteAddress(String siteAddress) {
+		this.siteAddress = siteAddress;
+		return this;
+	}
+
+	public Boolean getProduction() {
+		return this.production;
+	}
+
+	public void setProduction(Boolean production) {
+		this.production = production;
+	}
+
+	public AgreementParameters withProduction(Boolean production) {
+		this.production = production;
+		return this;
+	}
+
 	public LocalDate getFromDate() {
 		return fromDate;
 	}
@@ -232,51 +296,29 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
-			return true;
-		}
-		if ((o == null) || (getClass() != o.getClass())) {
-			return false;
-		}
-		if (!super.equals(o)) {
-			return false;
-		}
-		final AgreementParameters that = (AgreementParameters) o;
-		return Objects.equals(mainAgreement, that.mainAgreement) && Objects.equals(binding, that.binding) && Objects.equals(partyId, that.partyId) &&
-			Objects.equals(customerNumber, that.customerNumber) && Objects.equals(facilityId, that.facilityId) &&
-			Objects.equals(category, that.category) && Objects.equals(billingId, that.billingId) && Objects.equals(agreementId, that.agreementId) &&
-			Objects.equals(description, that.description) && Objects.equals(bindingRule, that.bindingRule) &&
-			Objects.equals(fromDate, that.fromDate) && Objects.equals(toDate, that.toDate) && Objects.equals(active, that.active);
+	public int hashCode() {
+		final var prime = 31;
+		final var result = super.hashCode();
+		return prime * result + Objects.hash(active, agreementId, billingId, binding, bindingRule, category, customerNumber, description, facilityId, fromDate, mainAgreement, netAreaId, partyId, placementStatus, production, siteAddress, toDate);
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), partyId, customerNumber, facilityId, category, billingId, agreementId, description,
-			mainAgreement, binding, bindingRule, fromDate, toDate, active);
+	public boolean equals(Object obj) {
+		if (this == obj) { return true; }
+		if (!super.equals(obj) || !(obj instanceof final AgreementParameters other)) { return false; }
+		return Objects.equals(active, other.active) && Objects.equals(agreementId, other.agreementId) && Objects.equals(billingId, other.billingId) && Objects.equals(binding, other.binding) && Objects.equals(bindingRule, other.bindingRule) && Objects
+			.equals(category, other.category) && Objects.equals(customerNumber, other.customerNumber) && Objects.equals(description, other.description) && Objects.equals(facilityId, other.facilityId) && Objects.equals(fromDate, other.fromDate) && Objects
+				.equals(mainAgreement, other.mainAgreement) && Objects.equals(netAreaId, other.netAreaId) && Objects.equals(partyId, other.partyId) && Objects.equals(placementStatus, other.placementStatus) && Objects.equals(production, other.production)
+			&& Objects.equals(siteAddress, other.siteAddress) && Objects.equals(toDate, other.toDate);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("AgreementParameters [partyId=").append(partyId)
-			.append(", customerNumber=").append(customerNumber)
-			.append(", facilityId=").append(facilityId)
-			.append(", category=").append(category)
-			.append(", billingId=").append(billingId)
-			.append(", agreementId=").append(agreementId)
-			.append(", description=").append(description)
-			.append(", mainAgreement=").append(mainAgreement)
-			.append(", binding=").append(binding)
-			.append(", bindingRule=").append(bindingRule)
-			.append(", fromDate=").append(fromDate)
-			.append(", toDate=").append(toDate)
-			.append(", active=").append(active)
-			.append(", page=").append(page)
-			.append(", limit=").append(limit)
-			.append(", sortBy=").append(sortBy)
-			.append(", sortDirection=").append(sortDirection)
-			.append("]");
+		final var builder = new StringBuilder();
+		builder.append("AgreementParameters [partyId=").append(partyId).append(", customerNumber=").append(customerNumber).append(", facilityId=").append(facilityId).append(", category=").append(category).append(", billingId=").append(billingId).append(
+			", agreementId=").append(agreementId).append(", description=").append(description).append(", mainAgreement=").append(mainAgreement).append(", binding=").append(binding).append(", bindingRule=").append(bindingRule).append(", placementStatus=")
+			.append(placementStatus).append(", netAreaId=").append(netAreaId).append(", siteAddress=").append(siteAddress).append(", production=").append(production).append(", fromDate=").append(fromDate).append(", toDate=").append(toDate).append(
+				", active=").append(active).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append(", page=").append(page).append(", limit=").append(limit).append("]");
 		return builder.toString();
 	}
 
