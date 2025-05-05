@@ -14,6 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.cache.annotation.Cacheable;
 
 @ExtendWith(MockitoExtension.class)
 class PartyIntegrationTest {
@@ -27,6 +28,11 @@ class PartyIntegrationTest {
 	@AfterEach
 	void verifyNoMoreMockInterations() {
 		verifyNoMoreInteractions(partyClientMock);
+	}
+
+	@Test
+	void testCacheableAnnotationExistsOnLegalIdMethod() throws Exception {
+		assertThat(PartyIntegration.class.getMethod("getLegalId", PartyType.class, String.class, String.class).getAnnotation(Cacheable.class).value()).containsExactly("legalIds");
 	}
 
 	@Test
@@ -58,6 +64,11 @@ class PartyIntegrationTest {
 		// Assert and verify
 		assertThat(result).isEmpty();
 		verify(partyClientMock).getLegalId(PartyType.PRIVATE, municipalityId, partyId);
+	}
+
+	@Test
+	void testCacheableAnnotationExistsOnPartyIdMethod() throws Exception {
+		assertThat(PartyIntegration.class.getMethod("getPartyId", PartyType.class, String.class, String.class).getAnnotation(Cacheable.class).value()).containsExactly("partyIds");
 	}
 
 	@Test
