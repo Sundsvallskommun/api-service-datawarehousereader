@@ -59,6 +59,21 @@ public class ServiceUtil {
 	}
 
 	/**
+	 * Method for converting String to Boolean
+	 *
+	 * @param  string The string to be converted (may be null) where case insensitive comparison to value 'true'
+	 *                after string trimming will result in true. All other values execpt null will be converted
+	 *                to false.
+	 * @return        Boolean representation of sent in string or null if string equals null
+	 */
+	public static Boolean toBoolean(String string) {
+		return ofNullable(string)
+			.map(String::trim)
+			.map(Boolean::valueOf)
+			.orElse(null);
+	}
+
+	/**
 	 * Method for converting Boolean to String
 	 *
 	 * @param  bool boolean

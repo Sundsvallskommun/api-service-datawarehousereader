@@ -6,7 +6,6 @@ import static se.sundsvall.datawarehousereader.integration.party.configuration.P
 import generated.se.sundsvall.party.PartyType;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.Optional;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +25,6 @@ public interface PartyClient {
 	 *                                              provided partyType and partyId if found.
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
-	@Cacheable("legalIds")
 	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = TEXT_PLAIN_VALUE)
 	Optional<String> getLegalId(
 		@PathVariable("type") PartyType partyType,
@@ -44,7 +42,6 @@ public interface PartyClient {
 	 *                                              provided partyType and legalId if found.
 	 * @throws org.zalando.problem.ThrowableProblem
 	 */
-	@Cacheable("partyIds")
 	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = TEXT_PLAIN_VALUE)
 	Optional<String> getPartyId(
 		@PathVariable("type") PartyType partyType,
