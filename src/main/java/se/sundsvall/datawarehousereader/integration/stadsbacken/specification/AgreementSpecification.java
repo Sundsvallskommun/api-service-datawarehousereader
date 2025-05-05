@@ -20,6 +20,7 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agr
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.MAIN_AGREEMENT;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.NET_AREA_ID;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.PLACEMENT_STATUS;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.SITE_ADDRESS;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.TO_DATE;
 
 import java.time.LocalDate;
@@ -85,11 +86,11 @@ public interface AgreementSpecification {
 	}
 
 	static Specification<AgreementEntity> withSiteAddress(String siteAddress) {
-		return BUILDER.buildEqualIgnoreCaseFilter(siteAddress, siteAddress);
+		return BUILDER.buildEqualIgnoreCaseFilter(SITE_ADDRESS, siteAddress);
 	}
 
 	static Specification<AgreementEntity> withProduction(Boolean production) {
-		return BUILDER.buildEqualFilter(IS_PRODUCTION, production);
+		return BUILDER.buildEqualFilter(IS_PRODUCTION, ofNullable(production).map(String::valueOf).orElse(null));
 	}
 
 	static Specification<AgreementEntity> withFromDate(LocalDate date) {

@@ -1,7 +1,5 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
-
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
@@ -22,50 +20,50 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1")
 	private String partyId;
 
-	@Schema(description = "Customer number", example = "10007")
+	@Schema(description = "Customer number", example = "10007", nullable = true)
 	private String customerNumber;
 
-	@Schema(description = "Facility Id", example = "1223334")
+	@Schema(description = "Facility Id", example = "1223334", nullable = true)
 	private String facilityId;
 
 	@ArraySchema(schema = @Schema(implementation = Category.class))
 	private List<Category> category;
 
-	@Schema(description = "Billing Id", example = "222333")
+	@Schema(description = "Billing Id", example = "222333", nullable = true)
 	private String billingId;
 
-	@Schema(description = "Agreement Id", example = "333444")
+	@Schema(description = "Agreement Id", example = "333444", nullable = true)
 	private String agreementId;
 
-	@Schema(description = "Description", example = "Avtalet avser fjärrvärme")
+	@Schema(description = "Description", example = "Avtalet avser fjärrvärme", nullable = true)
 	private String description;
 
-	@Schema(description = "Shows if agreement is a main-agreement or not", example = "true")
+	@Schema(description = "Shows if agreement is a main-agreement or not", example = "true", nullable = true)
 	private Boolean mainAgreement;
 
-	@Schema(description = "Shows if agreement include binding or not", example = "false")
+	@Schema(description = "Shows if agreement include binding or not", example = "false", nullable = true)
 	private Boolean binding;
 
-	@Schema(description = "Rule of binding if exists", example = "10 mån binding")
+	@Schema(description = "Rule of binding if exists", example = "10 mån binding", nullable = true)
 	private String bindingRule;
 
-	@Schema(description = "Placement status for agreement", example = "Tillkopplad", accessMode = READ_ONLY)
+	@Schema(description = "Placement status for agreement", example = "Tillkopplad", nullable = true)
 	private String placementStatus;
 
-	@Schema(description = "Net area id for agreement", example = "SUV", accessMode = READ_ONLY)
+	@Schema(description = "Net area id for agreement", example = "SUV", nullable = true)
 	private String netAreaId;
 
-	@Schema(description = "Site address connected to the agreement", example = "Första gatan 2", accessMode = READ_ONLY)
+	@Schema(description = "Site address connected to the agreement", example = "Första gatan 2", nullable = true)
 	private String siteAddress;
 
-	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", example = "true", accessMode = READ_ONLY)
+	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", example = "true", nullable = true)
 	private Boolean production;
 
-	@Schema(description = "From-date in validity of agreement")
+	@Schema(description = "From-date in validity of agreement", nullable = true)
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate fromDate;
 
-	@Schema(description = "To-date in validity of agreement")
+	@Schema(description = "To-date in validity of agreement", nullable = true)
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate toDate;
 
@@ -300,7 +298,7 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 	@Override
 	public int hashCode() {
 		final var prime = 31;
-		var result = super.hashCode();
+		final var result = super.hashCode();
 		return prime * result + Objects.hash(active, agreementId, billingId, binding, bindingRule, category, customerNumber, description, facilityId, fromDate, mainAgreement, netAreaId, partyId, placementStatus, production, siteAddress, toDate);
 	}
 
