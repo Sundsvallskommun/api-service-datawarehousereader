@@ -153,7 +153,7 @@ class AgreementResourceFailuresTest {
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(tuple(
 			"agreementParameters",
-			"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [mainAgreement, billingId, facilityId, toDate, description, binding, uuid, fromDate, agreementId, customerId, customerOrgId, category, bindingRule]."));
+			"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [mainAgreement, billingId, facilityId, isProduction, toDate, description, binding, siteAddress, uuid, fromDate, netAreaId, agreementId, customerId, customerOrgId, placementStatus, category, bindingRule]."));
 
 		verifyNoInteractions(serviceMock);
 	}
