@@ -9,6 +9,10 @@
 			"description": "Fastpris 2 år",
 			"binding": false,
 			"active": true,
+			"placementStatus": "Tillkopplad",
+			"netAreaId": "SUV",
+			"siteAddress": "Storgatan 12",
+			"production": true,
 			"partyId": "53A17B25-0E65-487A-A435-ED52809C386C",
 			"customerNumber": "632819",
 			"category": "DISTRICT_HEATING"

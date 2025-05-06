@@ -12,15 +12,15 @@ import java.util.Optional;
 import org.springframework.stereotype.Component;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ThrowableProblem;
-import se.sundsvall.datawarehousereader.integration.party.PartyClient;
+import se.sundsvall.datawarehousereader.integration.party.PartyIntegration;
 
 @Component
 public class PartyProvider {
 
-	private final PartyClient partyClient;
+	private final PartyIntegration partyIntegration;
 
-	PartyProvider(PartyClient partyClient) {
-		this.partyClient = partyClient;
+	PartyProvider(PartyIntegration partyIntegration) {
+		this.partyIntegration = partyIntegration;
 	}
 
 	public String translateToLegalId(String municipalityId, String partyId) {
@@ -36,7 +36,7 @@ public class PartyProvider {
 
 	private Optional<String> getLegalId(PartyType partyType, String municipalityId, String partyId) {
 		try {
-			return partyClient.getLegalId(partyType, municipalityId, partyId);
+			return partyIntegration.getLegalId(partyType, municipalityId, partyId);
 		} catch (final ThrowableProblem e) {
 			if (e.getStatus() == NOT_FOUND) {
 				return empty();
@@ -47,7 +47,7 @@ public class PartyProvider {
 
 	private Optional<String> getPartyId(PartyType partyType, String municipalityId, String legalId) {
 		try {
-			return partyClient.getPartyId(partyType, municipalityId, legalId);
+			return partyIntegration.getPartyId(partyType, municipalityId, legalId);
 		} catch (final ThrowableProblem e) {
 			if (e.getStatus() == NOT_FOUND) {
 				return empty();

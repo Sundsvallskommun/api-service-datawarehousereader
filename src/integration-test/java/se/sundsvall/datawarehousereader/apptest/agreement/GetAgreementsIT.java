@@ -54,6 +54,10 @@ class GetAgreementsIT extends AbstractAppTest {
 				&binding=false\
 				&bindingRule=Fastpris 2 år\
 				&description=Fastpris 2 år\
+				&placementStatus=Frånkopplad\
+				&netAreaId=SUV\
+				&siteAddress=Långgatan 1\
+				&production=true\
 				&fromDate=2022-01-01\
 				&toDate=2022-07-01""")
 			.withHttpMethod(GET)
@@ -77,6 +81,10 @@ class GetAgreementsIT extends AbstractAppTest {
 				&binding=false\
 				&bindingRule=Fastpris 2 år\
 				&description=Fastpris 2 år\
+				&placementStatus=Frånkopplad\
+				&netAreaId=SUV\
+				&siteAddress=Långgatan 1\
+				&production=true\
 				&fromDate=2022-01-01\
 				&toDate=2022-07-01""")
 			.withHttpMethod(GET)

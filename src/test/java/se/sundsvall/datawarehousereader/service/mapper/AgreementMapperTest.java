@@ -29,6 +29,10 @@ class AgreementMapperTest {
 	private static final Boolean MAIN_AGREEMENT = true;
 	private static final Boolean BINDING = false;
 	private static final String BINDING_RULE = "bindingRule";
+	private static final String PLACEMENT_STATUS = "placementStatus";
+	private static final String NET_AREA_ID = "netAreaId";
+	private static final String SITE_ADDRESS = "siteAddress";
+	private static final String PRODUCTION = "false";
 	private static final LocalDate FROM_DATE = LocalDate.now().minusMonths(10L);
 	private static final LocalDate TO_DATE = LocalDate.now();
 
@@ -56,6 +60,10 @@ class AgreementMapperTest {
 			.withUuid(PARTY_ID)
 			.withFacilityId(FACILITY_ID)
 			.withDescription(DESCRIPTION)
+			.withPlacementStatus(PLACEMENT_STATUS)
+			.withNetAreaId(NET_AREA_ID)
+			.withSiteAddress(SITE_ADDRESS)
+			.withIsProduction(PRODUCTION)
 			.withFromDate(FROM_DATE.atStartOfDay())
 			.withToDate(TO_DATE.atStartOfDay());
 
@@ -72,6 +80,10 @@ class AgreementMapperTest {
 				Agreement::getBinding,
 				Agreement::getBindingRule,
 				Agreement::getCategory,
+				Agreement::getPlacementStatus,
+				Agreement::getNetAreaId,
+				Agreement::getSiteAddress,
+				Agreement::getProduction,
 				Agreement::getFromDate,
 				Agreement::getToDate,
 				Agreement::getDescription,
@@ -86,11 +98,17 @@ class AgreementMapperTest {
 				BINDING,
 				BINDING_RULE,
 				CATEGORY,
+				PLACEMENT_STATUS,
+				NET_AREA_ID,
+				SITE_ADDRESS,
+				Boolean.FALSE,
 				FROM_DATE,
 				TO_DATE,
 				DESCRIPTION,
 				FACILITY_ID,
-				true));
+				Boolean.TRUE));
+
+		assertThat(result.getFirst()).hasNoNullFieldsOrProperties();
 	}
 
 	@Test

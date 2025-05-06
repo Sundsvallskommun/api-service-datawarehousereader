@@ -5,7 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class ServiceUtilTest {
 
@@ -67,8 +71,7 @@ class ServiceUtilTest {
 
 	@Test
 	void testStringToInteger() {
-		final String nullString = null;
-		assertThat(ServiceUtil.toInteger(nullString)).isNull();
+		assertThat(ServiceUtil.toInteger((String) null)).isNull();
 		assertThat(ServiceUtil.toInteger("1337")).isEqualTo(Integer.valueOf(1337));
 	}
 
@@ -80,16 +83,32 @@ class ServiceUtilTest {
 
 	@Test
 	void testIntegerToString() {
-		final Integer nullInteger = null;
-		assertThat(ServiceUtil.toString(nullInteger)).isNull();
+		assertThat(ServiceUtil.toString((Integer) null)).isNull();
 		assertThat(ServiceUtil.toString(1337)).isEqualTo("1337");
 	}
 
 	@Test
 	void testBooleanToString() {
-		final Boolean nullBoolean = null;
-		assertThat(ServiceUtil.toString(nullBoolean)).isNull();
+		assertThat(ServiceUtil.toString((Boolean) null)).isNull();
 		assertThat(ServiceUtil.toString(Boolean.TRUE)).isEqualTo("true");
+		assertThat(ServiceUtil.toString(Boolean.FALSE)).isEqualTo("false");
+	}
+
+	private static Stream<Arguments> stringToBooleanAgrumentProvider() {
+		return Stream.of(
+			Arguments.of("true", Boolean.TRUE),
+			Arguments.of("TRUE", Boolean.TRUE),
+			Arguments.of("TrUe", Boolean.TRUE),
+			Arguments.of(" true ", Boolean.TRUE),
+			Arguments.of("false", Boolean.FALSE),
+			Arguments.of("trie", Boolean.FALSE),
+			Arguments.of(null, null));
+	}
+
+	@ParameterizedTest
+	@MethodSource("stringToBooleanAgrumentProvider")
+	void testStringToBoolean(String value, Boolean expected) {
+		assertThat(ServiceUtil.toBoolean(value)).isEqualTo(expected);
 	}
 
 	@Test

@@ -24,7 +24,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.zalando.problem.Problem;
 import org.zalando.problem.ThrowableProblem;
-import se.sundsvall.datawarehousereader.integration.party.PartyClient;
+import se.sundsvall.datawarehousereader.integration.party.PartyIntegration;
 
 @ExtendWith(MockitoExtension.class)
 class PartyProviderTest {
@@ -34,7 +34,7 @@ class PartyProviderTest {
 	private static final String UUID = randomUUID().toString();
 
 	@Mock
-	private PartyClient partyClientMock;
+	private PartyIntegration partyIntegrationMock;
 
 	@InjectMocks
 	private PartyProvider provider;
@@ -43,55 +43,55 @@ class PartyProviderTest {
 	@EnumSource(PartyType.class)
 	@MockitoSettings(strictness = LENIENT)
 	void translateToLegalId(PartyType partyType) {
-		when(partyClientMock.getLegalId(partyType, MUNICIPALITY_ID, UUID)).thenReturn(Optional.of(LEGAL_ID));
+		when(partyIntegrationMock.getLegalId(partyType, MUNICIPALITY_ID, UUID)).thenReturn(Optional.of(LEGAL_ID));
 
 		assertThat(provider.translateToLegalId(MUNICIPALITY_ID, UUID)).isEqualTo(LEGAL_ID);
 
 		switch (partyType) {
 			case PRIVATE -> {
-				verify(partyClientMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
-				verify(partyClientMock, never()).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
+				verify(partyIntegrationMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
+				verify(partyIntegrationMock, never()).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
 			}
 			case ENTERPRISE -> {
-				verify(partyClientMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
-				verify(partyClientMock).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
+				verify(partyIntegrationMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
+				verify(partyIntegrationMock).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
 			}
 		}
 	}
 
 	@Test
 	void translateToLegalIdWhenPartyIdNotFound() {
-		when(partyClientMock.getLegalId(PRIVATE, MUNICIPALITY_ID, UUID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
-		when(partyClientMock.getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
+		when(partyIntegrationMock.getLegalId(PRIVATE, MUNICIPALITY_ID, UUID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
+		when(partyIntegrationMock.getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
 
 		final var exception = assertThrows(ThrowableProblem.class, () -> provider.translateToLegalId(MUNICIPALITY_ID, UUID));
 
 		assertThat(exception.getStatus()).isEqualTo(NOT_FOUND);
 		assertThat(exception.getMessage()).isEqualTo(String.format("Not Found: PartyId '%s' could not be found as a private customer or an enterprise customer", UUID));
 
-		verify(partyClientMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
-		verify(partyClientMock).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
+		verify(partyIntegrationMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
+		verify(partyIntegrationMock).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
 	}
 
 	@Test
 	void translateToLegalIdWhenPartyIdNotFoundForPrivate() {
-		when(partyClientMock.getLegalId(PRIVATE, MUNICIPALITY_ID, UUID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
-		when(partyClientMock.getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID)).thenReturn(Optional.of(LEGAL_ID));
+		when(partyIntegrationMock.getLegalId(PRIVATE, MUNICIPALITY_ID, UUID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
+		when(partyIntegrationMock.getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID)).thenReturn(Optional.of(LEGAL_ID));
 
 		assertThat(provider.translateToLegalId(MUNICIPALITY_ID, UUID)).isEqualTo(LEGAL_ID);
 
-		verify(partyClientMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
-		verify(partyClientMock).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
+		verify(partyIntegrationMock).getLegalId(PRIVATE, MUNICIPALITY_ID, UUID);
+		verify(partyIntegrationMock).getLegalId(ENTERPRISE, MUNICIPALITY_ID, UUID);
 	}
 
 	@ParameterizedTest
 	@EnumSource(PartyType.class)
 	void translateToPartyId(PartyType partyType) {
-		when(partyClientMock.getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID)).thenReturn(Optional.of(UUID));
+		when(partyIntegrationMock.getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID)).thenReturn(Optional.of(UUID));
 
 		assertThat(provider.translateToPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID)).isEqualTo(UUID);
 
-		verify(partyClientMock).getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID);
+		verify(partyIntegrationMock).getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID);
 	}
 
 	@ParameterizedTest
@@ -102,18 +102,18 @@ class PartyProviderTest {
 		assertThat(exception.getStatus()).isEqualTo(INTERNAL_SERVER_ERROR);
 		assertThat(exception.getMessage()).isEqualTo("Internal Server Error: Could not determine partyId for customer connected to returned data");
 
-		verify(partyClientMock).getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID);
+		verify(partyIntegrationMock).getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID);
 	}
 
 	@ParameterizedTest
 	@EnumSource(PartyType.class)
 	void translateToPartyIdWhen404FromParty(PartyType partyType) {
-		when(partyClientMock.getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
+		when(partyIntegrationMock.getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID)).thenThrow(Problem.valueOf(NOT_FOUND, "Not Found"));
 
 		final var exception = assertThrows(ThrowableProblem.class, () -> provider.translateToPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID));
 
 		assertThat(exception.getStatus()).isEqualTo(INTERNAL_SERVER_ERROR);
 		assertThat(exception.getMessage()).isEqualTo("Internal Server Error: Could not determine partyId for customer connected to returned data");
-		verify(partyClientMock).getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID);
+		verify(partyIntegrationMock).getPartyId(partyType, MUNICIPALITY_ID, LEGAL_ID);
 	}
 }

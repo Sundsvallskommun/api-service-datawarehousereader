@@ -36,6 +36,10 @@ public class AgreementMapper {
 			.withBindingRule(entity.getBindingRule())
 			.withMainAgreement(Boolean.valueOf(entity.getMainAgreement()))
 			.withFacilityId(entity.getFacilityId())
+			.withPlacementStatus(entity.getPlacementStatus())
+			.withProduction(ServiceUtil.toBoolean(entity.getIsProduction()))
+			.withNetAreaId(entity.getNetAreaId())
+			.withSiteAddress(ofNullable(entity.getSiteAddress()).map(String::trim).orElse(null))
 			.withFromDate(toLocalDate(entity.getFromDate()))
 			.withToDate(toLocalDate(entity.getToDate()))
 			.withActive(isActive(entity));
