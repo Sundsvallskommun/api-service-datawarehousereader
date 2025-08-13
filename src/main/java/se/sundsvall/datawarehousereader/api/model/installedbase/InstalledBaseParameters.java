@@ -3,12 +3,14 @@ package se.sundsvall.datawarehousereader.api.model.installedbase;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.Objects;
+import org.springdoc.core.annotations.ParameterObject;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Installed base request parameters model")
 @ValidSortByProperty(InstalledBaseItemEntity.class)
+@ParameterObject
 public class InstalledBaseParameters extends AbstractParameterPagingAndSortingBase {
 
 	@Schema(description = "Company", example = "Sundsvall Energi AB")
