@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
@@ -14,6 +15,7 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Agreement request parameters model")
 @ValidSortByProperty(AgreementEntity.class)
+@ParameterObject
 public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ValidUuid(nullable = true)

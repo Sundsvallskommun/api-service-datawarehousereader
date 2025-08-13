@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
@@ -14,6 +15,7 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Invoice request parameters model")
 @ValidSortByProperty(InvoiceEntity.class)
+@ParameterObject
 public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("invoiceDate");

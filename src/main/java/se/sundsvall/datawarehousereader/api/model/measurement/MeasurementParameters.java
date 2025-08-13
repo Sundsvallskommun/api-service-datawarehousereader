@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Objects;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
@@ -13,6 +14,7 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Measurement request parameters model")
 @ValidSortByProperty(MeasurementElectricityDayEntity.class)
+@ParameterObject
 public class MeasurementParameters extends AbstractParameterPagingAndSortingBase {
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("measurementTimestamp");

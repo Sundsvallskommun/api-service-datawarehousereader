@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 import java.util.Objects;
+import org.springdoc.core.annotations.ParameterObject;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
@@ -11,6 +12,7 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Customer engagement request parameters model")
 @ValidSortByProperty(CustomerEntity.class)
+@ParameterObject
 public class CustomerEngagementParameters extends AbstractParameterPagingAndSortingBase {
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("customerOrgId");
