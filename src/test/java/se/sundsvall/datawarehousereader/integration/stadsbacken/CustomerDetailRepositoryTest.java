@@ -56,10 +56,10 @@ class CustomerDetailRepositoryTest {
 				CustomerDetailEntity::isActive,
 				CustomerDetailEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
-				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D79", 123454, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag1", "Test Testorsson", "c/o Testorsson", "Testvägen12 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, null),
-				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D80", 123455, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag2", "Test Testorsson", "c/o Testorsson", "Testvägen11 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, null));
+				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D79", 123454, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag1", "Test Testorsson", "c/o Testorsson", "Testvägen12 c lgh 1005", "85234", "Sundsvall", "+46701740605", null,
+					"+46701740605", null, null, false, true, true, null),
+				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D80", 123455, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag2", "Test Testorsson", "c/o Testorsson", "Testvägen11 c lgh 1005", "85234", "Sundsvall", "+46701740605", null,
+					"+46701740605", null, null, false, true, true, null));
 	}
 
 	@Test
@@ -93,12 +93,12 @@ class CustomerDetailRepositoryTest {
 				CustomerDetailEntity::isActive,
 				CustomerDetailEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
-				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D79", 123454, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag1", "Test Testorsson", "c/o Testorsson", "Testvägen12 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, null),
-				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D80", 123455, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag2", "Test Testorsson", "c/o Testorsson", "Testvägen11 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, null),
-				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D81", 123456, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag", "Test Testorsson", "c/o Testorsson", "Testvägen10 c lgh 1005", "85234", "Sundsvall", "+46761234567", null,
-					"+46761234567", null, null, false, true, true, null));
+				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D79", 123454, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag1", "Test Testorsson", "c/o Testorsson", "Testvägen12 c lgh 1005", "85234", "Sundsvall", "+46701740605", null,
+					"+46701740605", null, null, false, true, true, null),
+				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D80", 123455, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag2", "Test Testorsson", "c/o Testorsson", "Testvägen11 c lgh 1005", "85234", "Sundsvall", "+46701740605", null,
+					"+46701740605", null, null, false, true, true, null),
+				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D81", 123456, "102000-0000", "5564786647", "Sundsvall Energi AB", 2, "Företag", "Test Testorsson", "c/o Testorsson", "Testvägen10 c lgh 1005", "85234", "Sundsvall", "+46701740605", null,
+					"+46701740605", null, null, false, true, true, null));
 	}
 
 	@Test
@@ -132,9 +132,9 @@ class CustomerDetailRepositoryTest {
 				CustomerDetailEntity::isActive,
 				CustomerDetailEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
-				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D90", 123414, "20070101-1234", "5565027225", "Some other Elnät", 1, "Privatperson", "Test Testorsson3", null, "Testvägen106", "85234", "Sundsvall", null, "+46761234567",
+				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D90", 123414, "20070101-1234", "5565027225", "Some other Elnät", 1, "Privatperson", "Test Testorsson3", null, "Testvägen106", "85234", "Sundsvall", null, "+46701740605",
 					null, null, "test3@sundsvall.com", false, true, false, LocalDateTime.of(2095, 1, 1, 0, 0)),
-				tuple(null, 123415, "20070101-1234", "5565027225", "Some other Elnät", 1, "Privatperson", "Test Testorsson4", null, "Testvägen106", "85234", "Sundsvall", null, "+46761234567",
+				tuple(null, 123415, "20070101-1234", "5565027225", "Some other Elnät", 1, "Privatperson", "Test Testorsson4", null, "Testvägen106", "85234", "Sundsvall", null, "+46701740605",
 					null, null, "test4@sundsvall.com", false, true, false, LocalDateTime.of(2095, 1, 1, 0, 0)));
 	}
 }
