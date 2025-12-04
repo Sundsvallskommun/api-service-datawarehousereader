@@ -6,6 +6,7 @@ import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 
+import java.util.Collections;
 import java.util.List;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
@@ -34,9 +35,9 @@ public class InvoiceMapper {
 			.withCustomerNumber(ServiceUtil.toString(entity.getCustomerId()))
 			.withCustomerType(fromValue(entity.getCustomerType(), INTERNAL_SERVER_ERROR, UNKNOWN_CUSTOMER_TYPE))
 			.withDueDate(entity.getDueDate())
-			.withFacilityId(entity.getFacilityId())
+			.withFacilityIds(Collections.singleton(entity.getFacilityId()))
 			.withInvoiceDate(entity.getInvoiceDate())
-			.withInvoiceDescription(entity.getInvoiceDescription())
+			.withInvoiceDescription(Collections.singleton(entity.getInvoiceDescription()))
 			.withInvoiceName(entity.getInvoiceName())
 			.withInvoiceNumber(entity.getInvoiceNumber())
 			.withInvoiceStatus(entity.getInvoiceStatus())

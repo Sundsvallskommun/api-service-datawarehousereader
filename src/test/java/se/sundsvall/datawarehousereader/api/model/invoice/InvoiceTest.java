@@ -13,6 +13,8 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -48,8 +50,10 @@ class InvoiceTest {
 		final var customerType = CustomerType.PRIVATE;
 		final var dueDate = now();
 		final var facilityId = "facilityId";
+		final var facilityIds = new HashSet<>(List.of(facilityId));
 		final var invoiceDate = now().minusDays(15);
 		final var invoiceDescription = "invoiceDescription";
+		final var invoiceDescriptions = new HashSet<>(List.of(invoiceDescription));
 		final var invoiceName = "invoiceName";
 		final var invoiceNumber = 4321L;
 		final var invoiceStatus = "invoiceStatus";
@@ -76,9 +80,9 @@ class InvoiceTest {
 			.withCustomerNumber(customerNumber)
 			.withCustomerType(customerType)
 			.withDueDate(dueDate)
-			.withFacilityId(facilityId)
+			.withFacilityIds(new HashSet<>(facilityIds))
 			.withInvoiceDate(invoiceDate)
-			.withInvoiceDescription(invoiceDescription)
+			.withInvoiceDescription(new HashSet<>(invoiceDescriptions))
 			.withInvoiceName(invoiceName)
 			.withInvoiceNumber(invoiceNumber)
 			.withInvoiceStatus(invoiceStatus)
@@ -107,9 +111,9 @@ class InvoiceTest {
 				Invoice::getCustomerNumber,
 				Invoice::getCustomerType,
 				Invoice::getDueDate,
-				Invoice::getFacilityId,
+				Invoice::getFacilityIds,
 				Invoice::getInvoiceDate,
-				Invoice::getInvoiceDescription,
+				Invoice::getInvoiceDescriptions,
 				Invoice::getInvoiceName,
 				Invoice::getInvoiceNumber,
 				Invoice::getInvoiceStatus,
@@ -135,9 +139,9 @@ class InvoiceTest {
 				customerNumber,
 				customerType,
 				dueDate,
-				facilityId,
+				facilityIds,
 				invoiceDate,
-				invoiceDescription,
+				invoiceDescriptions,
 				invoiceName,
 				invoiceNumber,
 				invoiceStatus,

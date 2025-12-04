@@ -1,73 +1,81 @@
 {
 	"invoices": [
 		{
-			"invoiceName": "139342596.pdf",
-			"ocrNumber": 139342596,
-			"invoiceDescription": "El",
-			"city": "SUNDSVALL",
-			"administration": "Sundsvall Elnät",
-			"dueDate": "2019-11-11",
+			"customerNumber": "10335",
 			"customerType": "Enterprise",
-			"street": "Fakturor",
-			"invoiceNumber": 139342596,
+			"facilityIds": [
+				"735999109122811214"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 767880198,
+			"invoiceDate": "2019-10-08",
+			"invoiceName": "767880198.pdf",
 			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 767880198,
+			"dueDate": "2019-11-07",
+			"totalAmount": 239.0000,
+			"amountVatIncluded": 238.8700,
+			"amountVatExcluded": 191.1000,
+			"vatEligibleAmount": 191.1000,
+			"rounding": 0.1300,
+			"vat": 191.1000,
+			"reversedVat": false,
 			"currency": "sek",
 			"organizationGroup": "stadsbacken",
-			"facilityId": "735999109122811214",
 			"organizationNumber": "5565027223",
-			"amountVatIncluded": 251.85,
-			"vat": 201.48,
-			"vatEligibleAmount": 201.48,
-			"rounding": 0.15,
-			"customerNumber": "10335",
-			"invoiceDate": "2019-10-10",
-			"totalAmount": 252,
-			"reversedVat": false,
-			"pdfAvailable": false,
-			"careOf": "Fastighetsförmedling AB",
+			"administration": "Sundsvall Elnät",
+			"street": "Fakturor",
 			"postCode": "85185",
-			"invoiceStatus": "Skickad",
-			"amountVatExcluded": 201.48
+			"city": "SUNDSVALL",
+			"careOf": "Fastighetsförmedling AB",
+			"pdfAvailable": false
 		},
 		{
-			"invoiceName": "767880198.pdf",
-			"ocrNumber": 767880198,
-			"invoiceDescription": "El",
-			"city": "SUNDSVALL",
-			"administration": "Sundsvall Elnät",
-			"dueDate": "2019-11-07",
+			"customerNumber": "10335",
 			"customerType": "Enterprise",
-			"street": "Fakturor",
-			"invoiceNumber": 767880198,
+			"facilityIds": [
+				"735999109122811214"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 139342596,
+			"invoiceDate": "2019-10-10",
+			"invoiceName": "139342596.pdf",
 			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 139342596,
+			"dueDate": "2019-11-11",
+			"totalAmount": 252.0000,
+			"amountVatIncluded": 251.8500,
+			"amountVatExcluded": 201.4800,
+			"vatEligibleAmount": 201.4800,
+			"rounding": 0.1500,
+			"vat": 201.4800,
+			"reversedVat": false,
 			"currency": "sek",
 			"organizationGroup": "stadsbacken",
-			"facilityId": "735999109122811214",
 			"organizationNumber": "5565027223",
-			"amountVatIncluded": 238.87,
-			"vat": 191.1,
-			"vatEligibleAmount": 191.1,
-			"rounding": 0.13,
-			"customerNumber": "10335",
-			"invoiceDate": "2019-10-08",
-			"totalAmount": 239,
-			"reversedVat": false,
-			"pdfAvailable": false,
-			"careOf": "Fastighetsförmedling AB",
+			"administration": "Sundsvall Elnät",
+			"street": "Fakturor",
 			"postCode": "85185",
-			"invoiceStatus": "Skickad",
-			"amountVatExcluded": 191.1
+			"city": "SUNDSVALL",
+			"careOf": "Fastighetsförmedling AB",
+			"pdfAvailable": false
 		}
 	],
 	"_meta": {
-		"sortDirection": "ASC",
-		"totalRecords": 2,
+		"page": 1,
 		"limit": 100,
 		"count": 2,
+		"totalRecords": 2,
 		"totalPages": 1,
 		"sortBy": [
 			"invoiceDate"
 		],
-		"page": 1
+		"sortDirection": "ASC"
 	}
 }

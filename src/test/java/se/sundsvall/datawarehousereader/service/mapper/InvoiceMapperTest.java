@@ -6,7 +6,9 @@ import static org.assertj.core.groups.Tuple.tuple;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
@@ -26,8 +28,10 @@ class InvoiceMapperTest {
 	private static final CustomerType CUSTOMER_TYPE = CustomerType.PRIVATE;
 	private static final LocalDate DUE_DATE = LocalDate.now().minusDays(30);
 	private static final String FACILITY_ID = "facilityId";
+	private static final Set<String> FACILITY_IDS = new HashSet<>(List.of(FACILITY_ID));
 	private static final LocalDate INVOICE_DATE = LocalDate.now();
 	private static final String INVOICE_DESCRIPTION = "invoiceDescription";
+	private static final Set<String> INVOICE_DESCRIPTIONS = new HashSet<>(List.of(INVOICE_DESCRIPTION));
 	private static final String INVOICE_NAME = "invoiceName";
 	private static final long INVOICE_NUMBER = 4321;
 	private static final String INVOICE_STATUS = "invoiceStatus";
@@ -110,9 +114,9 @@ class InvoiceMapperTest {
 				Invoice::getCustomerNumber,
 				Invoice::getCustomerType,
 				Invoice::getDueDate,
-				Invoice::getFacilityId,
+				Invoice::getFacilityIds,
 				Invoice::getInvoiceDate,
-				Invoice::getInvoiceDescription,
+				Invoice::getInvoiceDescriptions,
 				Invoice::getInvoiceName,
 				Invoice::getInvoiceNumber,
 				Invoice::getInvoiceStatus,
@@ -138,9 +142,9 @@ class InvoiceMapperTest {
 				Integer.toString(CUSTOMER_ID),
 				CUSTOMER_TYPE,
 				DUE_DATE,
-				FACILITY_ID,
+				FACILITY_IDS,
 				INVOICE_DATE,
-				INVOICE_DESCRIPTION,
+				INVOICE_DESCRIPTIONS,
 				INVOICE_NAME,
 				INVOICE_NUMBER,
 				INVOICE_STATUS,

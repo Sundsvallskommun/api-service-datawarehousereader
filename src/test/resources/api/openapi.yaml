@@ -1,129 +1,129 @@
 openapi: 3.0.1
 info:
   title: api-datawarehousereader
-  contact: {}
+  contact: { }
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "4.2"
+  version: "5.0"
 servers:
-- url: http://localhost:8080
-  description: Generated server url
+  - url: http://localhost:58955
+    description: Generated server url
 tags:
-- name: Measurement
-  description: Measurement operations
-- name: Installed base
-  description: Installed base operations
-- name: Agreement
-  description: Agreement operations
-- name: Customer
-  description: Customer operations
-- name: Invoice
-  description: Invoice operations
+  - name: Measurement
+    description: Measurement operations
+  - name: Installed base
+    description: Installed base operations
+  - name: Agreement
+    description: Agreement operations
+  - name: Customer
+    description: Customer operations
+  - name: Invoice
+    description: Invoice operations
 paths:
   /{municipalityId}/measurements/{category}/{aggregateOn}:
     get:
       tags:
-      - Measurement
+        - Measurement
       summary: Get measurement information
       description: Resource returns measurement data matching provided search parameters
       operationId: getMeasurements
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: category
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/Category"
-      - name: aggregateOn
-        in: path
-        required: true
-        schema:
-          $ref: "#/components/schemas/Aggregation"
-      - name: partyId
-        in: query
-        description: PartyId (e.g. a personId or an organizationId)
-        required: false
-        schema:
-          type: string
-          description: PartyId (e.g. a personId or an organizationId)
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
-        example: 81471222-5798-11e9-ae24-57fa13b361e1
-      - name: facilityId
-        in: query
-        description: Facility id
-        required: false
-        schema:
-          type: string
-          description: Facility id
-          example: "735999109151401011"
-        example: 735999109151401011
-      - name: fromDateTime
-        in: query
-        description: "Date and time for oldest measurement point to return. Format\
-          \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
-        required: false
-        schema:
-          type: string
-          description: "Date and time for oldest measurement point to return. Format\
-            \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
-          format: date-time
-      - name: toDateTime
-        in: query
-        description: "Date and time for youngest measurement point to return. Format\
-          \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
-        required: false
-        schema:
-          type: string
-          description: "Date and time for youngest measurement point to return. Format\
-            \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
-          format: date-time
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+          example: 2281
+        - name: category
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Category"
+        - name: aggregateOn
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/Aggregation"
+        - name: partyId
+          in: query
+          description: PartyId (e.g. a personId or an organizationId)
+          required: false
+          schema:
+            type: string
+            description: PartyId (e.g. a personId or an organizationId)
+            example: 81471222-5798-11e9-ae24-57fa13b361e1
+          example: 81471222-5798-11e9-ae24-57fa13b361e1
+        - name: facilityId
+          in: query
+          description: Facility id
+          required: false
+          schema:
+            type: string
+            description: Facility id
+            example: "735999109151401011"
+          example: 735999109151401011
+        - name: fromDateTime
+          in: query
+          description: "Date and time for oldest measurement point to return. Format\
+          \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
+          required: false
+          schema:
+            type: string
+            description: "Date and time for oldest measurement point to return. Format\
+            \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
+            format: date-time
+        - name: toDateTime
+          in: query
+          description: "Date and time for youngest measurement point to return. Format\
+          \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
+          required: false
+          schema:
+            type: string
+            description: "Date and time for youngest measurement point to return. Format\
+            \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
+            format: date-time
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: Successful operation
@@ -140,8 +140,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -151,195 +151,195 @@ paths:
   /{municipalityId}/invoices:
     get:
       tags:
-      - Invoice
+        - Invoice
       summary: Get basic invoice information
       description: Resource returns all invoices matching provided search parameters
       operationId: getInvoices
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: customerNumber
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: Customer numbers
-            example: "39195"
-      - name: customerType
-        in: query
-        required: false
-        schema:
-          $ref: "#/components/schemas/CustomerType"
-      - name: facilityId
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-            description: Facility ids
-            example: "735999109151401011"
-      - name: invoiceNumber
-        in: query
-        description: Invoice number
-        required: false
-        schema:
-          type: integer
+          example: 2281
+        - name: customerNumber
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: Customer numbers
+              example: "39195"
+        - name: customerType
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/CustomerType"
+        - name: facilityId
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: Facility ids
+              example: "735999109151401011"
+        - name: invoiceNumber
+          in: query
           description: Invoice number
-          format: int64
+          required: false
+          schema:
+            type: integer
+            description: Invoice number
+            format: int64
+            example: 767915994
           example: 767915994
-        example: 767915994
-      - name: invoiceDateFrom
-        in: query
-        description: Earliest invoice date. Format is YYYY-MM-DD.
-        required: false
-        schema:
-          type: string
+        - name: invoiceDateFrom
+          in: query
           description: Earliest invoice date. Format is YYYY-MM-DD.
-          format: date
-          example: 2022-01-01
-        example: 2022-01-01
-      - name: invoiceDateTo
-        in: query
-        description: Latest invoice date. Format is YYYY-MM-DD.
-        required: false
-        schema:
-          type: string
-          description: Latest invoice date. Format is YYYY-MM-DD.
-          format: date
-          example: 2022-01-31
-        example: 2022-01-31
-      - name: invoiceName
-        in: query
-        description: Invoice name
-        required: false
-        schema:
-          type: string
-          description: Invoice name
-          example: 765801493.pdf
-        example: 765801493.pdf
-      - name: invoiceType
-        in: query
-        description: Invoice type
-        required: false
-        schema:
-          type: string
-          description: Invoice type
-          example: Faktura
-        example: Faktura
-      - name: invoiceStatus
-        in: query
-        description: Invoice status
-        required: false
-        schema:
-          type: string
-          description: Invoice status
-          example: Skickad
-        example: Skickad
-      - name: ocrNumber
-        in: query
-        description: Ocr number
-        required: false
-        schema:
-          type: integer
-          description: Ocr number
-          format: int64
-          example: 767915994
-        example: 767915994
-      - name: dueDateFrom
-        in: query
-        description: Earliest due date. Format is YYYY-MM-DD.
-        required: false
-        schema:
-          type: string
-          description: Earliest due date. Format is YYYY-MM-DD.
-          format: date
-          example: 2022-01-01
-        example: 2022-01-01
-      - name: dueDateTo
-        in: query
-        description: Latest due date. Format is YYYY-MM-DD.
-        required: false
-        schema:
-          type: string
-          description: Latest due date. Format is YYYY-MM-DD.
-          format: date
-          example: 2022-01-31
-        example: 2022-01-31
-      - name: organizationGroup
-        in: query
-        description: Organization group
-        required: false
-        schema:
-          type: string
-          description: Organization group
-          example: stadsbacken
-        example: stadsbacken
-      - name: organizationNumber
-        in: query
-        description: Organization number of invoice issuer
-        required: false
-        schema:
-          type: string
-          description: Organization number of invoice issuer
-          example: "5565027223"
-        example: 5565027223
-      - name: administration
-        in: query
-        description: Adminstration
-        required: false
-        schema:
-          type: string
-          description: Adminstration
-          example: Sundsvall Elnät
-        example: Sundsvall Elnät
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+          required: false
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+            description: Earliest invoice date. Format is YYYY-MM-DD.
+            format: date
+            example: 2022-01-01
+          example: 2022-01-01
+        - name: invoiceDateTo
+          in: query
+          description: Latest invoice date. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            description: Latest invoice date. Format is YYYY-MM-DD.
+            format: date
+            example: 2022-01-31
+          example: 2022-01-31
+        - name: invoiceName
+          in: query
+          description: Invoice name
+          required: false
+          schema:
+            type: string
+            description: Invoice name
+            example: 765801493.pdf
+          example: 765801493.pdf
+        - name: invoiceType
+          in: query
+          description: Invoice type
+          required: false
+          schema:
+            type: string
+            description: Invoice type
+            example: Faktura
+          example: Faktura
+        - name: invoiceStatus
+          in: query
+          description: Invoice status
+          required: false
+          schema:
+            type: string
+            description: Invoice status
+            example: Skickad
+          example: Skickad
+        - name: ocrNumber
+          in: query
+          description: Ocr number
+          required: false
+          schema:
+            type: integer
+            description: Ocr number
+            format: int64
+            example: 767915994
+          example: 767915994
+        - name: dueDateFrom
+          in: query
+          description: Earliest due date. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            description: Earliest due date. Format is YYYY-MM-DD.
+            format: date
+            example: 2022-01-01
+          example: 2022-01-01
+        - name: dueDateTo
+          in: query
+          description: Latest due date. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            description: Latest due date. Format is YYYY-MM-DD.
+            format: date
+            example: 2022-01-31
+          example: 2022-01-31
+        - name: organizationGroup
+          in: query
+          description: Organization group
+          required: false
+          schema:
+            type: string
+            description: Organization group
+            example: stadsbacken
+          example: stadsbacken
+        - name: organizationNumber
+          in: query
+          description: Organization number of invoice issuer
+          required: false
+          schema:
+            type: string
+            description: Organization number of invoice issuer
+            example: "5565027223"
+          example: 5565027223
+        - name: administration
+          in: query
+          description: Adminstration
+          required: false
+          schema:
+            type: string
+            description: Adminstration
+            example: Sundsvall Elnät
+          example: Sundsvall Elnät
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: Successful operation
@@ -353,8 +353,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -364,33 +364,33 @@ paths:
   /{municipalityId}/invoices/{organizationNumber}/{invoiceNumber}/details:
     get:
       tags:
-      - Invoice
+        - Invoice
       summary: Get invoice details for invoice matching issuer of provided organization
         number and having invoice number matching provided invoice number
       operationId: getInvoiceDetails
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: organizationNumber
-        in: path
-        description: Organization number of invoice issuer
-        required: true
-        schema:
-          type: string
-        example: 5565027223
-      - name: invoiceNumber
-        in: path
-        description: Invoice number
-        required: true
-        schema:
-          type: integer
-          format: int64
-        example: 805137494
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: organizationNumber
+          in: path
+          description: Organization number of invoice issuer
+          required: true
+          schema:
+            type: string
+          example: 5565027223
+        - name: invoiceNumber
+          in: path
+          description: Invoice number
+          required: true
+          schema:
+            type: integer
+            format: int64
+          example: 805137494
       responses:
         "200":
           description: Successful operation
@@ -421,159 +421,159 @@ paths:
   /{municipalityId}/installedbase:
     get:
       tags:
-      - Installed base
+        - Installed base
       summary: Get installed base information
       description: Resource returns all installed bases matching provided search parameters
       operationId: getInstalledBase
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: company
-        in: query
-        description: Company
-        required: false
-        schema:
-          type: string
-          description: Company
-          example: Sundsvall Energi AB
-        example: Sundsvall Energi AB
-      - name: customerNumber
-        in: query
-        description: Customer number
-        required: false
-        schema:
-          type: string
-          description: Customer number
-          example: "104327"
-        example: 104327
-      - name: type
-        in: query
-        description: Type
-        required: false
-        schema:
-          type: string
-          description: Type
-          example: Fjärrvärme
-        example: Fjärrvärme
-      - name: facilityId
-        in: query
-        description: Facility id
-        required: false
-        schema:
-          type: string
-          description: Facility id
-          example: "735999109270751042"
-        example: 735999109270751042
-      - name: careOf
-        in: query
-        description: Care of address
-        required: false
-        schema:
-          type: string
-          description: Care of address
-          example: Agatha Malm
-        example: Agatha Malm
-      - name: street
-        in: query
-        description: Street
-        required: false
-        schema:
-          type: string
-          description: Street
-          example: Storgatan 9
-        example: Storgatan 9
-      - name: postCode
-        in: query
-        description: Postal code
-        required: false
-        schema:
-          type: string
-          description: Postal code
-          example: "85230"
-        example: 85230
-      - name: city
-        in: query
-        description: City
-        required: false
-        schema:
-          type: string
-          description: City
-          example: Sundsvall
-        example: Sundsvall
-      - name: propertyDesignation
-        in: query
-        description: Property designation
-        required: false
-        schema:
-          type: string
-          description: Property designation
-          example: Södermalm 1:27
-        example: Södermalm 1:27
-      - name: lastModifiedDateFrom
-        in: query
-        description: Earliest date when item was last modified
-        required: false
-        schema:
-          type: string
-          description: Earliest date when item was last modified
-          format: date
-          example: 2022-12-31
-        example: 2022-12-31
-      - name: lastModifiedDateTom
-        in: query
-        description: Latest date when item was last modified
-        required: false
-        schema:
-          type: string
-          description: Latest date when item was last modified
-          format: date
-          example: 2022-12-31
-        example: 2022-12-31
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+          example: 2281
+        - name: company
+          in: query
+          description: Company
+          required: false
+          schema:
+            type: string
+            description: Company
+            example: Sundsvall Energi AB
+          example: Sundsvall Energi AB
+        - name: customerNumber
+          in: query
+          description: Customer number
+          required: false
+          schema:
+            type: string
+            description: Customer number
+            example: "104327"
+          example: 104327
+        - name: type
+          in: query
+          description: Type
+          required: false
+          schema:
+            type: string
+            description: Type
+            example: Fjärrvärme
+          example: Fjärrvärme
+        - name: facilityId
+          in: query
+          description: Facility id
+          required: false
+          schema:
+            type: string
+            description: Facility id
+            example: "735999109270751042"
+          example: 735999109270751042
+        - name: careOf
+          in: query
+          description: Care of address
+          required: false
+          schema:
+            type: string
+            description: Care of address
+            example: Agatha Malm
+          example: Agatha Malm
+        - name: street
+          in: query
+          description: Street
+          required: false
+          schema:
+            type: string
+            description: Street
+            example: Storgatan 9
+          example: Storgatan 9
+        - name: postCode
+          in: query
+          description: Postal code
+          required: false
+          schema:
+            type: string
+            description: Postal code
+            example: "85230"
+          example: 85230
+        - name: city
+          in: query
+          description: City
+          required: false
+          schema:
+            type: string
+            description: City
+            example: Sundsvall
+          example: Sundsvall
+        - name: propertyDesignation
+          in: query
+          description: Property designation
+          required: false
+          schema:
+            type: string
+            description: Property designation
+            example: Södermalm 1:27
+          example: Södermalm 1:27
+        - name: lastModifiedDateFrom
+          in: query
+          description: Earliest date when item was last modified
+          required: false
+          schema:
+            type: string
+            description: Earliest date when item was last modified
+            format: date
+            example: 2022-12-31
+          example: 2022-12-31
+        - name: lastModifiedDateTom
+          in: query
+          description: Latest date when item was last modified
+          required: false
+          schema:
+            type: string
+            description: Latest date when item was last modified
+            format: date
+            example: 2022-12-31
+          example: 2022-12-31
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: Successful operation
@@ -587,8 +587,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -598,103 +598,103 @@ paths:
   /{municipalityId}/installations:
     get:
       tags:
-      - Installations
+        - Installations
       summary: Get installation details
       description: Resource returns all installations matching provided search parameters
       operationId: getInstallationDetails
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: installed
-        in: query
-        description: Is the installation installed
-        required: false
-        schema:
-          type: boolean
-          description: Is the installation installed
-          example: true
-        example: true
-      - name: lastModifiedDateFrom
-        in: query
-        description: Earliest date when item was last modified
-        required: false
-        schema:
-          type: string
-          description: Earliest date when item was last modified
-          format: date
-          example: 2022-12-31
-        example: 2022-12-31
-      - name: lastModifiedDateTo
-        in: query
-        description: Latest date when item was last modified
-        required: false
-        schema:
-          type: string
-          description: Latest date when item was last modified
-          format: date
-          example: 2022-12-31
-        example: 2022-12-31
-      - name: category
-        in: query
-        description: Category
-        required: false
-        schema:
-          $ref: "#/components/schemas/Category"
-        example: ELECTRICITY
-      - name: facilityId
-        in: query
-        description: Facility id
-        required: false
-        schema:
-          type: string
-          description: Facility id
-          example: "735999109151401011"
-        example: 735999109151401011
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+          example: 2281
+        - name: installed
+          in: query
+          description: Is the installation installed
+          required: false
+          schema:
+            type: boolean
+            description: Is the installation installed
+            example: true
+          example: true
+        - name: lastModifiedDateFrom
+          in: query
+          description: Earliest date when item was last modified
+          required: false
+          schema:
+            type: string
+            description: Earliest date when item was last modified
+            format: date
+            example: 2022-12-31
+          example: 2022-12-31
+        - name: lastModifiedDateTo
+          in: query
+          description: Latest date when item was last modified
+          required: false
+          schema:
+            type: string
+            description: Latest date when item was last modified
+            format: date
+            example: 2022-12-31
+          example: 2022-12-31
+        - name: category
+          in: query
+          description: Category
+          required: false
+          schema:
+            $ref: "#/components/schemas/Category"
+          example: ELECTRICITY
+        - name: facilityId
+          in: query
+          description: Facility id
+          required: false
+          schema:
+            type: string
+            description: Facility id
+            example: "735999109151401011"
+          example: 735999109151401011
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: Successful operation
@@ -708,8 +708,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -719,95 +719,95 @@ paths:
   /{municipalityId}/customer/engagements:
     get:
       tags:
-      - Customer
+        - Customer
       summary: Get basic customer information
       description: Resource returns all customer engagements matching provided search
         parameters
       operationId: getCustomerEngagements
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: partyId
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: PartyId (e.g. a personId or an organizationId)
-            example: 81471222-5798-11e9-ae24-57fa13b361e1
-      - name: customerNumber
-        in: query
-        description: Customer number
-        required: false
-        schema:
-          type: string
+          example: 2281
+        - name: partyId
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: PartyId (e.g. a personId or an organizationId)
+              example: 81471222-5798-11e9-ae24-57fa13b361e1
+        - name: customerNumber
+          in: query
           description: Customer number
-          example: "10007"
-        example: 10007
-      - name: organizationNumber
-        in: query
-        description: Organization number for counterpart of engagement
-        required: false
-        schema:
-          type: string
-          description: Organization number for counterpart of engagement
-          example: "5565027223"
-        example: 5565027223
-      - name: organizationName
-        in: query
-        description: Organization name for counterpart of engagement
-        required: false
-        schema:
-          type: string
-          description: Organization name for counterpart of engagement
-          example: Sundsvall Elnät
-        example: Sundsvall Elnät
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+          required: false
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+            description: Customer number
+            example: "10007"
+          example: 10007
+        - name: organizationNumber
+          in: query
+          description: Organization number for counterpart of engagement
+          required: false
+          schema:
+            type: string
+            description: Organization number for counterpart of engagement
+            example: "5565027223"
+          example: 5565027223
+        - name: organizationName
+          in: query
+          description: Organization name for counterpart of engagement
+          required: false
+          schema:
+            type: string
+            description: Organization name for counterpart of engagement
+            example: Sundsvall Elnät
+          example: Sundsvall Elnät
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: Successful operation
@@ -821,8 +821,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -832,91 +832,91 @@ paths:
   /{municipalityId}/customer/details:
     get:
       tags:
-      - Customer
+        - Customer
       summary: Get detailed customer information
       description: Resource returns all customer details matching provided search
         parameters
       operationId: getCustomerDetails
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: partyId
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
             type: string
-            description: PartyId (e.g. a personId or an organizationId)
-            example: 81471222-5798-11e9-ae24-57fa13b361e1
-      - name: customerEngagementOrgId
-        in: query
-        description: Organization id for customer engagements
-        required: true
-        schema:
-          type: string
+          example: 2281
+        - name: partyId
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: PartyId (e.g. a personId or an organizationId)
+              example: 81471222-5798-11e9-ae24-57fa13b361e1
+        - name: customerEngagementOrgId
+          in: query
           description: Organization id for customer engagements
-          example: "5565027225"
-        example: 5565027225
-      - name: fromDateTime
-        in: query
-        description: Date and time for when to search for changes from. Format is
-          yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year will
-          be returned.
-        required: false
-        schema:
-          type: string
-          description: Date and time for when to search for changes from. Format is
-            yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year
-            will be returned.
-          format: date-time
-          example: 2000-10-31T01:30:00-05:00
-        example: 2000-10-31T01:30:00.000-05:00
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
+          required: true
+          schema:
             type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+            description: Organization id for customer engagements
+            example: "5565027225"
+          example: 5565027225
+        - name: fromDateTime
+          in: query
+          description: Date and time for when to search for changes from. Format is
+            yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year will
+            be returned.
+          required: false
+          schema:
+            type: string
+            description: Date and time for when to search for changes from. Format is
+              yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year
+              will be returned.
+            format: date-time
+            example: 2000-10-31T01:30:00-05:00
+          example: 2000-10-31T01:30:00.000-05:00
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: Successful operation
@@ -930,8 +930,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -941,226 +941,226 @@ paths:
   /{municipalityId}/agreements:
     get:
       tags:
-      - Agreement
+        - Agreement
       summary: Get agreements
       description: Resource returns all agreements matching provided search parameters
       operationId: getAgreements
       parameters:
-      - name: municipalityId
-        in: path
-        description: Municipality id
-        required: true
-        schema:
-          type: string
-        example: 2281
-      - name: partyId
-        in: query
-        description: PartyId (e.g. a personId or an organizationId)
-        required: false
-        schema:
-          type: string
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: partyId
+          in: query
           description: PartyId (e.g. a personId or an organizationId)
+          required: false
+          schema:
+            type: string
+            description: PartyId (e.g. a personId or an organizationId)
+            example: 81471222-5798-11e9-ae24-57fa13b361e1
           example: 81471222-5798-11e9-ae24-57fa13b361e1
-        example: 81471222-5798-11e9-ae24-57fa13b361e1
-      - name: customerNumber
-        in: query
-        description: Customer number
-        required: false
-        schema:
-          type: string
+        - name: customerNumber
+          in: query
           description: Customer number
-          nullable: true
-          example: "10007"
-        example: 10007
-      - name: facilityId
-        in: query
-        description: Facility Id
-        required: false
-        schema:
-          type: string
+          required: false
+          schema:
+            type: string
+            description: Customer number
+            nullable: true
+            example: "10007"
+          example: 10007
+        - name: facilityId
+          in: query
           description: Facility Id
-          nullable: true
-          example: "1223334"
-        example: 1223334
-      - name: category
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
-            $ref: "#/components/schemas/Category"
-      - name: billingId
-        in: query
-        description: Billing Id
-        required: false
-        schema:
-          type: string
+          required: false
+          schema:
+            type: string
+            description: Facility Id
+            nullable: true
+            example: "1223334"
+          example: 1223334
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Category"
+        - name: billingId
+          in: query
           description: Billing Id
-          nullable: true
-          example: "222333"
-        example: 222333
-      - name: agreementId
-        in: query
-        description: Agreement Id
-        required: false
-        schema:
-          type: string
+          required: false
+          schema:
+            type: string
+            description: Billing Id
+            nullable: true
+            example: "222333"
+          example: 222333
+        - name: agreementId
+          in: query
           description: Agreement Id
-          nullable: true
-          example: "333444"
-        example: 333444
-      - name: description
-        in: query
-        description: Description
-        required: false
-        schema:
-          type: string
+          required: false
+          schema:
+            type: string
+            description: Agreement Id
+            nullable: true
+            example: "333444"
+          example: 333444
+        - name: description
+          in: query
           description: Description
-          nullable: true
+          required: false
+          schema:
+            type: string
+            description: Description
+            nullable: true
+            example: Avtalet avser fjärrvärme
           example: Avtalet avser fjärrvärme
-        example: Avtalet avser fjärrvärme
-      - name: mainAgreement
-        in: query
-        description: Shows if agreement is a main-agreement or not
-        required: false
-        schema:
-          type: boolean
+        - name: mainAgreement
+          in: query
           description: Shows if agreement is a main-agreement or not
-          nullable: true
+          required: false
+          schema:
+            type: boolean
+            description: Shows if agreement is a main-agreement or not
+            nullable: true
+            example: true
           example: true
-        example: true
-      - name: binding
-        in: query
-        description: Shows if agreement include binding or not
-        required: false
-        schema:
-          type: boolean
+        - name: binding
+          in: query
           description: Shows if agreement include binding or not
-          nullable: true
+          required: false
+          schema:
+            type: boolean
+            description: Shows if agreement include binding or not
+            nullable: true
+            example: false
           example: false
-        example: false
-      - name: bindingRule
-        in: query
-        description: Rule of binding if exists
-        required: false
-        schema:
-          type: string
+        - name: bindingRule
+          in: query
           description: Rule of binding if exists
-          nullable: true
-          example: 10 mån binding
-        example: 10
-      - name: placementStatus
-        in: query
-        description: Placement status for agreement
-        required: false
-        schema:
-          type: string
+          required: false
+          schema:
+            type: string
+            description: Rule of binding if exists
+            nullable: true
+            example: 10 mån binding
+          example: 10
+        - name: placementStatus
+          in: query
           description: Placement status for agreement
-          nullable: true
+          required: false
+          schema:
+            type: string
+            description: Placement status for agreement
+            nullable: true
+            example: Tillkopplad
           example: Tillkopplad
-        example: Tillkopplad
-      - name: netAreaId
-        in: query
-        description: Net area id for agreement
-        required: false
-        schema:
-          type: string
+        - name: netAreaId
+          in: query
           description: Net area id for agreement
-          nullable: true
+          required: false
+          schema:
+            type: string
+            description: Net area id for agreement
+            nullable: true
+            example: SUV
           example: SUV
-        example: SUV
-      - name: siteAddress
-        in: query
-        description: Site address connected to the agreement
-        required: false
-        schema:
-          type: string
+        - name: siteAddress
+          in: query
           description: Site address connected to the agreement
-          nullable: true
+          required: false
+          schema:
+            type: string
+            description: Site address connected to the agreement
+            nullable: true
+            example: Första gatan 2
           example: Första gatan 2
-        example: Första gatan 2
-      - name: production
-        in: query
-        description: Signal if the agreement is a production agreement or not (can
-          be null if not applicable)
-        required: false
-        schema:
-          type: boolean
+        - name: production
+          in: query
           description: Signal if the agreement is a production agreement or not (can
             be null if not applicable)
-          nullable: true
+          required: false
+          schema:
+            type: boolean
+            description: Signal if the agreement is a production agreement or not (can
+              be null if not applicable)
+            nullable: true
+            example: true
           example: true
-        example: true
-      - name: fromDate
-        in: query
-        description: From-date in validity of agreement
-        required: false
-        schema:
-          type: string
+        - name: fromDate
+          in: query
           description: From-date in validity of agreement
-          format: date
-          nullable: true
-      - name: toDate
-        in: query
-        description: To-date in validity of agreement
-        required: false
-        schema:
-          type: string
+          required: false
+          schema:
+            type: string
+            description: From-date in validity of agreement
+            format: date
+            nullable: true
+        - name: toDate
+          in: query
           description: To-date in validity of agreement
-          format: date
-          nullable: true
-      - name: active
-        in: query
-        description: Shows if agreement is active ('fromDate' <= today and 'toDate'
-          => today). Null shows both active and inactive
-        required: false
-        schema:
-          type: boolean
+          required: false
+          schema:
+            type: string
+            description: To-date in validity of agreement
+            format: date
+            nullable: true
+        - name: active
+          in: query
           description: Shows if agreement is active ('fromDate' <= today and 'toDate'
             => today). Null shows both active and inactive
-          nullable: true
+          required: false
+          schema:
+            type: boolean
+            description: Shows if agreement is active ('fromDate' <= today and 'toDate'
+              => today). Null shows both active and inactive
+            nullable: true
+            example: true
           example: true
-        example: true
-      - name: sortBy
-        in: query
-        required: false
-        schema:
-          type: array
-          items:
-            type: string
-            description: The properties to sort on
-            example: propertyName
-      - name: sortDirection
-        in: query
-        description: The sort order direction
-        required: false
-        schema:
-          $ref: "#/components/schemas/Direction"
-        example: ASC
-      - name: page
-        in: query
-        description: Page number
-        required: false
-        schema:
-          minimum: 1
-          type: integer
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: The properties to sort on
+              example: propertyName
+        - name: sortDirection
+          in: query
+          description: The sort order direction
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+          example: ASC
+        - name: page
+          in: query
           description: Page number
-          format: int32
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Page number
+            format: int32
+            example: 1
+            default: 1
           example: 1
-          default: 1
-        example: 1
-      - name: limit
-        in: query
-        description: Result size per page. Maximum allowed value is dynamically configured
-        required: false
-        schema:
-          minimum: 1
-          type: integer
-          description: Result size per page. Maximum allowed value is dynamically
-            configured
-          format: int32
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            minimum: 1
+            type: integer
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            format: int32
+            example: 15
           example: 15
-        example: 15
       responses:
         "200":
           description: OK - Successful operation
@@ -1174,8 +1174,8 @@ paths:
             application/problem+json:
               schema:
                 oneOf:
-                - $ref: "#/components/schemas/Problem"
-                - $ref: "#/components/schemas/ConstraintViolationProblem"
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -1185,7 +1185,7 @@ paths:
   /api-docs:
     get:
       tags:
-      - API
+        - API
       summary: OpenAPI
       operationId: getApiDocs
       responses:
@@ -1213,12 +1213,12 @@ components:
           type: object
           additionalProperties:
             type: object
+        status:
+          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
     StatusType:
       type: object
       properties:
@@ -1348,12 +1348,12 @@ components:
           type: object
           additionalProperties:
             type: object
+        status:
+          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
         suppressed:
           type: array
           items:
@@ -1398,28 +1398,28 @@ components:
       type: string
       description: Category
       enum:
-      - COMMUNICATION
-      - DISTRICT_COOLING
-      - DISTRICT_HEATING
-      - ELECTRICITY
-      - ELECTRICITY_TRADE
-      - WASTE_MANAGEMENT
-      - WATER
+        - COMMUNICATION
+        - DISTRICT_COOLING
+        - DISTRICT_HEATING
+        - ELECTRICITY
+        - ELECTRICITY_TRADE
+        - WASTE_MANAGEMENT
+        - WATER
     Aggregation:
       type: string
       description: Data point aggregation granularity
       enum:
-      - HOUR
-      - DAY
-      - MONTH
-      - YEAR
+        - HOUR
+        - DAY
+        - MONTH
+        - YEAR
     Direction:
       type: string
       description: The sort order direction
       example: ASC
       enum:
-      - ASC
-      - DESC
+        - ASC
+        - DESC
     Measurement:
       type: object
       properties:
@@ -1549,8 +1549,8 @@ components:
       description: Customer type
       example: Enterprise
       enum:
-      - Enterprise
-      - Private
+        - Enterprise
+        - Private
     Invoice:
       type: object
       properties:
@@ -1561,11 +1561,32 @@ components:
           example: "39195"
         customerType:
           $ref: "#/components/schemas/CustomerType"
-        facilityId:
-          type: string
-          description: Facility id
+        facilityIds:
+          uniqueItems: true
+          type: array
+          description: List of facility ids
           readOnly: true
-          example: "735999109151401011"
+          example:
+            - "735999109151404321"
+            - "735999109151401234"
+          items:
+            type: string
+            description: List of facility ids
+            readOnly: true
+            example: "[\"735999109151404321\",\"735999109151401234\"]"
+        invoiceDescriptions:
+          uniqueItems: true
+          type: array
+          description: List of descriptions
+          readOnly: true
+          example:
+            - Fjärrvärme
+            - Elnät
+          items:
+            type: string
+            description: List of descriptions
+            readOnly: true
+            example: "[\"Fjärrvärme\",\"Elnät\"]"
         invoiceNumber:
           type: integer
           description: Invoice number
@@ -1588,11 +1609,6 @@ components:
           description: Invoice type
           readOnly: true
           example: Faktura
-        invoiceDescription:
-          type: string
-          description: Invoice description
-          readOnly: true
-          example: Fjärrvärme
         invoiceStatus:
           type: string
           description: Invoice status
@@ -2256,4 +2272,4 @@ components:
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
       description: Agreement response model
-  securitySchemes: {}
+  securitySchemes: { }
