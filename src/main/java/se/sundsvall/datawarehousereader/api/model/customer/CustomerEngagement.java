@@ -11,25 +11,25 @@ import se.sundsvall.datawarehousereader.api.model.CustomerType;
 @Schema(description = "Customer engagement model")
 public class CustomerEngagement {
 
-	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
+	@Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
 	private String partyId;
 
-	@Schema(description = "Customer organization number, for internal use only", example = "5534567890", accessMode = READ_ONLY, hidden = true)
+	@Schema(description = "Customer organization number, for internal use only", examples = "5534567890", accessMode = READ_ONLY, hidden = true)
 	private String customerOrgNumber;
 
 	@Schema(implementation = CustomerType.class, accessMode = READ_ONLY)
 	private CustomerType customerType;
 
-	@Schema(description = "Customer number", example = "10007", accessMode = READ_ONLY)
+	@Schema(description = "Customer number", examples = "10007", accessMode = READ_ONLY)
 	private String customerNumber;
 
-	@Schema(description = "Organization number for counterpart of engagement", example = "5565027223", accessMode = READ_ONLY)
+	@Schema(description = "Organization number for counterpart of engagement", examples = "5565027223", accessMode = READ_ONLY)
 	private String organizationNumber;
 
-	@Schema(description = "Organization name for counterpart of engagement", example = "Sundsvall Elnät", accessMode = READ_ONLY)
+	@Schema(description = "Organization name for counterpart of engagement", examples = "Sundsvall Elnät", accessMode = READ_ONLY)
 	private String organizationName;
 
-	@Schema(description = "Indicates customer status, if not active then the moveInDate holds information on when the customer will be activated", example = "true", accessMode = READ_ONLY)
+	@Schema(description = "Indicates customer status, if not active then the moveInDate holds information on when the customer will be activated", examples = "true", accessMode = READ_ONLY)
 	private boolean active;
 
 	@Schema(description = "The prospective customer's move-in date", accessMode = READ_ONLY)

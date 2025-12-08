@@ -9,46 +9,46 @@ import java.util.Objects;
 @Schema(description = "Invoice detail model")
 public class InvoiceDetail {
 
-	@Schema(description = "Invoice number", example = "767915994", accessMode = READ_ONLY)
+	@Schema(description = "Invoice number", examples = "767915994", accessMode = READ_ONLY)
 	private Long invoiceNumber;
 
-	@Schema(description = "Amount", example = "66.97", accessMode = READ_ONLY)
+	@Schema(description = "Amount", examples = "66.97", accessMode = READ_ONLY)
 	private BigDecimal amount;
 
-	@Schema(description = "Amount excluded VAT", example = "53.57", accessMode = READ_ONLY)
+	@Schema(description = "Amount excluded VAT", examples = "53.57", accessMode = READ_ONLY)
 	private BigDecimal amountVatExcluded;
 
-	@Schema(description = "VAT", example = "13.40", accessMode = READ_ONLY)
+	@Schema(description = "VAT", examples = "13.40", accessMode = READ_ONLY)
 	private BigDecimal vat;
 
-	@Schema(description = "VAT rate", example = "25.0", accessMode = READ_ONLY)
+	@Schema(description = "VAT rate", examples = "25.0", accessMode = READ_ONLY)
 	private Double vatRate;
 
-	@Schema(description = "Quantity", example = "154.39", accessMode = READ_ONLY)
+	@Schema(description = "Quantity", examples = "154.39", accessMode = READ_ONLY)
 	private Double quantity;
 
-	@Schema(description = "Unit", example = "kWh", accessMode = READ_ONLY)
+	@Schema(description = "Unit", examples = "kWh", accessMode = READ_ONLY)
 	private String unit;
 
-	@Schema(description = "Price per unit", example = "0.347", accessMode = READ_ONLY)
+	@Schema(description = "Price per unit", examples = "0.347", accessMode = READ_ONLY)
 	private BigDecimal unitPrice;
 
-	@Schema(description = "Period from", example = "2022-01-01", accessMode = READ_ONLY)
+	@Schema(description = "Period from", examples = "2022-01-01", accessMode = READ_ONLY)
 	private String periodFrom;
 
-	@Schema(description = "Period to", example = "2022-01-31", accessMode = READ_ONLY)
+	@Schema(description = "Period to", examples = "2022-01-31", accessMode = READ_ONLY)
 	private String periodTo;
 
 	@Schema(description = "Description", accessMode = READ_ONLY)
 	private String description;
 
-	@Schema(description = "Product code", example = "1404", accessMode = READ_ONLY)
+	@Schema(description = "Product code", examples = "1404", accessMode = READ_ONLY)
 	private Integer productCode;
 
-	@Schema(description = "Product name", example = "Elöverföring", accessMode = READ_ONLY)
+	@Schema(description = "Product name", examples = "Elöverföring", accessMode = READ_ONLY)
 	private String productName;
 
-	@Schema(description = "Organization number of invoice issuer", example = "5565027223", accessMode = READ_ONLY)
+	@Schema(description = "Organization number of invoice issuer", examples = "5565027223", accessMode = READ_ONLY)
 	private String organizationNumber;
 
 	public static InvoiceDetail create() {

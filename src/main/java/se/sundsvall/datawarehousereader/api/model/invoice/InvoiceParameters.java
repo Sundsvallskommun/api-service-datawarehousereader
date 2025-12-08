@@ -20,53 +20,53 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("invoiceDate");
 
-	@ArraySchema(schema = @Schema(description = "Customer numbers", example = "39195"))
+	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "39195"))
 	private List<String> customerNumber;
 
 	@Schema(implementation = CustomerType.class)
 	private CustomerType customerType;
 
-	@ArraySchema(schema = @Schema(description = "Facility ids", example = "735999109151401011"))
+	@ArraySchema(schema = @Schema(description = "Facility ids", examples = "735999109151401011"))
 	private List<String> facilityId;
 
-	@Schema(description = "Invoice number", example = "767915994")
+	@Schema(description = "Invoice number", examples = "767915994")
 	private Long invoiceNumber;
 
-	@Schema(description = "Earliest invoice date. Format is YYYY-MM-DD.", example = "2022-01-01")
+	@Schema(description = "Earliest invoice date. Format is YYYY-MM-DD.", examples = "2022-01-01")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate invoiceDateFrom;
 
-	@Schema(description = "Latest invoice date. Format is YYYY-MM-DD.", example = "2022-01-31")
+	@Schema(description = "Latest invoice date. Format is YYYY-MM-DD.", examples = "2022-01-31")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate invoiceDateTo;
 
-	@Schema(description = "Invoice name", example = "765801493.pdf")
+	@Schema(description = "Invoice name", examples = "765801493.pdf")
 	private String invoiceName;
 
-	@Schema(description = "Invoice type", example = "Faktura")
+	@Schema(description = "Invoice type", examples = "Faktura")
 	private String invoiceType;
 
-	@Schema(description = "Invoice status", example = "Skickad")
+	@Schema(description = "Invoice status", examples = "Skickad")
 	private String invoiceStatus;
 
-	@Schema(description = "Ocr number", example = "767915994")
+	@Schema(description = "Ocr number", examples = "767915994")
 	private Long ocrNumber;
 
-	@Schema(description = "Earliest due date. Format is YYYY-MM-DD.", example = "2022-01-01")
+	@Schema(description = "Earliest due date. Format is YYYY-MM-DD.", examples = "2022-01-01")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dueDateFrom;
 
-	@Schema(description = "Latest due date. Format is YYYY-MM-DD.", example = "2022-01-31")
+	@Schema(description = "Latest due date. Format is YYYY-MM-DD.", examples = "2022-01-31")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate dueDateTo;
 
-	@Schema(description = "Organization group", example = "stadsbacken")
+	@Schema(description = "Organization group", examples = "stadsbacken")
 	private String organizationGroup;
 
-	@Schema(description = "Organization number of invoice issuer", example = "5565027223")
+	@Schema(description = "Organization number of invoice issuer", examples = "5565027223")
 	private String organizationNumber;
 
-	@Schema(description = "Adminstration", example = "Sundsvall Elnät")
+	@Schema(description = "Adminstration", examples = "Sundsvall Elnät")
 	private String administration;
 
 	public InvoiceParameters() {
