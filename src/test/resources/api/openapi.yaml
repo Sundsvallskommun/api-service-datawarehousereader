@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.1.0
 info:
   title: api-datawarehousereader
   contact: { }
@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:57998
+  - url: http://localhost:57827
     description: Generated server url
 tags:
   - name: Measurement
@@ -53,8 +53,8 @@ paths:
           schema:
             type: string
             description: PartyId (e.g. a personId or an organizationId)
-            example: 81471222-5798-11e9-ae24-57fa13b361e1
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
+            examples:
+              - 81471222-5798-11e9-ae24-57fa13b361e1
         - name: facilityId
           in: query
           description: Facility id
@@ -62,8 +62,8 @@ paths:
           schema:
             type: string
             description: Facility id
-            example: "735999109151401011"
-          example: 735999109151401011
+            examples:
+              - "735999109151401011"
         - name: fromDateTime
           in: query
           description: "Date and time for oldest measurement point to return. Format\
@@ -71,9 +71,9 @@ paths:
           required: false
           schema:
             type: string
+            format: date-time
             description: "Date and time for oldest measurement point to return. Format\
             \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
-            format: date-time
         - name: toDateTime
           in: query
           description: "Date and time for youngest measurement point to return. Format\
@@ -81,9 +81,9 @@ paths:
           required: false
           schema:
             type: string
+            format: date-time
             description: "Date and time for youngest measurement point to return. Format\
             \ is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'"
-            format: date-time
         - name: sortBy
           in: query
           required: false
@@ -105,24 +105,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -171,7 +171,8 @@ paths:
             items:
               type: string
               description: Customer numbers
-              example: "39195"
+              examples:
+                - "39195"
         - name: customerType
           in: query
           required: false
@@ -185,37 +186,38 @@ paths:
             items:
               type: string
               description: Facility ids
-              example: "735999109151401011"
+              examples:
+                - "735999109151401011"
         - name: invoiceNumber
           in: query
           description: Invoice number
           required: false
           schema:
             type: integer
-            description: Invoice number
             format: int64
-            example: 767915994
-          example: 767915994
+            description: Invoice number
+            examples:
+              - "767915994"
         - name: invoiceDateFrom
           in: query
           description: Earliest invoice date. Format is YYYY-MM-DD.
           required: false
           schema:
             type: string
-            description: Earliest invoice date. Format is YYYY-MM-DD.
             format: date
-            example: 2022-01-01
-          example: 2022-01-01
+            description: Earliest invoice date. Format is YYYY-MM-DD.
+            examples:
+              - 2022-01-01
         - name: invoiceDateTo
           in: query
           description: Latest invoice date. Format is YYYY-MM-DD.
           required: false
           schema:
             type: string
-            description: Latest invoice date. Format is YYYY-MM-DD.
             format: date
-            example: 2022-01-31
-          example: 2022-01-31
+            description: Latest invoice date. Format is YYYY-MM-DD.
+            examples:
+              - 2022-01-31
         - name: invoiceName
           in: query
           description: Invoice name
@@ -223,8 +225,8 @@ paths:
           schema:
             type: string
             description: Invoice name
-            example: 765801493.pdf
-          example: 765801493.pdf
+            examples:
+              - 765801493.pdf
         - name: invoiceType
           in: query
           description: Invoice type
@@ -232,8 +234,8 @@ paths:
           schema:
             type: string
             description: Invoice type
-            example: Faktura
-          example: Faktura
+            examples:
+              - Faktura
         - name: invoiceStatus
           in: query
           description: Invoice status
@@ -241,38 +243,38 @@ paths:
           schema:
             type: string
             description: Invoice status
-            example: Skickad
-          example: Skickad
+            examples:
+              - Skickad
         - name: ocrNumber
           in: query
           description: Ocr number
           required: false
           schema:
             type: integer
-            description: Ocr number
             format: int64
-            example: 767915994
-          example: 767915994
+            description: Ocr number
+            examples:
+              - "767915994"
         - name: dueDateFrom
           in: query
           description: Earliest due date. Format is YYYY-MM-DD.
           required: false
           schema:
             type: string
-            description: Earliest due date. Format is YYYY-MM-DD.
             format: date
-            example: 2022-01-01
-          example: 2022-01-01
+            description: Earliest due date. Format is YYYY-MM-DD.
+            examples:
+              - 2022-01-01
         - name: dueDateTo
           in: query
           description: Latest due date. Format is YYYY-MM-DD.
           required: false
           schema:
             type: string
-            description: Latest due date. Format is YYYY-MM-DD.
             format: date
-            example: 2022-01-31
-          example: 2022-01-31
+            description: Latest due date. Format is YYYY-MM-DD.
+            examples:
+              - 2022-01-31
         - name: organizationGroup
           in: query
           description: Organization group
@@ -280,8 +282,8 @@ paths:
           schema:
             type: string
             description: Organization group
-            example: stadsbacken
-          example: stadsbacken
+            examples:
+              - stadsbacken
         - name: organizationNumber
           in: query
           description: Organization number of invoice issuer
@@ -289,8 +291,8 @@ paths:
           schema:
             type: string
             description: Organization number of invoice issuer
-            example: "5565027223"
-          example: 5565027223
+            examples:
+              - "5565027223"
         - name: administration
           in: query
           description: Adminstration
@@ -298,8 +300,8 @@ paths:
           schema:
             type: string
             description: Adminstration
-            example: Sundsvall Elnät
-          example: Sundsvall Elnät
+            examples:
+              - Sundsvall Elnät
         - name: sortBy
           in: query
           required: false
@@ -321,24 +323,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -440,8 +442,8 @@ paths:
           schema:
             type: string
             description: Company
-            example: Sundsvall Energi AB
-          example: Sundsvall Energi AB
+            examples:
+              - Sundsvall Energi AB
         - name: customerNumber
           in: query
           description: Customer number
@@ -449,8 +451,8 @@ paths:
           schema:
             type: string
             description: Customer number
-            example: "104327"
-          example: 104327
+            examples:
+              - "104327"
         - name: type
           in: query
           description: Type
@@ -458,8 +460,8 @@ paths:
           schema:
             type: string
             description: Type
-            example: Fjärrvärme
-          example: Fjärrvärme
+            examples:
+              - Fjärrvärme
         - name: facilityId
           in: query
           description: Facility id
@@ -467,8 +469,8 @@ paths:
           schema:
             type: string
             description: Facility id
-            example: "735999109270751042"
-          example: 735999109270751042
+            examples:
+              - "735999109270751042"
         - name: careOf
           in: query
           description: Care of address
@@ -476,8 +478,8 @@ paths:
           schema:
             type: string
             description: Care of address
-            example: Agatha Malm
-          example: Agatha Malm
+            examples:
+              - Agatha Malm
         - name: street
           in: query
           description: Street
@@ -485,8 +487,8 @@ paths:
           schema:
             type: string
             description: Street
-            example: Storgatan 9
-          example: Storgatan 9
+            examples:
+              - Storgatan 9
         - name: postCode
           in: query
           description: Postal code
@@ -494,8 +496,8 @@ paths:
           schema:
             type: string
             description: Postal code
-            example: "85230"
-          example: 85230
+            examples:
+              - "85230"
         - name: city
           in: query
           description: City
@@ -503,8 +505,8 @@ paths:
           schema:
             type: string
             description: City
-            example: Sundsvall
-          example: Sundsvall
+            examples:
+              - Sundsvall
         - name: propertyDesignation
           in: query
           description: Property designation
@@ -512,28 +514,28 @@ paths:
           schema:
             type: string
             description: Property designation
-            example: Södermalm 1:27
-          example: Södermalm 1:27
+            examples:
+              - Södermalm 1:27
         - name: lastModifiedDateFrom
           in: query
           description: Earliest date when item was last modified
           required: false
           schema:
             type: string
-            description: Earliest date when item was last modified
             format: date
-            example: 2022-12-31
-          example: 2022-12-31
+            description: Earliest date when item was last modified
+            examples:
+              - 2022-12-31
         - name: lastModifiedDateTom
           in: query
           description: Latest date when item was last modified
           required: false
           schema:
             type: string
-            description: Latest date when item was last modified
             format: date
-            example: 2022-12-31
-          example: 2022-12-31
+            description: Latest date when item was last modified
+            examples:
+              - 2022-12-31
         - name: sortBy
           in: query
           required: false
@@ -555,24 +557,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -617,35 +619,37 @@ paths:
           schema:
             type: boolean
             description: Is the installation installed
-            example: true
-          example: true
+            examples:
+              - "true"
         - name: lastModifiedDateFrom
           in: query
           description: Earliest date when item was last modified
           required: false
           schema:
             type: string
-            description: Earliest date when item was last modified
             format: date
-            example: 2022-12-31
-          example: 2022-12-31
+            description: Earliest date when item was last modified
+            examples:
+              - 2022-12-31
         - name: lastModifiedDateTo
           in: query
           description: Latest date when item was last modified
           required: false
           schema:
             type: string
-            description: Latest date when item was last modified
             format: date
-            example: 2022-12-31
-          example: 2022-12-31
+            description: Latest date when item was last modified
+            examples:
+              - 2022-12-31
         - name: category
           in: query
           description: Category
           required: false
           schema:
             $ref: "#/components/schemas/Category"
-          example: ELECTRICITY
+            description: Category
+            examples:
+              - ELECTRICITY
         - name: facilityId
           in: query
           description: Facility id
@@ -653,8 +657,8 @@ paths:
           schema:
             type: string
             description: Facility id
-            example: "735999109151401011"
-          example: 735999109151401011
+            examples:
+              - "735999109151401011"
         - name: sortBy
           in: query
           required: false
@@ -676,24 +680,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -740,7 +744,8 @@ paths:
             items:
               type: string
               description: PartyId (e.g. a personId or an organizationId)
-              example: 81471222-5798-11e9-ae24-57fa13b361e1
+              examples:
+                - 81471222-5798-11e9-ae24-57fa13b361e1
         - name: customerNumber
           in: query
           description: Customer number
@@ -748,8 +753,8 @@ paths:
           schema:
             type: string
             description: Customer number
-            example: "10007"
-          example: 10007
+            examples:
+              - "10007"
         - name: organizationNumber
           in: query
           description: Organization number for counterpart of engagement
@@ -757,8 +762,8 @@ paths:
           schema:
             type: string
             description: Organization number for counterpart of engagement
-            example: "5565027223"
-          example: 5565027223
+            examples:
+              - "5565027223"
         - name: organizationName
           in: query
           description: Organization name for counterpart of engagement
@@ -766,8 +771,8 @@ paths:
           schema:
             type: string
             description: Organization name for counterpart of engagement
-            example: Sundsvall Elnät
-          example: Sundsvall Elnät
+            examples:
+              - Sundsvall Elnät
         - name: sortBy
           in: query
           required: false
@@ -789,24 +794,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -853,7 +858,8 @@ paths:
             items:
               type: string
               description: PartyId (e.g. a personId or an organizationId)
-              example: 81471222-5798-11e9-ae24-57fa13b361e1
+              examples:
+                - 81471222-5798-11e9-ae24-57fa13b361e1
         - name: customerEngagementOrgId
           in: query
           description: Organization id for customer engagements
@@ -861,8 +867,8 @@ paths:
           schema:
             type: string
             description: Organization id for customer engagements
-            example: "5565027225"
-          example: 5565027225
+            examples:
+              - "5565027225"
         - name: fromDateTime
           in: query
           description: Date and time for when to search for changes from. Format is
@@ -871,12 +877,12 @@ paths:
           required: false
           schema:
             type: string
+            format: date-time
             description: Date and time for when to search for changes from. Format is
               yyyy-MM-dd'T'HH:mm:ss.SSSXXX. If omitted changes within the last year
               will be returned.
-            format: date-time
-            example: 2000-10-31T01:30:00-05:00
-          example: 2000-10-31T01:30:00.000-05:00
+            examples:
+              - 2000-10-31T01:30:00.000-05:00
         - name: sortBy
           in: query
           required: false
@@ -898,24 +904,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -960,8 +966,8 @@ paths:
           schema:
             type: string
             description: PartyId (e.g. a personId or an organizationId)
-            example: 81471222-5798-11e9-ae24-57fa13b361e1
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
+            examples:
+              - 81471222-5798-11e9-ae24-57fa13b361e1
         - name: customerNumber
           in: query
           description: Customer number
@@ -969,9 +975,8 @@ paths:
           schema:
             type: string
             description: Customer number
-            nullable: true
-            example: "10007"
-          example: 10007
+            examples:
+              - "10007"
         - name: facilityId
           in: query
           description: Facility Id
@@ -979,9 +984,8 @@ paths:
           schema:
             type: string
             description: Facility Id
-            nullable: true
-            example: "1223334"
-          example: 1223334
+            examples:
+              - "1223334"
         - name: category
           in: query
           required: false
@@ -996,9 +1000,8 @@ paths:
           schema:
             type: string
             description: Billing Id
-            nullable: true
-            example: "222333"
-          example: 222333
+            examples:
+              - "222333"
         - name: agreementId
           in: query
           description: Agreement Id
@@ -1006,9 +1009,8 @@ paths:
           schema:
             type: string
             description: Agreement Id
-            nullable: true
-            example: "333444"
-          example: 333444
+            examples:
+              - "333444"
         - name: description
           in: query
           description: Description
@@ -1016,9 +1018,8 @@ paths:
           schema:
             type: string
             description: Description
-            nullable: true
-            example: Avtalet avser fjärrvärme
-          example: Avtalet avser fjärrvärme
+            examples:
+              - Avtalet avser fjärrvärme
         - name: mainAgreement
           in: query
           description: Shows if agreement is a main-agreement or not
@@ -1026,9 +1027,8 @@ paths:
           schema:
             type: boolean
             description: Shows if agreement is a main-agreement or not
-            nullable: true
-            example: true
-          example: true
+            examples:
+              - "true"
         - name: binding
           in: query
           description: Shows if agreement include binding or not
@@ -1036,9 +1036,8 @@ paths:
           schema:
             type: boolean
             description: Shows if agreement include binding or not
-            nullable: true
-            example: false
-          example: false
+            examples:
+              - "false"
         - name: bindingRule
           in: query
           description: Rule of binding if exists
@@ -1046,9 +1045,8 @@ paths:
           schema:
             type: string
             description: Rule of binding if exists
-            nullable: true
-            example: 10 mån binding
-          example: 10
+            examples:
+              - 10 mån binding
         - name: placementStatus
           in: query
           description: Placement status for agreement
@@ -1056,9 +1054,8 @@ paths:
           schema:
             type: string
             description: Placement status for agreement
-            nullable: true
-            example: Tillkopplad
-          example: Tillkopplad
+            examples:
+              - Tillkopplad
         - name: netAreaId
           in: query
           description: Net area id for agreement
@@ -1066,9 +1063,8 @@ paths:
           schema:
             type: string
             description: Net area id for agreement
-            nullable: true
-            example: SUV
-          example: SUV
+            examples:
+              - SUV
         - name: siteAddress
           in: query
           description: Site address connected to the agreement
@@ -1076,9 +1072,8 @@ paths:
           schema:
             type: string
             description: Site address connected to the agreement
-            nullable: true
-            example: Första gatan 2
-          example: Första gatan 2
+            examples:
+              - Första gatan 2
         - name: production
           in: query
           description: Signal if the agreement is a production agreement or not (can
@@ -1088,27 +1083,24 @@ paths:
             type: boolean
             description: Signal if the agreement is a production agreement or not (can
               be null if not applicable)
-            nullable: true
-            example: true
-          example: true
+            examples:
+              - "true"
         - name: fromDate
           in: query
           description: From-date in validity of agreement
           required: false
           schema:
             type: string
-            description: From-date in validity of agreement
             format: date
-            nullable: true
+            description: From-date in validity of agreement
         - name: toDate
           in: query
           description: To-date in validity of agreement
           required: false
           schema:
             type: string
-            description: To-date in validity of agreement
             format: date
-            nullable: true
+            description: To-date in validity of agreement
         - name: active
           in: query
           description: Shows if agreement is active ('fromDate' <= today and 'toDate'
@@ -1118,9 +1110,8 @@ paths:
             type: boolean
             description: Shows if agreement is active ('fromDate' <= today and 'toDate'
               => today). Null shows both active and inactive
-            nullable: true
-            example: true
-          example: true
+            examples:
+              - "true"
         - name: sortBy
           in: query
           required: false
@@ -1142,24 +1133,24 @@ paths:
           description: Page number
           required: false
           schema:
-            minimum: 1
             type: integer
-            description: Page number
             format: int32
-            example: 1
             default: 1
+            description: Page number
+            example: 1
+            minimum: 1
           example: 1
         - name: limit
           in: query
           description: Result size per page. Maximum allowed value is dynamically configured
           required: false
           schema:
-            minimum: 1
             type: integer
+            format: int32
             description: Result size per page. Maximum allowed value is dynamically
               configured
-            format: int32
             example: 15
+            minimum: 1
           example: 15
       responses:
         "200":
@@ -1211,13 +1202,12 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties:
-            type: object
+          additionalProperties: { }
         status:
           $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
     StatusType:
       type: object
@@ -1272,8 +1262,7 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties:
-            type: object
+          additionalProperties: { }
         detail:
           type: string
         suppressed:
@@ -1312,8 +1301,7 @@ components:
     ThrowableProblem:
       type: object
       properties:
-        cause:
-          $ref: "#/components/schemas/ThrowableProblem"
+        cause: { }
         stackTrace:
           type: array
           items:
@@ -1346,13 +1334,12 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties:
-            type: object
+          additionalProperties: { }
         status:
           $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
         suppressed:
           type: array
@@ -1416,860 +1403,964 @@ components:
     Direction:
       type: string
       description: The sort order direction
-      example: ASC
       enum:
         - ASC
         - DESC
+      example: ASC
     Measurement:
       type: object
+      description: Measurement model
       properties:
         partyId:
           type: string
           description: PartyId (e.g. a personId or an organizationId)
+          examples:
+            - 81471222-5798-11e9-ae24-57fa13b361e1
           readOnly: true
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
         facilityId:
           type: string
           description: Facility id
+          examples:
+            - "735999109151401011"
           readOnly: true
-          example: "735999109151401011"
         category:
           $ref: "#/components/schemas/Category"
+          readOnly: true
         aggregatedOn:
           $ref: "#/components/schemas/Aggregation"
+          readOnly: true
         measurementType:
           type: string
           description: Measurement type
+          examples:
+            - Energy
           readOnly: true
-          example: Energy
         unit:
           type: string
           description: Measurement unit
+          examples:
+            - kWh
           readOnly: true
-          example: kWh
         value:
           type: number
           description: Measurement value
+          examples:
+            - "1292.7500000000"
           readOnly: true
-          example: 1292.75
         timestamp:
           type: string
+          format: date-time
           description: "Date and time for measurement point. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX,\
             \ for example '2000-10-31T01:30:00.000-05:00'"
-          format: date-time
           readOnly: true
         metaData:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/MeasurementMetaData"
+            readOnly: true
+          readOnly: true
         interpolation:
           type: integer
+          format: int32
           description: Interpolation information. Zero means that no interpolations
             has been done. Value greater than zero tells how many values in the serie
             that has been interpolated/calculated.
-          format: int32
+          examples:
+            - "13"
           readOnly: true
-          example: 13
-      description: Measurement model
-      readOnly: true
     MeasurementMetaData:
       type: object
+      description: Measurement meta data model
       properties:
         key:
           type: string
           description: Key connected to the meta data
+          examples:
+            - READING_SEQ
           readOnly: true
-          example: READING_SEQ
         value:
           type: string
           description: Value for the meta data
+          examples:
+            - "5733010"
           readOnly: true
-          example: "5733010"
-      description: Measurement meta data model
-      readOnly: true
     MeasurementResponse:
       type: object
+      description: Measurement response model
       properties:
         measurements:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/Measurement"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-      description: Measurement response model
+          readOnly: true
     PagingAndSortingMetaData:
       type: object
+      description: PagingAndSortingMetaData model
       properties:
         page:
           type: integer
-          description: Current page
           format: int32
-          readOnly: true
+          description: Current page
           example: 5
+          readOnly: true
         limit:
           type: integer
-          description: Displayed objects per page
           format: int32
-          readOnly: true
+          description: Displayed objects per page
           example: 20
+          readOnly: true
         count:
           type: integer
-          description: Displayed objects on current page
           format: int32
-          readOnly: true
+          description: Displayed objects on current page
           example: 13
+          readOnly: true
         totalRecords:
           type: integer
-          description: Total amount of hits based on provided search parameters
           format: int64
-          readOnly: true
+          description: Total amount of hits based on provided search parameters
           example: 98
+          readOnly: true
         totalPages:
           type: integer
-          description: Total amount of pages based on provided search parameters
           format: int32
-          readOnly: true
+          description: Total amount of pages based on provided search parameters
           example: 23
+          readOnly: true
         sortBy:
           type: array
-          readOnly: true
           items:
             type: string
             description: The properties to sort by
-            readOnly: true
             example: property
+            readOnly: true
+          readOnly: true
         sortDirection:
           $ref: "#/components/schemas/Direction"
-      description: PagingAndSortingMetaData model
-      readOnly: true
+          description: The sort order direction
+          example: ASC
     CustomerType:
       type: string
       description: Customer type
-      example: Enterprise
       enum:
         - Enterprise
         - Private
+      examples:
+        - Enterprise
     Invoice:
       type: object
+      description: Invoice model
       properties:
         customerNumber:
           type: string
           description: Customer number
+          examples:
+            - "39195"
           readOnly: true
-          example: "39195"
         customerType:
           $ref: "#/components/schemas/CustomerType"
+          readOnly: true
         facilityIds:
-          uniqueItems: true
           type: array
           description: List of facility ids
-          readOnly: true
           example:
             - "735999109151404321"
             - "735999109151401234"
           items:
             type: string
-            description: List of facility ids
-            readOnly: true
-            example: "[\"735999109151404321\",\"735999109151401234\"]"
-        invoiceDescriptions:
+          readOnly: true
           uniqueItems: true
+        invoiceDescriptions:
           type: array
           description: List of descriptions
-          readOnly: true
-          example:
-            - Fjärrvärme
-            - Elnät
+          examples:
+            - "[\"Fjärrvärme\", \"Elnät\"]"
           items:
             type: string
-            description: List of descriptions
-            readOnly: true
-            example: "[\"Fjärrvärme\",\"Elnät\"]"
+          readOnly: true
+          uniqueItems: true
         invoiceNumber:
           type: integer
-          description: Invoice number
           format: int64
+          description: Invoice number
+          examples:
+            - "767915994"
           readOnly: true
-          example: 767915994
         invoiceDate:
           type: string
-          description: Invoice date
           format: date
+          description: Invoice date
+          examples:
+            - 2022-01-15
           readOnly: true
-          example: 2022-01-15
         invoiceName:
           type: string
           description: invoice name
+          examples:
+            - 765801493.pdf
           readOnly: true
-          example: 765801493.pdf
         invoiceType:
           type: string
           description: Invoice type
+          examples:
+            - Faktura
           readOnly: true
-          example: Faktura
         invoiceStatus:
           type: string
           description: Invoice status
-          readOnly: true
           example: Skickad
+          readOnly: true
         ocrNumber:
           type: integer
-          description: Ocr number
           format: int64
+          description: Ocr number
+          examples:
+            - "767915994"
           readOnly: true
-          example: 767915994
         dueDate:
           type: string
-          description: Due date
           format: date
+          description: Due date
+          examples:
+            - 2022-01-31
           readOnly: true
-          example: 2022-01-31
         totalAmount:
           type: number
           description: Total amount
+          examples:
+            - "1116.00"
           readOnly: true
-          example: 1116.0
         amountVatIncluded:
           type: number
           description: Amount included VAT
+          examples:
+            - "1115.62"
           readOnly: true
-          example: 1115.62
         amountVatExcluded:
           type: number
           description: Amount excluded VAT
+          examples:
+            - "892.50"
           readOnly: true
-          example: 892.5
         vatEligibleAmount:
           type: number
           description: Amount eligible for VAT
+          examples:
+            - "892.50"
           readOnly: true
-          example: 892.5
         rounding:
           type: number
           description: Rounding
+          examples:
+            - "0.38"
           readOnly: true
-          example: 0.38
         vat:
           type: number
           description: VAT
+          examples:
+            - "892.50"
           readOnly: true
-          example: 892.5
         reversedVat:
           type: boolean
           description: Reversed VAT
+          examples:
+            - "false"
           readOnly: true
-          example: false
         currency:
           type: string
           description: Currency
+          examples:
+            - sek
           readOnly: true
-          example: sek
         organizationGroup:
           type: string
           description: Organization group
+          examples:
+            - stadsbacken
           readOnly: true
-          example: stadsbacken
         organizationNumber:
           type: string
           description: Organization number of invoice issuer
+          examples:
+            - "5565027223"
           readOnly: true
-          example: "5565027223"
         administration:
           type: string
           description: Adminstration
+          examples:
+            - Sundsvall Elnät
           readOnly: true
-          example: Sundsvall Elnät
         street:
           type: string
           description: Street
+          examples:
+            - Storgatan 44
           readOnly: true
-          example: Storgatan 44
         postCode:
           type: string
           description: Postal code
+          examples:
+            - "85230"
           readOnly: true
-          example: "85230"
         city:
           type: string
           description: City
+          examples:
+            - Sundsvall
           readOnly: true
-          example: Sundsvall
         careOf:
           type: string
           description: Care of address
+          examples:
+            - Agatha Malm
           readOnly: true
-          example: Agatha Malm
         pdfAvailable:
           type: boolean
           description: Is pdf-version of invoice available
+          examples:
+            - "false"
           readOnly: true
-          example: false
-      description: Invoice model
-      readOnly: true
     InvoiceResponse:
       type: object
+      description: Invoice response model
       properties:
         invoices:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/Invoice"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-      description: Invoice response model
+          readOnly: true
     InvoiceDetail:
       type: object
+      description: Invoice detail model
       properties:
         invoiceNumber:
           type: integer
-          description: Invoice number
           format: int64
+          description: Invoice number
+          examples:
+            - "767915994"
           readOnly: true
-          example: 767915994
         amount:
           type: number
           description: Amount
+          examples:
+            - "66.97"
           readOnly: true
-          example: 66.97
         amountVatExcluded:
           type: number
           description: Amount excluded VAT
+          examples:
+            - "53.57"
           readOnly: true
-          example: 53.57
         vat:
           type: number
           description: VAT
+          examples:
+            - "13.40"
           readOnly: true
-          example: 13.4
         vatRate:
           type: number
-          description: VAT rate
           format: double
+          description: VAT rate
+          examples:
+            - "25.0"
           readOnly: true
-          example: 25.0
         quantity:
           type: number
-          description: Quantity
           format: double
+          description: Quantity
+          examples:
+            - "154.39"
           readOnly: true
-          example: 154.39
         unit:
           type: string
           description: Unit
+          examples:
+            - kWh
           readOnly: true
-          example: kWh
         unitPrice:
           type: number
           description: Price per unit
+          examples:
+            - "0.347"
           readOnly: true
-          example: 0.347
         periodFrom:
           type: string
           description: Period from
+          examples:
+            - 2022-01-01
           readOnly: true
-          example: 2022-01-01
         periodTo:
           type: string
           description: Period to
+          examples:
+            - 2022-01-31
           readOnly: true
-          example: 2022-01-31
         description:
           type: string
           description: Description
           readOnly: true
         productCode:
           type: integer
-          description: Product code
           format: int32
+          description: Product code
+          examples:
+            - "1404"
           readOnly: true
-          example: 1404
         productName:
           type: string
           description: Product name
+          examples:
+            - Elöverföring
           readOnly: true
-          example: Elöverföring
         organizationNumber:
           type: string
           description: Organization number of invoice issuer
+          examples:
+            - "5565027223"
           readOnly: true
-          example: "5565027223"
-      description: Invoice detail model
     InstalledBaseItem:
       type: object
+      description: Installed base item model
       properties:
         company:
           type: string
           description: Company
+          examples:
+            - Sundsvall Energi AB
           readOnly: true
-          example: Sundsvall Energi AB
         customerNumber:
           type: string
           description: Customer number
+          examples:
+            - "104327"
           readOnly: true
-          example: "104327"
         type:
           type: string
           description: Type
+          examples:
+            - Fjärrvärme
           readOnly: true
-          example: Fjärrvärme
         facilityId:
           type: string
           description: Facility id
+          examples:
+            - "735999109270751042"
           readOnly: true
-          example: "735999109270751042"
         placementId:
           type: integer
-          description: Placement id
           format: int32
+          description: Placement id
+          examples:
+            - "5263"
           readOnly: true
-          example: 5263
         careOf:
           type: string
           description: Care of address
+          examples:
+            - Agatha Malm
           readOnly: true
-          example: Agatha Malm
         street:
           type: string
           description: Street
+          examples:
+            - Storgatan 9
           readOnly: true
-          example: Storgatan 9
         postCode:
           type: string
           description: Postal code
+          examples:
+            - "85230"
           readOnly: true
-          example: "85230"
         city:
           type: string
           description: City
+          examples:
+            - Sundsvall
           readOnly: true
-          example: Sundsvall
         propertyDesignation:
           type: string
           description: Property designation
+          examples:
+            - Södermalm 1:27
           readOnly: true
-          example: Södermalm 1:27
         dateFrom:
           type: string
-          description: From date
           format: date
+          description: From date
+          examples:
+            - 2019-01-01
           readOnly: true
-          example: 2019-01-01
         dateTo:
           type: string
-          description: To date
           format: date
+          description: To date
+          examples:
+            - 2022-12-31
           readOnly: true
-          example: 2022-12-31
         dateLastModified:
           type: string
-          description: Date when object was last modified (or null if never modified)
           format: date
+          description: Date when object was last modified (or null if never modified)
+          examples:
+            - 2022-12-31
           readOnly: true
-          example: 2022-12-31
         metaData:
-          maxItems: 1000
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/InstalledBaseItemMetaData"
-      description: Installed base item model
-      readOnly: true
+            maxItems: 1000
+            readOnly: true
+          maxItems: 1000
+          readOnly: true
     InstalledBaseItemMetaData:
       type: object
+      description: Installed base item metadata model
       properties:
         key:
           type: string
           description: Key
+          examples:
+            - netarea
           readOnly: true
-          example: netarea
         value:
           type: string
           description: Value
+          examples:
+            - Sundsvall tätort
           readOnly: true
-          example: Sundsvall tätort
         type:
           type: string
           description: Type
+          examples:
+            - location
           readOnly: true
-          example: location
         displayName:
           type: string
           description: Displayname
+          examples:
+            - Nätområde
           readOnly: true
-          example: Nätområde
-      description: Installed base item metadata model
-      readOnly: true
     InstalledBaseResponse:
       type: object
+      description: Installed base response model
       properties:
         installedBase:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/InstalledBaseItem"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-      description: Installed base response model
+          readOnly: true
     InstallationDetails:
       type: object
+      description: Installation details model
       properties:
         company:
           type: string
           description: Company
+          examples:
+            - Sundsvall Energi AB
           readOnly: true
-          example: Sundsvall Energi AB
         type:
           type: string
           description: Type
+          examples:
+            - Fjärrvärme
           readOnly: true
-          example: Fjärrvärme
         facilityId:
           type: string
           description: Facility id
+          examples:
+            - "735999109270751042"
           readOnly: true
-          example: "735999109270751042"
         placementId:
           type: integer
-          description: Placement id
           format: int32
+          description: Placement id
+          examples:
+            - "5263"
           readOnly: true
-          example: 5263
         careOf:
           type: string
           description: Care of address
+          examples:
+            - Agatha Malm
           readOnly: true
-          example: Agatha Malm
         street:
           type: string
           description: Street
+          examples:
+            - Storgatan 9
           readOnly: true
-          example: Storgatan 9
         postCode:
           type: string
           description: Post code
+          examples:
+            - "85230"
           readOnly: true
-          example: "85230"
         city:
           type: string
           description: City
+          examples:
+            - Sundsvall
           readOnly: true
-          example: Sundsvall
         propertyDesignation:
           type: string
           description: Property designation
+          examples:
+            - Södermalm 1:27
           readOnly: true
-          example: Södermalm 1:27
         dateFrom:
           type: string
-          description: From date
           format: date
+          description: From date
+          examples:
+            - 2019-01-01
           readOnly: true
-          example: 2019-01-01
         dateTo:
           type: string
-          description: To date
           format: date
+          description: To date
+          examples:
+            - 2022-12-31
           readOnly: true
-          example: 2022-12-31
         dateLastModified:
           type: string
-          description: Date when object was last modified (or null if never modified)
           format: date
+          description: Date when object was last modified (or null if never modified)
+          examples:
+            - 2022-12-31
           readOnly: true
-          example: 2022-12-31
         metaData:
-          maxItems: 1000
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/InstallationMetaDataEmbeddable"
-      description: Installation details model
-      readOnly: true
+            maxItems: 1000
+            readOnly: true
+          maxItems: 1000
+          readOnly: true
     InstallationDetailsResponse:
       type: object
       properties:
         installationDetails:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/InstallationDetails"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-    InstallationMetaDataEmbeddable:
-      type: object
-      properties:
-        company:
-          type: string
-        key:
-          type: string
-        value:
-          type: string
-        type:
-          type: string
-        displayName:
-          type: string
-      readOnly: true
+          readOnly: true
     CustomerEngagement:
       type: object
+      description: Customer engagement model
       properties:
         partyId:
           type: string
           description: PartyId (e.g. a personId or an organizationId)
+          examples:
+            - 81471222-5798-11e9-ae24-57fa13b361e1
           readOnly: true
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
         customerType:
           $ref: "#/components/schemas/CustomerType"
+          readOnly: true
         customerNumber:
           type: string
           description: Customer number
+          examples:
+            - "10007"
           readOnly: true
-          example: "10007"
         organizationNumber:
           type: string
           description: Organization number for counterpart of engagement
+          examples:
+            - "5565027223"
           readOnly: true
-          example: "5565027223"
         organizationName:
           type: string
           description: Organization name for counterpart of engagement
+          examples:
+            - Sundsvall Elnät
           readOnly: true
-          example: Sundsvall Elnät
         active:
           type: boolean
           description: "Indicates customer status, if not active then the moveInDate\
             \ holds information on when the customer will be activated"
+          examples:
+            - "true"
           readOnly: true
-          example: true
         moveInDate:
           type: string
-          description: The prospective customer's move-in date
           format: date
+          description: The prospective customer's move-in date
           readOnly: true
-      description: Customer engagement model
-      readOnly: true
     CustomerEngagementResponse:
       type: object
+      description: Customer engagement response model
       properties:
         customerEngagements:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/CustomerEngagement"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-      description: Customer engagement response model
+          readOnly: true
     CustomerDetails:
       type: object
+      description: Customer details model
       properties:
         customerEngagementOrgId:
           type: string
           description: Company with which the customer has an engagement (organization
             number)
+          examples:
+            - "5591962591"
           readOnly: true
-          example: "5591962591"
         customerEngagementOrgName:
           type: string
           description: Name of the company the customer has an engagement with
+          examples:
+            - Sundsvall Elnät
           readOnly: true
-          example: Sundsvall Elnät
         partyId:
           type: string
           description: PartyId (e.g. a personId or an organizationId)
+          examples:
+            - 81471222-5798-11e9-ae24-57fa13b361e1
           readOnly: true
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
         customerNumber:
           type: string
           description: Customer number
+          examples:
+            - "39195"
           readOnly: true
-          example: "39195"
         customerName:
           type: string
           description: Customer name
+          examples:
+            - Sven Svensson
           readOnly: true
-          example: Sven Svensson
         street:
           type: string
           description: Street
+          examples:
+            - Storgatan 44
           readOnly: true
-          example: Storgatan 44
         postalCode:
           type: string
           description: Postal code
+          examples:
+            - "85230"
           readOnly: true
-          example: "85230"
         city:
           type: string
           description: City
+          examples:
+            - Sundsvall
           readOnly: true
-          example: Sundsvall
         careOf:
           type: string
           description: Care of address
+          examples:
+            - Agatha Malm
           readOnly: true
-          example: Agatha Malm
         phoneNumbers:
           type: array
-          readOnly: true
           items:
             type: string
             description: List of phoneNumbers
+            examples:
+              - 076-1234567
             readOnly: true
-            example: 076-1234567
+          readOnly: true
         emails:
           type: array
-          readOnly: true
           items:
             type: string
             description: List of emailAddresses
+            examples:
+              - test@test.se
             readOnly: true
-            example: test@test.se
+          readOnly: true
         customerCategoryID:
           type: integer
-          description: Customer category ID
           format: int32
+          description: Customer category ID
+          examples:
+            - "1"
           readOnly: true
-          example: 1
         customerCategoryDescription:
           type: string
           description: Customer category description
+          examples:
+            - Privat
           readOnly: true
-          example: Privat
         customerChangedFlg:
           type: boolean
           description: Indicates if customer details have changed since the search
             date
+          examples:
+            - PRIVATE
           readOnly: true
-          example: false
         installedChangedFlg:
           type: boolean
           description: Indicates if placement and/or equipment details have changed
             since the search date
+          examples:
+            - "true"
           readOnly: true
-          example: true
         active:
           type: boolean
           description: "Indicates customer status, if not active then the moveInDate\
             \ holds information on when the customer will be activated"
+          examples:
+            - "true"
           readOnly: true
-          example: true
         moveInDate:
           type: string
-          description: The prospective customer's move-in date
           format: date
+          description: The prospective customer's move-in date
           readOnly: true
-      description: Customer details model
-      readOnly: true
     CustomerDetailsResponse:
       type: object
+      description: Customer details response model
       properties:
         customerDetails:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/CustomerDetails"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-      description: Customer details response model
+          readOnly: true
     Agreement:
       type: object
+      description: Agreement model
       properties:
         partyId:
           type: string
           description: PartyId (e.g. a personId or an organizationId)
+          examples:
+            - 81471222-5798-11e9-ae24-57fa13b361e1
           readOnly: true
-          example: 81471222-5798-11e9-ae24-57fa13b361e1
         customerNumber:
           type: string
           description: Customer number
+          examples:
+            - "10007"
           readOnly: true
-          example: "10007"
         facilityId:
           type: string
           description: Facility Id
+          examples:
+            - "1223334"
           readOnly: true
-          example: "1223334"
         category:
           $ref: "#/components/schemas/Category"
+          readOnly: true
         billingId:
           type: string
           description: Billing Id
+          examples:
+            - "222333"
           readOnly: true
-          example: "222333"
         agreementId:
           type: string
           description: Agreement Id
+          examples:
+            - "333444"
           readOnly: true
-          example: "333444"
         description:
           type: string
           description: Description
+          examples:
+            - Avtalet avser fjärrvärme
           readOnly: true
-          example: Avtalet avser fjärrvärme
         mainAgreement:
           type: boolean
           description: Shows if agreement is a main-agreement or not
+          examples:
+            - "true"
           readOnly: true
-          example: true
         binding:
           type: boolean
           description: Shows if agreement include binding or not
+          examples:
+            - "false"
           readOnly: true
-          example: false
         bindingRule:
           type: string
           description: Rule of binding if exists
+          examples:
+            - 10 mån binding
           readOnly: true
-          example: 10 mån binding
         placementStatus:
           type: string
           description: Placement status for agreement
+          examples:
+            - Tillkopplad
           readOnly: true
-          example: Tillkopplad
         netAreaId:
           type: string
           description: Net area id for agreement
+          examples:
+            - SUV
           readOnly: true
-          example: SUV
         siteAddress:
           type: string
           description: Site address connected to the agreement
+          examples:
+            - Första gatan 2
           readOnly: true
-          example: Första gatan 2
         production:
           type: boolean
           description: Signal if the agreement is a production agreement or not (can
             be null if not applicable)
+          examples:
+            - "true"
           readOnly: true
-          example: true
         fromDate:
           type: string
-          description: From-date in validity of agreement
           format: date
+          description: From-date in validity of agreement
           readOnly: true
         toDate:
           type: string
-          description: To-date in validity of agreement
           format: date
+          description: To-date in validity of agreement
           readOnly: true
         active:
           type: boolean
           description: Shows if agreement is active ('fromDate' <= today and 'toDate'
             => today)
+          examples:
+            - "true"
           readOnly: true
-          example: true
-      description: Agreement model
-      readOnly: true
     AgreementResponse:
       type: object
+      description: Agreement response model
       properties:
         agreements:
           type: array
-          readOnly: true
           items:
             $ref: "#/components/schemas/Agreement"
+            readOnly: true
+          readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
-      description: Agreement response model
+          readOnly: true
   securitySchemes: { }
