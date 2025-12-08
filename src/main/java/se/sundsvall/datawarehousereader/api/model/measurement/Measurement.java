@@ -15,10 +15,10 @@ import se.sundsvall.datawarehousereader.api.model.Category;
 @Schema(description = "Measurement model")
 public class Measurement {
 
-	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
+	@Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
 	private String partyId;
 
-	@Schema(description = "Facility id", example = "735999109151401011", accessMode = READ_ONLY)
+	@Schema(description = "Facility id", examples = "735999109151401011", accessMode = READ_ONLY)
 	private String facilityId;
 
 	@Schema(implementation = Category.class, accessMode = READ_ONLY)
@@ -27,13 +27,13 @@ public class Measurement {
 	@Schema(implementation = Aggregation.class, accessMode = READ_ONLY)
 	private Aggregation aggregatedOn;
 
-	@Schema(description = "Measurement type", example = "Energy", accessMode = READ_ONLY)
+	@Schema(description = "Measurement type", examples = "Energy", accessMode = READ_ONLY)
 	private String measurementType;
 
-	@Schema(description = "Measurement unit", example = "kWh", accessMode = READ_ONLY)
+	@Schema(description = "Measurement unit", examples = "kWh", accessMode = READ_ONLY)
 	private String unit;
 
-	@Schema(description = "Measurement value", example = "1292.7500000000", accessMode = READ_ONLY)
+	@Schema(description = "Measurement value", examples = "1292.7500000000", accessMode = READ_ONLY)
 	private BigDecimal value;
 
 	@Schema(description = "Date and time for measurement point. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'", accessMode = READ_ONLY)
@@ -43,7 +43,7 @@ public class Measurement {
 	@ArraySchema(schema = @Schema(implementation = MeasurementMetaData.class, accessMode = READ_ONLY))
 	private List<MeasurementMetaData> metaData;
 
-	@Schema(description = "Interpolation information. Zero means that no interpolations has been done. Value greater than zero tells how many values in the serie that has been interpolated/calculated.", example = "13", accessMode = READ_ONLY)
+	@Schema(description = "Interpolation information. Zero means that no interpolations has been done. Value greater than zero tells how many values in the serie that has been interpolated/calculated.", examples = "13", accessMode = READ_ONLY)
 	private int interpolation;
 
 	public static Measurement create() {

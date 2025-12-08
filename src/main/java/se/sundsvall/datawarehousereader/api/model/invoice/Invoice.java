@@ -11,85 +11,85 @@ import se.sundsvall.datawarehousereader.api.model.CustomerType;
 @Schema(description = "Invoice model")
 public class Invoice {
 
-	@Schema(description = "Customer number", example = "39195", accessMode = READ_ONLY)
+	@Schema(description = "Customer number", examples = "39195", accessMode = READ_ONLY)
 	private String customerNumber;
 
 	@Schema(implementation = CustomerType.class, accessMode = READ_ONLY)
 	private CustomerType customerType;
 
-	@Schema(description = "Facility id", example = "735999109151401011", accessMode = READ_ONLY)
+	@Schema(description = "Facility id", examples = "735999109151401011", accessMode = READ_ONLY)
 	private String facilityId;
 
-	@Schema(description = "Invoice number", example = "767915994", accessMode = READ_ONLY)
+	@Schema(description = "Invoice number", examples = "767915994", accessMode = READ_ONLY)
 	private Long invoiceNumber;
 
-	@Schema(description = "Invoice date", example = "2022-01-15", accessMode = READ_ONLY)
+	@Schema(description = "Invoice date", examples = "2022-01-15", accessMode = READ_ONLY)
 	private LocalDate invoiceDate;
 
-	@Schema(description = "invoice name", example = "765801493.pdf", accessMode = READ_ONLY)
+	@Schema(description = "invoice name", examples = "765801493.pdf", accessMode = READ_ONLY)
 	private String invoiceName;
 
-	@Schema(description = "Invoice type", example = "Faktura", accessMode = READ_ONLY)
+	@Schema(description = "Invoice type", examples = "Faktura", accessMode = READ_ONLY)
 	private String invoiceType;
 
-	@Schema(description = "Invoice description", example = "Fjärrvärme", accessMode = READ_ONLY)
+	@Schema(description = "Invoice description", examples = "Fjärrvärme", accessMode = READ_ONLY)
 	private String invoiceDescription;
 
-	@Schema(description = "Invoice status", example = "Skickad", accessMode = READ_ONLY)
+	@Schema(description = "Invoice status", examples = "Skickad", accessMode = READ_ONLY)
 	private String invoiceStatus;
 
-	@Schema(description = "Ocr number", example = "767915994", accessMode = READ_ONLY)
+	@Schema(description = "Ocr number", examples = "767915994", accessMode = READ_ONLY)
 	private Long ocrNumber;
 
-	@Schema(description = "Due date", example = "2022-01-31", accessMode = READ_ONLY)
+	@Schema(description = "Due date", examples = "2022-01-31", accessMode = READ_ONLY)
 	private LocalDate dueDate;
 
-	@Schema(description = "Total amount", example = "1116.00", accessMode = READ_ONLY)
+	@Schema(description = "Total amount", examples = "1116.00", accessMode = READ_ONLY)
 	private BigDecimal totalAmount;
 
-	@Schema(description = "Amount included VAT", example = "1115.62", accessMode = READ_ONLY)
+	@Schema(description = "Amount included VAT", examples = "1115.62", accessMode = READ_ONLY)
 	private BigDecimal amountVatIncluded;
 
-	@Schema(description = "Amount excluded VAT", example = "892.50", accessMode = READ_ONLY)
+	@Schema(description = "Amount excluded VAT", examples = "892.50", accessMode = READ_ONLY)
 	private BigDecimal amountVatExcluded;
 
-	@Schema(description = "Amount eligible for VAT", example = "892.50", accessMode = READ_ONLY)
+	@Schema(description = "Amount eligible for VAT", examples = "892.50", accessMode = READ_ONLY)
 	private BigDecimal vatEligibleAmount;
 
-	@Schema(description = "Rounding", example = "0.38", accessMode = READ_ONLY)
+	@Schema(description = "Rounding", examples = "0.38", accessMode = READ_ONLY)
 	private BigDecimal rounding;
 
-	@Schema(description = "VAT", example = "892.50", accessMode = READ_ONLY)
+	@Schema(description = "VAT", examples = "892.50", accessMode = READ_ONLY)
 	private BigDecimal vat;
 
-	@Schema(description = "Reversed VAT", example = "false", accessMode = READ_ONLY)
+	@Schema(description = "Reversed VAT", examples = "false", accessMode = READ_ONLY)
 	private Boolean reversedVat;
 
-	@Schema(description = "Currency", example = "sek", accessMode = READ_ONLY)
+	@Schema(description = "Currency", examples = "sek", accessMode = READ_ONLY)
 	private String currency;
 
-	@Schema(description = "Organization group", example = "stadsbacken", accessMode = READ_ONLY)
+	@Schema(description = "Organization group", examples = "stadsbacken", accessMode = READ_ONLY)
 	private String organizationGroup;
 
-	@Schema(description = "Organization number of invoice issuer", example = "5565027223", accessMode = READ_ONLY)
+	@Schema(description = "Organization number of invoice issuer", examples = "5565027223", accessMode = READ_ONLY)
 	private String organizationNumber;
 
-	@Schema(description = "Adminstration", example = "Sundsvall Elnät", accessMode = READ_ONLY)
+	@Schema(description = "Adminstration", examples = "Sundsvall Elnät", accessMode = READ_ONLY)
 	private String administration;
 
-	@Schema(description = "Street", example = "Storgatan 44", accessMode = READ_ONLY)
+	@Schema(description = "Street", examples = "Storgatan 44", accessMode = READ_ONLY)
 	private String street;
 
-	@Schema(description = "Postal code", example = "85230", accessMode = READ_ONLY)
+	@Schema(description = "Postal code", examples = "85230", accessMode = READ_ONLY)
 	private String postCode;
 
-	@Schema(description = "City", example = "Sundsvall", accessMode = READ_ONLY)
+	@Schema(description = "City", examples = "Sundsvall", accessMode = READ_ONLY)
 	private String city;
 
-	@Schema(description = "Care of address", example = "Agatha Malm", accessMode = READ_ONLY)
+	@Schema(description = "Care of address", examples = "Agatha Malm", accessMode = READ_ONLY)
 	private String careOf;
 
-	@Schema(description = "Is pdf-version of invoice available", example = "false", accessMode = READ_ONLY)
+	@Schema(description = "Is pdf-version of invoice available", examples = "false", accessMode = READ_ONLY)
 	private Boolean pdfAvailable;
 
 	public static Invoice create() {

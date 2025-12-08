@@ -8,10 +8,10 @@ import java.util.Objects;
 @Schema(description = "Measurement meta data model")
 public class MeasurementMetaData {
 
-	@Schema(description = "Key connected to the meta data", example = "READING_SEQ", accessMode = READ_ONLY)
+	@Schema(description = "Key connected to the meta data", examples = "READING_SEQ", accessMode = READ_ONLY)
 	private String key;
 
-	@Schema(description = "Value for the meta data", example = "5733010", accessMode = READ_ONLY)
+	@Schema(description = "Value for the meta data", examples = "5733010", accessMode = READ_ONLY)
 	private String value;
 
 	public static MeasurementMetaData create() {

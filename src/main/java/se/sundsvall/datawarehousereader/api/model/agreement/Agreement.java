@@ -11,46 +11,46 @@ import se.sundsvall.datawarehousereader.api.model.Category;
 @Schema(description = "Agreement model")
 public class Agreement {
 
-	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
+	@Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1", accessMode = READ_ONLY)
 	private String partyId;
 
-	@Schema(description = "Customer number", example = "10007", accessMode = READ_ONLY)
+	@Schema(description = "Customer number", examples = "10007", accessMode = READ_ONLY)
 	private String customerNumber;
 
-	@Schema(description = "Facility Id", example = "1223334", accessMode = READ_ONLY)
+	@Schema(description = "Facility Id", examples = "1223334", accessMode = READ_ONLY)
 	private String facilityId;
 
 	@Schema(implementation = Category.class, accessMode = READ_ONLY)
 	private Category category;
 
-	@Schema(description = "Billing Id", example = "222333", accessMode = READ_ONLY)
+	@Schema(description = "Billing Id", examples = "222333", accessMode = READ_ONLY)
 	private String billingId;
 
-	@Schema(description = "Agreement Id", example = "333444", accessMode = READ_ONLY)
+	@Schema(description = "Agreement Id", examples = "333444", accessMode = READ_ONLY)
 	private String agreementId;
 
-	@Schema(description = "Description", example = "Avtalet avser fjärrvärme", accessMode = READ_ONLY)
+	@Schema(description = "Description", examples = "Avtalet avser fjärrvärme", accessMode = READ_ONLY)
 	private String description;
 
-	@Schema(description = "Shows if agreement is a main-agreement or not", example = "true", accessMode = READ_ONLY)
+	@Schema(description = "Shows if agreement is a main-agreement or not", examples = "true", accessMode = READ_ONLY)
 	private Boolean mainAgreement;
 
-	@Schema(description = "Shows if agreement include binding or not", example = "false", accessMode = READ_ONLY)
+	@Schema(description = "Shows if agreement include binding or not", examples = "false", accessMode = READ_ONLY)
 	private Boolean binding;
 
-	@Schema(description = "Rule of binding if exists", example = "10 mån binding", accessMode = READ_ONLY)
+	@Schema(description = "Rule of binding if exists", examples = "10 mån binding", accessMode = READ_ONLY)
 	private String bindingRule;
 
-	@Schema(description = "Placement status for agreement", example = "Tillkopplad", accessMode = READ_ONLY)
+	@Schema(description = "Placement status for agreement", examples = "Tillkopplad", accessMode = READ_ONLY)
 	private String placementStatus;
 
-	@Schema(description = "Net area id for agreement", example = "SUV", accessMode = READ_ONLY)
+	@Schema(description = "Net area id for agreement", examples = "SUV", accessMode = READ_ONLY)
 	private String netAreaId;
 
-	@Schema(description = "Site address connected to the agreement", example = "Första gatan 2", accessMode = READ_ONLY)
+	@Schema(description = "Site address connected to the agreement", examples = "Första gatan 2", accessMode = READ_ONLY)
 	private String siteAddress;
 
-	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", example = "true", accessMode = READ_ONLY)
+	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", examples = "true", accessMode = READ_ONLY)
 	private Boolean production;
 
 	@Schema(description = "From-date in validity of agreement", accessMode = READ_ONLY)
@@ -61,7 +61,7 @@ public class Agreement {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
 	private LocalDate toDate;
 
-	@Schema(description = "Shows if agreement is active ('fromDate' <= today and 'toDate' => today)", example = "true", accessMode = READ_ONLY)
+	@Schema(description = "Shows if agreement is active ('fromDate' <= today and 'toDate' => today)", examples = "true", accessMode = READ_ONLY)
 	private Boolean active;
 
 	public static Agreement create() {
