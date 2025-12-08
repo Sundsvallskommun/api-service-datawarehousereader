@@ -16,12 +16,12 @@
 			"invoiceStatus": "Skickad",
 			"ocrNumber": 767916190,
 			"dueDate": "2019-10-31",
-			"totalAmount": -1900.0000,
-			"amountVatIncluded": -1900.0000,
-			"amountVatExcluded": -1520.0000,
-			"vatEligibleAmount": -1520.0000,
-			"rounding": 0.0000,
-			"vat": -1520.0000,
+			"totalAmount": -1900.0,
+			"amountVatIncluded": -1900.0,
+			"amountVatExcluded": -1520.0,
+			"vatEligibleAmount": -1520.0,
+			"rounding": 0.0,
+			"vat": -1520.0,
 			"reversedVat": false,
 			"currency": "sek",
 			"organizationGroup": "stadsbacken",
@@ -39,10 +39,6 @@
 		"limit": 100,
 		"count": 1,
 		"totalRecords": 1,
-		"totalPages": 1,
-		"sortBy": [
-			"invoiceDate"
-		],
-		"sortDirection": "ASC"
+		"totalPages": 1
 	}
 }

@@ -83,7 +83,7 @@ class InvoiceResourceTest {
 		assertThat(parameters.getCustomerType()).isEqualTo(CUSTOMER_TYPE);
 		assertThat(parameters.getDueDateFrom()).isEqualTo(DUE_DATE_FROM);
 		assertThat(parameters.getDueDateTo()).isEqualTo(DUE_DATE_TO);
-		assertThat(parameters.getFacilityId()).isEqualTo(List.of(FACILITY_ID));
+		assertThat(parameters.getFacilityIds()).isEqualTo(List.of(FACILITY_ID));
 		assertThat(parameters.getInvoiceDateFrom()).isEqualTo(INVOICE_DATE_FROM);
 		assertThat(parameters.getInvoiceDateTo()).isEqualTo(INVOICE_DATE_TO);
 		assertThat(parameters.getInvoiceName()).isEqualTo(INVOICE_NAME);
@@ -117,7 +117,7 @@ class InvoiceResourceTest {
 		assertThat(parameters.getCustomerType()).isEqualTo(CUSTOMER_TYPE);
 		assertThat(parameters.getDueDateFrom()).isEqualTo(DUE_DATE_FROM);
 		assertThat(parameters.getDueDateTo()).isEqualTo(DUE_DATE_TO);
-		assertThat(parameters.getFacilityId()).isEqualTo(List.of(FACILITY_ID));
+		assertThat(parameters.getFacilityIds()).isEqualTo(List.of(FACILITY_ID));
 		assertThat(parameters.getInvoiceDateFrom()).isEqualTo(INVOICE_DATE_FROM);
 		assertThat(parameters.getInvoiceDateTo()).isEqualTo(INVOICE_DATE_TO);
 		assertThat(parameters.getInvoiceName()).isEqualTo(INVOICE_NAME);
@@ -148,7 +148,7 @@ class InvoiceResourceTest {
 		assertThat(parameters.getCustomerType()).isNull();
 		assertThat(parameters.getDueDateFrom()).isNull();
 		assertThat(parameters.getDueDateTo()).isNull();
-		assertThat(parameters.getFacilityId()).isNull();
+		assertThat(parameters.getFacilityIds()).isNull();
 		assertThat(parameters.getInvoiceDateFrom()).isNull();
 		assertThat(parameters.getInvoiceDateTo()).isNull();
 		assertThat(parameters.getInvoiceName()).isNull();
@@ -185,7 +185,7 @@ class InvoiceResourceTest {
 		ofNullable(limit).ifPresent(p -> parameters.add("limit", valueOf(p)));
 		ofNullable(customerNumber).ifPresent(p -> parameters.add("customerNumber", p));
 		ofNullable(customerType).ifPresent(p -> parameters.add("customerType", p));
-		ofNullable(facilityId).ifPresent(p -> parameters.add("facilityId", p));
+		ofNullable(facilityId).ifPresent(p -> parameters.add("facilityIds", p));
 		ofNullable(invoiceNumber).ifPresent(p -> parameters.add("invoiceNumber", valueOf(p)));
 		ofNullable(invoiceDateFrom).ifPresent(p -> parameters.add("invoiceDateFrom", p.format(DateTimeFormatter.ISO_LOCAL_DATE)));
 		ofNullable(invoiceDateTo).ifPresent(p -> parameters.add("invoiceDateTo", p.format(DateTimeFormatter.ISO_LOCAL_DATE)));

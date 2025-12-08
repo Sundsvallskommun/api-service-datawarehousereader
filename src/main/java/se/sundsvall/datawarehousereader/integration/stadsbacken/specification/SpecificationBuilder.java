@@ -12,8 +12,8 @@ import org.springframework.data.jpa.domain.Specification;
 public class SpecificationBuilder<T> {
 
 	/**
-	 * Method builds an equal filter if value is not null. If value is null, method returns
-	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 * Method builds an equal filter if value is not null. If value is null, method returns an always-true predicate
+	 * (meaning no filtering will be applied for sent in attribute)
 	 *
 	 * @param  attribute name that will be used in filter
 	 * @param  value     value (or null) to compare against
@@ -24,8 +24,8 @@ public class SpecificationBuilder<T> {
 	}
 
 	/**
-	 * Method builds an equal filter if value is not null. If value is null, method returns
-	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 * Method builds an equal filter if value is not null. If value is null, method returns an always-true predicate
+	 * (meaning no filtering will be applied for sent in attribute)
 	 *
 	 * @param  attribute name that will be used in filter
 	 * @param  value     value (or null) to compare against
@@ -36,8 +36,8 @@ public class SpecificationBuilder<T> {
 	}
 
 	/**
-	 * Method builds a filter depending on sent in time stamps. If both values are null, method returns
-	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 * Method builds a filter depending on sent in time stamps. If both values are null, method returns an always-true
+	 * predicate (meaning no filtering will be applied for sent in attribute)
 	 *
 	 * @param  attribute    name of attribute (of type date) that will be used in filter
 	 * @param  dateTimeFrom date from (or null) to compare against
@@ -63,8 +63,8 @@ public class SpecificationBuilder<T> {
 	}
 
 	/**
-	 * Method builds a filter depending on sent in dates. If both values are null, method returns
-	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 * Method builds a filter depending on sent in dates. If both values are null, method returns an always-true predicate
+	 * (meaning no filtering will be applied for sent in attribute)
 	 *
 	 * @param  attribute name of attribute (of type date) that will be used in filter
 	 * @param  dateFrom  date from (or null) to compare against
@@ -90,8 +90,8 @@ public class SpecificationBuilder<T> {
 	}
 
 	/**
-	 * Method builds a filter depending on sent in list of string. If values are null, method returns
-	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 * Method builds a filter depending on sent in list of string. If values are null, method returns an always-true
+	 * predicate (meaning no filtering will be applied for sent in attribute)
 	 *
 	 * @param  attribute name of attribute that will be used in filter
 	 * @param  values    String-values (or null) to compare against
@@ -102,8 +102,8 @@ public class SpecificationBuilder<T> {
 	}
 
 	/**
-	 * Method builds a filter depending on sent in list of Integer. If values are null, method returns
-	 * an always-true predicate (meaning no filtering will be applied for sent in attribute)
+	 * Method builds a filter depending on sent in list of Integer. If values are null, method returns an always-true
+	 * predicate (meaning no filtering will be applied for sent in attribute)
 	 *
 	 * @param  attribute name of attribute that will be used in filter
 	 * @param  values    Integer-values (or null) to compare against

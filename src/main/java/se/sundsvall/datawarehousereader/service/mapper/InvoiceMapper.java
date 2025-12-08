@@ -8,6 +8,8 @@ import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
@@ -22,6 +24,50 @@ public class InvoiceMapper {
 		return ofNullable(entities).orElse(emptyList()).stream()
 			.map(InvoiceMapper::toInvoice)
 			.toList();
+	}
+
+	public static List<Invoice> toInvoices(Map<Long, List<InvoiceEntity>> invoiceMap) {
+		return invoiceMap.values().stream()
+			.map(InvoiceMapper::toInvoice)
+			.toList();
+	}
+
+	private static Invoice toInvoice(List<InvoiceEntity> entities) {
+		var facilityIds = entities.stream()
+			.map(InvoiceEntity::getFacilityId)
+			.collect(Collectors.toSet());
+		var invoiceDescriptions = entities.stream()
+			.map(InvoiceEntity::getInvoiceDescription)
+			.collect(Collectors.toSet());
+
+		return Invoice.create()
+			.withAdministration(entities.getFirst().getAdministration())
+			.withAmountVatExcluded(entities.getFirst().getAmountVatExcluded())
+			.withAmountVatIncluded(entities.getFirst().getAmountVatIncluded())
+			.withCareOf(entities.getFirst().getCareOf())
+			.withCity(entities.getFirst().getCity())
+			.withCurrency(entities.getFirst().getCurrency())
+			.withCustomerNumber(ServiceUtil.toString(entities.getFirst().getCustomerId()))
+			.withCustomerType(fromValue(entities.getFirst().getCustomerType(), INTERNAL_SERVER_ERROR, UNKNOWN_CUSTOMER_TYPE))
+			.withDueDate(entities.getFirst().getDueDate())
+			.withFacilityIds(facilityIds)
+			.withInvoiceDate(entities.getFirst().getInvoiceDate())
+			.withInvoiceDescription(invoiceDescriptions)
+			.withInvoiceName(entities.getFirst().getInvoiceName())
+			.withInvoiceNumber(entities.getFirst().getInvoiceNumber())
+			.withInvoiceStatus(entities.getFirst().getInvoiceStatus())
+			.withInvoiceType(entities.getFirst().getInvoiceType())
+			.withOcrNumber(entities.getFirst().getOcrNumber())
+			.withOrganizationGroup(entities.getFirst().getOrganizationGroup())
+			.withOrganizationNumber(entities.getFirst().getOrganizationId())
+			.withPostCode(entities.getFirst().getPostCode())
+			.withReversedVat(entities.getFirst().getReversedVat())
+			.withRounding(entities.getFirst().getRounding())
+			.withStreet(entities.getFirst().getStreet())
+			.withTotalAmount(entities.getFirst().getTotalAmount())
+			.withVat(entities.getFirst().getVat())
+			.withVatEligibleAmount(entities.getFirst().getVatEligibleAmount())
+			.withPdfAvailable(entities.getFirst().getPdfAvailable());
 	}
 
 	private static Invoice toInvoice(InvoiceEntity entity) {

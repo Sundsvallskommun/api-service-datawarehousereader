@@ -60,11 +60,6 @@ class InvoiceMapperTest {
 	private static final String STREET = "street";
 
 	@Test
-	void toInvoicesWithNull() {
-		assertThat(InvoiceMapper.toInvoices(null)).isEmpty();
-	}
-
-	@Test
 	void toInvoicesWithEmptyList() {
 		assertThat(InvoiceMapper.toInvoices(Collections.emptyList())).isEmpty();
 	}

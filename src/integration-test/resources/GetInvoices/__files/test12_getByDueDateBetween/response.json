@@ -1,105 +1,6 @@
 {
 	"invoices": [
 		{
-			"customerNumber": "691071",
-			"customerType": "Private",
-			"facilityIds": [
-				"735999226000059909"
-			],
-			"invoiceDescriptions": [
-				"Fjärrkyla"
-			],
-			"invoiceNumber": 766763197,
-			"invoiceDate": "2019-10-08",
-			"invoiceName": "766763197.pdf",
-			"invoiceType": "Faktura",
-			"invoiceStatus": "Skickad",
-			"ocrNumber": 766763197,
-			"dueDate": "2019-10-30",
-			"totalAmount": 344.0000,
-			"amountVatIncluded": 343.7000,
-			"amountVatExcluded": 274.9600,
-			"vatEligibleAmount": 274.9600,
-			"rounding": 0.3000,
-			"vat": 274.9600,
-			"reversedVat": false,
-			"currency": "sek",
-			"organizationGroup": "stadsbacken",
-			"organizationNumber": "5564786647",
-			"administration": "Sundsvall Energi AB",
-			"street": "Flugeby Hammersdal",
-			"postCode": "50199",
-			"city": "Vetlanda",
-			"careOf": "Pettson Findus",
-			"pdfAvailable": false
-		},
-		{
-			"customerNumber": "600606",
-			"customerType": "Enterprise",
-			"facilityIds": [
-				"735999109261218707"
-			],
-			"invoiceDescriptions": [
-				"El"
-			],
-			"invoiceNumber": 137968194,
-			"invoiceDate": "2019-10-09",
-			"invoiceName": "137968194.pdf",
-			"invoiceType": "Faktura",
-			"invoiceStatus": "Skickad",
-			"ocrNumber": 137968194,
-			"dueDate": "2019-10-29",
-			"totalAmount": 1357.0000,
-			"amountVatIncluded": 1357.3600,
-			"amountVatExcluded": 1085.8900,
-			"vatEligibleAmount": 1085.8900,
-			"rounding": -0.3600,
-			"vat": 1085.8900,
-			"reversedVat": false,
-			"currency": "sek",
-			"organizationGroup": "stadsbacken",
-			"organizationNumber": "5565027223",
-			"administration": "Sundsvall Elnät",
-			"street": "DB79B,  FE 11040",
-			"postCode": "83882",
-			"city": "FRÖSÖN",
-			"careOf": "Fräscha fastigheter AB",
-			"pdfAvailable": true
-		},
-		{
-			"customerNumber": "600606",
-			"customerType": "Enterprise",
-			"facilityIds": [
-				"735999109140205897"
-			],
-			"invoiceDescriptions": [
-				"El"
-			],
-			"invoiceNumber": 137968293,
-			"invoiceDate": "2019-10-09",
-			"invoiceName": "137968293.pdf",
-			"invoiceType": "Faktura",
-			"invoiceStatus": "Skickad",
-			"ocrNumber": 137968293,
-			"dueDate": "2019-10-29",
-			"totalAmount": 48631.0000,
-			"amountVatIncluded": 48631.0100,
-			"amountVatExcluded": 38904.8100,
-			"vatEligibleAmount": 38904.8100,
-			"rounding": -0.0100,
-			"vat": 38904.8100,
-			"reversedVat": false,
-			"currency": "sek",
-			"organizationGroup": "stadsbacken",
-			"organizationNumber": "5565027223",
-			"administration": "Sundsvall Elnät",
-			"street": "DB79B,  FE 11040",
-			"postCode": "83882",
-			"city": "FRÖSÖN",
-			"careOf": "Fräscha fastigheter AB",
-			"pdfAvailable": true
-		},
-		{
 			"customerNumber": "600606",
 			"customerType": "Enterprise",
 			"facilityIds": [
@@ -115,12 +16,12 @@
 			"invoiceStatus": "Skickad",
 			"ocrNumber": 137968392,
 			"dueDate": "2019-10-29",
-			"totalAmount": 12060.0000,
-			"amountVatIncluded": 12059.9900,
-			"amountVatExcluded": 9647.9900,
-			"vatEligibleAmount": 9647.9900,
-			"rounding": 0.0100,
-			"vat": 9647.9900,
+			"totalAmount": 12060.0,
+			"amountVatIncluded": 12059.99,
+			"amountVatExcluded": 9647.99,
+			"vatEligibleAmount": 9647.99,
+			"rounding": 0.01,
+			"vat": 9647.99,
 			"reversedVat": false,
 			"currency": "sek",
 			"organizationGroup": "stadsbacken",
@@ -148,12 +49,12 @@
 			"invoiceStatus": "Skickad",
 			"ocrNumber": 767916190,
 			"dueDate": "2019-10-31",
-			"totalAmount": -1900.0000,
-			"amountVatIncluded": -1900.0000,
-			"amountVatExcluded": -1520.0000,
-			"vatEligibleAmount": -1520.0000,
-			"rounding": 0.0000,
-			"vat": -1520.0000,
+			"totalAmount": -1900.0,
+			"amountVatIncluded": -1900.0,
+			"amountVatExcluded": -1520.0,
+			"vatEligibleAmount": -1520.0,
+			"rounding": 0.0,
+			"vat": -1520.0,
 			"reversedVat": false,
 			"currency": "sek",
 			"organizationGroup": "stadsbacken",
@@ -164,6 +65,105 @@
 			"city": "FRÖSÖN",
 			"careOf": "Fräscha fastigheter AB",
 			"pdfAvailable": true
+		},
+		{
+			"customerNumber": "600606",
+			"customerType": "Enterprise",
+			"facilityIds": [
+				"735999109261218707"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 137968194,
+			"invoiceDate": "2019-10-09",
+			"invoiceName": "137968194.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 137968194,
+			"dueDate": "2019-10-29",
+			"totalAmount": 1357.0,
+			"amountVatIncluded": 1357.36,
+			"amountVatExcluded": 1085.89,
+			"vatEligibleAmount": 1085.89,
+			"rounding": -0.36,
+			"vat": 1085.89,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "DB79B,  FE 11040",
+			"postCode": "83882",
+			"city": "FRÖSÖN",
+			"careOf": "Fräscha fastigheter AB",
+			"pdfAvailable": true
+		},
+		{
+			"customerNumber": "600606",
+			"customerType": "Enterprise",
+			"facilityIds": [
+				"735999109140205897"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 137968293,
+			"invoiceDate": "2019-10-09",
+			"invoiceName": "137968293.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 137968293,
+			"dueDate": "2019-10-29",
+			"totalAmount": 48631.0,
+			"amountVatIncluded": 48631.01,
+			"amountVatExcluded": 38904.81,
+			"vatEligibleAmount": 38904.81,
+			"rounding": -0.01,
+			"vat": 38904.81,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "DB79B,  FE 11040",
+			"postCode": "83882",
+			"city": "FRÖSÖN",
+			"careOf": "Fräscha fastigheter AB",
+			"pdfAvailable": true
+		},
+		{
+			"customerNumber": "691071",
+			"customerType": "Private",
+			"facilityIds": [
+				"735999226000059909"
+			],
+			"invoiceDescriptions": [
+				"Fjärrkyla"
+			],
+			"invoiceNumber": 766763197,
+			"invoiceDate": "2019-10-08",
+			"invoiceName": "766763197.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 766763197,
+			"dueDate": "2019-10-30",
+			"totalAmount": 344.0,
+			"amountVatIncluded": 343.7,
+			"amountVatExcluded": 274.96,
+			"vatEligibleAmount": 274.96,
+			"rounding": 0.3,
+			"vat": 274.96,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5564786647",
+			"administration": "Sundsvall Energi AB",
+			"street": "Flugeby Hammersdal",
+			"postCode": "50199",
+			"city": "Vetlanda",
+			"careOf": "Pettson Findus",
+			"pdfAvailable": false
 		}
 	],
 	"_meta": {
@@ -171,10 +171,6 @@
 		"limit": 100,
 		"count": 5,
 		"totalRecords": 5,
-		"totalPages": 1,
-		"sortBy": [
-			"invoiceDate"
-		],
-		"sortDirection": "ASC"
+		"totalPages": 1
 	}
 }

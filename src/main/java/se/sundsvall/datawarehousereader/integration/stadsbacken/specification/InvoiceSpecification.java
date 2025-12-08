@@ -14,16 +14,33 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.inv
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity_.OCR_NUMBER;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity_.ORGANIZATION_GROUP;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity_.ORGANIZATION_ID;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toIntegers;
 
 import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
+import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 
 public interface InvoiceSpecification {
 
 	SpecificationBuilder<InvoiceEntity> BUILDER = new SpecificationBuilder<>();
+
+	static Specification<InvoiceEntity> createSpecification(InvoiceParameters parameters) {
+		return Specification.allOf(withAdministration(parameters.getAdministration())
+			.and(withCustomerIds(toIntegers(parameters.getCustomerNumber()))
+				.and(withCustomerType(parameters.getCustomerType()))
+				.and(withDueDate(parameters.getDueDateFrom(), parameters.getDueDateTo()))
+				.and(withFacilityIds(parameters.getFacilityIds())))
+			.and(withInvoiceDate(parameters.getInvoiceDateFrom(), parameters.getInvoiceDateTo()))
+			.and(withInvoiceName(parameters.getInvoiceName())).and(withInvoiceNumber(parameters.getInvoiceNumber()))
+			.and(withInvoiceStatus(parameters.getInvoiceStatus()))
+			.and(withInvoiceType(parameters.getInvoiceType()))
+			.and(withOcrNumber(parameters.getOcrNumber()))
+			.and(withOrganizationGroup(parameters.getOrganizationGroup()))
+			.and(withOrganizationId(parameters.getOrganizationNumber())));
+	}
 
 	static Specification<InvoiceEntity> withCustomerIds(List<Integer> customerIds) {
 		return BUILDER.buildInFilterForInteger(CUSTOMER_ID, customerIds);

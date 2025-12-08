@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:58955
+  - url: http://localhost:57998
     description: Generated server url
 tags:
   - name: Measurement
@@ -177,7 +177,7 @@ paths:
           required: false
           schema:
             $ref: "#/components/schemas/CustomerType"
-        - name: facilityId
+        - name: facilityIds
           in: query
           required: false
           schema:
