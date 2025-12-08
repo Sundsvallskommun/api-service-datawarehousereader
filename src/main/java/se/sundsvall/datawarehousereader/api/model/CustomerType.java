@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 import org.zalando.problem.Problem;
 import org.zalando.problem.Status;
 
-@Schema(description = "Customer type", enumAsRef = true, example = "Enterprise")
+@Schema(description = "Customer type", enumAsRef = true, examples = "Enterprise")
 public enum CustomerType {
 
 	ENTERPRISE("Enterprise"),

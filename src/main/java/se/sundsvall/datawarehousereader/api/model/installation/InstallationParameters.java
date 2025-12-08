@@ -14,19 +14,19 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 @ParameterObject
 public class InstallationParameters extends AbstractParameterPagingAndSortingBase {
 
-	@Schema(description = "Is the installation installed", example = "true")
+	@Schema(description = "Is the installation installed", examples = "true")
 	private Boolean installed;
 
-	@Schema(description = "Earliest date when item was last modified", example = "2022-12-31")
+	@Schema(description = "Earliest date when item was last modified", examples = "2022-12-31")
 	private LocalDate lastModifiedDateFrom;
 
-	@Schema(description = "Latest date when item was last modified", example = "2022-12-31")
+	@Schema(description = "Latest date when item was last modified", examples = "2022-12-31")
 	private LocalDate lastModifiedDateTo;
 
-	@Schema(description = "Category", example = "ELECTRICITY", implementation = Category.class)
+	@Schema(description = "Category", examples = "ELECTRICITY", implementation = Category.class)
 	private Category category;
 
-	@Schema(description = "Facility id", example = "735999109151401011")
+	@Schema(description = "Facility id", examples = "735999109151401011")
 	private String facilityId;
 
 	public static InstallationParameters create() {

@@ -13,37 +13,37 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 @ParameterObject
 public class InstalledBaseParameters extends AbstractParameterPagingAndSortingBase {
 
-	@Schema(description = "Company", example = "Sundsvall Energi AB")
+	@Schema(description = "Company", examples = "Sundsvall Energi AB")
 	private String company;
 
-	@Schema(description = "Customer number", example = "104327")
+	@Schema(description = "Customer number", examples = "104327")
 	private String customerNumber;
 
-	@Schema(description = "Type", example = "Fjärrvärme")
+	@Schema(description = "Type", examples = "Fjärrvärme")
 	private String type;
 
-	@Schema(description = "Facility id", example = "735999109270751042")
+	@Schema(description = "Facility id", examples = "735999109270751042")
 	private String facilityId;
 
-	@Schema(description = "Care of address", example = "Agatha Malm")
+	@Schema(description = "Care of address", examples = "Agatha Malm")
 	private String careOf;
 
-	@Schema(description = "Street", example = "Storgatan 9")
+	@Schema(description = "Street", examples = "Storgatan 9")
 	private String street;
 
-	@Schema(description = "Postal code", example = "85230")
+	@Schema(description = "Postal code", examples = "85230")
 	private String postCode;
 
-	@Schema(description = "City", example = "Sundsvall")
+	@Schema(description = "City", examples = "Sundsvall")
 	private String city;
 
-	@Schema(description = "Property designation", example = "Södermalm 1:27")
+	@Schema(description = "Property designation", examples = "Södermalm 1:27")
 	private String propertyDesignation;
 
-	@Schema(description = "Earliest date when item was last modified", example = "2022-12-31")
+	@Schema(description = "Earliest date when item was last modified", examples = "2022-12-31")
 	private LocalDate lastModifiedDateFrom;
 
-	@Schema(description = "Latest date when item was last modified", example = "2022-12-31")
+	@Schema(description = "Latest date when item was last modified", examples = "2022-12-31")
 	private LocalDate lastModifiedDateTom;
 
 	public static InstalledBaseParameters create() {

@@ -11,43 +11,43 @@ import java.util.Objects;
 @Schema(description = "Installed base item model")
 public class InstalledBaseItem {
 
-	@Schema(description = "Company", example = "Sundsvall Energi AB", accessMode = READ_ONLY)
+	@Schema(description = "Company", examples = "Sundsvall Energi AB", accessMode = READ_ONLY)
 	private String company;
 
-	@Schema(description = "Customer number", example = "104327", accessMode = READ_ONLY)
+	@Schema(description = "Customer number", examples = "104327", accessMode = READ_ONLY)
 	private String customerNumber;
 
-	@Schema(description = "Type", example = "Fjärrvärme", accessMode = READ_ONLY)
+	@Schema(description = "Type", examples = "Fjärrvärme", accessMode = READ_ONLY)
 	private String type;
 
-	@Schema(description = "Facility id", example = "735999109270751042", accessMode = READ_ONLY)
+	@Schema(description = "Facility id", examples = "735999109270751042", accessMode = READ_ONLY)
 	private String facilityId;
 
-	@Schema(description = "Placement id", example = "5263", accessMode = READ_ONLY)
+	@Schema(description = "Placement id", examples = "5263", accessMode = READ_ONLY)
 	private int placementId;
 
-	@Schema(description = "Care of address", example = "Agatha Malm", accessMode = READ_ONLY)
+	@Schema(description = "Care of address", examples = "Agatha Malm", accessMode = READ_ONLY)
 	private String careOf;
 
-	@Schema(description = "Street", example = "Storgatan 9", accessMode = READ_ONLY)
+	@Schema(description = "Street", examples = "Storgatan 9", accessMode = READ_ONLY)
 	private String street;
 
-	@Schema(description = "Postal code", example = "85230", accessMode = READ_ONLY)
+	@Schema(description = "Postal code", examples = "85230", accessMode = READ_ONLY)
 	private String postCode;
 
-	@Schema(description = "City", example = "Sundsvall", accessMode = READ_ONLY)
+	@Schema(description = "City", examples = "Sundsvall", accessMode = READ_ONLY)
 	private String city;
 
-	@Schema(description = "Property designation", example = "Södermalm 1:27", accessMode = READ_ONLY)
+	@Schema(description = "Property designation", examples = "Södermalm 1:27", accessMode = READ_ONLY)
 	private String propertyDesignation;
 
-	@Schema(description = "From date", example = "2019-01-01", accessMode = READ_ONLY)
+	@Schema(description = "From date", examples = "2019-01-01", accessMode = READ_ONLY)
 	private LocalDate dateFrom;
 
-	@Schema(description = "To date", example = "2022-12-31", accessMode = READ_ONLY)
+	@Schema(description = "To date", examples = "2022-12-31", accessMode = READ_ONLY)
 	private LocalDate dateTo;
 
-	@Schema(description = "Date when object was last modified (or null if never modified)", example = "2022-12-31", accessMode = READ_ONLY)
+	@Schema(description = "Date when object was last modified (or null if never modified)", examples = "2022-12-31", accessMode = READ_ONLY)
 	private LocalDate dateLastModified;
 
 	@ArraySchema(schema = @Schema(implementation = InstalledBaseItemMetaData.class, accessMode = READ_ONLY), maxItems = 1000)

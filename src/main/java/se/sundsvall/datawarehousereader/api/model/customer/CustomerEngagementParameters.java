@@ -17,16 +17,16 @@ public class CustomerEngagementParameters extends AbstractParameterPagingAndSort
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("customerOrgId");
 
-	@ArraySchema(schema = @Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1"))
+	@ArraySchema(schema = @Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1"))
 	private List<@ValidUuid String> partyId;
 
-	@Schema(description = "Customer number", example = "10007")
+	@Schema(description = "Customer number", examples = "10007")
 	private String customerNumber;
 
-	@Schema(description = "Organization number for counterpart of engagement", example = "5565027223")
+	@Schema(description = "Organization number for counterpart of engagement", examples = "5565027223")
 	private String organizationNumber;
 
-	@Schema(description = "Organization name for counterpart of engagement", example = "Sundsvall Elnät")
+	@Schema(description = "Organization name for counterpart of engagement", examples = "Sundsvall Elnät")
 	private String organizationName;
 
 	public CustomerEngagementParameters() {
