@@ -19,11 +19,11 @@ public class MeasurementParameters extends AbstractParameterPagingAndSortingBase
 
 	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("measurementTimestamp");
 
-	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1")
+	@Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1")
 	@ValidUuid(nullable = true)
 	private String partyId;
 
-	@Schema(description = "Facility id", example = "735999109151401011")
+	@Schema(description = "Facility id", examples = "735999109151401011")
 	private String facilityId;
 
 	@Schema(description = "Date and time for oldest measurement point to return. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")

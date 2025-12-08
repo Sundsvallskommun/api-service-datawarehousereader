@@ -19,46 +19,46 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ValidUuid(nullable = true)
-	@Schema(description = "PartyId (e.g. a personId or an organizationId)", example = "81471222-5798-11e9-ae24-57fa13b361e1")
+	@Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1")
 	private String partyId;
 
-	@Schema(description = "Customer number", example = "10007", nullable = true)
+	@Schema(description = "Customer number", examples = "10007", nullable = true)
 	private String customerNumber;
 
-	@Schema(description = "Facility Id", example = "1223334", nullable = true)
+	@Schema(description = "Facility Id", examples = "1223334", nullable = true)
 	private String facilityId;
 
 	@ArraySchema(schema = @Schema(implementation = Category.class))
 	private List<Category> category;
 
-	@Schema(description = "Billing Id", example = "222333", nullable = true)
+	@Schema(description = "Billing Id", examples = "222333", nullable = true)
 	private String billingId;
 
-	@Schema(description = "Agreement Id", example = "333444", nullable = true)
+	@Schema(description = "Agreement Id", examples = "333444", nullable = true)
 	private String agreementId;
 
-	@Schema(description = "Description", example = "Avtalet avser fjärrvärme", nullable = true)
+	@Schema(description = "Description", examples = "Avtalet avser fjärrvärme", nullable = true)
 	private String description;
 
-	@Schema(description = "Shows if agreement is a main-agreement or not", example = "true", nullable = true)
+	@Schema(description = "Shows if agreement is a main-agreement or not", examples = "true", nullable = true)
 	private Boolean mainAgreement;
 
-	@Schema(description = "Shows if agreement include binding or not", example = "false", nullable = true)
+	@Schema(description = "Shows if agreement include binding or not", examples = "false", nullable = true)
 	private Boolean binding;
 
-	@Schema(description = "Rule of binding if exists", example = "10 mån binding", nullable = true)
+	@Schema(description = "Rule of binding if exists", examples = "10 mån binding", nullable = true)
 	private String bindingRule;
 
-	@Schema(description = "Placement status for agreement", example = "Tillkopplad", nullable = true)
+	@Schema(description = "Placement status for agreement", examples = "Tillkopplad", nullable = true)
 	private String placementStatus;
 
-	@Schema(description = "Net area id for agreement", example = "SUV", nullable = true)
+	@Schema(description = "Net area id for agreement", examples = "SUV", nullable = true)
 	private String netAreaId;
 
-	@Schema(description = "Site address connected to the agreement", example = "Första gatan 2", nullable = true)
+	@Schema(description = "Site address connected to the agreement", examples = "Första gatan 2", nullable = true)
 	private String siteAddress;
 
-	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", example = "true", nullable = true)
+	@Schema(description = "Signal if the agreement is a production agreement or not (can be null if not applicable)", examples = "true", nullable = true)
 	private Boolean production;
 
 	@Schema(description = "From-date in validity of agreement", nullable = true)
@@ -69,7 +69,7 @@ public class AgreementParameters extends AbstractParameterPagingAndSortingBase {
 	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate toDate;
 
-	@Schema(description = "Shows if agreement is active ('fromDate' <= today and 'toDate' => today). Null shows both active and inactive", example = "true", nullable = true)
+	@Schema(description = "Shows if agreement is active ('fromDate' <= today and 'toDate' => today). Null shows both active and inactive", examples = "true", nullable = true)
 	private Boolean active;
 
 	public static AgreementParameters create() {
