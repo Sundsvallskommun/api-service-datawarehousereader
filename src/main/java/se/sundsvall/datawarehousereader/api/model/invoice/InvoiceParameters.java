@@ -48,7 +48,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "Invoice status", examples = "Skickad")
 	private String invoiceStatus;
 
-	@Schema(description = "Ocr number", examples = "767915994")
+	@Schema(description = "OCR number", examples = "767915994")
 	private Long ocrNumber;
 
 	@Schema(description = "Earliest due date. Format is YYYY-MM-DD.", examples = "2022-01-01")
@@ -65,7 +65,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "Organization number of invoice issuer", examples = "5565027223")
 	private String organizationNumber;
 
-	@Schema(description = "Adminstration", examples = "Sundsvall Elnät")
+	@Schema(description = "Administration", examples = "Sundsvall Elnät")
 	private String administration;
 
 	public InvoiceParameters(int limit) {

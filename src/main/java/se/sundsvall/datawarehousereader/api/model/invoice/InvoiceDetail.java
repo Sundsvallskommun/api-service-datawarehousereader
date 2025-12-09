@@ -39,7 +39,7 @@ public class InvoiceDetail {
 	@Schema(description = "Period to", examples = "2022-01-31", accessMode = READ_ONLY)
 	private String periodTo;
 
-	@Schema(description = "Description", accessMode = READ_ONLY)
+	@Schema(description = "Description", examples = "This is a description", accessMode = READ_ONLY)
 	private String description;
 
 	@Schema(description = "Product code", examples = "1404", accessMode = READ_ONLY)

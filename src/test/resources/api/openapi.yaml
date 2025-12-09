@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:57827
+  - url: http://localhost:53607
     description: Generated server url
 tags:
   - name: Measurement
@@ -247,12 +247,12 @@ paths:
               - Skickad
         - name: ocrNumber
           in: query
-          description: Ocr number
+          description: OCR number
           required: false
           schema:
             type: integer
             format: int64
-            description: Ocr number
+            description: OCR number
             examples:
               - "767915994"
         - name: dueDateFrom
@@ -295,11 +295,11 @@ paths:
               - "5565027223"
         - name: administration
           in: query
-          description: Adminstration
+          description: Administration
           required: false
           schema:
             type: string
-            description: Adminstration
+            description: Administration
             examples:
               - Sundsvall Elnät
         - name: sortBy
@@ -1205,9 +1205,9 @@ components:
           additionalProperties: { }
         status:
           $ref: "#/components/schemas/StatusType"
-        detail:
-          type: string
         title:
+          type: string
+        detail:
           type: string
     StatusType:
       type: object
@@ -1337,9 +1337,9 @@ components:
           additionalProperties: { }
         status:
           $ref: "#/components/schemas/StatusType"
-        detail:
-          type: string
         title:
+          type: string
+        detail:
           type: string
         suppressed:
           type: array
@@ -1567,7 +1567,7 @@ components:
         facilityIds:
           type: array
           description: List of facility ids
-          example:
+          examples:
             - "735999109151404321"
             - "735999109151401234"
           items:
@@ -1578,7 +1578,8 @@ components:
           type: array
           description: List of descriptions
           examples:
-            - "[\"Fjärrvärme\", \"Elnät\"]"
+            - Fjärrvärme
+            - Elnät
           items:
             type: string
           readOnly: true
@@ -1612,7 +1613,8 @@ components:
         invoiceStatus:
           type: string
           description: Invoice status
-          example: Skickad
+          examples:
+            - Skickad
           readOnly: true
         ocrNumber:
           type: integer
@@ -1807,6 +1809,8 @@ components:
         description:
           type: string
           description: Description
+          examples:
+            - This is a description
           readOnly: true
         productCode:
           type: integer

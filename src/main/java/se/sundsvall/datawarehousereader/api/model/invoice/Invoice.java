@@ -18,10 +18,14 @@ public class Invoice {
 	@Schema(implementation = CustomerType.class, accessMode = READ_ONLY)
 	private CustomerType customerType;
 
-	@Schema(description = "List of facility ids", example = "[\"735999109151404321\", \"735999109151401234\"]", accessMode = READ_ONLY)
+	@Schema(description = "List of facility ids", examples = {
+		"735999109151404321", "735999109151401234"
+	}, accessMode = READ_ONLY)
 	private Set<String> facilityIds;
 
-	@Schema(description = "List of descriptions", examples = "[\"Fjärrvärme\", \"Elnät\"]", accessMode = READ_ONLY)
+	@Schema(description = "List of descriptions", examples = {
+		"Fjärrvärme", "Elnät"
+	}, accessMode = READ_ONLY)
 	private Set<String> invoiceDescriptions;
 
 	@Schema(description = "Invoice number", examples = "767915994", accessMode = READ_ONLY)
@@ -36,7 +40,7 @@ public class Invoice {
 	@Schema(description = "Invoice type", examples = "Faktura", accessMode = READ_ONLY)
 	private String invoiceType;
 
-	@Schema(description = "Invoice status", example = "Skickad", accessMode = READ_ONLY)
+	@Schema(description = "Invoice status", examples = "Skickad", accessMode = READ_ONLY)
 	private String invoiceStatus;
 
 	@Schema(description = "Ocr number", examples = "767915994", accessMode = READ_ONLY)
