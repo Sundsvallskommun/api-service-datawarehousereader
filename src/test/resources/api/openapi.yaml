@@ -5,9 +5,9 @@ info:
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "4.2"
+  version: "5.0"
 servers:
-  - url: http://localhost:52955
+  - url: http://localhost:53607
     description: Generated server url
 tags:
   - name: Measurement
@@ -178,7 +178,7 @@ paths:
           required: false
           schema:
             $ref: "#/components/schemas/CustomerType"
-        - name: facilityId
+        - name: facilityIds
           in: query
           required: false
           schema:
@@ -247,12 +247,12 @@ paths:
               - Skickad
         - name: ocrNumber
           in: query
-          description: Ocr number
+          description: OCR number
           required: false
           schema:
             type: integer
             format: int64
-            description: Ocr number
+            description: OCR number
             examples:
               - "767915994"
         - name: dueDateFrom
@@ -295,11 +295,11 @@ paths:
               - "5565027223"
         - name: administration
           in: query
-          description: Adminstration
+          description: Administration
           required: false
           schema:
             type: string
-            description: Adminstration
+            description: Administration
             examples:
               - Sundsvall Elnät
         - name: sortBy
@@ -1194,12 +1194,6 @@ components:
     Problem:
       type: object
       properties:
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
@@ -1209,6 +1203,12 @@ components:
         parameters:
           type: object
           additionalProperties: { }
+        status:
+          $ref: "#/components/schemas/StatusType"
+        title:
+          type: string
+        detail:
+          type: string
     StatusType:
       type: object
       properties:
@@ -1257,14 +1257,14 @@ components:
           type: string
         message:
           type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
         parameters:
           type: object
           additionalProperties: { }
+        detail:
+          type: string
         suppressed:
           type: array
           items:
@@ -1326,12 +1326,6 @@ components:
                 type: boolean
         message:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
@@ -1341,6 +1335,12 @@ components:
         parameters:
           type: object
           additionalProperties: { }
+        status:
+          $ref: "#/components/schemas/StatusType"
+        title:
+          type: string
+        detail:
+          type: string
         suppressed:
           type: array
           items:
@@ -1564,12 +1564,26 @@ components:
         customerType:
           $ref: "#/components/schemas/CustomerType"
           readOnly: true
-        facilityId:
-          type: string
-          description: Facility id
+        facilityIds:
+          type: array
+          description: List of facility ids
           examples:
-            - "735999109151401011"
+            - "735999109151404321"
+            - "735999109151401234"
+          items:
+            type: string
           readOnly: true
+          uniqueItems: true
+        invoiceDescriptions:
+          type: array
+          description: List of descriptions
+          examples:
+            - Fjärrvärme
+            - Elnät
+          items:
+            type: string
+          readOnly: true
+          uniqueItems: true
         invoiceNumber:
           type: integer
           format: int64
@@ -1595,12 +1609,6 @@ components:
           description: Invoice type
           examples:
             - Faktura
-          readOnly: true
-        invoiceDescription:
-          type: string
-          description: Invoice description
-          examples:
-            - Fjärrvärme
           readOnly: true
         invoiceStatus:
           type: string
@@ -1801,6 +1809,8 @@ components:
         description:
           type: string
           description: Description
+          examples:
+            - This is a description
           readOnly: true
         productCode:
           type: integer

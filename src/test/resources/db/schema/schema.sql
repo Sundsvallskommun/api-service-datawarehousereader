@@ -104,7 +104,7 @@
         [value] nvarchar(255)
     );
 
-    create table kundinfo.vInvoice (
+    create table kundinfo.vInvoice_Test_251126 (
         AmountVatExcluded money,
         AmountVatIncluded money,
         CustomerId int not null,

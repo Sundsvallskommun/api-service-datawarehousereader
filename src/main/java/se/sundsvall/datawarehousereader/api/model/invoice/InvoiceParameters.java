@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
@@ -18,8 +19,6 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 @ParameterObject
 public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
-	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("invoiceDate");
-
 	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "39195"))
 	private List<String> customerNumber;
 
@@ -27,7 +26,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	private CustomerType customerType;
 
 	@ArraySchema(schema = @Schema(description = "Facility ids", examples = "735999109151401011"))
-	private List<String> facilityId;
+	private List<String> facilityIds;
 
 	@Schema(description = "Invoice number", examples = "767915994")
 	private Long invoiceNumber;
@@ -49,7 +48,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "Invoice status", examples = "Skickad")
 	private String invoiceStatus;
 
-	@Schema(description = "Ocr number", examples = "767915994")
+	@Schema(description = "OCR number", examples = "767915994")
 	private Long ocrNumber;
 
 	@Schema(description = "Earliest due date. Format is YYYY-MM-DD.", examples = "2022-01-01")
@@ -66,11 +65,19 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "Organization number of invoice issuer", examples = "5565027223")
 	private String organizationNumber;
 
-	@Schema(description = "Adminstration", examples = "Sundsvall Elnät")
+	@Schema(description = "Administration", examples = "Sundsvall Elnät")
 	private String administration;
 
+	public InvoiceParameters(int limit) {
+		super(limit);
+	}
+
 	public InvoiceParameters() {
-		this.sortBy = DEFAULT_SORT_BY_PROPERTY;
+		super(100);
+	}
+
+	public static InvoiceParameters createWithLimit(int limit) {
+		return new InvoiceParameters(limit);
 	}
 
 	public static InvoiceParameters create() {
@@ -81,6 +88,11 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return customerNumber;
 	}
 
+	public InvoiceParameters withCustomerNumber(List<String> customerNumber) {
+		this.customerNumber = customerNumber;
+		return this;
+	}
+
 	public void setCustomerNumber(List<String> customerNumber) {
 		this.customerNumber = customerNumber;
 	}
@@ -89,20 +101,35 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return customerType;
 	}
 
+	public InvoiceParameters withCustomerType(CustomerType customerType) {
+		this.customerType = customerType;
+		return this;
+	}
+
 	public void setCustomerType(CustomerType customerType) {
 		this.customerType = customerType;
 	}
 
-	public List<String> getFacilityId() {
-		return facilityId;
+	public List<String> getFacilityIds() {
+		return facilityIds;
 	}
 
-	public void setFacilityId(List<String> facilityId) {
-		this.facilityId = facilityId;
+	public InvoiceParameters withFacilityIds(List<String> facilityId) {
+		this.facilityIds = facilityId;
+		return this;
+	}
+
+	public void setFacilityIds(List<String> facilityIds) {
+		this.facilityIds = facilityIds;
 	}
 
 	public Long getInvoiceNumber() {
 		return invoiceNumber;
+	}
+
+	public InvoiceParameters withInvoiceNumber(Long invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+		return this;
 	}
 
 	public void setInvoiceNumber(Long invoiceNumber) {
@@ -113,12 +140,22 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return invoiceDateFrom;
 	}
 
+	public InvoiceParameters withInvoiceDateFrom(LocalDate invoiceDateFrom) {
+		this.invoiceDateFrom = invoiceDateFrom;
+		return this;
+	}
+
 	public void setInvoiceDateFrom(LocalDate invoiceDateFrom) {
 		this.invoiceDateFrom = invoiceDateFrom;
 	}
 
 	public LocalDate getInvoiceDateTo() {
 		return invoiceDateTo;
+	}
+
+	public InvoiceParameters withInvoiceDateTo(LocalDate invoiceDateTo) {
+		this.invoiceDateTo = invoiceDateTo;
+		return this;
 	}
 
 	public void setInvoiceDateTo(LocalDate invoiceDateTo) {
@@ -129,12 +166,22 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return invoiceName;
 	}
 
+	public InvoiceParameters withInvoiceName(String invoiceName) {
+		this.invoiceName = invoiceName;
+		return this;
+	}
+
 	public void setInvoiceName(String invoiceName) {
 		this.invoiceName = invoiceName;
 	}
 
 	public String getInvoiceType() {
 		return invoiceType;
+	}
+
+	public InvoiceParameters withInvoiceType(String invoiceType) {
+		this.invoiceType = invoiceType;
+		return this;
 	}
 
 	public void setInvoiceType(String invoiceType) {
@@ -145,12 +192,22 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return invoiceStatus;
 	}
 
+	public InvoiceParameters withInvoiceStatus(String invoiceStatus) {
+		this.invoiceStatus = invoiceStatus;
+		return this;
+	}
+
 	public void setInvoiceStatus(String invoiceStatus) {
 		this.invoiceStatus = invoiceStatus;
 	}
 
 	public Long getOcrNumber() {
 		return ocrNumber;
+	}
+
+	public InvoiceParameters withOcrNumber(Long ocrNumber) {
+		this.ocrNumber = ocrNumber;
+		return this;
 	}
 
 	public void setOcrNumber(Long ocrNumber) {
@@ -161,12 +218,22 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return dueDateFrom;
 	}
 
+	public InvoiceParameters withDueDateFrom(LocalDate dueDateFrom) {
+		this.dueDateFrom = dueDateFrom;
+		return this;
+	}
+
 	public void setDueDateFrom(LocalDate dueDateFrom) {
 		this.dueDateFrom = dueDateFrom;
 	}
 
 	public LocalDate getDueDateTo() {
 		return dueDateTo;
+	}
+
+	public InvoiceParameters withDueDateTo(LocalDate dueDateTo) {
+		this.dueDateTo = dueDateTo;
+		return this;
 	}
 
 	public void setDueDateTo(LocalDate dueDateTo) {
@@ -177,12 +244,22 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return organizationGroup;
 	}
 
+	public InvoiceParameters withOrganizationGroup(String organizationGroup) {
+		this.organizationGroup = organizationGroup;
+		return this;
+	}
+
 	public void setOrganizationGroup(String organizationGroup) {
 		this.organizationGroup = organizationGroup;
 	}
 
 	public String getOrganizationNumber() {
 		return organizationNumber;
+	}
+
+	public InvoiceParameters withOrganizationNumber(String organizationNumber) {
+		this.organizationNumber = organizationNumber;
+		return this;
 	}
 
 	public void setOrganizationNumber(String organizationNumber) {
@@ -193,8 +270,23 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return administration;
 	}
 
+	public InvoiceParameters withAdministration(String administration) {
+		this.administration = administration;
+		return this;
+	}
+
 	public void setAdministration(String administration) {
 		this.administration = administration;
+	}
+
+	public InvoiceParameters withSortBy(List<String> sortBy) {
+		setSortBy(sortBy);
+		return this;
+	}
+
+	public InvoiceParameters withSortDirection(Sort.Direction sortDirection) {
+		setSortDirection(sortDirection);
+		return this;
 	}
 
 	@Override
@@ -202,7 +294,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		final int prime = 31;
 		int result = super.hashCode();
 		result = (prime * result) + Objects.hash(administration, customerNumber, customerType, dueDateFrom, dueDateTo,
-			facilityId, invoiceDateFrom, invoiceDateTo, invoiceName, invoiceNumber, invoiceStatus, invoiceType,
+			facilityIds, invoiceDateFrom, invoiceDateTo, invoiceName, invoiceNumber, invoiceStatus, invoiceType,
 			ocrNumber, organizationGroup, organizationNumber);
 		return result;
 	}
@@ -222,7 +314,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return Objects.equals(administration, other.administration)
 			&& Objects.equals(customerNumber, other.customerNumber) && (customerType == other.customerType)
 			&& Objects.equals(dueDateFrom, other.dueDateFrom) && Objects.equals(dueDateTo, other.dueDateTo)
-			&& Objects.equals(facilityId, other.facilityId)
+			&& Objects.equals(facilityIds, other.facilityIds)
 			&& Objects.equals(invoiceDateFrom, other.invoiceDateFrom)
 			&& Objects.equals(invoiceDateTo, other.invoiceDateTo) && Objects.equals(invoiceName, other.invoiceName)
 			&& Objects.equals(invoiceNumber, other.invoiceNumber)
@@ -234,11 +326,22 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("InvoiceParameters [customerNumber=").append(customerNumber).append(", customerType=").append(customerType).append(", facilityId=").append(facilityId).append(", invoiceNumber=").append(invoiceNumber).append(
-			", invoiceDateFrom=").append(invoiceDateFrom).append(", invoiceDateTo=").append(invoiceDateTo).append(", invoiceName=").append(invoiceName).append(", invoiceType=").append(invoiceType).append(", invoiceStatus=").append(invoiceStatus)
-			.append(", ocrNumber=").append(ocrNumber).append(", dueDateFrom=").append(dueDateFrom).append(", dueDateTo=").append(dueDateTo).append(", organizationGroup=").append(organizationGroup).append(", organizationNumber=").append(
-				organizationNumber).append(", administration=").append(administration).append(", page=").append(page).append(", limit=").append(limit).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");
-		return builder.toString();
+		return "InvoiceParameters{" +
+			"customerNumber=" + customerNumber +
+			", customerType=" + customerType +
+			", facilityIds=" + facilityIds +
+			", invoiceNumber=" + invoiceNumber +
+			", invoiceDateFrom=" + invoiceDateFrom +
+			", invoiceDateTo=" + invoiceDateTo +
+			", invoiceName='" + invoiceName + '\'' +
+			", invoiceType='" + invoiceType + '\'' +
+			", invoiceStatus='" + invoiceStatus + '\'' +
+			", ocrNumber=" + ocrNumber +
+			", dueDateFrom=" + dueDateFrom +
+			", dueDateTo=" + dueDateTo +
+			", organizationGroup='" + organizationGroup + '\'' +
+			", organizationNumber='" + organizationNumber + '\'' +
+			", administration='" + administration + '\'' +
+			'}';
 	}
 }

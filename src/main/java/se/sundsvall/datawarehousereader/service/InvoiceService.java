@@ -1,10 +1,13 @@
 package se.sundsvall.datawarehousereader.service;
 
+import static java.util.stream.Collectors.groupingBy;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.zalando.problem.Problem;
@@ -15,6 +18,7 @@ import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 @Service
@@ -32,13 +36,19 @@ public class InvoiceService {
 	}
 
 	public InvoiceResponse getInvoices(final InvoiceParameters parameters) {
-		final var matches = invoiceRepository.findAllByParameters(parameters, PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
+		var pageable = PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort());
 
-		// If page larger than last page is requested, a empty list is returned otherwise the current page
-		final List<Invoice> invoices = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInvoices(matches.getContent());
+		Page<Long> invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(parameters, pageable);
+
+		var invoiceEntities = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
+
+		var invoiceMap = invoiceEntities.stream()
+			.collect(groupingBy(InvoiceEntity::getInvoiceNumber, Collectors.toList()));
+
+		List<Invoice> invoices = invoiceNumbers.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInvoices(invoiceMap);
 
 		return InvoiceResponse.create()
-			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches))
+			.withMetaData(PagingAndSortingMetaData.create().withPageData(invoiceNumbers))
 			.withInvoices(invoices);
 	}
 

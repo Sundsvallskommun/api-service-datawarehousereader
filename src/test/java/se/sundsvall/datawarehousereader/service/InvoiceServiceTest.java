@@ -1,18 +1,17 @@
 package se.sundsvall.datawarehousereader.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.sort;
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
-import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,29 +20,25 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.zalando.problem.Status;
-import org.zalando.problem.ThrowableProblem;
-import se.sundsvall.datawarehousereader.api.model.CustomerType;
+import org.springframework.data.domain.Sort;
+import org.zalando.problem.Problem;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
+import se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper;
 
 @ExtendWith(MockitoExtension.class)
 class InvoiceServiceTest {
+
 	@Mock
 	private InvoiceRepository invoiceRepositoryMock;
 
 	@Mock
 	private InvoiceDetailRepository invoiceDetailRepositoryMock;
-
-	@Mock
-	private Page<InvoiceEntity> pageMock;
-
-	@Mock
-	private InvoiceEntity entityMock;
 
 	@InjectMocks
 	private InvoiceService service;
@@ -54,152 +49,105 @@ class InvoiceServiceTest {
 	@Captor
 	private ArgumentCaptor<Pageable> pageableCaptor;
 
-	@Test
-	void testWithEmptyParameters() {
-
-		final var params = InvoiceParameters.create();
-
-		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getContent()).thenReturn(List.of(entityMock));
-		when(pageMock.getTotalPages()).thenReturn(1);
-		when(pageMock.getTotalElements()).thenReturn(1L);
-		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
-		when(pageMock.getNumberOfElements()).thenReturn(1);
-		when(pageMock.getSize()).thenReturn(params.getLimit());
-		when(pageMock.getSort()).thenReturn(params.sort());
-
-		final var response = service.getInvoices(params);
-
-		verify(invoiceRepositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());
-
-		assertThat(parametersCaptor.getValue())
-			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortBy", "sortDirection")
-			.extracting(InvoiceParameters::getPage, InvoiceParameters::getLimit)
-			.isEqualTo(List.of(1, 100));
-		assertThat(pageableCaptor.getValue().getPageNumber()).isZero();
-		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(100);
-		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(InvoiceEntity.class).by(InvoiceEntity::getInvoiceDate));
-		assertThat(response.getMetaData().getCount()).isEqualTo(1);
-		assertThat(response.getMetaData().getLimit()).isEqualTo(100);
-		assertThat(response.getMetaData().getPage()).isEqualTo(1);
-		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
-		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(1);
-		assertThat(response.getInvoices()).isEqualTo(toInvoices(List.of(entityMock)));
+	@AfterEach
+	void tearDown() {
+		verifyNoMoreInteractions(invoiceRepositoryMock);
 	}
 
 	@Test
-	void testWithAllParametersSet() {
-		final var administration = "administration";
-		final var customerNumber = List.of("1337", "1338");
-		final var customerType = CustomerType.PRIVATE;
-		final var dueDateFrom = LocalDate.now().minusDays(30);
-		final var dueDateTo = LocalDate.now().minusDays(20);
-		final var facilityId = List.of("facilityId1", "facilityId2");
-		final var invoiceDateFrom = LocalDate.now().minusDays(10);
-		final var invoiceDateTo = LocalDate.now();
-		final var invoiceName = "invoiceName";
-		final var invoiceNumber = 4321L;
-		final var invoiceStatus = "invoiceStatus";
-		final var invoiceType = "invoiceType";
-		final var limit = 1;
-		final var ocrNumber = 1234L;
-		final var organizationGroup = "organizationGroup";
-		final var page = 2;
+	void getInvoices_noParameters() {
+		final var invoiceNumbers = List.of(1L);
+		final var invoiceEntity1 = new InvoiceEntity();
+		invoiceEntity1.setInvoiceNumber(1L);
+		final var invoiceEntities = List.of(invoiceEntity1);
 		final var params = InvoiceParameters.create();
-		params.setAdministration(administration);
-		params.setCustomerNumber(customerNumber);
-		params.setCustomerType(customerType);
-		params.setDueDateFrom(dueDateFrom);
-		params.setDueDateTo(dueDateTo);
-		params.setFacilityId(facilityId);
-		params.setInvoiceDateFrom(invoiceDateFrom);
-		params.setInvoiceDateTo(invoiceDateTo);
-		params.setInvoiceName(invoiceName);
-		params.setInvoiceNumber(invoiceNumber);
-		params.setInvoiceStatus(invoiceStatus);
-		params.setInvoiceType(invoiceType);
-		params.setLimit(limit);
-		params.setOcrNumber(ocrNumber);
-		params.setOrganizationGroup(organizationGroup);
-		params.setPage(page);
 
-		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getContent()).thenReturn(List.of(entityMock));
-		when(pageMock.getTotalPages()).thenReturn(2);
-		when(pageMock.getTotalElements()).thenReturn(2L);
-		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
-		when(pageMock.getNumberOfElements()).thenReturn(1);
-		when(pageMock.getSize()).thenReturn(params.getLimit());
-		when(pageMock.getSort()).thenReturn(params.sort());
+		final var pageable = Pageable.ofSize(params.getLimit()).withPage(params.getPage() - 1);
+		final Page<Long> page = new PageImpl<>(invoiceNumbers, pageable, invoiceEntities.size());
 
-		final var response = service.getInvoices(params);
-		verify(invoiceRepositoryMock).findAllByParameters(parametersCaptor.capture(), pageableCaptor.capture());
+		when(invoiceRepositoryMock.findDistinctInvoiceNumbers(eq(params), any(Pageable.class))).thenReturn(page);
+		when(invoiceRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(invoiceEntities);
 
-		assertThat(parametersCaptor.getValue()).usingRecursiveComparison().isEqualTo(params);
-		assertThat(pageableCaptor.getValue().getPageNumber()).isEqualTo(page - 1);
-		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(limit);
-		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(sort(InvoiceEntity.class).by(InvoiceEntity::getInvoiceDate));
-		assertThat(response.getMetaData().getCount()).isEqualTo(1);
-		assertThat(response.getMetaData().getLimit()).isEqualTo(1);
-		assertThat(response.getMetaData().getPage()).isEqualTo(2);
-		assertThat(response.getMetaData().getTotalPages()).isEqualTo(2);
-		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(2);
-		assertThat(response.getInvoices()).isEqualTo(toInvoices(List.of(entityMock)));
+		final var result = service.getInvoices(params);
+
+		verify(invoiceRepositoryMock).findDistinctInvoiceNumbers(eq(params), pageableCaptor.capture());
+
+		assertThat(pageableCaptor.getValue().getPageNumber()).isEqualTo(params.getPage() - 1);
+		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(params.getLimit());
+		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(params.sort());
+		assertThat(result.getMetaData().getCount()).isEqualTo(result.getInvoices().size());
+		assertThat(result.getMetaData().getLimit()).isEqualTo(params.getLimit());
+		assertThat(result.getMetaData().getPage()).isEqualTo(params.getPage());
+		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(1);
+		assertThat(result.getInvoices()).isEqualTo(toInvoices(invoiceEntities));
 	}
 
 	@Test
-	void testForPageLargerThanResultsMaxPage() {
-		final var params = InvoiceParameters.create();
-		params.setPage(2);
+	void getInvoices_sortedAndLimited() {
+		final var invoiceNumbers = List.of(1L, 2L);
+		final var invoiceEntity1 = new InvoiceEntity();
+		invoiceEntity1.setInvoiceNumber(1L);
+		final var invoiceEntity2 = new InvoiceEntity();
+		invoiceEntity2.setInvoiceNumber(2L);
+		final var invoiceEntities = List.of(invoiceEntity1, invoiceEntity2);
+		final var params = InvoiceParameters.createWithLimit(125)
+			.withCustomerNumber(List.of("12345"))
+			.withSortBy(List.of("invoiceDate"))
+			.withSortDirection(Sort.Direction.DESC);
 
-		when(invoiceRepositoryMock.findAllByParameters(any(InvoiceParameters.class), any(Pageable.class))).thenReturn(pageMock);
-		when(pageMock.getTotalPages()).thenReturn(1);
-		when(pageMock.getTotalElements()).thenReturn(1L);
-		when(pageMock.getNumber()).thenReturn(params.getPage() - 1);
-		when(pageMock.getNumberOfElements()).thenReturn(0);
-		when(pageMock.getSize()).thenReturn(params.getLimit());
-		when(pageMock.getSort()).thenReturn(params.sort());
+		final var pageable = Pageable.ofSize(params.getLimit()).withPage(params.getPage() - 1);
+		final Page<Long> page = new PageImpl<>(invoiceNumbers, pageable, invoiceEntities.size());
 
-		final var response = service.getInvoices(params);
+		when(invoiceRepositoryMock.findDistinctInvoiceNumbers(eq(params), any(Pageable.class))).thenReturn(page);
+		when(invoiceRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(invoiceEntities);
 
-		verify(invoiceRepositoryMock).findAllByParameters(any(InvoiceParameters.class), any(Pageable.class));
+		final var result = service.getInvoices(params);
 
-		assertThat(response.getMetaData().getCount()).isZero();
-		assertThat(response.getMetaData().getLimit()).isEqualTo(100);
-		assertThat(response.getMetaData().getPage()).isEqualTo(2);
-		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
-		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(1);
-		assertThat(response.getInvoices()).isEmpty();
+		verify(invoiceRepositoryMock).findDistinctInvoiceNumbers(parametersCaptor.capture(), pageableCaptor.capture());
 
+		assertThat(parametersCaptor.getValue()).isEqualTo(params);
+		assertThat(pageableCaptor.getValue().getPageNumber()).isEqualTo(params.getPage() - 1);
+		assertThat(pageableCaptor.getValue().getPageSize()).isEqualTo(params.getLimit());
+		assertThat(pageableCaptor.getValue().getSort()).isEqualTo(params.sort());
+		assertThat(result.getMetaData().getCount()).isEqualTo(2);
+		assertThat(result.getMetaData().getLimit()).isEqualTo(125);
+		assertThat(result.getMetaData().getPage()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalPages()).isEqualTo(1);
+		assertThat(result.getMetaData().getTotalRecords()).isEqualTo(2);
+		assertThat(result.getInvoices()).hasSameElementsAs(toInvoices(Map.of(
+			1L, List.of(invoiceEntity1),
+			2L, List.of(invoiceEntity2))));
 	}
 
 	@Test
-	void testInvoiceDetails() {
-		final var organizationNumber = "1234567890";
-		final var invoiceNumber = 1337;
-		final var detailEntities = List.of(new InvoiceDetailEntity());
+	void getInvoiceDetails_notFound() {
+		var organizationNumber = "1234567890";
+		var invoiceNumber = 987654L;
 
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(any(), anyLong())).thenReturn(detailEntities);
+		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber)).thenReturn(List.of());
 
-		final var response = service.getInvoiceDetails(organizationNumber, invoiceNumber);
+		assertThatThrownBy(() -> service.getInvoiceDetails(organizationNumber, invoiceNumber))
+			.isInstanceOfAny(Problem.class)
+			.hasMessageContaining(String.format("Not Found: No invoicedetails found for invoice issuer '%s' and invoicenumber '%s'", organizationNumber, invoiceNumber));
 
 		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
-		assertThat(response).isEqualTo(toDetails(detailEntities));
 	}
 
 	@Test
-	void testInvoiceDetailsNotFound() {
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(any(), anyLong())).thenReturn(Collections.emptyList());
+	void getInvoiceDetails_found() {
+		var organizationNumber = "1234567890";
+		var invoiceNumber = 987654L;
 
-		final var organizationNumber = "1234567890";
-		final var invoiceNumber = 1337L;
+		var invoiceDetailEntity = new InvoiceDetailEntity();
 
-		final var exception = assertThrows(ThrowableProblem.class, () -> service.getInvoiceDetails(organizationNumber, invoiceNumber));
+		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber)).thenReturn(List.of(invoiceDetailEntity));
 
-		assertThat(exception.getStatus()).isNotNull();
-		assertThat(exception.getStatus().getStatusCode()).isEqualTo(Status.NOT_FOUND.getStatusCode());
-		assertThat(exception.getStatus().getReasonPhrase()).isEqualTo(Status.NOT_FOUND.getReasonPhrase());
-		assertThat(exception.getMessage()).isEqualTo("Not Found: No invoicedetails found for invoice issuer '1234567890' and invoicenumber '1337'");
-		assertThat(exception.getDetail()).isEqualTo("No invoicedetails found for invoice issuer '1234567890' and invoicenumber '1337'");
+		var result = service.getInvoiceDetails(organizationNumber, invoiceNumber);
+
+		assertThat(result).hasSize(1);
+		assertThat(result).usingRecursiveComparison().isEqualTo(InvoiceMapper.toDetails(List.of(invoiceDetailEntity)));
+
+		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
 	}
 }

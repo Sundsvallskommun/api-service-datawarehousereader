@@ -2,10 +2,11 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import static java.util.Optional.ofNullable;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.In
 
 /**
  * invoice repository tests.
- * 
+ *
  * @see src/test/resources/db/scripts/testdata.sql for data setup.
  */
 @DataJpaTest
@@ -28,33 +29,28 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.In
 class InvoiceRepositoryTest {
 
 	@Autowired
-	private InvoiceRepository repository;
+	private InvoiceRepository invoiceRepository;
 
 	@Test
-	void getInvoiceNoMatch() {
-		assertThat(repository.findAllByParameters(createParameters("UnknownAdminstrationGroup", null, null, null, null, null, null), PageRequest.of(0, 100))).isEmpty();
+	void getInvoiceNumbersNoParameters() {
+
+		var result = invoiceRepository.findDistinctInvoiceNumbers(InvoiceParameters.create(), PageRequest.of(0, 100));
+
+		assertThat(result).isNotNull();
+		assertThat(result.getNumber()).isZero();
+		assertThat(result.getNumberOfElements()).isEqualTo(100);
+		assertThat(result.getTotalPages()).isEqualTo(2);
+		assertThat(result.getTotalElements()).isEqualTo(177);
+		assertThat(result.getContent()).hasSize(100);
 	}
 
 	@Test
-	void getInvoiceNoFilters() {
-		final var page = repository.findAllByParameters(InvoiceParameters.create(), PageRequest.of(0, 100));
+	void getInvoicesByAdministration() {
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(100);
-		assertThat(page.getTotalPages()).isEqualTo(2);
-		assertThat(page.getTotalElements()).isEqualTo(177);
-		assertThat(page.getContent()).hasSize(100);
-	}
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters("Sundsvall Energi AB ", null, null, null, null, null, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-	@Test
-	void getInvoiceByAdminstration() {
-		final var page = repository.findAllByParameters(createParameters("Sundsvall Energi AB ", null, null, null, null, null, null), PageRequest.of(0, 100));
-
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(9);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(9);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(9)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -90,17 +86,16 @@ class InvoiceRepositoryTest {
 					"Fjärrvärme", "767234891.pdf"),
 				tuple("Sundsvall Energi AB", "5564786647", toBigDecimal(135.55), toBigDecimal(169.44), "Fastighetsförmedling AB", "Sundsvall", "sek", 10335, "Enterprise", LocalDate.of(2019, 11, 7), "735999109141107350", LocalDate.of(2019, 10, 8),
 					"Fjärrvärme", "767891997.pdf"));
+
 	}
 
 	@Test
-	void getInvoiceByAdminstrationAndDueDateBetween() {
-		final var page = repository.findAllByParameters(createParameters("Sundsvall Energi AB ", null, LocalDate.of(2019, 10, 30), LocalDate.of(2019, 11, 7), null, null, null), PageRequest.of(0, 100));
+	void getInvoiceByAdministrationAndDueDateBetween() {
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(3);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(3);
-		assertThat(page.getContent())
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters("Sundsvall Energi AB ", null, LocalDate.of(2019, 10, 30), LocalDate.of(2019, 11, 7), null, null, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
+
+		assertThat(result)
 			.hasSize(3)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -127,14 +122,11 @@ class InvoiceRepositoryTest {
 	}
 
 	@Test
-	void getInvoiceByAdminstrationAndDueDateLargerOrEqualThan() {
-		final var page = repository.findAllByParameters(createParameters("Sundsvall Energi AB ", null, LocalDate.of(2019, 11, 8), null, null, null, null), PageRequest.of(0, 100));
+	void getInvoiceByAdministrationAndDueDateLargerOrEqualThan() {
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters("Sundsvall Energi AB ", null, LocalDate.of(2019, 11, 8), null, null, null, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(6);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(6);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(6)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -167,48 +159,11 @@ class InvoiceRepositoryTest {
 	}
 
 	@Test
-	void getInvoiceByAdminstrationAndDueDateLessOrEqualThan() {
-		final var page = repository.findAllByParameters(createParameters("Sundsvall Energi AB ", null, null, LocalDate.of(2019, 11, 7), null, null, null), PageRequest.of(0, 100));
-
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(3);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(3);
-		assertThat(page.getContent())
-			.hasSize(3)
-			.extracting(
-				InvoiceEntity::getAdministration,
-				InvoiceEntity::getOrganizationId,
-				InvoiceEntity::getAmountVatExcluded,
-				InvoiceEntity::getAmountVatIncluded,
-				InvoiceEntity::getCareOf,
-				InvoiceEntity::getCity,
-				InvoiceEntity::getCurrency,
-				InvoiceEntity::getCustomerId,
-				InvoiceEntity::getCustomerType,
-				InvoiceEntity::getDueDate,
-				InvoiceEntity::getFacilityId,
-				InvoiceEntity::getInvoiceDate,
-				InvoiceEntity::getInvoiceDescription,
-				InvoiceEntity::getInvoiceName)
-			.containsExactlyInAnyOrder(
-				tuple("Sundsvall Energi AB", "5564786647", toBigDecimal(274.96), toBigDecimal(343.7), "Pettson Findus", "Vetlanda", "sek", 691071, "Private", LocalDate.of(2019, 10, 30), "735999226000059909", LocalDate.of(2019, 10, 8), "Fjärrkyla",
-					"766763197.pdf"),
-				tuple("Sundsvall Energi AB", "5564786647", toBigDecimal(33.04), toBigDecimal(41.3), "Fastighetsförmedling AB", "Sundsvall", "sek", 10335, "Enterprise", LocalDate.of(2019, 11, 7), "735999109252711002", LocalDate.of(2019, 10, 8),
-					"Fjärrvärme", "767234891.pdf"),
-				tuple("Sundsvall Energi AB", "5564786647", toBigDecimal(135.55), toBigDecimal(169.44), "Fastighetsförmedling AB", "Sundsvall", "sek", 10335, "Enterprise", LocalDate.of(2019, 11, 7), "735999109141107350", LocalDate.of(2019, 10, 8),
-					"Fjärrvärme", "767891997.pdf"));
-	}
-
-	@Test
 	void getInvoiceByCustomerId() {
-		final var page = repository.findAllByParameters(createParameters(null, List.of("600675"), null, null, null, null, null), PageRequest.of(0, 100));
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters(null, List.of("600675"), null, null, null, null, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(1);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(1);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(1)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -232,13 +187,10 @@ class InvoiceRepositoryTest {
 
 	@Test
 	void getInvoiceByMultipleCustomerIds() {
-		final var page = repository.findAllByParameters(createParameters(null, List.of("600675", "600606"), null, null, null, null, null), PageRequest.of(0, 100));
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters(null, List.of("600675", "600606"), null, null, null, null, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(6);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(6);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(6)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -272,13 +224,10 @@ class InvoiceRepositoryTest {
 
 	@Test
 	void getInvoiceByInvoiceNumber() {
-		final var page = repository.findAllByParameters(createParameters(null, null, null, null, 138023999L, null, null), PageRequest.of(0, 100));
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters(null, null, null, null, 138023999L, null, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(1);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(1);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(1)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -302,13 +251,10 @@ class InvoiceRepositoryTest {
 
 	@Test
 	void getInvoiceByOcrNumber() {
-		final var page = repository.findAllByParameters(createParameters(null, null, null, null, null, 138023999L, null), PageRequest.of(0, 100));
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters(null, null, null, null, null, 138023999L, null), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(1);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(1);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(1)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -332,13 +278,10 @@ class InvoiceRepositoryTest {
 
 	@Test
 	void getInvoiceByFacilityId() {
-		final var page = repository.findAllByParameters(createParameters(null, null, null, null, null, null, List.of("735999109324119255")), PageRequest.of(0, 100));
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters(null, null, null, null, null, null, List.of("735999109324119255")), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(1);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(1);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(1)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -362,13 +305,10 @@ class InvoiceRepositoryTest {
 
 	@Test
 	void getInvoiceByMultipleFacilityIds() {
-		final var page = repository.findAllByParameters(createParameters(null, null, null, null, null, null, List.of("735999109324119255", "735999109451436027")), PageRequest.of(0, 100));
+		var invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(createParameters(null, null, null, null, null, null, List.of("735999109324119255", "735999109451436027")), PageRequest.of(0, 100));
+		var result = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
-		assertThat(page.getNumber()).isZero();
-		assertThat(page.getNumberOfElements()).isEqualTo(2);
-		assertThat(page.getTotalPages()).isEqualTo(1);
-		assertThat(page.getTotalElements()).isEqualTo(2);
-		assertThat(page.getContent())
+		assertThat(result)
 			.hasSize(2)
 			.extracting(
 				InvoiceEntity::getAdministration,
@@ -392,20 +332,20 @@ class InvoiceRepositoryTest {
 					"El", "139349898.pdf"));
 	}
 
-	private static InvoiceParameters createParameters(String adminstration, List<String> customerNumber, LocalDate dueDateFrom, LocalDate dueDateTo, Long invoiceNumber, Long ocrNumber, List<String> facilityId) {
+	private static InvoiceParameters createParameters(String administration, List<String> customerNumber, LocalDate dueDateFrom, LocalDate dueDateTo, Long invoiceNumber, Long ocrNumber, List<String> facilityId) {
 		InvoiceParameters parameters = InvoiceParameters.create();
-		parameters.setAdministration(adminstration);
+		parameters.setAdministration(administration);
 		ofNullable(customerNumber).ifPresent(p -> parameters.setCustomerNumber(customerNumber));
 		parameters.setDueDateFrom(dueDateFrom);
 		parameters.setDueDateTo(dueDateTo);
 		parameters.setInvoiceNumber(invoiceNumber);
 		parameters.setOcrNumber(ocrNumber);
-		ofNullable(facilityId).ifPresent(p -> parameters.setFacilityId(facilityId));
+		ofNullable(facilityId).ifPresent(p -> parameters.setFacilityIds(facilityId));
 
 		return parameters;
 	}
 
 	private static BigDecimal toBigDecimal(double number) {
-		return BigDecimal.valueOf(number).setScale(4);
+		return BigDecimal.valueOf(number).setScale(4, RoundingMode.UP);
 	}
 }
