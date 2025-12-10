@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "kundinfo", name = "vInvoice")
+@Table(schema = "kundinfo", name = "vInvoice_Test_251126")
 public class InvoiceEntity {
 
 	@Id
