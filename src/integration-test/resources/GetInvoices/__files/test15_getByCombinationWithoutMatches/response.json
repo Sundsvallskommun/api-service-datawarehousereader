@@ -1,14 +1,10 @@
 {
 	"invoices": [],
 	"_meta": {
-		"sortDirection": "ASC",
-		"totalRecords": 0,
+		"page": 1,
 		"limit": 100,
 		"count": 0,
-		"totalPages": 0,
-		"sortBy": [
-			"invoiceDate"
-		],
-		"page": 1
+		"totalRecords": 0,
+		"totalPages": 0
 	}
 }

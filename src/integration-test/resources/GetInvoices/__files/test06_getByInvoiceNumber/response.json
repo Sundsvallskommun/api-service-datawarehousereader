@@ -1,44 +1,44 @@
 {
 	"invoices": [
 		{
-			"invoiceName": "137968392.pdf",
-			"ocrNumber": 137968392,
-			"invoiceDescription": "El",
-			"city": "FRÖSÖN",
-			"administration": "Sundsvall Elnät",
-			"dueDate": "2019-10-29",
+			"customerNumber": "600606",
 			"customerType": "Enterprise",
-			"street": "DB79B,  FE 11040",
+			"facilityIds": [
+				"735999109144630886"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
 			"invoiceNumber": 137968392,
+			"invoiceDate": "2019-10-09",
+			"invoiceName": "137968392.pdf",
 			"invoiceType": "Faktura",
-			"currency": "sek",
-			"organizationGroup": "stadsbacken",
-			"facilityId": "735999109144630886",
-			"organizationNumber": "5565027223",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 137968392,
+			"dueDate": "2019-10-29",
+			"totalAmount": 12060.0,
 			"amountVatIncluded": 12059.99,
-			"vat": 9647.99,
+			"amountVatExcluded": 9647.99,
 			"vatEligibleAmount": 9647.99,
 			"rounding": 0.01,
-			"customerNumber": "600606",
-			"invoiceDate": "2019-10-09",
-			"totalAmount": 12060,
+			"vat": 9647.99,
 			"reversedVat": false,
-			"pdfAvailable": true,
-			"careOf": "Fräscha fastigheter AB",
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "DB79B,  FE 11040",
 			"postCode": "83882",
-			"invoiceStatus": "Skickad",
-			"amountVatExcluded": 9647.99
+			"city": "FRÖSÖN",
+			"careOf": "Fräscha fastigheter AB",
+			"pdfAvailable": true
 		}
 	],
 	"_meta": {
-		"sortDirection": "ASC",
-		"totalRecords": 1,
+		"page": 1,
 		"limit": 100,
 		"count": 1,
-		"totalPages": 1,
-		"sortBy": [
-			"invoiceDate"
-		],
-		"page": 1
+		"totalRecords": 1,
+		"totalPages": 1
 	}
 }

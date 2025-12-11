@@ -4,7 +4,6 @@ import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
 
 import org.junit.jupiter.api.Test;
-
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.dept44.test.AbstractAppTest;
 import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
@@ -63,7 +62,7 @@ class GetInvoicesIT extends AbstractAppTest {
 	@Test
 	void test05_getByFacilityId() {
 		setupCall()
-			.withServicePath(PATH.concat("?facilityId=735999109122811214"))
+			.withServicePath(PATH.concat("?facilityIds=735999109122811214"))
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
@@ -229,7 +228,7 @@ class GetInvoicesIT extends AbstractAppTest {
 	@Test
 	void test19_getByFacilityIds() {
 		setupCall()
-			.withServicePath(PATH.concat("?facilityId=735999109122811214&facilityId=735999109144511017"))
+			.withServicePath(PATH.concat("?facilityIds=735999109122811214&facilityIds=735999109144511017"))
 			.withHttpMethod(GET)
 			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
