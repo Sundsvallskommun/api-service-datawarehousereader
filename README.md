@@ -6,7 +6,7 @@ The micro service provides information for different data domains (for example a
 
 ### Prerequisites
 
-- **Java 21 or higher**
+- **Java 25 or higher**
 - **Maven**
 - **Git**
 - **[Dependent Microservices](#dependencies)**
