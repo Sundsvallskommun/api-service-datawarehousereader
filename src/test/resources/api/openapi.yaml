@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:53607
+  - url: http://localhost:52119
     description: Generated server url
 tags:
   - name: Measurement
@@ -163,185 +163,11 @@ paths:
           schema:
             type: string
           example: 2281
-        - name: customerNumber
+        - name: searchParams
           in: query
-          required: false
+          required: true
           schema:
-            type: array
-            items:
-              type: string
-              description: Customer numbers
-              examples:
-                - "39195"
-        - name: customerType
-          in: query
-          required: false
-          schema:
-            $ref: "#/components/schemas/CustomerType"
-        - name: facilityIds
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-              description: Facility ids
-              examples:
-                - "735999109151401011"
-        - name: invoiceNumber
-          in: query
-          description: Invoice number
-          required: false
-          schema:
-            type: integer
-            format: int64
-            description: Invoice number
-            examples:
-              - "767915994"
-        - name: invoiceDateFrom
-          in: query
-          description: Earliest invoice date. Format is YYYY-MM-DD.
-          required: false
-          schema:
-            type: string
-            format: date
-            description: Earliest invoice date. Format is YYYY-MM-DD.
-            examples:
-              - 2022-01-01
-        - name: invoiceDateTo
-          in: query
-          description: Latest invoice date. Format is YYYY-MM-DD.
-          required: false
-          schema:
-            type: string
-            format: date
-            description: Latest invoice date. Format is YYYY-MM-DD.
-            examples:
-              - 2022-01-31
-        - name: invoiceName
-          in: query
-          description: Invoice name
-          required: false
-          schema:
-            type: string
-            description: Invoice name
-            examples:
-              - 765801493.pdf
-        - name: invoiceType
-          in: query
-          description: Invoice type
-          required: false
-          schema:
-            type: string
-            description: Invoice type
-            examples:
-              - Faktura
-        - name: invoiceStatus
-          in: query
-          description: Invoice status
-          required: false
-          schema:
-            type: string
-            description: Invoice status
-            examples:
-              - Skickad
-        - name: ocrNumber
-          in: query
-          description: OCR number
-          required: false
-          schema:
-            type: integer
-            format: int64
-            description: OCR number
-            examples:
-              - "767915994"
-        - name: dueDateFrom
-          in: query
-          description: Earliest due date. Format is YYYY-MM-DD.
-          required: false
-          schema:
-            type: string
-            format: date
-            description: Earliest due date. Format is YYYY-MM-DD.
-            examples:
-              - 2022-01-01
-        - name: dueDateTo
-          in: query
-          description: Latest due date. Format is YYYY-MM-DD.
-          required: false
-          schema:
-            type: string
-            format: date
-            description: Latest due date. Format is YYYY-MM-DD.
-            examples:
-              - 2022-01-31
-        - name: organizationGroup
-          in: query
-          description: Organization group
-          required: false
-          schema:
-            type: string
-            description: Organization group
-            examples:
-              - stadsbacken
-        - name: organizationNumber
-          in: query
-          description: Organization number of invoice issuer
-          required: false
-          schema:
-            type: string
-            description: Organization number of invoice issuer
-            examples:
-              - "5565027223"
-        - name: administration
-          in: query
-          description: Administration
-          required: false
-          schema:
-            type: string
-            description: Administration
-            examples:
-              - Sundsvall Elnät
-        - name: sortBy
-          in: query
-          required: false
-          schema:
-            type: array
-            items:
-              type: string
-              description: The properties to sort on
-              example: propertyName
-        - name: sortDirection
-          in: query
-          description: The sort order direction
-          required: false
-          schema:
-            $ref: "#/components/schemas/Direction"
-          example: ASC
-        - name: page
-          in: query
-          description: Page number
-          required: false
-          schema:
-            type: integer
-            format: int32
-            default: 1
-            description: Page number
-            example: 1
-            minimum: 1
-          example: 1
-        - name: limit
-          in: query
-          description: Result size per page. Maximum allowed value is dynamically configured
-          required: false
-          schema:
-            type: integer
-            format: int32
-            description: Result size per page. Maximum allowed value is dynamically
-              configured
-            example: 15
-            minimum: 1
-          example: 15
+            $ref: "#/components/schemas/InvoiceParameters"
       responses:
         "200":
           description: Successful operation
@@ -1194,6 +1020,12 @@ components:
     Problem:
       type: object
       properties:
+        status:
+          $ref: "#/components/schemas/StatusType"
+        title:
+          type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
@@ -1203,12 +1035,6 @@ components:
         parameters:
           type: object
           additionalProperties: { }
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
     StatusType:
       type: object
       properties:
@@ -1257,14 +1083,14 @@ components:
           type: string
         message:
           type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
         parameters:
           type: object
           additionalProperties: { }
-        detail:
-          type: string
         suppressed:
           type: array
           items:
@@ -1326,6 +1152,12 @@ components:
                 type: boolean
         message:
           type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
+        title:
+          type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
@@ -1335,12 +1167,6 @@ components:
         parameters:
           type: object
           additionalProperties: { }
-        status:
-          $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
-        detail:
-          type: string
         suppressed:
           type: array
           items:
@@ -1551,6 +1377,116 @@ components:
         - Private
       examples:
         - Enterprise
+    InvoiceParameters:
+      type: object
+      description: Invoice request parameters model
+      properties:
+        page:
+          type: integer
+          format: int32
+          default: 1
+          description: Page number
+          example: 1
+          minimum: 1
+        limit:
+          type: integer
+          format: int32
+          description: Result size per page. Maximum allowed value is dynamically
+            configured
+          example: 15
+          minimum: 1
+        sortBy:
+          type: array
+          items:
+            type: string
+            description: The properties to sort on
+            example: propertyName
+        sortDirection:
+          $ref: "#/components/schemas/Direction"
+          description: The sort order direction
+          example: ASC
+        customerNumber:
+          type: array
+          items:
+            type: string
+            description: Customer numbers
+            examples:
+              - "39195"
+        customerType:
+          $ref: "#/components/schemas/CustomerType"
+        facilityIds:
+          type: array
+          items:
+            type: string
+            description: Facility ids
+            examples:
+              - "735999109151401011"
+        invoiceNumber:
+          type: integer
+          format: int64
+          description: Invoice number
+          examples:
+            - "767915994"
+        invoiceDateFrom:
+          type: string
+          format: date
+          description: Earliest invoice date. Format is YYYY-MM-DD.
+          examples:
+            - 2022-01-01
+        invoiceDateTo:
+          type: string
+          format: date
+          description: Latest invoice date. Format is YYYY-MM-DD.
+          examples:
+            - 2022-01-31
+        invoiceName:
+          type: string
+          description: Invoice name
+          examples:
+            - 765801493.pdf
+        invoiceType:
+          type: string
+          description: Invoice type
+          examples:
+            - Faktura
+        invoiceStatus:
+          type: string
+          description: Invoice status
+          examples:
+            - Skickad
+        ocrNumber:
+          type: integer
+          format: int64
+          description: OCR number
+          examples:
+            - "767915994"
+        dueDateFrom:
+          type: string
+          format: date
+          description: Earliest due date. Format is YYYY-MM-DD.
+          examples:
+            - 2022-01-01
+        dueDateTo:
+          type: string
+          format: date
+          description: Latest due date. Format is YYYY-MM-DD.
+          examples:
+            - 2022-01-31
+        organizationGroup:
+          type: string
+          description: Organization group
+          examples:
+            - stadsbacken
+        organizationNumber:
+          type: string
+          description: Organization number of invoice issuer
+          examples:
+            - "5565027223"
+        administration:
+          type: string
+          description: Administration
+          examples:
+            - Sundsvall Elnät
     Invoice:
       type: object
       description: Invoice model
@@ -2049,7 +1985,7 @@ components:
         metaData:
           type: array
           items:
-            $ref: "#/components/schemas/InstallationMetaDataEmbeddable"
+            $ref: "#/components/schemas/InstallationMetaData"
             maxItems: 1000
             readOnly: true
           maxItems: 1000
@@ -2065,6 +2001,34 @@ components:
           readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
+          readOnly: true
+    InstallationMetaData:
+      type: object
+      description: Installation metadata model
+      properties:
+        key:
+          type: string
+          description: Key
+          examples:
+            - netarea
+          readOnly: true
+        value:
+          type: string
+          description: Value
+          examples:
+            - Sundsvall tätort
+          readOnly: true
+        type:
+          type: string
+          description: Type
+          examples:
+            - location
+          readOnly: true
+        displayName:
+          type: string
+          description: Displayname
+          examples:
+            - Nätområde
           readOnly: true
     CustomerEngagement:
       type: object

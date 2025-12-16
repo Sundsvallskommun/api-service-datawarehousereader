@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -16,7 +15,6 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Invoice request parameters model")
 @ValidSortByProperty(InvoiceEntity.class)
-@ParameterObject
 public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "39195"))
@@ -68,7 +66,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	@Schema(description = "Administration", examples = "Sundsvall Elnät")
 	private String administration;
 
-	public InvoiceParameters(int limit) {
+	public InvoiceParameters(final int limit) {
 		super(limit);
 	}
 
@@ -76,7 +74,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		super(100);
 	}
 
-	public static InvoiceParameters createWithLimit(int limit) {
+	public static InvoiceParameters createWithLimit(final int limit) {
 		return new InvoiceParameters(limit);
 	}
 
@@ -88,203 +86,203 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return customerNumber;
 	}
 
-	public InvoiceParameters withCustomerNumber(List<String> customerNumber) {
+	public void setCustomerNumber(final List<String> customerNumber) {
 		this.customerNumber = customerNumber;
-		return this;
 	}
 
-	public void setCustomerNumber(List<String> customerNumber) {
+	public InvoiceParameters withCustomerNumber(final List<String> customerNumber) {
 		this.customerNumber = customerNumber;
+		return this;
 	}
 
 	public CustomerType getCustomerType() {
 		return customerType;
 	}
 
-	public InvoiceParameters withCustomerType(CustomerType customerType) {
+	public void setCustomerType(final CustomerType customerType) {
 		this.customerType = customerType;
-		return this;
 	}
 
-	public void setCustomerType(CustomerType customerType) {
+	public InvoiceParameters withCustomerType(final CustomerType customerType) {
 		this.customerType = customerType;
+		return this;
 	}
 
 	public List<String> getFacilityIds() {
 		return facilityIds;
 	}
 
-	public InvoiceParameters withFacilityIds(List<String> facilityId) {
-		this.facilityIds = facilityId;
-		return this;
+	public void setFacilityIds(final List<String> facilityIds) {
+		this.facilityIds = facilityIds;
 	}
 
-	public void setFacilityIds(List<String> facilityIds) {
-		this.facilityIds = facilityIds;
+	public InvoiceParameters withFacilityIds(final List<String> facilityId) {
+		this.facilityIds = facilityId;
+		return this;
 	}
 
 	public Long getInvoiceNumber() {
 		return invoiceNumber;
 	}
 
-	public InvoiceParameters withInvoiceNumber(Long invoiceNumber) {
+	public void setInvoiceNumber(final Long invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
-		return this;
 	}
 
-	public void setInvoiceNumber(Long invoiceNumber) {
+	public InvoiceParameters withInvoiceNumber(final Long invoiceNumber) {
 		this.invoiceNumber = invoiceNumber;
+		return this;
 	}
 
 	public LocalDate getInvoiceDateFrom() {
 		return invoiceDateFrom;
 	}
 
-	public InvoiceParameters withInvoiceDateFrom(LocalDate invoiceDateFrom) {
+	public void setInvoiceDateFrom(final LocalDate invoiceDateFrom) {
 		this.invoiceDateFrom = invoiceDateFrom;
-		return this;
 	}
 
-	public void setInvoiceDateFrom(LocalDate invoiceDateFrom) {
+	public InvoiceParameters withInvoiceDateFrom(final LocalDate invoiceDateFrom) {
 		this.invoiceDateFrom = invoiceDateFrom;
+		return this;
 	}
 
 	public LocalDate getInvoiceDateTo() {
 		return invoiceDateTo;
 	}
 
-	public InvoiceParameters withInvoiceDateTo(LocalDate invoiceDateTo) {
+	public void setInvoiceDateTo(final LocalDate invoiceDateTo) {
 		this.invoiceDateTo = invoiceDateTo;
-		return this;
 	}
 
-	public void setInvoiceDateTo(LocalDate invoiceDateTo) {
+	public InvoiceParameters withInvoiceDateTo(final LocalDate invoiceDateTo) {
 		this.invoiceDateTo = invoiceDateTo;
+		return this;
 	}
 
 	public String getInvoiceName() {
 		return invoiceName;
 	}
 
-	public InvoiceParameters withInvoiceName(String invoiceName) {
+	public void setInvoiceName(final String invoiceName) {
 		this.invoiceName = invoiceName;
-		return this;
 	}
 
-	public void setInvoiceName(String invoiceName) {
+	public InvoiceParameters withInvoiceName(final String invoiceName) {
 		this.invoiceName = invoiceName;
+		return this;
 	}
 
 	public String getInvoiceType() {
 		return invoiceType;
 	}
 
-	public InvoiceParameters withInvoiceType(String invoiceType) {
+	public void setInvoiceType(final String invoiceType) {
 		this.invoiceType = invoiceType;
-		return this;
 	}
 
-	public void setInvoiceType(String invoiceType) {
+	public InvoiceParameters withInvoiceType(final String invoiceType) {
 		this.invoiceType = invoiceType;
+		return this;
 	}
 
 	public String getInvoiceStatus() {
 		return invoiceStatus;
 	}
 
-	public InvoiceParameters withInvoiceStatus(String invoiceStatus) {
+	public void setInvoiceStatus(final String invoiceStatus) {
 		this.invoiceStatus = invoiceStatus;
-		return this;
 	}
 
-	public void setInvoiceStatus(String invoiceStatus) {
+	public InvoiceParameters withInvoiceStatus(final String invoiceStatus) {
 		this.invoiceStatus = invoiceStatus;
+		return this;
 	}
 
 	public Long getOcrNumber() {
 		return ocrNumber;
 	}
 
-	public InvoiceParameters withOcrNumber(Long ocrNumber) {
+	public void setOcrNumber(final Long ocrNumber) {
 		this.ocrNumber = ocrNumber;
-		return this;
 	}
 
-	public void setOcrNumber(Long ocrNumber) {
+	public InvoiceParameters withOcrNumber(final Long ocrNumber) {
 		this.ocrNumber = ocrNumber;
+		return this;
 	}
 
 	public LocalDate getDueDateFrom() {
 		return dueDateFrom;
 	}
 
-	public InvoiceParameters withDueDateFrom(LocalDate dueDateFrom) {
+	public void setDueDateFrom(final LocalDate dueDateFrom) {
 		this.dueDateFrom = dueDateFrom;
-		return this;
 	}
 
-	public void setDueDateFrom(LocalDate dueDateFrom) {
+	public InvoiceParameters withDueDateFrom(final LocalDate dueDateFrom) {
 		this.dueDateFrom = dueDateFrom;
+		return this;
 	}
 
 	public LocalDate getDueDateTo() {
 		return dueDateTo;
 	}
 
-	public InvoiceParameters withDueDateTo(LocalDate dueDateTo) {
+	public void setDueDateTo(final LocalDate dueDateTo) {
 		this.dueDateTo = dueDateTo;
-		return this;
 	}
 
-	public void setDueDateTo(LocalDate dueDateTo) {
+	public InvoiceParameters withDueDateTo(final LocalDate dueDateTo) {
 		this.dueDateTo = dueDateTo;
+		return this;
 	}
 
 	public String getOrganizationGroup() {
 		return organizationGroup;
 	}
 
-	public InvoiceParameters withOrganizationGroup(String organizationGroup) {
+	public void setOrganizationGroup(final String organizationGroup) {
 		this.organizationGroup = organizationGroup;
-		return this;
 	}
 
-	public void setOrganizationGroup(String organizationGroup) {
+	public InvoiceParameters withOrganizationGroup(final String organizationGroup) {
 		this.organizationGroup = organizationGroup;
+		return this;
 	}
 
 	public String getOrganizationNumber() {
 		return organizationNumber;
 	}
 
-	public InvoiceParameters withOrganizationNumber(String organizationNumber) {
+	public void setOrganizationNumber(final String organizationNumber) {
 		this.organizationNumber = organizationNumber;
-		return this;
 	}
 
-	public void setOrganizationNumber(String organizationNumber) {
+	public InvoiceParameters withOrganizationNumber(final String organizationNumber) {
 		this.organizationNumber = organizationNumber;
+		return this;
 	}
 
 	public String getAdministration() {
 		return administration;
 	}
 
-	public InvoiceParameters withAdministration(String administration) {
+	public void setAdministration(final String administration) {
+		this.administration = administration;
+	}
+
+	public InvoiceParameters withAdministration(final String administration) {
 		this.administration = administration;
 		return this;
 	}
 
-	public void setAdministration(String administration) {
-		this.administration = administration;
-	}
-
-	public InvoiceParameters withSortBy(List<String> sortBy) {
+	public InvoiceParameters withSortBy(final List<String> sortBy) {
 		setSortBy(sortBy);
 		return this;
 	}
 
-	public InvoiceParameters withSortDirection(Sort.Direction sortDirection) {
+	public InvoiceParameters withSortDirection(final Sort.Direction sortDirection) {
 		setSortDirection(sortDirection);
 		return this;
 	}
@@ -300,7 +298,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}

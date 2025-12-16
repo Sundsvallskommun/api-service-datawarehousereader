@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationMetaDataEmbeddable;
 
 @Schema(description = "Installation details model")
 public class InstallationDetails {
@@ -48,7 +47,7 @@ public class InstallationDetails {
 	@Schema(description = "Date when object was last modified (or null if never modified)", examples = "2022-12-31", accessMode = READ_ONLY)
 	private LocalDate dateLastModified;
 
-	@ArraySchema(schema = @Schema(implementation = InstallationMetaDataEmbeddable.class, accessMode = READ_ONLY), maxItems = 1000)
+	@ArraySchema(schema = @Schema(implementation = InstallationMetaData.class, accessMode = READ_ONLY), maxItems = 1000)
 	private List<InstallationMetaData> metaData;
 
 	public static InstallationDetails create() {
@@ -124,7 +123,7 @@ public class InstallationDetails {
 		return placementId;
 	}
 
-	public void setPlacementId(int placementId) {
+	public void setPlacementId(final int placementId) {
 		this.placementId = placementId;
 	}
 
@@ -225,12 +224,12 @@ public class InstallationDetails {
 	}
 
 	@Override
-	public boolean equals(Object o) {
+	public boolean equals(final Object o) {
 		if (this == o)
 			return true;
 		if (o == null || getClass() != o.getClass())
 			return false;
-		InstallationDetails that = (InstallationDetails) o;
+		final InstallationDetails that = (InstallationDetails) o;
 		return Objects.equals(company, that.company) && Objects.equals(type, that.type) && Objects.equals(facilityId, that.facilityId) && Objects.equals(placementId, that.placementId) && Objects.equals(careOf, that.careOf) && Objects.equals(street,
 			that.street) && Objects.equals(postCode, that.postCode) && Objects.equals(city, that.city) && Objects.equals(propertyDesignation, that.propertyDesignation) && Objects.equals(dateFrom, that.dateFrom) && Objects.equals(dateTo, that.dateTo)
 			&& Objects.equals(dateLastModified, that.dateLastModified) && Objects.equals(metaData, that.metaData);
