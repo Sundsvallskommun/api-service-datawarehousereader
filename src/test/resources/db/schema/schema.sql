@@ -154,6 +154,19 @@
         periodFrom nvarchar(4000),
         periodTo nvarchar(4000),
         unit nvarchar(255),
+        primary key (invoiceProductSeq)
+    );
+
+    create table kundinfo.vMeasurementDistrictHeating (
+        isInterpolted bit not null,
+        usage decimal(28,10),
+        DateAndTime datetime not null,
+        customerorgid varchar(8000) not null,
+        facilityId varchar(255) not null,
+        feedType nvarchar(255) not null,
+        unit nvarchar(255),
+        uuid uniqueidentifier,
+        primary key (DateAndTime, customerorgid, facilityId, feedType)
         primary key (InvoiceProductSeq)
     );
 

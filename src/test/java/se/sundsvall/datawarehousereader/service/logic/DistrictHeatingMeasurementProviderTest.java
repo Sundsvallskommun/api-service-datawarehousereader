@@ -122,6 +122,19 @@ class DistrictHeatingMeasurementProviderTest {
 	void testGetMeasurementsReturnsAllResults() {
 		// Arrange
 		final var searchParams = MeasurementParameters.create();
+		searchParams.setFacilityId(facilityId);
+		searchParams.setPage(1);
+		searchParams.setLimit(10);
+		searchParams.setSortBy(List.of("measurementTimestamp"));
+		searchParams.setSortDirection(Sort.Direction.DESC);
+
+		when(
+			districtHeatingRepositoryMock.findAllMatching(
+				any(),
+				any(),
+				any(),
+				any(),
+				any())).thenReturn(Collections.emptyList());
 
 		final var entities = List.of(
 			createMockEntity(1),
