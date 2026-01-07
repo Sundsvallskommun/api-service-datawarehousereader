@@ -42,7 +42,8 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 	}
 
 	@Test
-	void test02_getDistrictHeatingMonthWithCustomPageAndLimit() {
+	void test02_getDistrictHeatingMonthIgnoresPagination() {
+		// Pagination parameters are ignored for district heating - all results returned
 		setupCall()
 			.withServicePath(format(PATH, DISTRICT_HEATING, MONTH) +
 				"?page=2" +
