@@ -12,12 +12,6 @@
 	},
 	"measurements": [
 		{
-			"metaData": [
-				{
-					"value": "4321552",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",

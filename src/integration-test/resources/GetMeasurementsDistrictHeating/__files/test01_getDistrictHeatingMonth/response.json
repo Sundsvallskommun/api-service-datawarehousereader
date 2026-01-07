@@ -12,12 +12,6 @@
 	},
 	"measurements": [
 		{
-			"metaData": [
-				{
-					"value": "2592018",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -29,12 +23,6 @@
 			"timestamp": "2018-02-01T00:00:00+01:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "2807316",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -46,12 +34,6 @@
 			"timestamp": "2018-03-01T00:00:00+01:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "2947605",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -63,12 +45,6 @@
 			"timestamp": "2018-04-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "3066675",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -80,12 +56,6 @@
 			"timestamp": "2018-05-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "3229154",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -97,12 +67,6 @@
 			"timestamp": "2018-06-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "3372107",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -114,12 +78,6 @@
 			"timestamp": "2018-07-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "3538114",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -131,12 +89,6 @@
 			"timestamp": "2018-08-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "3671917",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -148,12 +100,6 @@
 			"timestamp": "2018-09-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "3875825",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -165,12 +111,6 @@
 			"timestamp": "2018-10-01T00:00:00+02:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "4148307",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",
@@ -182,12 +122,6 @@
 			"timestamp": "2018-11-01T00:00:00+01:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "4321552",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "735999109113202014",

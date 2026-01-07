@@ -9,9 +9,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
 
+import com.google.code.beanmatchers.BeanMatchers;
+import java.time.LocalDateTime;
+import java.util.Random;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class MeasurementDistrictHeatingKeyTest {
+
+	@BeforeAll
+	static void setup() {
+		BeanMatchers.registerValueGenerator(
+			() -> LocalDateTime.now().plusSeconds(new Random().nextInt()),
+			LocalDateTime.class);
+	}
 
 	@Test
 	void testBean() {

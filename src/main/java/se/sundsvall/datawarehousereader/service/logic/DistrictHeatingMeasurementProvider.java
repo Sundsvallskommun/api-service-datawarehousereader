@@ -11,97 +11,100 @@ import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
-import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementMetaData;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementDistrictHeatingDayRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementDistrictHeatingHourRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementDistrictHeatingMonthRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementDistrictHeatingRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.DefaultMeasurementAttributesInterface;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingDayEntity;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingHourEntity;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingMonthEntity;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementDistrictHeatingEntity;
 import se.sundsvall.datawarehousereader.service.mapper.MeasurementMapper;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 @Component
 public class DistrictHeatingMeasurementProvider {
 
-	private final MeasurementDistrictHeatingHourRepository districtHeatingHourRepository;
-	private final MeasurementDistrictHeatingDayRepository districtHeatingDayRepository;
-	private final MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository;
+	private final MeasurementDistrictHeatingRepository districtHeatingRepository;
 
 	DistrictHeatingMeasurementProvider(
-		final MeasurementDistrictHeatingHourRepository districtHeatingHourRepository,
-		final MeasurementDistrictHeatingDayRepository districtHeatingDayRepository,
-		final MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository) {
-
-		this.districtHeatingHourRepository = districtHeatingHourRepository;
-		this.districtHeatingDayRepository = districtHeatingDayRepository;
-		this.districtHeatingMonthRepository = districtHeatingMonthRepository;
+		final MeasurementDistrictHeatingRepository districtHeatingRepository) {
+		this.districtHeatingRepository = districtHeatingRepository;
 	}
 
-	private static final String AGGREGATION_NOT_IMPLEMENTED = "aggregation '%s' and category '%s'";
-	private static final String READING_SEQUENCE_KEY = "readingSequence";
-
-	public MeasurementResponse getMeasurements(String legalId, Aggregation aggregation, LocalDateTime fromDateTime, LocalDateTime toDateTime, MeasurementParameters searchParams) {
-		final var matches = switch (aggregation) {
-			case HOUR -> districtHeatingHourRepository.findAllMatching(legalId, searchParams.getFacilityId(), fromDateTime, toDateTime,
-				PageRequest.of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
-			case DAY -> districtHeatingDayRepository.findAllMatching(legalId, searchParams.getFacilityId(), fromDateTime, toDateTime,
-				PageRequest.of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
-			case MONTH -> districtHeatingMonthRepository.findAllMatching(legalId, searchParams.getFacilityId(), fromDateTime, toDateTime,
-				PageRequest.of(searchParams.getPage() - 1, searchParams.getLimit(), searchParams.sort()));
-			default -> throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(AGGREGATION_NOT_IMPLEMENTED, aggregation, DISTRICT_HEATING));
+	public MeasurementResponse getMeasurements(
+		final String legalId,
+		final Aggregation aggregation,
+		final LocalDateTime fromDateTime,
+		final LocalDateTime toDateTime,
+		final MeasurementParameters searchParams) {
+		final String aggregationLevel = switch (aggregation) {
+			case QUARTER -> "QUARTER";
+			case HOUR -> "HOUR";
+			case DAY -> "DAY";
+			case MONTH -> "MONTH";
 		};
 
-		// If page larger than last page is requested, an empty list is returned otherwise the current page
-		final List<Measurement> measurements = matches.getTotalPages() < searchParams.getPage() ? Collections.emptyList() : toMeasurements(matches.getContent(), searchParams, aggregation);
+		// Get all results from the stored procedure
+		final List<MeasurementDistrictHeatingEntity> allResults = districtHeatingRepository.findAllMatching(
+			legalId,
+			searchParams.getFacilityId(),
+			fromDateTime,
+			toDateTime,
+			aggregationLevel);
+
+		// Apply manual pagination
+		final int totalElements = allResults.size();
+		final int totalPages = (int) Math.ceil(
+			(double) totalElements / searchParams.getLimit());
+		final int startIndex = (searchParams.getPage() - 1) * searchParams.getLimit();
+		final int endIndex = Math.min(
+			startIndex + searchParams.getLimit(),
+			totalElements);
+
+		// If page larger than last page is requested, return an empty list
+		final List<? extends DefaultMeasurementAttributesInterface> pageContent = searchParams.getPage() > totalPages
+			? Collections.emptyList()
+			: allResults.subList(startIndex, endIndex);
+
+		final List<Measurement> measurements = toMeasurements(
+			pageContent,
+			searchParams,
+			aggregation);
+
+		// Create manual page info
+		final var pageInfo = new org.springframework.data.domain.PageImpl<>(
+			pageContent,
+			PageRequest.of(
+				searchParams.getPage() - 1,
+				searchParams.getLimit(),
+				searchParams.sort()),
+			totalElements);
 
 		return MeasurementResponse.create()
 			.withMeasurements(measurements)
-			.withMetaData(PagingAndSortingMetaData.create().withPageData(matches));
+			.withMetaData(
+				PagingAndSortingMetaData.create().withPageData(pageInfo));
 	}
 
-	private List<Measurement> toMeasurements(List<? extends DefaultMeasurementAttributesInterface> entities, MeasurementParameters searchParams, Aggregation aggregation) {
-		return ofNullable(entities).orElse(emptyList()).stream()
+	private List<Measurement> toMeasurements(
+		final List<? extends DefaultMeasurementAttributesInterface> entities,
+		final MeasurementParameters searchParams,
+		final Aggregation aggregation) {
+		return ofNullable(entities)
+			.orElse(emptyList())
+			.stream()
 			.filter(Objects::nonNull)
-			.map(defaultMeasurement -> toMeasurement(defaultMeasurement, aggregation))
-			.map(measurement -> decorateMeasurement(measurement, searchParams.getPartyId(), aggregation, DISTRICT_HEATING))
+			.map(entity -> toMeasurement((MeasurementDistrictHeatingEntity) entity))
+			.map(measurement -> decorateMeasurement(
+				measurement,
+				searchParams.getPartyId(),
+				aggregation,
+				DISTRICT_HEATING))
 			.toList();
 	}
 
-	private Measurement toMeasurement(DefaultMeasurementAttributesInterface entity, Aggregation aggregation) {
-		return MeasurementMapper.toMeasurement(entity)
-			.withMetaData(toMetadata(entity, aggregation));
-	}
-
-	private List<MeasurementMetaData> toMetadata(DefaultMeasurementAttributesInterface entity, Aggregation aggregation) {
-
-		return switch (aggregation) {
-			case HOUR -> {
-				final var hourEntity = (MeasurementDistrictHeatingHourEntity) entity;
-				yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(hourEntity.getReadingSequence())));
-			}
-			case DAY -> {
-				final var dayEntity = (MeasurementDistrictHeatingDayEntity) entity;
-				yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(dayEntity.getReadingSequence())));
-			}
-			case MONTH -> {
-				final var monthEntity = (MeasurementDistrictHeatingMonthEntity) entity;
-				yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(monthEntity.getReadingSequence())));
-			}
-			default -> emptyList();
-		};
-	}
-
-	private String toString(Integer value) {
-		return ofNullable(value)
-			.map(String::valueOf)
-			.orElse(null);
+	private Measurement toMeasurement(
+		final MeasurementDistrictHeatingEntity entity) {
+		return MeasurementMapper.toMeasurement(entity);
 	}
 }
