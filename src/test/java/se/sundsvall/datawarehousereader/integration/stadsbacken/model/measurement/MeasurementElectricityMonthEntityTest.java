@@ -68,7 +68,7 @@ class MeasurementElectricityMonthEntityTest {
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		assertThat(MeasurementDistrictHeatingMonthEntity.create()).hasAllNullFieldsOrProperties();
-		assertThat(new MeasurementDistrictHeatingMonthEntity()).hasAllNullFieldsOrProperties();
+		assertThat(MeasurementElectricityMonthEntity.create()).hasAllNullFieldsOrProperties();
+		assertThat(new MeasurementElectricityMonthEntity()).hasAllNullFieldsOrProperties();
 	}
 }

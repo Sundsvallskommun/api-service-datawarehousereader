@@ -6,8 +6,8 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.AllOf.allOf;
 
 import com.google.code.beanmatchers.BeanMatchers;
 import java.math.BigDecimal;
@@ -16,61 +16,63 @@ import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class MeasurementDistrictHeatingDayEntityTest {
+class MeasurementDistrictHeatingEntityTest {
 
 	@BeforeAll
 	static void setup() {
-		BeanMatchers.registerValueGenerator(() -> LocalDateTime.now().plusSeconds(new Random().nextInt()), LocalDateTime.class);
+		BeanMatchers.registerValueGenerator(
+			() -> LocalDateTime.now().plusSeconds(new Random().nextInt()),
+			LocalDateTime.class);
 	}
 
 	@Test
 	void testBean() {
-		assertThat(MeasurementDistrictHeatingDayEntity.class, allOf(
-			hasValidBeanConstructor(),
-			hasValidGettersAndSetters(),
-			hasValidBeanHashCode(),
-			hasValidBeanEquals(),
-			hasValidBeanToString()));
+		assertThat(
+			MeasurementDistrictHeatingEntity.class,
+			allOf(
+				hasValidBeanConstructor(),
+				hasValidGettersAndSetters(),
+				hasValidBeanHashCode(),
+				hasValidBeanEquals(),
+				hasValidBeanToString()));
 	}
 
 	@Test
 	void testBuilderMethods() {
+		final var uuid = "test-uuid";
 		final var customerOrgId = "customerOrgId";
 		final var facilityId = "facilityId";
 		final var feedType = "feedType";
-		final var interpolation = Integer.valueOf(543210);
-		final var measurementTimestamp = LocalDateTime.now();
-		final var readingSequence = Integer.valueOf(223344);
 		final var unit = "unit";
 		final var usage = BigDecimal.valueOf(123.456);
-		final var uuid = "uuid";
+		final var measurementTimestamp = LocalDateTime.now();
+		final var interpolation = Integer.valueOf(543210);
 
-		final var entity = MeasurementDistrictHeatingDayEntity.create()
+		final var entity = MeasurementDistrictHeatingEntity.create()
+			.withUuid(uuid)
 			.withCustomerOrgId(customerOrgId)
 			.withFacilityId(facilityId)
 			.withFeedType(feedType)
-			.withInterpolation(interpolation)
-			.withMeasurementTimestamp(measurementTimestamp)
-			.withReadingSequence(readingSequence)
 			.withUnit(unit)
 			.withUsage(usage)
-			.withUuid(uuid);
+			.withMeasurementTimestamp(measurementTimestamp)
+			.withInterpolation(interpolation);
 
 		assertThat(entity).isNotNull().hasNoNullFieldsOrProperties();
+
+		assertThat(entity.getUuid()).isEqualTo(uuid);
 		assertThat(entity.getCustomerOrgId()).isEqualTo(customerOrgId);
 		assertThat(entity.getFacilityId()).isEqualTo(facilityId);
 		assertThat(entity.getFeedType()).isEqualTo(feedType);
-		assertThat(entity.getInterpolation()).isEqualTo(interpolation);
-		assertThat(entity.getMeasurementTimestamp()).isEqualTo(measurementTimestamp);
-		assertThat(entity.getReadingSequence()).isEqualTo(readingSequence);
 		assertThat(entity.getUnit()).isEqualTo(unit);
 		assertThat(entity.getUsage()).isEqualTo(usage);
-		assertThat(entity.getUuid()).isEqualTo(uuid);
+		assertThat(entity.getMeasurementTimestamp()).isEqualTo(measurementTimestamp);
+		assertThat(entity.getInterpolation()).isEqualTo(interpolation);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
-		assertThat(MeasurementDistrictHeatingDayEntity.create()).hasAllNullFieldsOrProperties();
-		assertThat(new MeasurementDistrictHeatingDayEntity()).hasAllNullFieldsOrProperties();
+		assertThat(MeasurementDistrictHeatingEntity.create()).hasAllNullFieldsOrProperties();
+		assertThat(new MeasurementDistrictHeatingEntity()).hasAllNullFieldsOrProperties();
 	}
 }

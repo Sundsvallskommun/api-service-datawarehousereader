@@ -17,7 +17,7 @@ public class MeasurementMapper {
 
 	private MeasurementMapper() {}
 
-	public static List<Measurement> toMeasurements(List<? extends DefaultMeasurementAttributesInterface> entities, MeasurementParameters searchParams, Aggregation aggregation, Category category) {
+	public static List<Measurement> toMeasurements(final List<? extends DefaultMeasurementAttributesInterface> entities, final MeasurementParameters searchParams, final Aggregation aggregation, final Category category) {
 		return ofNullable(entities).orElse(emptyList()).stream()
 			.filter(Objects::nonNull)
 			.map(MeasurementMapper::toMeasurement)
@@ -25,7 +25,7 @@ public class MeasurementMapper {
 			.toList();
 	}
 
-	public static Measurement toMeasurement(DefaultMeasurementAttributesInterface entity) {
+	public static Measurement toMeasurement(final DefaultMeasurementAttributesInterface entity) {
 		return Measurement.create()
 			.withUnit(entity.getUnit())
 			.withMeasurementType(entity.getFeedType())
@@ -37,7 +37,7 @@ public class MeasurementMapper {
 			.withTimestamp(toOffsetDateTimeWithLocalOffset((entity.getMeasurementTimestamp())));
 	}
 
-	public static Measurement decorateMeasurement(Measurement measurement, String partyId, Aggregation aggregation, Category category) {
+	public static Measurement decorateMeasurement(final Measurement measurement, final String partyId, final Aggregation aggregation, final Category category) {
 		return (measurement.getPartyId() == null) && StringUtils.isNotEmpty(partyId) ? measurement.withPartyId(partyId).withAggregatedOn(aggregation).withCategory(category) : measurement.withAggregatedOn(aggregation).withCategory(category);
 	}
 }
