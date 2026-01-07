@@ -13,7 +13,7 @@ import static org.springframework.data.domain.Sort.by;
 import static org.zalando.problem.Status.BAD_REQUEST;
 import static org.zalando.problem.Status.NOT_IMPLEMENTED;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.HOUR;
-import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
+import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.QUARTER;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -93,7 +93,7 @@ class ElectricityMeasurementProviderTest {
 
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {
-		"YEAR"
+		"QUARTER"
 	}, mode = EnumSource.Mode.EXCLUDE)
 	void testWithEmptyParameters(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
@@ -166,7 +166,7 @@ class ElectricityMeasurementProviderTest {
 
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {
-		"YEAR"
+		"QUARTER"
 	}, mode = EnumSource.Mode.EXCLUDE)
 	void testWithAllParametersSet(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
@@ -247,7 +247,7 @@ class ElectricityMeasurementProviderTest {
 
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {
-		"YEAR"
+		"QUARTER"
 	}, mode = EnumSource.Mode.EXCLUDE)
 	void testForPageLargerThanResultsMaxPage(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
@@ -315,16 +315,16 @@ class ElectricityMeasurementProviderTest {
 	void testProblemIsThrownWhenNotSupportedAggregation() {
 		final var searchParams = MeasurementParameters.create();
 
-		final ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, YEAR, null, null, searchParams));
+		final ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, QUARTER, null, null, searchParams));
 		assertThat(e.getStatus()).isEqualTo(NOT_IMPLEMENTED);
-		assertThat(e.getMessage()).isEqualTo("Not Implemented: aggregation 'YEAR' and category 'ELECTRICITY'");
+		assertThat(e.getMessage()).isEqualTo("Not Implemented: aggregation 'QUARTER' and category 'ELECTRICITY'");
 
 		verifyNoInteractions(electricityHourRepositoryMock, electricityDayRepositoryMock, electricityMonthRepositoryMock);
 	}
 
 	@ParameterizedTest
 	@MethodSource("dateRangeArgumentProvider")
-	void testDateRangeExeedsMax(LocalDateTime start, LocalDateTime end) {
+	void testDateRangeExceedsMax(LocalDateTime start, LocalDateTime end) {
 		final var searchParams = MeasurementParameters.create();
 
 		final ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, HOUR, start, end, searchParams));

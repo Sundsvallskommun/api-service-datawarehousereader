@@ -29,7 +29,7 @@ public class AgreementService {
 	public AgreementResponse getAgreements(String municipalityId, AgreementParameters parameters) {
 		final var matches = repository.findAllByParameters(parameters, getCustomerOrgId(municipalityId, parameters.getPartyId()), PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
-		// If page larger than last page is requested, a empty list is returned otherwise the current page
+		// If page larger than last page is requested, an empty list is returned otherwise the current page
 		final List<Agreement> agreements = matches.getTotalPages() < parameters.getPage() ? emptyList() : toAgreements(matches.getContent());
 
 		return AgreementResponse.create()

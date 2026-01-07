@@ -44,7 +44,7 @@ public class ElectricityMeasurementProvider {
 	private static final String AGGREGATION_NOT_IMPLEMENTED = "aggregation '%s' and category '%s'";
 	private static final String MAXIMUM_HOURLY_MEASUREMENT_RANGE_VIOLATION = "Date range exceeds maximum range. Range can max be one year when asking for hourly electricity measurements.";
 
-	public MeasurementResponse getMeasurements(String legalId, Aggregation aggregateOn, LocalDateTime fromDateTime, LocalDateTime toDateTime, MeasurementParameters parameters) {
+	public MeasurementResponse getMeasurements(final String legalId, final Aggregation aggregateOn, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final MeasurementParameters parameters) {
 
 		final var pagedMatches = switch (aggregateOn) {
 			case HOUR -> handleHourMeasurementRequest(legalId, fromDateTime, toDateTime, parameters);
@@ -53,7 +53,7 @@ public class ElectricityMeasurementProvider {
 			default -> throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(AGGREGATION_NOT_IMPLEMENTED, aggregateOn, ELECTRICITY));
 		};
 
-		// If requested page is larger than last page, an empty list is returned otherwise the requested page
+		// If the requested page is larger than the last page, an empty list is returned otherwise the requested page
 		final List<Measurement> measurements = pagedMatches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : MeasurementMapper.toMeasurements(pagedMatches.getContent(), parameters, aggregateOn, ELECTRICITY);
 
 		return MeasurementResponse.create()
@@ -61,7 +61,7 @@ public class ElectricityMeasurementProvider {
 			.withMetaData(PagingAndSortingMetaData.create().withPageData(pagedMatches));
 	}
 
-	private Page<MeasurementElectricityHourEntity> handleHourMeasurementRequest(String legalId, LocalDateTime fromDateTime, LocalDateTime toDateTime, MeasurementParameters parameters) {
+	private Page<MeasurementElectricityHourEntity> handleHourMeasurementRequest(final String legalId, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final MeasurementParameters parameters) {
 		// Throw exception if requested period is larger than a year
 		if (ofNullable(fromDateTime).orElse(LocalDateTime.MIN).plusYears(1).isBefore(ofNullable(toDateTime).orElse(LocalDateTime.MAX))) {
 			throw Problem.valueOf(Status.BAD_REQUEST, MAXIMUM_HOURLY_MEASUREMENT_RANGE_VIOLATION);
@@ -71,19 +71,19 @@ public class ElectricityMeasurementProvider {
 	}
 
 	/**
-	 * Method for converting result list into a Page object with sub list for requested page. Convertion must be done
-	 * explicitly as stored procedures can not produce a return object of type Page and cant sort result list.
+	 * Method for converting a result list into a Page object with a sub list for the requested page. Conversion must be
+	 * done explicitly as stored procedures cannot produce a return object of type Page and cant sort result list.
 	 *
-	 * @param  parameters object containing input for calculating the current requested sub page for the result list
+	 * @param  parameters object containing input for calculating the current requested subpage for the result list
 	 * @param  matches    with result to be converted to a paged list
 	 * @return            a Page object representing the sublist for the requested page of the list
 	 */
-	private Page<MeasurementElectricityHourEntity> toPage(MeasurementParameters parameters, List<MeasurementElectricityHourEntity> matches) {
+	private Page<MeasurementElectricityHourEntity> toPage(final MeasurementParameters parameters, final List<MeasurementElectricityHourEntity> matches) {
 
 		// Sort result list based on incoming sorting parameters
 		matches.sort(MeasurementElectricityHourEntityComparator.create(parameters.getSortBy(), parameters.getSortDirection()));
 
-		// Convert list into a list of pages
+		// Convert a list into a list of pages
 		final PagedListHolder<MeasurementElectricityHourEntity> page = toPagedListHolder(parameters, matches);
 
 		if (page.getPageCount() < parameters.getPage()) {
@@ -92,14 +92,14 @@ public class ElectricityMeasurementProvider {
 		return new PageImpl<>(page.getPageList(), PageRequest.of(page.getPage(), page.getPageSize(), parameters.sort()), page.getNrOfElements());
 	}
 
-	private PagedListHolder<MeasurementElectricityHourEntity> toPagedListHolder(MeasurementParameters parameters, List<MeasurementElectricityHourEntity> matches) {
+	private PagedListHolder<MeasurementElectricityHourEntity> toPagedListHolder(final MeasurementParameters parameters, final List<MeasurementElectricityHourEntity> matches) {
 		final PagedListHolder<MeasurementElectricityHourEntity> page = new PagedListHolder<>(matches);
 		page.setPage(parameters.getPage() - 1);
 		page.setPageSize(parameters.getLimit());
 		return page;
 	}
 
-	private PageRequest toPageRequest(MeasurementParameters parameters) {
+	private PageRequest toPageRequest(final MeasurementParameters parameters) {
 		return PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort());
 	}
 }

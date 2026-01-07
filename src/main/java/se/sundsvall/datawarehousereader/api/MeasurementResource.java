@@ -50,9 +50,9 @@ class MeasurementResource {
 	})
 	ResponseEntity<MeasurementResponse> getMeasurements(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
-		@Parameter(name = "category", schema = @Schema(implementation = Category.class), required = true) @PathVariable(name = "category") Category category,
-		@Parameter(name = "aggregateOn", schema = @Schema(implementation = Aggregation.class), required = true) @PathVariable(name = "aggregateOn") Aggregation aggregateOn,
-		@Valid MeasurementParameters searchParams) {
+		@Parameter(name = "category", schema = @Schema(implementation = Category.class), required = true) @PathVariable(name = "category") final Category category,
+		@Parameter(name = "aggregateOn", schema = @Schema(implementation = Aggregation.class), required = true) @PathVariable(name = "aggregateOn") final Aggregation aggregateOn,
+		@Valid final MeasurementParameters searchParams) {
 
 		return ok(measurementService.getMeasurements(municipalityId, category, aggregateOn, searchParams));
 	}

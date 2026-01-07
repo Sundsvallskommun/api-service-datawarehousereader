@@ -32,7 +32,7 @@ public class MeasurementService {
 		this.partyProvider = partyProvider;
 	}
 
-	public MeasurementResponse getMeasurements(String municipalityId, Category category, Aggregation aggregateOn, MeasurementParameters parameters) {
+	public MeasurementResponse getMeasurements(final String municipalityId, final Category category, final Aggregation aggregateOn, final MeasurementParameters parameters) {
 		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyId -> partyProvider.translateToLegalId(municipalityId, partyId)).orElse(null);
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);

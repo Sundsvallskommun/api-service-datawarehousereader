@@ -36,9 +36,9 @@ public class DistrictHeatingMeasurementProvider {
 	private final MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository;
 
 	DistrictHeatingMeasurementProvider(
-		MeasurementDistrictHeatingHourRepository districtHeatingHourRepository,
-		MeasurementDistrictHeatingDayRepository districtHeatingDayRepository,
-		MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository) {
+		final MeasurementDistrictHeatingHourRepository districtHeatingHourRepository,
+		final MeasurementDistrictHeatingDayRepository districtHeatingDayRepository,
+		final MeasurementDistrictHeatingMonthRepository districtHeatingMonthRepository) {
 
 		this.districtHeatingHourRepository = districtHeatingHourRepository;
 		this.districtHeatingDayRepository = districtHeatingDayRepository;
@@ -83,9 +83,18 @@ public class DistrictHeatingMeasurementProvider {
 	private List<MeasurementMetaData> toMetadata(DefaultMeasurementAttributesInterface entity, Aggregation aggregation) {
 
 		return switch (aggregation) {
-			case HOUR -> { final var hourEntity = (MeasurementDistrictHeatingHourEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(hourEntity.getReadingSequence()))); }
-			case DAY -> { final var dayEntity = (MeasurementDistrictHeatingDayEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(dayEntity.getReadingSequence()))); }
-			case MONTH -> { final var monthEntity = (MeasurementDistrictHeatingMonthEntity) entity; yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(monthEntity.getReadingSequence()))); }
+			case HOUR -> {
+				final var hourEntity = (MeasurementDistrictHeatingHourEntity) entity;
+				yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(hourEntity.getReadingSequence())));
+			}
+			case DAY -> {
+				final var dayEntity = (MeasurementDistrictHeatingDayEntity) entity;
+				yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(dayEntity.getReadingSequence())));
+			}
+			case MONTH -> {
+				final var monthEntity = (MeasurementDistrictHeatingMonthEntity) entity;
+				yield List.of(MeasurementMetaData.create().withKey(READING_SEQUENCE_KEY).withValue(toString(monthEntity.getReadingSequence())));
+			}
 			default -> emptyList();
 		};
 	}
