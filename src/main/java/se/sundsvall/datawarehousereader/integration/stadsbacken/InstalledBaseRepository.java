@@ -26,7 +26,6 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 public interface InstalledBaseRepository extends PagingAndSortingRepository<InstalledBaseItemEntity, Integer>, JpaSpecificationExecutor<InstalledBaseItemEntity> {
 
 	default Page<InstalledBaseItemEntity> findAllByParameters(InstalledBaseParameters parameters, Pageable pageable) {
-
 		return findAll(withCareOf(parameters.getCareOf())
 			.and(withCity(parameters.getCity()))
 			.and(withCompany(parameters.getCompany()))
