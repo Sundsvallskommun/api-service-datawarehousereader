@@ -135,24 +135,26 @@
         primary key (InvoiceNumber)
     );
 
-    create table kundinfo.vInvoiceDetail (
+    create table kundinfo.vInvoiceDetail_Test_251126 (
         Amount money,
         AmountVatExcluded money,
+        InvoiceProductSeq int not null,
         Productcode smallint not null,
         Quantity float(53),
         Unitprice money,
         Vat money,
         Vatrate float(53),
-        invoiceId int not null,
-        invoiceProductSeq int not null,
-        InvoiceNumber bigint,
+        invoiceid int not null,
+        Invoicenumber bigint,
+        Administration nvarchar(255),
         Description nvarchar(255),
+        FacilityId varchar(50),
         OrganizationId varchar(10),
-        ProductName nvarchar(255),
+        Productname nvarchar(255),
         periodFrom nvarchar(4000),
         periodTo nvarchar(4000),
         unit nvarchar(255),
-        primary key (invoiceProductSeq)
+        primary key (InvoiceProductSeq)
     );
 
     create table kundinfo.vMeasurementDistrictHeatingDay (

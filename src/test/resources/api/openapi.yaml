@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:51972
+  - url: http://localhost:58207
     description: Generated server url
 tags:
   - name: Measurement
@@ -1031,18 +1031,18 @@ components:
           additionalProperties: { }
         status:
           $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
     StatusType:
       type: object
       properties:
-        reasonPhrase:
-          type: string
         statusCode:
           type: integer
           format: int32
+        reasonPhrase:
+          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -1163,9 +1163,9 @@ components:
           additionalProperties: { }
         status:
           $ref: "#/components/schemas/StatusType"
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
         suppressed:
           type: array
@@ -1766,6 +1766,18 @@ components:
           description: Organization number of invoice issuer
           examples:
             - "5565027223"
+          readOnly: true
+        administration:
+          type: string
+          description: Administration
+          examples:
+            - Name of the administration
+          readOnly: true
+        facilityId:
+          type: string
+          description: Facility id
+          examples:
+            - "735999109151401011"
           readOnly: true
     InstalledBaseItem:
       type: object
