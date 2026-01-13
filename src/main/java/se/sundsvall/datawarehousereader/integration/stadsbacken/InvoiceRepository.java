@@ -13,23 +13,26 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "invoiceRepository")
 public interface InvoiceRepository extends PagingAndSortingRepository<InvoiceEntity, Integer>, JpaSpecificationExecutor<InvoiceEntity> {
 
+	@WithRecompile
 	List<InvoiceEntity> findAllByInvoiceNumberIn(final List<Long> invoiceNumbers);
 
+	@WithRecompile
 	default Page<Long> findDistinctInvoiceNumbers(final InvoiceParameters parameters, final Pageable pageable) {
-		var invoices = findAll(createSpecification(parameters), pageable.getSort());
+		final var invoices = findAll(createSpecification(parameters), pageable.getSort());
 
-		var totalDistinctInvoiceNumbers = invoices.stream()
+		final var totalDistinctInvoiceNumbers = invoices.stream()
 			.map(InvoiceEntity::getInvoiceNumber)
 			.distinct()
 			.count();
 
-		var invoiceNumbers = invoices.stream()
+		final var invoiceNumbers = invoices.stream()
 			.map(InvoiceEntity::getInvoiceNumber)
 			.distinct()
 			.skip(pageable.getOffset())

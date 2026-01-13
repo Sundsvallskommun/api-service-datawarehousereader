@@ -4,11 +4,13 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "invoiceDetailRepository")
 public interface InvoiceDetailRepository extends CrudRepository<InvoiceDetailEntity, Integer> {
 
+	@WithRecompile
 	List<InvoiceDetailEntity> findAllByOrganizationIdAndInvoiceNumber(String organizationNumber, long invoiceNumber);
 }
