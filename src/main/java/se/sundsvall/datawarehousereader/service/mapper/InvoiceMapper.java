@@ -20,19 +20,19 @@ public class InvoiceMapper {
 
 	private InvoiceMapper() {}
 
-	public static List<Invoice> toInvoices(List<InvoiceEntity> entities) {
+	public static List<Invoice> toInvoices(final List<InvoiceEntity> entities) {
 		return ofNullable(entities).orElse(emptyList()).stream()
 			.map(InvoiceMapper::toInvoice)
 			.toList();
 	}
 
-	public static List<Invoice> toInvoices(Map<Long, List<InvoiceEntity>> invoiceMap) {
+	public static List<Invoice> toInvoices(final Map<Long, List<InvoiceEntity>> invoiceMap) {
 		return invoiceMap.values().stream()
 			.map(InvoiceMapper::toInvoice)
 			.toList();
 	}
 
-	private static Invoice toInvoice(List<InvoiceEntity> entities) {
+	private static Invoice toInvoice(final List<InvoiceEntity> entities) {
 		var facilityIds = entities.stream()
 			.map(InvoiceEntity::getFacilityId)
 			.collect(Collectors.toSet());
@@ -70,7 +70,7 @@ public class InvoiceMapper {
 			.withPdfAvailable(entities.getFirst().getPdfAvailable());
 	}
 
-	private static Invoice toInvoice(InvoiceEntity entity) {
+	private static Invoice toInvoice(final InvoiceEntity entity) {
 		return Invoice.create()
 			.withAdministration(entity.getAdministration())
 			.withAmountVatExcluded(entity.getAmountVatExcluded())
@@ -101,13 +101,13 @@ public class InvoiceMapper {
 			.withPdfAvailable(entity.getPdfAvailable());
 	}
 
-	public static List<InvoiceDetail> toDetails(List<InvoiceDetailEntity> entities) {
+	public static List<InvoiceDetail> toDetails(final List<InvoiceDetailEntity> entities) {
 		return ofNullable(entities).orElse(emptyList()).stream()
 			.map(InvoiceMapper::toDetail)
 			.toList();
 	}
 
-	private static InvoiceDetail toDetail(InvoiceDetailEntity entity) {
+	private static InvoiceDetail toDetail(final InvoiceDetailEntity entity) {
 		return InvoiceDetail.create()
 			.withAmount(entity.getAmount())
 			.withAmountVatExcluded(entity.getAmountVatExcluded())
@@ -122,6 +122,8 @@ public class InvoiceMapper {
 			.withUnit(entity.getUnit())
 			.withUnitPrice(entity.getUnitPrice())
 			.withVat(entity.getVat())
-			.withVatRate(entity.getVatRate());
+			.withVatRate(entity.getVatRate())
+			.withFacilityId(entity.getFacilityId())
+			.withAdministration(entity.getAdministration());
 	}
 }

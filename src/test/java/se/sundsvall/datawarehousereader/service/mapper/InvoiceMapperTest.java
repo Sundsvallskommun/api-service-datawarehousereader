@@ -185,6 +185,8 @@ class InvoiceMapperTest {
 		entity.setUnitPrice(UNIT_PRICE);
 		entity.setVat(VAT);
 		entity.setVatRate(VAT_RATE);
+		entity.setFacilityId(FACILITY_ID);
+		entity.setAdministration(ADMINISTRATION);
 
 		final var result = InvoiceMapper.toDetails(List.of(entity));
 
@@ -204,7 +206,9 @@ class InvoiceMapperTest {
 				InvoiceDetail::getUnit,
 				InvoiceDetail::getUnitPrice,
 				InvoiceDetail::getVat,
-				InvoiceDetail::getVatRate)
+				InvoiceDetail::getVatRate,
+				InvoiceDetail::getFacilityId,
+				InvoiceDetail::getAdministration)
 			.containsExactly(tuple(
 				AMOUNT,
 				AMOUNT_VAT_EXCLUDED,
@@ -219,6 +223,8 @@ class InvoiceMapperTest {
 				UNIT,
 				UNIT_PRICE,
 				VAT,
-				VAT_RATE));
+				VAT_RATE,
+				FACILITY_ID,
+				ADMINISTRATION));
 	}
 }

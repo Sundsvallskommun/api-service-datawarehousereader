@@ -40,6 +40,8 @@ class InvoiceDetailTest {
 		final var vat = valueOf(404);
 		final var vatRate = 777D;
 		final var organizationNumber = "organizationNumber";
+		final var facilityId = "facilityId";
+		final var administration = "administration";
 
 		final var detail = InvoiceDetail.create()
 			.withAmount(amount)
@@ -55,6 +57,8 @@ class InvoiceDetailTest {
 			.withUnitPrice(unitPrice)
 			.withVat(vat)
 			.withVatRate(vatRate)
+			.withAdministration(administration)
+			.withFacilityId(facilityId)
 			.withOrganizationNumber(organizationNumber);
 
 		assertThat(detail).isNotNull().hasNoNullFieldsOrProperties();
@@ -70,6 +74,9 @@ class InvoiceDetailTest {
 		assertThat(detail.getUnit()).isEqualTo(unit);
 		assertThat(detail.getUnitPrice()).isEqualTo(unitPrice);
 		assertThat(detail.getVat()).isEqualTo(vat);
+		assertThat(detail.getVatRate()).isEqualTo(vatRate);
+		assertThat(detail.getAdministration()).isEqualTo(administration);
+		assertThat(detail.getFacilityId()).isEqualTo(facilityId);
 		assertThat(detail.getOrganizationNumber()).isEqualTo(organizationNumber);
 	}
 

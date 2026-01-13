@@ -51,8 +51,40 @@ public class InvoiceDetail {
 	@Schema(description = "Organization number of invoice issuer", examples = "5565027223", accessMode = READ_ONLY)
 	private String organizationNumber;
 
+	@Schema(description = "Administration", examples = "Name of the administration", accessMode = READ_ONLY)
+	private String administration;
+
+	@Schema(description = "Facility id", examples = "735999109151401011", accessMode = READ_ONLY)
+	private String facilityId;
+
 	public static InvoiceDetail create() {
 		return new InvoiceDetail();
+	}
+
+	public String getAdministration() {
+		return administration;
+	}
+
+	public InvoiceDetail withAdministration(String administration) {
+		this.administration = administration;
+		return this;
+	}
+
+	public void setAdministration(String administration) {
+		this.administration = administration;
+	}
+
+	public String getFacilityId() {
+		return facilityId;
+	}
+
+	public InvoiceDetail withFacilityId(String facilityId) {
+		this.facilityId = facilityId;
+		return this;
+	}
+
+	public void setFacilityId(String facilityId) {
+		this.facilityId = facilityId;
 	}
 
 	public Long getInvoiceNumber() {
@@ -238,33 +270,40 @@ public class InvoiceDetail {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(amount, amountVatExcluded, description, invoiceNumber, organizationNumber, periodFrom, periodTo, productCode, productName, quantity, unit, unitPrice, vat, vatRate);
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass())
+			return false;
+		InvoiceDetail that = (InvoiceDetail) o;
+		return Objects.equals(invoiceNumber, that.invoiceNumber) && Objects.equals(amount, that.amount) && Objects.equals(amountVatExcluded, that.amountVatExcluded) && Objects.equals(vat, that.vat)
+			&& Objects.equals(vatRate, that.vatRate) && Objects.equals(quantity, that.quantity) && Objects.equals(unit, that.unit) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(periodFrom,
+				that.periodFrom) && Objects.equals(periodTo, that.periodTo) && Objects.equals(description, that.description) && Objects.equals(productCode, that.productCode) && Objects.equals(productName, that.productName)
+			&& Objects.equals(organizationNumber, that.organizationNumber) && Objects.equals(administration, that.administration) && Objects.equals(facilityId, that.facilityId);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final InvoiceDetail other = (InvoiceDetail) obj;
-		return Objects.equals(amount, other.amount) && Objects.equals(amountVatExcluded, other.amountVatExcluded) && Objects.equals(description, other.description) && Objects.equals(invoiceNumber, other.invoiceNumber) && Objects.equals(
-			organizationNumber, other.organizationNumber) && Objects.equals(periodFrom, other.periodFrom) && Objects.equals(periodTo, other.periodTo) && Objects.equals(productCode, other.productCode) && Objects.equals(productName, other.productName)
-			&& Objects.equals(quantity, other.quantity) && Objects.equals(unit, other.unit) && Objects.equals(unitPrice, other.unitPrice) && Objects.equals(vat, other.vat) && Objects.equals(vatRate, other.vatRate);
+	public int hashCode() {
+		return Objects.hash(invoiceNumber, amount, amountVatExcluded, vat, vatRate, quantity, unit, unitPrice, periodFrom, periodTo, description, productCode, productName, organizationNumber, administration, facilityId);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("InvoiceDetail [invoiceNumber=").append(invoiceNumber).append(", amount=").append(amount).append(", amountVatExcluded=").append(amountVatExcluded).append(", vat=").append(vat).append(", vatRate=").append(vatRate).append(
-			", quantity=").append(quantity).append(", unit=").append(unit).append(", unitPrice=").append(unitPrice).append(", periodFrom=").append(periodFrom).append(", periodTo=").append(periodTo).append(", description=").append(description).append(
-				", productCode=").append(productCode).append(", productName=").append(productName).append(", organizationNumber=").append(organizationNumber).append("]");
-		return builder.toString();
+		return "InvoiceDetail{" +
+			"invoiceNumber=" + invoiceNumber +
+			", amount=" + amount +
+			", amountVatExcluded=" + amountVatExcluded +
+			", vat=" + vat +
+			", vatRate=" + vatRate +
+			", quantity=" + quantity +
+			", unit='" + unit + '\'' +
+			", unitPrice=" + unitPrice +
+			", periodFrom='" + periodFrom + '\'' +
+			", periodTo='" + periodTo + '\'' +
+			", description='" + description + '\'' +
+			", productCode=" + productCode +
+			", productName='" + productName + '\'' +
+			", organizationNumber='" + organizationNumber + '\'' +
+			", administration='" + administration + '\'' +
+			", facilityId='" + facilityId + '\'' +
+			'}';
 	}
 }

@@ -8,14 +8,14 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "kundinfo", name = "vInvoiceDetail")
+@Table(schema = "kundinfo", name = "vInvoiceDetail_Test_251126")
 public class InvoiceDetailEntity {
 
 	@Id
-	@Column(name = "invoiceProductSeq", nullable = false, insertable = false, updatable = false)
+	@Column(name = "InvoiceProductSeq", nullable = false, insertable = false, updatable = false)
 	private int invoiceProductSeq;
 
-	@Column(name = "invoiceId", nullable = false, insertable = false, updatable = false)
+	@Column(name = "invoiceid", nullable = false, insertable = false, updatable = false)
 	private int invoiceId;
 
 	@Column(name = "Productcode", nullable = false, insertable = false, updatable = false, columnDefinition = "smallint")
@@ -30,7 +30,7 @@ public class InvoiceDetailEntity {
 	@Column(name = "Amount", insertable = false, updatable = false, columnDefinition = "money")
 	private BigDecimal amount;
 
-	@Column(name = "InvoiceNumber", insertable = false, updatable = false)
+	@Column(name = "Invoicenumber", insertable = false, updatable = false)
 	private Long invoiceNumber;
 
 	@Column(name = "AmountVatExcluded", insertable = false, updatable = false, columnDefinition = "money")
@@ -54,11 +54,33 @@ public class InvoiceDetailEntity {
 	@Column(name = "Description", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String description;
 
-	@Column(name = "ProductName", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
+	@Column(name = "Productname", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String productName;
 
 	@Column(name = "OrganizationId", insertable = false, updatable = false, columnDefinition = "varchar(10)")
 	private String organizationId;
+
+	@Column(name = "FacilityId", insertable = false, updatable = false, columnDefinition = "varchar(50)")
+	private String facilityId;
+
+	@Column(name = "Administration", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
+	private String administration;
+
+	public String getAdministration() {
+		return administration;
+	}
+
+	public void setAdministration(String administration) {
+		this.administration = administration;
+	}
+
+	public String getFacilityId() {
+		return facilityId;
+	}
+
+	public void setFacilityId(String facilityId) {
+		this.facilityId = facilityId;
+	}
 
 	public int getInvoiceProductSeq() {
 		return invoiceProductSeq;
@@ -189,35 +211,43 @@ public class InvoiceDetailEntity {
 	}
 
 	@Override
-	public int hashCode() {
-		return Objects.hash(amount, amountVatExcluded, description, invoiceId, invoiceNumber, invoiceProductSeq, organizationId, periodFrom, periodTo, productCode, productName, quantity, unit, unitPrice, vat, vatRate);
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass())
+			return false;
+		InvoiceDetailEntity that = (InvoiceDetailEntity) o;
+		return invoiceProductSeq == that.invoiceProductSeq && invoiceId == that.invoiceId && productCode == that.productCode && Objects.equals(periodFrom, that.periodFrom) && Objects.equals(periodTo, that.periodTo)
+			&& Objects.equals(amount, that.amount) && Objects.equals(invoiceNumber, that.invoiceNumber) && Objects.equals(amountVatExcluded, that.amountVatExcluded) && Objects.equals(vat, that.vat)
+			&& Objects.equals(vatRate, that.vatRate) && Objects.equals(quantity, that.quantity) && Objects.equals(unit, that.unit) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(description,
+				that.description) && Objects.equals(productName, that.productName) && Objects.equals(organizationId, that.organizationId) && Objects.equals(facilityId, that.facilityId) && Objects.equals(administration,
+					that.administration);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final InvoiceDetailEntity other = (InvoiceDetailEntity) obj;
-		return Objects.equals(amount, other.amount) && Objects.equals(amountVatExcluded, other.amountVatExcluded) && Objects.equals(description, other.description) && (invoiceId == other.invoiceId) && Objects.equals(invoiceNumber, other.invoiceNumber)
-			&& (invoiceProductSeq == other.invoiceProductSeq) && Objects.equals(organizationId, other.organizationId) && Objects.equals(periodFrom, other.periodFrom) && Objects.equals(periodTo, other.periodTo) && (productCode == other.productCode)
-			&& Objects.equals(productName, other.productName) && Objects.equals(quantity, other.quantity) && Objects.equals(unit, other.unit) && Objects.equals(unitPrice, other.unitPrice) && Objects.equals(vat, other.vat) && Objects.equals(vatRate,
-				other.vatRate);
+	public int hashCode() {
+		return Objects.hash(invoiceProductSeq, invoiceId, productCode, periodFrom, periodTo, amount, invoiceNumber, amountVatExcluded, vat, vatRate, quantity, unit, unitPrice, description, productName, organizationId, facilityId, administration);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("InvoiceDetailEntity [invoiceProductSeq=").append(invoiceProductSeq).append(", invoiceId=").append(invoiceId).append(", productCode=").append(productCode).append(", periodFrom=").append(periodFrom).append(", periodTo=").append(
-			periodTo).append(", amount=").append(amount).append(", invoiceNumber=").append(invoiceNumber).append(", amountVatExcluded=").append(amountVatExcluded).append(", vat=").append(vat).append(", vatRate=").append(vatRate).append(", quantity=")
-			.append(quantity).append(", unit=").append(unit).append(", unitPrice=").append(unitPrice).append(", description=").append(description).append(", productName=").append(productName).append(", organizationId=").append(organizationId).append(
-				"]");
-		return builder.toString();
+		return "InvoiceDetailEntity{" +
+			"invoiceProductSeq=" + invoiceProductSeq +
+			", invoiceId=" + invoiceId +
+			", productCode=" + productCode +
+			", periodFrom='" + periodFrom + '\'' +
+			", periodTo='" + periodTo + '\'' +
+			", amount=" + amount +
+			", invoiceNumber=" + invoiceNumber +
+			", amountVatExcluded=" + amountVatExcluded +
+			", vat=" + vat +
+			", vatRate=" + vatRate +
+			", quantity=" + quantity +
+			", unit='" + unit + '\'' +
+			", unitPrice=" + unitPrice +
+			", description='" + description + '\'' +
+			", productName='" + productName + '\'' +
+			", organizationId='" + organizationId + '\'' +
+			", facilityId='" + facilityId + '\'' +
+			", administration='" + administration + '\'' +
+			'}';
 	}
 }
