@@ -24,7 +24,7 @@ public class InstalledBaseService {
 	public InstalledBaseResponse getInstalledBase(final InstalledBaseParameters parameters) {
 		final var matches = repository.findAllByParameters(parameters, PageRequest.of(parameters.getPage() - 1, parameters.getLimit(), parameters.sort()));
 
-		// If page larger than last page is requested, a empty list is returned otherwise the current page
+		// If page larger than last page is requested, an empty list is returned otherwise the current page
 		final List<InstalledBaseItem> installedBase = matches.getTotalPages() < parameters.getPage() ? Collections.emptyList() : toInstalledBaseItems(matches.getContent());
 
 		return InstalledBaseResponse.create()

@@ -66,8 +66,7 @@ public class CustomerService {
 	}
 
 	/**
-	 * Fetch customer details
-	 * If fromDate in {@link CustomerDetailsParameters} is empty, we fetch last years changes.
+	 * Fetch customer details If fromDate in {@link CustomerDetailsParameters} is empty, we fetch last year's changes.
 	 *
 	 * @param  parameters request parameters
 	 * @return            {@link CustomerDetailsResponse}

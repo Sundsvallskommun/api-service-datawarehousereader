@@ -9,7 +9,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.by;
 import static org.zalando.problem.Status.NOT_IMPLEMENTED;
-import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.YEAR;
+import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.QUARTER;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -85,7 +85,7 @@ class DistrictHeatingMeasurementProviderTest {
 
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {
-		"YEAR"
+		"QUARTER"
 	}, mode = EnumSource.Mode.EXCLUDE)
 	void testWithEmptyParameters(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
@@ -162,7 +162,7 @@ class DistrictHeatingMeasurementProviderTest {
 
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {
-		"YEAR"
+		"QUARTER"
 	}, mode = EnumSource.Mode.EXCLUDE)
 	void testWithAllParametersSet(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
@@ -253,13 +253,13 @@ class DistrictHeatingMeasurementProviderTest {
 		assertThat(response.getMetaData().getTotalPages()).isEqualTo(1);
 		assertThat(response.getMetaData().getTotalRecords()).isEqualTo(1);
 		assertThat(response.getMeasurements()).hasSize(1);
-		assertThat(response.getMeasurements().get(0).getMetaData()).hasSize(1);
-		assertThat(response.getMeasurements().get(0).getMetaData().get(0).getValue()).isEqualTo(readingSequence.toString());
+		assertThat(response.getMeasurements().getFirst().getMetaData()).hasSize(1);
+		assertThat(response.getMeasurements().getFirst().getMetaData().getFirst().getValue()).isEqualTo(readingSequence.toString());
 	}
 
 	@ParameterizedTest
 	@EnumSource(value = Aggregation.class, names = {
-		"YEAR"
+		"QUARTER"
 	}, mode = EnumSource.Mode.EXCLUDE)
 	void testForPageLargerThanResultsMaxPage(Aggregation aggregateOn) {
 		final var searchParams = MeasurementParameters.create();
@@ -330,9 +330,9 @@ class DistrictHeatingMeasurementProviderTest {
 	void testProblemIsThrownWhenNotSupportedAggregation() {
 		final var searchParams = MeasurementParameters.create();
 
-		ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, YEAR, null, null, searchParams));
+		ThrowableProblem e = assertThrows(ThrowableProblem.class, () -> provider.getMeasurements(null, QUARTER, null, null, searchParams));
 		assertThat(e.getStatus()).isEqualTo(NOT_IMPLEMENTED);
-		assertThat(e.getMessage()).isEqualTo("Not Implemented: aggregation 'YEAR' and category 'DISTRICT_HEATING'");
+		assertThat(e.getMessage()).isEqualTo("Not Implemented: aggregation 'QUARTER' and category 'DISTRICT_HEATING'");
 
 		verifyNoInteractions(districtHeatingMonthRepositoryMock);
 	}
