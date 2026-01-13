@@ -1,8 +1,10 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.inspector;
 
-public class RecompileContext {
+public final class RecompileContext {
 
 	private static final ThreadLocal<Boolean> RECOMPILE_ENABLED = new ThreadLocal<>();
+
+	private RecompileContext() {}
 
 	public static void enable() {
 		RECOMPILE_ENABLED.set(true);

@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.inspector;
 
-import org.hibernate.cfg.AvailableSettings;
+import static org.hibernate.cfg.JdbcSettings.STATEMENT_INSPECTOR;
+
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,8 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class HibernateConfig {
 
 	@Bean
-	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(RecompileStatementInspector inspector) {
-		return properties -> properties.put(
-			AvailableSettings.STATEMENT_INSPECTOR, inspector);
+	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(final RecompileStatementInspector inspector) {
+		return properties -> properties.put(STATEMENT_INSPECTOR, inspector);
 	}
 }

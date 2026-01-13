@@ -14,12 +14,14 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "installationRepository")
 public interface InstallationRepository extends PagingAndSortingRepository<InstallationEntity, Integer>, JpaSpecificationExecutor<InstallationEntity> {
 
+	@WithRecompile
 	default Page<InstallationEntity> findAllByParameters(final InstallationParameters parameters, final Pageable pageable) {
 		return findAll(withCustomerFlag(parameters.getInstalled())
 			.and(withLastModifiedDateBetween(parameters.getLastModifiedDateFrom(), parameters.getLastModifiedDateTo()))

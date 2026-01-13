@@ -18,6 +18,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
@@ -25,7 +26,8 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 @CircuitBreaker(name = "installedBaseRepository")
 public interface InstalledBaseRepository extends PagingAndSortingRepository<InstalledBaseItemEntity, Integer>, JpaSpecificationExecutor<InstalledBaseItemEntity> {
 
-	default Page<InstalledBaseItemEntity> findAllByParameters(InstalledBaseParameters parameters, Pageable pageable) {
+	@WithRecompile
+	default Page<InstalledBaseItemEntity> findAllByParameters(final InstalledBaseParameters parameters, final Pageable pageable) {
 		return findAll(withCareOf(parameters.getCareOf())
 			.and(withCity(parameters.getCity()))
 			.and(withCompany(parameters.getCompany()))
