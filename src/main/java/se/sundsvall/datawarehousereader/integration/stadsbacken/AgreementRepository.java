@@ -26,6 +26,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementKey;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
@@ -34,6 +35,7 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 @CircuitBreaker(name = "agreementRepository")
 public interface AgreementRepository extends PagingAndSortingRepository<AgreementEntity, AgreementKey>, JpaSpecificationExecutor<AgreementEntity> {
 
+	@WithRecompile
 	default Page<AgreementEntity> findAllByParameters(AgreementParameters agreementParameters, String customerOrgId, Pageable pageable) {
 		final var parameters = ofNullable(agreementParameters).orElse(AgreementParameters.create());
 		return this.findAll(withAgreementId(ServiceUtil.toInteger(parameters.getAgreementId()))

@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagementParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerKey;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
@@ -22,7 +23,8 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 @CircuitBreaker(name = "customerRepository")
 public interface CustomerRepository extends PagingAndSortingRepository<CustomerEntity, CustomerKey>, JpaSpecificationExecutor<CustomerEntity> {
 
-	default Page<CustomerEntity> findAllByParameters(CustomerEngagementParameters customerParameters, List<String> customerOrgIds, Pageable pageable) {
+	@WithRecompile
+	default Page<CustomerEntity> findAllByParameters(final CustomerEngagementParameters customerParameters, final List<String> customerOrgIds, final Pageable pageable) {
 		final var parameters = ofNullable(customerParameters).orElse(CustomerEngagementParameters.create());
 		return this.findAll(withCustomerId(ServiceUtil.toInteger(parameters.getCustomerNumber()))
 			.and(withCustomerOrgIds(customerOrgIds))
