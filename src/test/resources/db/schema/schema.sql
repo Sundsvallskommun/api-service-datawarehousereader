@@ -157,46 +157,6 @@
         primary key (InvoiceProductSeq)
     );
 
-    create table kundinfo.vMeasurementDistrictHeatingDay (
-        READING_DAY_SEQ int not null,
-        isInterpolated tinyint not null,
-        usage decimal(33,10),
-        DateAndTime datetime,
-        customerorgid varchar(8000) not null,
-        facilityId varchar(255) not null,
-        feedType nvarchar(255),
-        unit nvarchar(255),
-        uuid uniqueidentifier,
-        primary key (READING_DAY_SEQ, customerorgid, facilityId)
-    );
-
-    create table kundinfo.vMeasurementDistrictHeatingHour (
-        READING_DAY_SEQ int not null,
-        isInterpolted bit not null,
-        usage decimal(28,10),
-        DateAndTime datetime,
-        ReadingDetailID bigint not null,
-        customerorgid varchar(8000) not null,
-        facilityId varchar(255),
-        feedType nvarchar(255),
-        unit nvarchar(255),
-        uuid uniqueidentifier,
-        primary key (ReadingDetailID)
-    );
-
-    create table kundinfo.vMeasurementDistrictHeatingMonth (
-        READING_SEQ int not null,
-        isInterpolated smallint not null,
-        usage decimal(33,10),
-        DateAndTime datetime,
-        customerorgid varchar(8000) not null,
-        facilityId varchar(255) not null,
-        feedType nvarchar(255),
-        unit nvarchar(255),
-        uuid uniqueidentifier,
-        primary key (READING_SEQ, customerorgid, facilityId)
-    );
-
     create table kundinfo.vMeasurementElectricityDay (
         READING_DAY_SEQ int not null,
         isInterpolted tinyint not null,

@@ -1,23 +1,6 @@
 {
-	"_meta": {
-		"totalRecords": 3,
-		"sortDirection": "ASC",
-		"limit": 100,
-		"count": 3,
-		"totalPages": 1,
-		"sortBy": [
-			"measurementTimestamp"
-		],
-		"page": 1
-	},
 	"measurements": [
 		{
-			"metaData": [
-				{
-					"value": "158221639",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9261219043",
@@ -29,12 +12,6 @@
 			"timestamp": "2022-03-23T00:00:00+01:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "149689424",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9261219043",
@@ -46,12 +23,6 @@
 			"timestamp": "2022-03-24T00:00:00+01:00"
 		},
 		{
-			"metaData": [
-				{
-					"value": "148483730",
-					"key": "readingSequence"
-				}
-			],
 			"unit": "kWh",
 			"interpolation": 0,
 			"facilityId": "9261219043",

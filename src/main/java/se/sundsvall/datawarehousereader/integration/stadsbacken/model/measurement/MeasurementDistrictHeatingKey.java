@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class MeasurementDistrictHeatingKey implements Serializable {
@@ -11,13 +12,15 @@ public class MeasurementDistrictHeatingKey implements Serializable {
 
 	private String facilityId;
 
-	private Integer readingSequence;
+	private String feedType;
+
+	private LocalDateTime measurementTimestamp;
 
 	public String getCustomerOrgId() {
 		return customerOrgId;
 	}
 
-	public void setCustomerOrgId(String customerOrgId) {
+	public void setCustomerOrgId(final String customerOrgId) {
 		this.customerOrgId = customerOrgId;
 	}
 
@@ -25,25 +28,33 @@ public class MeasurementDistrictHeatingKey implements Serializable {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(final String facilityId) {
 		this.facilityId = facilityId;
 	}
 
-	public Integer getReadingSequence() {
-		return readingSequence;
+	public String getFeedType() {
+		return feedType;
 	}
 
-	public void setReadingSequence(Integer readingSequence) {
-		this.readingSequence = readingSequence;
+	public void setFeedType(final String feedType) {
+		this.feedType = feedType;
+	}
+
+	public LocalDateTime getMeasurementTimestamp() {
+		return measurementTimestamp;
+	}
+
+	public void setMeasurementTimestamp(final LocalDateTime measurementTimestamp) {
+		this.measurementTimestamp = measurementTimestamp;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerOrgId, facilityId, readingSequence);
+		return Objects.hash(customerOrgId, facilityId, feedType, measurementTimestamp);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj) {
 			return true;
 		}
@@ -54,16 +65,22 @@ public class MeasurementDistrictHeatingKey implements Serializable {
 			return false;
 		}
 		final MeasurementDistrictHeatingKey other = (MeasurementDistrictHeatingKey) obj;
-		return Objects.equals(customerOrgId, other.customerOrgId) && Objects.equals(facilityId, other.facilityId)
-			&& Objects.equals(readingSequence, other.readingSequence);
+		return (Objects.equals(customerOrgId, other.customerOrgId) &&
+			Objects.equals(facilityId, other.facilityId) &&
+			Objects.equals(feedType, other.feedType) &&
+			Objects.equals(measurementTimestamp, other.measurementTimestamp));
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("MeasurementDistrictHeatingKey [customerOrgId=").append(customerOrgId)
-			.append(", facilityId=").append(facilityId).append(", readingSequence=").append(readingSequence)
-			.append("]");
-		return builder.toString();
+		return "MeasurementDistrictHeatingKey [customerOrgId="
+			+ customerOrgId
+			+ ", facilityId="
+			+ facilityId
+			+ ", feedType="
+			+ feedType
+			+ ", measurementTimestamp="
+			+ measurementTimestamp
+			+ "]";
 	}
 }
