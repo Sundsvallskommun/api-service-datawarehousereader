@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.api;
 
 import static java.lang.String.valueOf;
+import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -25,8 +26,8 @@ import org.springframework.util.MultiValueMap;
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
+import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
-import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
 import se.sundsvall.datawarehousereader.service.MeasurementService;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -57,13 +58,13 @@ class MeasurementResourceTest {
 
 	@Test
 	void getMeasurementsWithNoParameters() {
-		when(serviceMock.getMeasurements(any(), any(), any(), any())).thenReturn(MeasurementResponse.create());
+		when(serviceMock.getMeasurements(any(), any(), any(), any())).thenReturn(emptyList());
 
 		webTestClient.get().uri(PATH, MUNICIPALITY_ID, CATEGORY, AGGREGATION)
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON_VALUE)
-			.expectBody().json("{}");
+			.expectBody().json("[]");
 
 		verify(serviceMock).getMeasurements(eq(MUNICIPALITY_ID), eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
 		final MeasurementParameters parameters = parametersCaptor.getValue();
@@ -71,13 +72,11 @@ class MeasurementResourceTest {
 		assertThat(parameters.getFacilityId()).isNull();
 		assertThat(parameters.getFromDateTime()).isNull();
 		assertThat(parameters.getToDateTime()).isNull();
-		assertThat(parameters.getPage()).isEqualTo(DEFAULT_PAGE);
-		assertThat(parameters.getLimit()).isEqualTo(DEFAULT_LIMIT);
 	}
 
 	@Test
 	void getMeasurementsWithCustomCapitalizationOnCategoryAndAggregation() {
-		when(serviceMock.getMeasurements(any(), any(), any(), any())).thenReturn(MeasurementResponse.create());
+		when(serviceMock.getMeasurements(any(), any(), any(), any())).thenReturn(emptyList());
 
 		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
 			.queryParams(createParameterMap(PAGE, LIMIT, PARTY_ID, FACILITY_ID, FROM_DATE_TIME, TO_DATE_TIME))
@@ -85,15 +84,13 @@ class MeasurementResourceTest {
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON_VALUE)
-			.expectBody(MeasurementResponse.class)
+			.expectBodyList(Measurement.class)
 			.returnResult()
 			.getResponseBody();
 
-		assertThat(response).isNotNull().isEqualTo(MeasurementResponse.create());
+		assertThat(response).isNotNull().isEqualTo(emptyList());
 		verify(serviceMock).getMeasurements(eq(MUNICIPALITY_ID), eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
 		final MeasurementParameters parameters = parametersCaptor.getValue();
-		assertThat(parameters.getPage()).isEqualTo(PAGE);
-		assertThat(parameters.getLimit()).isEqualTo(LIMIT);
 		assertThat(parameters.getFacilityId()).isEqualTo(FACILITY_ID);
 		assertThat(parameters.getPartyId()).isEqualTo(PARTY_ID);
 		assertThat(parameters.getFromDateTime()).isEqualTo(FROM_DATE_TIME);

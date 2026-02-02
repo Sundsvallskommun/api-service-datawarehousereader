@@ -42,3 +42,6 @@ hs_err_pid*
 .env
 application-default.*
 
+# Claude
+CLAUDE.md
+.claude/

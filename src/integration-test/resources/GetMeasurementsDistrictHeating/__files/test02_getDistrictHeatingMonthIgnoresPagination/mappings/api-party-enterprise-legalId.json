@@ -6,13 +6,13 @@
 			}
 		},
 		"method": "GET",
-		"urlPath": "/api-party/2281/ENTERPRISE/B1EDEA3C-1083-4E1A-81FB-7D95E505E102/legalId"
+		"urlPath": "/api-party/2281/PRIVATE/A7B8C9D0-E1F2-3456-7890-ABCDEF123456/legalId"
 	},
 	"response": {
 		"headers": {
 			"Content-Type": "text/plain"
 		},
-		"body": "5534567890",
+		"body": "198001011234",
 		"status": 200
 	},
 	"name": "api-party-legalId"

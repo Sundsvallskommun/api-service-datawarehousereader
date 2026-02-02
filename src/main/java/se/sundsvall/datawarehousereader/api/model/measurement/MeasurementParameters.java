@@ -2,22 +2,15 @@ package se.sundsvall.datawarehousereader.api.model.measurement;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementElectricityDayEntity;
 import se.sundsvall.dept44.common.validators.annotation.ValidUuid;
-import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
-import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Measurement request parameters model")
-@ValidSortByProperty(MeasurementElectricityDayEntity.class)
 @ParameterObject
-public class MeasurementParameters extends AbstractParameterPagingAndSortingBase {
-
-	private static final List<String> DEFAULT_SORT_BY_PROPERTY = List.of("measurementTimestamp");
+public class MeasurementParameters {
 
 	@Schema(description = "PartyId (e.g. a personId or an organizationId)", examples = "81471222-5798-11e9-ae24-57fa13b361e1")
 	@ValidUuid(nullable = true)
@@ -34,9 +27,7 @@ public class MeasurementParameters extends AbstractParameterPagingAndSortingBase
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime toDateTime;
 
-	public MeasurementParameters() {
-		this.sortBy = DEFAULT_SORT_BY_PROPERTY;
-	}
+	public MeasurementParameters() {}
 
 	public static MeasurementParameters create() {
 		return new MeasurementParameters();
@@ -50,12 +41,22 @@ public class MeasurementParameters extends AbstractParameterPagingAndSortingBase
 		this.partyId = partyId;
 	}
 
+	public MeasurementParameters withPartyId(String partyId) {
+		this.partyId = partyId;
+		return this;
+	}
+
 	public String getFacilityId() {
 		return facilityId;
 	}
 
 	public void setFacilityId(String facilityId) {
 		this.facilityId = facilityId;
+	}
+
+	public MeasurementParameters withFacilityId(String facilityId) {
+		this.facilityId = facilityId;
+		return this;
 	}
 
 	public OffsetDateTime getFromDateTime() {
@@ -66,6 +67,11 @@ public class MeasurementParameters extends AbstractParameterPagingAndSortingBase
 		this.fromDateTime = fromDateTime;
 	}
 
+	public MeasurementParameters withFromDateTime(OffsetDateTime fromDateTime) {
+		this.fromDateTime = fromDateTime;
+		return this;
+	}
+
 	public OffsetDateTime getToDateTime() {
 		return toDateTime;
 	}
@@ -74,37 +80,31 @@ public class MeasurementParameters extends AbstractParameterPagingAndSortingBase
 		this.toDateTime = toDateTime;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = (prime * result)
-			+ Objects.hash(facilityId, fromDateTime, partyId, toDateTime);
-		return result;
+	public MeasurementParameters withToDateTime(OffsetDateTime toDateTime) {
+		this.toDateTime = toDateTime;
+		return this;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
+	public boolean equals(Object o) {
+		if (o == null || getClass() != o.getClass())
 			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		final MeasurementParameters other = (MeasurementParameters) obj;
-		return Objects.equals(facilityId, other.facilityId) &&
-			Objects.equals(fromDateTime, other.fromDateTime) && Objects.equals(partyId, other.partyId) &&
-			Objects.equals(toDateTime, other.toDateTime);
+		MeasurementParameters that = (MeasurementParameters) o;
+		return Objects.equals(partyId, that.partyId) && Objects.equals(facilityId, that.facilityId) && Objects.equals(fromDateTime, that.fromDateTime) && Objects.equals(toDateTime, that.toDateTime);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(partyId, facilityId, fromDateTime, toDateTime);
 	}
 
 	@Override
 	public String toString() {
-		final StringBuilder builder = new StringBuilder();
-		builder.append("MeasurementParameters [partyId=").append(partyId).append(", facilityId=").append(facilityId).append(", fromDateTime=").append(fromDateTime).append(", toDateTime=").append(toDateTime).append(", page=").append(page).append(
-			", limit=").append(limit).append(", sortBy=").append(sortBy).append(", sortDirection=").append(sortDirection).append("]");
-		return builder.toString();
+		return "MeasurementParameters{" +
+			"partyId='" + partyId + '\'' +
+			", facilityId='" + facilityId + '\'' +
+			", fromDateTime=" + fromDateTime +
+			", toDateTime=" + toDateTime +
+			'}';
 	}
 }
