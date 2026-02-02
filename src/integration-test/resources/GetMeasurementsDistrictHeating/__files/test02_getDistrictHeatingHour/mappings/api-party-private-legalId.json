@@ -6,14 +6,18 @@
 			}
 		},
 		"method": "GET",
-		"urlPath": "/api-party/2281/PRIVATE/A7B8C9D0-E1F2-3456-7890-ABCDEF123456/legalId"
+		"urlPath": "/api-party/2281/PRIVATE/A0B52C5B-93AC-480B-821D-E238C8F4D95/legalId"
 	},
 	"response": {
 		"headers": {
 			"Content-Type": "text/plain"
 		},
-		"body": "198001011234",
-		"status": 200
+		"jsonBody": {
+			"detail": "citizenmapping error: {status=404 Not Found, title=Not Found}",
+			"title": "Not Found",
+			"status": 404
+		},
+		"status": 404
 	},
 	"name": "api-party-legalId"
 }

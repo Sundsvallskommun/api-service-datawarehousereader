@@ -1,4 +1,4 @@
-package se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement;
+package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,16 +36,30 @@ public class MeasurementRepository {
 			parameters, new ElectricityMeasurementMapper(aggregation));
 	}
 
-	static class ElectricityMeasurementMapper implements RowMapper<Measurement> {
+	public List<Measurement> getDistrictHeatingMeasurements(final String legalId, final String facilityId,
+		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime) {
 
+		var parameters = new MapSqlParameterSource()
+			.addValue("legalId", legalId)
+			.addValue("facilityId", facilityId)
+			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
+			.addValue("toDate", Timestamp.valueOf(toDateTime))
+			.addValue("aggregation", aggregation != null ? aggregation.name() : null);
+
+		return jdbcTemplate.query(
+			"{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}",
+			parameters, new DistrictHeatingMeasurementMapper(aggregation));
+	}
+
+	static class DistrictHeatingMeasurementMapper implements RowMapper<Measurement> {
 		private final Aggregation aggregation;
 
-		ElectricityMeasurementMapper(Aggregation aggregation) {
+		DistrictHeatingMeasurementMapper(final Aggregation aggregation) {
 			this.aggregation = aggregation;
 		}
 
 		@Override
-		public Measurement mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+		public Measurement mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 			return Measurement.create()
 				.withUuid(resultSet.getString("uuid"))
 				.withCustomerOrgId(resultSet.getString("customerorgid"))
@@ -57,7 +71,36 @@ public class MeasurementRepository {
 				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toLocalDateTime());
 		}
 
-		private Integer getInterpolation(ResultSet resultSet) throws SQLException {
+		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
+			return switch (aggregation) {
+				case HOUR, QUARTER -> null;
+				case MONTH -> resultSet.getInt("interpolated");
+				case DAY -> resultSet.getInt("interpolted");
+			};
+		}
+	}
+
+	static class ElectricityMeasurementMapper implements RowMapper<Measurement> {
+		private final Aggregation aggregation;
+
+		ElectricityMeasurementMapper(final Aggregation aggregation) {
+			this.aggregation = aggregation;
+		}
+
+		@Override
+		public Measurement mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
+			return Measurement.create()
+				.withUuid(resultSet.getString("uuid"))
+				.withCustomerOrgId(resultSet.getString("customerorgid"))
+				.withFacilityId(resultSet.getString("facilityId"))
+				.withFeedType(resultSet.getString("feedType"))
+				.withUnit(resultSet.getString("unit"))
+				.withUsage(resultSet.getInt("usage"))
+				.withInterpolation(getInterpolation(resultSet))
+				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toLocalDateTime());
+		}
+
+		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
 				case HOUR -> null;
 				case MONTH -> resultSet.getInt("interpolated");

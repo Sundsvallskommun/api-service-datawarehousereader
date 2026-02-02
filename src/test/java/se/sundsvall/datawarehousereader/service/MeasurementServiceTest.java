@@ -26,7 +26,7 @@ import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.measurement.MeasurementRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementRepository;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 
 @ExtendWith(MockitoExtension.class)
@@ -205,41 +205,26 @@ class MeasurementServiceTest {
 		final var municipalityId = "2281";
 		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
 		final var legalId = "5591627751";
+		final var facilityId = "facilityId";
 		final var aggregation = Aggregation.MONTH;
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
-		parameters.setFacilityId("facilityId");
+		parameters.setFacilityId(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
+		when(measurementRepositoryMock.getDistrictHeatingMeasurements(legalId, facilityId, aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime())).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.DISTRICT_HEATING, aggregation, parameters);
 
 		assertThat(result).isEmpty();
 
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
-	}
-
-	@Test
-	void getDistrictHeatingMeasurementsWithNullPartyId() {
-		final var municipalityId = "2281";
-		final var aggregation = Aggregation.DAY;
-
-		final var parameters = new MeasurementParameters();
-		parameters.setPartyId(null);
-		parameters.setFacilityId("facilityId");
-		parameters.setFromDateTime(OffsetDateTime.now());
-		parameters.setToDateTime(OffsetDateTime.now());
-
-		final var result = service.getMeasurements(municipalityId, Category.DISTRICT_HEATING, aggregation, parameters);
-
-		assertThat(result).isEmpty();
-
-		verify(partyProviderMock, never()).translateToLegalId(any(), any());
+		verify(measurementRepositoryMock).getDistrictHeatingMeasurements(legalId, facilityId, aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime());
 	}
 
 	@ParameterizedTest
