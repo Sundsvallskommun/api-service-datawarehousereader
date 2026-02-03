@@ -74,8 +74,8 @@ public class MeasurementRepository {
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
 				case HOUR, QUARTER -> null;
-				case MONTH -> resultSet.getInt("interpolated");
-				case DAY -> resultSet.getInt("interpolted");
+				case MONTH -> resultSet.getInt("isInterpolated");
+				case DAY -> resultSet.getInt("isInterpolted");
 			};
 		}
 	}
@@ -103,8 +103,8 @@ public class MeasurementRepository {
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
 				case HOUR -> null;
-				case MONTH -> resultSet.getInt("interpolated");
-				case DAY, QUARTER -> resultSet.getInt("interpolted");
+				case MONTH -> resultSet.getInt("isInterpolated");
+				case DAY, QUARTER -> resultSet.getInt("isInterpolted");
 			};
 		}
 	}

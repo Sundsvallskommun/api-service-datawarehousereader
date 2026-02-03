@@ -48,19 +48,19 @@ begin
     end
 
     -- Test case: DAY aggregation for legalId 5566661234 and facilityId 9261219043
-    -- Production uses column name 'interpolted' (typo) for DAY
+    -- Production uses column name 'isInterpolted' (typo) for DAY
     else if @customerorgid = '5566661234' and @anlaggningsID = '9261219043' and @aggregationLevel = 'DAY'
     begin
-        select null as uuid, '5566661234' as customerorgid, '9261219043' as facilityId, 'energy' as feedType, 'kWh' as unit, cast(1393 as decimal(28,10)) as [usage], cast('2022-03-23 00:00:00' as datetime) as DateAndTime, 0 as interpolted
+        select null as uuid, '5566661234' as customerorgid, '9261219043' as facilityId, 'energy' as feedType, 'kWh' as unit, cast(1393 as decimal(28,10)) as [usage], cast('2022-03-23 00:00:00' as datetime) as DateAndTime, 0 as isInterpolted
         union all select null, '5566661234', '9261219043', 'energy', 'kWh', cast(1403 as decimal(28,10)), cast('2022-03-24 00:00:00' as datetime), 0
         union all select null, '5566661234', '9261219043', 'energy', 'kWh', cast(1567 as decimal(28,10)), cast('2022-03-25 00:00:00' as datetime), 0
     end
 
     -- Test case: MONTH aggregation for legalId 5534567890 and facilityId 735999109113202014
-    -- Production uses column name 'interpolated' (correct spelling) for MONTH
+    -- Production uses column name 'isInterpolated' (correct spelling) for MONTH
     else if @customerorgid = '5534567890' and @anlaggningsID = '735999109113202014' and @aggregationLevel = 'MONTH'
     begin
-        select null as uuid, '5534567890' as customerorgid, '735999109113202014' as facilityId, 'Aktiv' as feedType, 'kWh' as unit, cast(1772.10 as decimal(28,10)) as [usage], cast('2018-02-01 00:00:00' as datetime) as DateAndTime, 0 as interpolated
+        select null as uuid, '5534567890' as customerorgid, '735999109113202014' as facilityId, 'Aktiv' as feedType, 'kWh' as unit, cast(1772.10 as decimal(28,10)) as [usage], cast('2018-02-01 00:00:00' as datetime) as DateAndTime, 0 as isInterpolated
         union all select null, '5534567890', '735999109113202014', 'Aktiv', 'kWh', cast(2060.90 as decimal(28,10)), cast('2018-03-01 00:00:00' as datetime), 0
         union all select null, '5534567890', '735999109113202014', 'Aktiv', 'kWh', cast(1961.68 as decimal(28,10)), cast('2018-04-01 00:00:00' as datetime), 0
         union all select null, '5534567890', '735999109113202014', 'Aktiv', 'kWh', cast(1896.27 as decimal(28,10)), cast('2018-05-01 00:00:00' as datetime), 0
@@ -97,7 +97,7 @@ create procedure kundinfo.spMeasurementElectricity(
     as
     begin
         -- Test case: DAY aggregation for legalId 5534567890 and facilityId 735999109170208042
-        -- Production uses column name 'interpolted' (typo) for DAY
+        -- Production uses column name 'isInterpolted' (typo) for DAY
         if @customerorgid = '5534567890' and @anlaggningsID = '735999109170208042' and @aggregationLevel = 'DAY'
         begin
             select '16A64870-DF4D-4A27-A514-56297AB6F8D9' as uuid,
@@ -107,7 +107,7 @@ create procedure kundinfo.spMeasurementElectricity(
                    'kWh' as unit,
                    cast(4.587 as decimal(28,10)) as [usage],
                cast('2022-04-02 00:00:00' as datetime) as DateAndTime,
-               24 as interpolted
+               24 as isInterpolted
             union all
             select '16A64870-DF4D-4A27-A514-56297AB6F8D9', '5534567890', '735999109170208042', 'Energy', 'kWh',
                    cast(5.879 as decimal(28,10)), cast('2022-04-03 00:00:00' as datetime), 23
@@ -153,10 +153,10 @@ create procedure kundinfo.spMeasurementElectricity(
                     end
 
                 -- Test case: MONTH aggregation for legalId 197706010123 and facilityId 9151530012
-                -- Production uses column name 'interpolated' (correct spelling) for MONTH
+                -- Production uses column name 'isInterpolated' (correct spelling) for MONTH
                 else if @customerorgid = '197706010123' and @anlaggningsID = '9151530012' and @aggregationLevel = 'MONTH'
                 begin
-                    select 'B252BC0D-AC49-46A2-B20B-B63DFE9C812B' as uuid, '197706010123' as customerorgid, '9151530012' as facilityId, 'Energy' as feedType, 'C' as unit, cast(0 as decimal(28,10)) as [usage], cast('2019-02-01 00:00:00' as datetime) as DateAndTime, 0 as interpolated
+                    select 'B252BC0D-AC49-46A2-B20B-B63DFE9C812B' as uuid, '197706010123' as customerorgid, '9151530012' as facilityId, 'Energy' as feedType, 'C' as unit, cast(0 as decimal(28,10)) as [usage], cast('2019-02-01 00:00:00' as datetime) as DateAndTime, 0 as isInterpolated
                     union all select 'B252BC0D-AC49-46A2-B20B-B63DFE9C812B', '197706010123', '9151530012', 'Energy', 'kW', cast(0 as decimal(28,10)), cast('2019-02-01 00:00:00' as datetime), 0
                               union all select 'B252BC0D-AC49-46A2-B20B-B63DFE9C812B', '197706010123', '9151530012', 'Energy', 'm3', cast(63.81 as decimal(28,10)), cast('2019-02-01 00:00:00' as datetime), 0
                               union all select 'B252BC0D-AC49-46A2-B20B-B63DFE9C812B', '197706010123', '9151530012', 'Energy', 'm3/h', cast(0 as decimal(28,10)), cast('2019-02-01 00:00:00' as datetime), 0
@@ -184,7 +184,7 @@ create procedure kundinfo.spMeasurementElectricity(
                         end
 
                     -- Test case: QUARTER aggregation for legalId 198001011234 and facilityId 735999109440512001
-                    -- Production uses column name 'interpolted' (typo) for QUARTER
+                    -- Production uses column name 'isInterpolted' (typo) for QUARTER
                     else if @customerorgid = '198001011234' and @anlaggningsID = '735999109440512001' and @aggregationLevel = 'QUARTER'
                     begin
                         select 'A7B8C9D0-E1F2-3456-7890-ABCDEF123456' as uuid,
@@ -194,7 +194,7 @@ create procedure kundinfo.spMeasurementElectricity(
                                'kWh' as unit,
                                cast(125.5 as decimal(28,10)) as [usage],
                                cast('2022-01-01 00:00:00' as datetime) as DateAndTime,
-                               5 as interpolted
+                               5 as isInterpolted
                         union all
                         select 'A7B8C9D0-E1F2-3456-7890-ABCDEF123456', '198001011234', '735999109440512001', 'Energy', 'kWh',
                                cast(142.3 as decimal(28,10)), cast('2022-02-01 00:00:00' as datetime), 3
