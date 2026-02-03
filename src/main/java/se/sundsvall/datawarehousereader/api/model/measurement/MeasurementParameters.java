@@ -27,8 +27,6 @@ public class MeasurementParameters {
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime toDateTime;
 
-	public MeasurementParameters() {}
-
 	public static MeasurementParameters create() {
 		return new MeasurementParameters();
 	}
