@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +22,8 @@ import org.zalando.problem.Problem;
 import org.zalando.problem.violations.ConstraintViolationProblem;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
+import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
-import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementResponse;
 import se.sundsvall.datawarehousereader.service.MeasurementService;
 import se.sundsvall.dept44.common.validators.annotation.ValidMunicipalityId;
 
@@ -48,7 +49,7 @@ class MeasurementResource {
 		}))),
 		@ApiResponse(responseCode = "500", description = "Internal Server error", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(implementation = Problem.class)))
 	})
-	ResponseEntity<MeasurementResponse> getMeasurements(
+	ResponseEntity<List<Measurement>> getMeasurements(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
 		@Parameter(name = "category", schema = @Schema(implementation = Category.class), required = true) @PathVariable(name = "category") final Category category,
 		@Parameter(name = "aggregateOn", schema = @Schema(implementation = Aggregation.class), required = true) @PathVariable(name = "aggregateOn") final Aggregation aggregateOn,

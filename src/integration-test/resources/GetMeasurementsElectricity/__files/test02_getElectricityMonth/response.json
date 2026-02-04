@@ -1,0 +1,252 @@
+[
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "C",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-02-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "kW",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-02-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3",
+		"usage": 63,
+		"interpolation": 0,
+		"dateAndTime": "2019-02-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3/h",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-02-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "MWh",
+		"usage": 2,
+		"interpolation": 0,
+		"dateAndTime": "2019-02-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "C",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-03-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "kW",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-03-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3",
+		"usage": 68,
+		"interpolation": 0,
+		"dateAndTime": "2019-03-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3/h",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-03-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "MWh",
+		"usage": 2,
+		"interpolation": 0,
+		"dateAndTime": "2019-03-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "C",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-04-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "kW",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-04-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3",
+		"usage": 46,
+		"interpolation": 0,
+		"dateAndTime": "2019-04-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3/h",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-04-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "MWh",
+		"usage": 1,
+		"interpolation": 0,
+		"dateAndTime": "2019-04-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "C",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-05-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "kW",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-05-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3",
+		"usage": 33,
+		"interpolation": 0,
+		"dateAndTime": "2019-05-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3/h",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-05-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "MWh",
+		"usage": 1,
+		"interpolation": 0,
+		"dateAndTime": "2019-05-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "C",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-06-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "kW",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-06-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3",
+		"usage": 10,
+		"interpolation": 0,
+		"dateAndTime": "2019-06-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "m3/h",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-06-01T00:00:00"
+	},
+	{
+		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
+		"customerOrgId": "197706010123",
+		"facilityId": "9151530012",
+		"feedType": "Energy",
+		"unit": "MWh",
+		"usage": 0,
+		"interpolation": 0,
+		"dateAndTime": "2019-06-01T00:00:00"
+	}
+]

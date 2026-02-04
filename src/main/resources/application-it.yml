@@ -9,7 +9,7 @@ spring:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     hikari:
       maximum-pool-size: 2
-    url: jdbc:tc:sqlserver:2022-CU14-ubuntu-22.04:///
+    url: jdbc:tc:sqlserver:2022-CU14-ubuntu-22.04:///tempdb
   jpa:
     properties:
       hibernate:

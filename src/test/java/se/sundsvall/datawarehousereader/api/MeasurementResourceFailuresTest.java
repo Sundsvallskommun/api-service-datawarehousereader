@@ -50,69 +50,6 @@ class MeasurementResourceFailuresTest {
 	}
 
 	@Test
-	void getMeasurementsPageLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
-			.queryParam("page", 0)
-			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
-			.exchange()
-			.expectStatus().isBadRequest()
-			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody(ConstraintViolationProblem.class)
-			.returnResult()
-			.getResponseBody();
-
-		assertThat(response).isNotNull();
-		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
-		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("page", "must be greater than or equal to 1"));
-
-		verifyNoInteractions(serviceMock);
-	}
-
-	@Test
-	void getMeasurementsLimitLessThanMinimum() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
-			.queryParam("limit", 0)
-			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
-			.exchange()
-			.expectStatus().isBadRequest()
-			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody(ConstraintViolationProblem.class)
-			.returnResult()
-			.getResponseBody();
-
-		assertThat(response).isNotNull();
-		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
-		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "must be greater than or equal to 1"));
-
-		verifyNoInteractions(serviceMock);
-	}
-
-	@Test
-	void getMeasurementsLimitMoreThanMaximum() {
-		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
-			.queryParam("limit", 1001)
-			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION, FROM_DATE_TIME, TO_DATE_TIME))
-			.exchange()
-			.expectStatus().isBadRequest()
-			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody(ConstraintViolationProblem.class)
-			.returnResult()
-			.getResponseBody();
-
-		assertThat(response).isNotNull();
-		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
-		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("limit", "Page limit cannot be greater than 1000"));
-
-		verifyNoInteractions(serviceMock);
-	}
-
-	@Test
 	void getMeasurementsPartyIdNotValidUUID() {
 		final var response = webTestClient.get().uri(uriBuilder -> setupDefaultParams(uriBuilder.path(PATH))
 			.replaceQueryParam("partyId", "not-valid-uuid")
@@ -173,25 +110,4 @@ class MeasurementResourceFailuresTest {
 		verifyNoInteractions(serviceMock);
 	}
 
-	@Test
-	void getMeasurementsNoValidSortBy() {
-		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH)
-			.queryParam("sortBy", "not-valid-property")
-			.build(MUNICIPALITY_ID, CATEGORY, AGGREGATION))
-			.exchange()
-			.expectStatus().isBadRequest()
-			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
-			.expectBody(ConstraintViolationProblem.class)
-			.returnResult()
-			.getResponseBody();
-
-		assertThat(response).isNotNull();
-		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
-		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
-		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("measurementParameters",
-				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [interpolation, unit, readingSequence, facilityId, feedType, measurementTimestamp, usage, customerOrgId, uuid]."));
-
-		verifyNoInteractions(serviceMock);
-	}
 }
