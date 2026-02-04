@@ -3,6 +3,7 @@ package se.sundsvall.datawarehousereader.api.model.measurement;
 import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -25,9 +26,9 @@ public class Measurement {
 	private String unit;
 
 	@Schema(description = "Usage value", examples = "1500", accessMode = READ_ONLY)
-	private Integer usage;
+	private BigDecimal usage;
 
-	@Schema(description = "Interpolation value indicating data quality", examples = "0", accessMode = READ_ONLY, nullable = true)
+	@Schema(description = "Interpolation value indicating data quality", examples = "0", accessMode = READ_ONLY)
 	private Integer interpolation;
 
 	@Schema(description = "Date and time of the measurement", examples = "2024-01-15T10:30:00", accessMode = READ_ONLY)
@@ -102,16 +103,16 @@ public class Measurement {
 		this.unit = unit;
 	}
 
-	public Integer getUsage() {
+	public BigDecimal getUsage() {
 		return usage;
 	}
 
-	public Measurement withUsage(Integer usage) {
+	public Measurement withUsage(BigDecimal usage) {
 		this.usage = usage;
 		return this;
 	}
 
-	public void setUsage(Integer usage) {
+	public void setUsage(BigDecimal usage) {
 		this.usage = usage;
 	}
 

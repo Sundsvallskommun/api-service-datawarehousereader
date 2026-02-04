@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -142,7 +143,7 @@ class MeasurementRepositoryTest {
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 4, 11, 10, 0, 0));
-		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", 100, expectedTimestamp);
+		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
@@ -157,15 +158,15 @@ class MeasurementRepositoryTest {
 		assertThat(result.getFacilityId()).isEqualTo("facilityId");
 		assertThat(result.getFeedType()).isEqualTo("Energy");
 		assertThat(result.getUnit()).isEqualTo("kWh");
-		assertThat(result.getUsage()).isEqualTo(100);
-		assertThat(result.getInterpolation()).isNull();
+		assertThat(result.getUsage()).isEqualTo(BigDecimal.valueOf(100L));
+		assertThat(result.getInterpolation()).isZero();
 		assertThat(result.getDateAndTime()).isEqualTo(expectedTimestamp.toLocalDateTime());
 	}
 
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForDayAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 4, 11, 0, 0, 0));
-		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", 100, expectedTimestamp);
+		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(24);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -182,7 +183,7 @@ class MeasurementRepositoryTest {
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForQuarterAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 0, 0, 0));
-		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", 100, expectedTimestamp);
+		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(5);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -199,7 +200,7 @@ class MeasurementRepositoryTest {
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForMonthAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 0, 0, 0));
-		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", 100, expectedTimestamp);
+		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolated")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -216,7 +217,7 @@ class MeasurementRepositoryTest {
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 10, 0, 0));
-		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", 7910, expectedTimestamp);
+		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
@@ -231,15 +232,15 @@ class MeasurementRepositoryTest {
 		assertThat(result.getFacilityId()).isEqualTo("9115803075");
 		assertThat(result.getFeedType()).isEqualTo("Aktiv");
 		assertThat(result.getUnit()).isEqualTo("kWh");
-		assertThat(result.getUsage()).isEqualTo(7910);
-		assertThat(result.getInterpolation()).isNull();
+		assertThat(result.getUsage()).isEqualTo(BigDecimal.valueOf(7910L));
+		assertThat(result.getInterpolation()).isZero();
 		assertThat(result.getDateAndTime()).isEqualTo(expectedTimestamp.toLocalDateTime());
 	}
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForQuarterAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 10, 0, 0));
-		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", 7910, expectedTimestamp);
+		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
@@ -249,13 +250,13 @@ class MeasurementRepositoryTest {
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
 
-		assertThat(result.getInterpolation()).isNull();
+		assertThat(result.getInterpolation()).isZero();
 	}
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForDayAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 3, 23, 0, 0, 0));
-		setupResultSetMock("uuid-789", "5566661234", "9261219043", "energy", "kWh", 1393, expectedTimestamp);
+		setupResultSetMock("uuid-789", "5566661234", "9261219043", "energy", "kWh", BigDecimal.valueOf(1393L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -272,7 +273,7 @@ class MeasurementRepositoryTest {
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForMonthAggregation() throws SQLException {
 		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, 2, 1, 0, 0, 0));
-		setupResultSetMock("uuid-abc", "5534567890", "735999109113202014", "Aktiv", "kWh", 1772, expectedTimestamp);
+		setupResultSetMock("uuid-abc", "5534567890", "735999109113202014", "Aktiv", "kWh", BigDecimal.valueOf(1772), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolated")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -286,13 +287,13 @@ class MeasurementRepositoryTest {
 		assertThat(result.getInterpolation()).isZero();
 	}
 
-	private void setupResultSetMock(String uuid, String customerOrgId, String facilityId, String feedType, String unit, int usage, Timestamp dateAndTime) throws SQLException {
+	private void setupResultSetMock(String uuid, String customerOrgId, String facilityId, String feedType, String unit, BigDecimal usage, Timestamp dateAndTime) throws SQLException {
 		when(resultSetMock.getString("uuid")).thenReturn(uuid);
 		when(resultSetMock.getString("customerorgid")).thenReturn(customerOrgId);
 		when(resultSetMock.getString("facilityId")).thenReturn(facilityId);
 		when(resultSetMock.getString("feedType")).thenReturn(feedType);
 		when(resultSetMock.getString("unit")).thenReturn(unit);
-		when(resultSetMock.getInt("usage")).thenReturn(usage);
+		when(resultSetMock.getBigDecimal("usage")).thenReturn(usage);
 		when(resultSetMock.getTimestamp("DateAndTime")).thenReturn(dateAndTime);
 	}
 }

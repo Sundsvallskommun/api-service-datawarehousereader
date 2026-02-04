@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:58207
+  - url: http://localhost:59422
     description: Generated server url
 tags:
   - name: Measurement
@@ -1225,8 +1225,7 @@ components:
             - kWh
           readOnly: true
         usage:
-          type: integer
-          format: int32
+          type: number
           description: Usage value
           examples:
             - "1500"
