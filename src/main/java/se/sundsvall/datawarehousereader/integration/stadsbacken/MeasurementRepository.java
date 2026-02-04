@@ -66,14 +66,14 @@ public class MeasurementRepository {
 				.withFacilityId(resultSet.getString("facilityId"))
 				.withFeedType(resultSet.getString("feedType"))
 				.withUnit(resultSet.getString("unit"))
-				.withUsage(resultSet.getInt("usage"))
+				.withUsage(resultSet.getBigDecimal("usage"))
 				.withInterpolation(getInterpolation(resultSet))
 				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toLocalDateTime());
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
-				case HOUR, QUARTER -> null;
+				case HOUR, QUARTER -> 0;
 				case MONTH -> resultSet.getInt("isInterpolated");
 				case DAY -> resultSet.getInt("isInterpolted");
 			};
@@ -95,14 +95,14 @@ public class MeasurementRepository {
 				.withFacilityId(resultSet.getString("facilityId"))
 				.withFeedType(resultSet.getString("feedType"))
 				.withUnit(resultSet.getString("unit"))
-				.withUsage(resultSet.getInt("usage"))
+				.withUsage(resultSet.getBigDecimal("usage"))
 				.withInterpolation(getInterpolation(resultSet))
 				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toLocalDateTime());
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
-				case HOUR -> null;
+				case HOUR -> 0;
 				case MONTH -> resultSet.getInt("isInterpolated");
 				case DAY, QUARTER -> resultSet.getInt("isInterpolted");
 			};

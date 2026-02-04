@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -55,6 +56,7 @@ class MeasurementServiceTest {
 		final var aggregation = Aggregation.HOUR;
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
+		final var usage = BigDecimal.valueOf(100L);
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
@@ -68,7 +70,7 @@ class MeasurementServiceTest {
 			.withFacilityId(facilityId)
 			.withFeedType("Production")
 			.withUnit("kWh")
-			.withUsage(100)
+			.withUsage(usage)
 			.withInterpolation(0)
 			.withDateAndTime(LocalDateTime.of(2023, 6, 15, 12, 0, 0));
 

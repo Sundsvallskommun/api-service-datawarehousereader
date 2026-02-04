@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,7 +41,7 @@ class MeasurementTest {
 		final var facilityId = "facilityId";
 		final var feedType = "feedType";
 		final var unit = "unit";
-		final var usage = 123;
+		final var usage = BigDecimal.valueOf(123L);
 		final var interpolation = 456;
 		final var dateAndTime = LocalDateTime.now();
 

@@ -5,7 +5,7 @@
 		"facilityId": "735999109440512001",
 		"feedType": "Energy",
 		"unit": "kWh",
-		"usage": 125,
+		"usage": 125.5000000000,
 		"interpolation": 5,
 		"dateAndTime": "2022-01-01T00:00:00"
 	},
@@ -15,7 +15,7 @@
 		"facilityId": "735999109440512001",
 		"feedType": "Energy",
 		"unit": "kWh",
-		"usage": 142,
+		"usage": 142.3000000000,
 		"interpolation": 3,
 		"dateAndTime": "2022-02-01T00:00:00"
 	},
@@ -25,7 +25,7 @@
 		"facilityId": "735999109440512001",
 		"feedType": "Energy",
 		"unit": "kWh",
-		"usage": 118,
+		"usage": 118.7000000000,
 		"interpolation": 2,
 		"dateAndTime": "2022-03-01T00:00:00"
 	}
