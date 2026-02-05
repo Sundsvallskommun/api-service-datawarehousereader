@@ -1,13 +1,13 @@
 openapi: 3.1.0
 info:
   title: api-datawarehousereader
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
   version: "4.2"
 servers:
-  - url: http://localhost:52955
+  - url: http://localhost:58306
     description: Generated server url
 tags:
   - name: Measurement
@@ -1194,12 +1194,12 @@ components:
     Problem:
       type: object
       properties:
-        status:
-          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
         instance:
           type: string
           format: uri
@@ -1208,15 +1208,15 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties: { }
+          additionalProperties: {}
     StatusType:
       type: object
       properties:
+        reasonPhrase:
+          type: string
         statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -1264,7 +1264,7 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties: { }
+          additionalProperties: {}
         suppressed:
           type: array
           items:
@@ -1301,7 +1301,7 @@ components:
     ThrowableProblem:
       type: object
       properties:
-        cause: { }
+        cause: {}
         stackTrace:
           type: array
           items:
@@ -1326,12 +1326,12 @@ components:
                 type: boolean
         message:
           type: string
-        status:
-          $ref: "#/components/schemas/StatusType"
         title:
           type: string
         detail:
           type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
         instance:
           type: string
           format: uri
@@ -1340,7 +1340,7 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties: { }
+          additionalProperties: {}
         suppressed:
           type: array
           items:
@@ -2039,7 +2039,7 @@ components:
         metaData:
           type: array
           items:
-            $ref: "#/components/schemas/InstallationMetaDataEmbeddable"
+            $ref: "#/components/schemas/InstallationMetaData"
             maxItems: 1000
             readOnly: true
           maxItems: 1000
@@ -2055,6 +2055,34 @@ components:
           readOnly: true
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
+          readOnly: true
+    InstallationMetaData:
+      type: object
+      description: Installation metadata model
+      properties:
+        key:
+          type: string
+          description: Key
+          examples:
+            - netarea
+          readOnly: true
+        value:
+          type: string
+          description: Value
+          examples:
+            - Sundsvall tätort
+          readOnly: true
+        type:
+          type: string
+          description: Type
+          examples:
+            - location
+          readOnly: true
+        displayName:
+          type: string
+          description: Displayname
+          examples:
+            - Nätområde
           readOnly: true
     CustomerEngagement:
       type: object
@@ -2357,4 +2385,4 @@ components:
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
           readOnly: true
-  securitySchemes: { }
+  securitySchemes: {}

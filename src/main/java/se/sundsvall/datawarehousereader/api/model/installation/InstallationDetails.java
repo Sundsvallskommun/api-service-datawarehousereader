@@ -7,7 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationMetaDataEmbeddable;
 
 @Schema(description = "Installation details model")
 public class InstallationDetails {
@@ -48,7 +47,7 @@ public class InstallationDetails {
 	@Schema(description = "Date when object was last modified (or null if never modified)", examples = "2022-12-31", accessMode = READ_ONLY)
 	private LocalDate dateLastModified;
 
-	@ArraySchema(schema = @Schema(implementation = InstallationMetaDataEmbeddable.class, accessMode = READ_ONLY), maxItems = 1000)
+	@ArraySchema(schema = @Schema(implementation = InstallationMetaData.class, accessMode = READ_ONLY), maxItems = 1000)
 	private List<InstallationMetaData> metaData;
 
 	public static InstallationDetails create() {
