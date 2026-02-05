@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -68,7 +69,7 @@ public class MeasurementRepository {
 				.withUnit(resultSet.getString("unit"))
 				.withUsage(resultSet.getBigDecimal("usage"))
 				.withInterpolation(getInterpolation(resultSet))
-				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toLocalDateTime());
+				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC));
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
@@ -97,7 +98,7 @@ public class MeasurementRepository {
 				.withUnit(resultSet.getString("unit"))
 				.withUsage(resultSet.getBigDecimal("usage"))
 				.withInterpolation(getInterpolation(resultSet))
-				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toLocalDateTime());
+				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC));
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {

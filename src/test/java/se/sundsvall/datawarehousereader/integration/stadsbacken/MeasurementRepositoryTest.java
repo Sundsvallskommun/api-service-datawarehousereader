@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -142,7 +144,8 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 4, 11, 10, 0, 0));
+		final var expectedOffsetDateTime = OffsetDateTime.of(2022, 4, 11, 10, 0, 0, 0, ZoneOffset.UTC);
+		final var expectedTimestamp = Timestamp.from(expectedOffsetDateTime.toInstant());
 		setupResultSetMock("uuid-123", "5534567890", "facilityId", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -160,7 +163,7 @@ class MeasurementRepositoryTest {
 		assertThat(result.getUnit()).isEqualTo("kWh");
 		assertThat(result.getUsage()).isEqualTo(BigDecimal.valueOf(100L));
 		assertThat(result.getInterpolation()).isZero();
-		assertThat(result.getDateAndTime()).isEqualTo(expectedTimestamp.toLocalDateTime());
+		assertThat(result.getDateAndTime()).isEqualTo(expectedOffsetDateTime);
 	}
 
 	@Test
@@ -216,7 +219,8 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 10, 0, 0));
+		final var expectedOffsetDateTime = OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
+		final var expectedTimestamp = Timestamp.from(expectedOffsetDateTime.toInstant());
 		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -234,12 +238,12 @@ class MeasurementRepositoryTest {
 		assertThat(result.getUnit()).isEqualTo("kWh");
 		assertThat(result.getUsage()).isEqualTo(BigDecimal.valueOf(7910L));
 		assertThat(result.getInterpolation()).isZero();
-		assertThat(result.getDateAndTime()).isEqualTo(expectedTimestamp.toLocalDateTime());
+		assertThat(result.getDateAndTime()).isEqualTo(expectedOffsetDateTime);
 	}
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForQuarterAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 10, 0, 0));
+		final var expectedTimestamp = Timestamp.from(OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC).toInstant());
 		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))

@@ -4,8 +4,9 @@ import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Objects;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Schema(description = "Measurement model")
 public class Measurement {
@@ -31,8 +32,9 @@ public class Measurement {
 	@Schema(description = "Interpolation value indicating data quality", examples = "0", accessMode = READ_ONLY)
 	private Integer interpolation;
 
-	@Schema(description = "Date and time of the measurement", examples = "2024-01-15T10:30:00", accessMode = READ_ONLY)
-	private LocalDateTime dateAndTime;
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+	@Schema(description = "Date and time of the measurement", examples = "2024-01-15T10:30:00Z", accessMode = READ_ONLY)
+	private OffsetDateTime dateAndTime;
 
 	public static Measurement create() {
 		return new Measurement();
@@ -129,16 +131,16 @@ public class Measurement {
 		this.interpolation = interpolation;
 	}
 
-	public LocalDateTime getDateAndTime() {
+	public OffsetDateTime getDateAndTime() {
 		return dateAndTime;
 	}
 
-	public Measurement withDateAndTime(LocalDateTime dateAndTime) {
+	public Measurement withDateAndTime(OffsetDateTime dateAndTime) {
 		this.dateAndTime = dateAndTime;
 		return this;
 	}
 
-	public void setDateAndTime(LocalDateTime dateAndTime) {
+	public void setDateAndTime(OffsetDateTime dateAndTime) {
 		this.dateAndTime = dateAndTime;
 	}
 

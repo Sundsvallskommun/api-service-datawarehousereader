@@ -9,7 +9,6 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
@@ -72,7 +71,7 @@ class MeasurementServiceTest {
 			.withUnit("kWh")
 			.withUsage(usage)
 			.withInterpolation(0)
-			.withDateAndTime(LocalDateTime.of(2023, 6, 15, 12, 0, 0));
+			.withDateAndTime(OffsetDateTime.of(2023, 6, 15, 12, 0, 0, 0, ZoneOffset.UTC));
 
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
 		when(measurementRepositoryMock.getElectricityMeasurements(
