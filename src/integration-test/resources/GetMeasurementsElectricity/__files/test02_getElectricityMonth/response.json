@@ -5,9 +5,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "C",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-02-01T00:00:00"
+		"dateAndTime": "2019-01-31T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -15,9 +15,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "kW",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-02-01T00:00:00"
+		"dateAndTime": "2019-01-31T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -25,9 +25,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3",
-		"usage": 63.8100000000,
+		"usage": 63.81,
 		"interpolation": 0,
-		"dateAndTime": "2019-02-01T00:00:00"
+		"dateAndTime": "2019-01-31T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -35,9 +35,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3/h",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-02-01T00:00:00"
+		"dateAndTime": "2019-01-31T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -45,9 +45,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "MWh",
-		"usage": 2.0650000000,
+		"usage": 2.065,
 		"interpolation": 0,
-		"dateAndTime": "2019-02-01T00:00:00"
+		"dateAndTime": "2019-01-31T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -55,9 +55,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "C",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-03-01T00:00:00"
+		"dateAndTime": "2019-02-28T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -65,9 +65,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "kW",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-03-01T00:00:00"
+		"dateAndTime": "2019-02-28T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -75,9 +75,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3",
-		"usage": 68.1300000000,
+		"usage": 68.13,
 		"interpolation": 0,
-		"dateAndTime": "2019-03-01T00:00:00"
+		"dateAndTime": "2019-02-28T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -85,9 +85,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3/h",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-03-01T00:00:00"
+		"dateAndTime": "2019-02-28T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -95,9 +95,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "MWh",
-		"usage": 2.1470000000,
+		"usage": 2.147,
 		"interpolation": 0,
-		"dateAndTime": "2019-03-01T00:00:00"
+		"dateAndTime": "2019-02-28T23:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -105,9 +105,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "C",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-04-01T00:00:00"
+		"dateAndTime": "2019-03-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -115,9 +115,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "kW",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-04-01T00:00:00"
+		"dateAndTime": "2019-03-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -125,9 +125,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3",
-		"usage": 46.4100000000,
+		"usage": 46.41,
 		"interpolation": 0,
-		"dateAndTime": "2019-04-01T00:00:00"
+		"dateAndTime": "2019-03-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -135,9 +135,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3/h",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-04-01T00:00:00"
+		"dateAndTime": "2019-03-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -145,9 +145,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "MWh",
-		"usage": 1.4180000000,
+		"usage": 1.418,
 		"interpolation": 0,
-		"dateAndTime": "2019-04-01T00:00:00"
+		"dateAndTime": "2019-03-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -155,9 +155,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "C",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-05-01T00:00:00"
+		"dateAndTime": "2019-04-30T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -165,9 +165,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "kW",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-05-01T00:00:00"
+		"dateAndTime": "2019-04-30T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -175,9 +175,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3",
-		"usage": 33.8200000000,
+		"usage": 33.82,
 		"interpolation": 0,
-		"dateAndTime": "2019-05-01T00:00:00"
+		"dateAndTime": "2019-04-30T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -185,9 +185,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3/h",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-05-01T00:00:00"
+		"dateAndTime": "2019-04-30T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -195,9 +195,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "MWh",
-		"usage": 1.0930000000,
+		"usage": 1.093,
 		"interpolation": 0,
-		"dateAndTime": "2019-05-01T00:00:00"
+		"dateAndTime": "2019-04-30T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -205,9 +205,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "C",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-06-01T00:00:00"
+		"dateAndTime": "2019-05-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -215,9 +215,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "kW",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-06-01T00:00:00"
+		"dateAndTime": "2019-05-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -225,9 +225,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3",
-		"usage": 10.0600000000,
+		"usage": 10.06,
 		"interpolation": 0,
-		"dateAndTime": "2019-06-01T00:00:00"
+		"dateAndTime": "2019-05-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -235,9 +235,9 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "m3/h",
-		"usage": 0E-10,
+		"usage": 0.0,
 		"interpolation": 0,
-		"dateAndTime": "2019-06-01T00:00:00"
+		"dateAndTime": "2019-05-31T22:00:00Z"
 	},
 	{
 		"uuid": "B252BC0D-AC49-46A2-B20B-B63DFE9C812B",
@@ -245,8 +245,8 @@
 		"facilityId": "9151530012",
 		"feedType": "Energy",
 		"unit": "MWh",
-		"usage": 0.3060000000,
+		"usage": 0.306,
 		"interpolation": 0,
-		"dateAndTime": "2019-06-01T00:00:00"
+		"dateAndTime": "2019-05-31T22:00:00Z"
 	}
 ]

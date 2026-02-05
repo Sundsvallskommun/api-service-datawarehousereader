@@ -5,9 +5,9 @@
 		"facilityId": "735999109440512001",
 		"feedType": "Energy",
 		"unit": "kWh",
-		"usage": 125.5000000000,
+		"usage": 125.5,
 		"interpolation": 5,
-		"dateAndTime": "2022-01-01T00:00:00"
+		"dateAndTime": "2021-12-31T23:00:00Z"
 	},
 	{
 		"uuid": "A7B8C9D0-E1F2-3456-7890-ABCDEF123456",
@@ -15,9 +15,9 @@
 		"facilityId": "735999109440512001",
 		"feedType": "Energy",
 		"unit": "kWh",
-		"usage": 142.3000000000,
+		"usage": 142.3,
 		"interpolation": 3,
-		"dateAndTime": "2022-02-01T00:00:00"
+		"dateAndTime": "2022-01-31T23:00:00Z"
 	},
 	{
 		"uuid": "A7B8C9D0-E1F2-3456-7890-ABCDEF123456",
@@ -25,8 +25,8 @@
 		"facilityId": "735999109440512001",
 		"feedType": "Energy",
 		"unit": "kWh",
-		"usage": 118.7000000000,
+		"usage": 118.7,
 		"interpolation": 2,
-		"dateAndTime": "2022-03-01T00:00:00"
+		"dateAndTime": "2022-02-28T23:00:00Z"
 	}
 ]

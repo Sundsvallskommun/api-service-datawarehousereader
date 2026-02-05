@@ -1,13 +1,13 @@
 openapi: 3.1.0
 info:
   title: api-datawarehousereader
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
   version: "5.0"
 servers:
-  - url: http://localhost:59422
+  - url: http://localhost:50265
     description: Generated server url
 tags:
   - name: Measurement
@@ -984,6 +984,12 @@ components:
     Problem:
       type: object
       properties:
+        title:
+          type: string
+        detail:
+          type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
         instance:
           type: string
           format: uri
@@ -992,21 +998,15 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties: { }
-        status:
-          $ref: "#/components/schemas/StatusType"
-        detail:
-          type: string
-        title:
-          type: string
+          additionalProperties: {}
     StatusType:
       type: object
       properties:
+        reasonPhrase:
+          type: string
         statusCode:
           type: integer
           format: int32
-        reasonPhrase:
-          type: string
     ConstraintViolationProblem:
       type: object
       properties:
@@ -1047,14 +1047,14 @@ components:
           type: string
         message:
           type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
         parameters:
           type: object
-          additionalProperties: { }
-        detail:
-          type: string
+          additionalProperties: {}
         suppressed:
           type: array
           items:
@@ -1091,7 +1091,7 @@ components:
     ThrowableProblem:
       type: object
       properties:
-        cause: { }
+        cause: {}
         stackTrace:
           type: array
           items:
@@ -1116,6 +1116,12 @@ components:
                 type: boolean
         message:
           type: string
+        title:
+          type: string
+        detail:
+          type: string
+        status:
+          $ref: "#/components/schemas/StatusType"
         instance:
           type: string
           format: uri
@@ -1124,13 +1130,7 @@ components:
           format: uri
         parameters:
           type: object
-          additionalProperties: { }
-        status:
-          $ref: "#/components/schemas/StatusType"
-        detail:
-          type: string
-        title:
-          type: string
+          additionalProperties: {}
         suppressed:
           type: array
           items:
@@ -1242,7 +1242,7 @@ components:
           format: date-time
           description: Date and time of the measurement
           examples:
-            - 2024-01-15T10:30:00
+            - 2024-01-15T10:30:00Z
           readOnly: true
     CustomerType:
       type: string
@@ -2269,4 +2269,4 @@ components:
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
           readOnly: true
-  securitySchemes: { }
+  securitySchemes: {}
