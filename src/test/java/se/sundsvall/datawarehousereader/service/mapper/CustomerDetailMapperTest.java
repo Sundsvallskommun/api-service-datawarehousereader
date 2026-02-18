@@ -1,10 +1,5 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toCustomerDetails;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toPagingAndSortingMetaData;
-
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -14,6 +9,11 @@ import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetails;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerDetailsParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.MetadataEmbeddable;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toCustomerDetails;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toPagingAndSortingMetaData;
 
 class CustomerDetailMapperTest {
 

@@ -1,5 +1,12 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
+import org.springframework.data.jpa.domain.Specification;
+import se.sundsvall.datawarehousereader.api.model.Category;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
+
 import static java.lang.Boolean.TRUE;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.isNull;
@@ -22,13 +29,6 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agr
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.PLACEMENT_STATUS;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.SITE_ADDRESS;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity_.TO_DATE;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.List;
-import org.springframework.data.jpa.domain.Specification;
-import se.sundsvall.datawarehousereader.api.model.Category;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 
 public interface AgreementSpecification {
 

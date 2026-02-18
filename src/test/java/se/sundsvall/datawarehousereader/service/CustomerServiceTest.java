@@ -1,16 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
-import static generated.se.sundsvall.party.PartyType.PRIVATE;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
-import static org.mockito.Mockito.when;
-import static org.springframework.data.domain.Sort.sort;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
-
 import generated.se.sundsvall.party.PartyType;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -40,6 +29,17 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.MetadataEmbeddable;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+
+import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
+import static generated.se.sundsvall.party.PartyType.PRIVATE;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
+import static org.springframework.data.domain.Sort.sort;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
 @ExtendWith(MockitoExtension.class)
 class CustomerServiceTest {

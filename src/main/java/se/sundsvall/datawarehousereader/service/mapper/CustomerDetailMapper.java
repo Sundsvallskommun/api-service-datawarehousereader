@@ -1,10 +1,5 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang3.ObjectUtils.isEmpty;
-import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -18,6 +13,11 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.C
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.MetadataEmbeddable;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.ObjectUtils.isEmpty;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
 public class CustomerDetailMapper {
 

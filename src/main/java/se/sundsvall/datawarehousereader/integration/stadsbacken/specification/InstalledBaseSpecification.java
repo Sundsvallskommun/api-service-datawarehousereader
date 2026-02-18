@@ -1,5 +1,9 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
+import java.time.LocalDate;
+import org.springframework.data.jpa.domain.Specification;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
+
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.CARE_OF;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.CITY;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.COMPANY;
@@ -10,10 +14,6 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.ins
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.POST_CODE;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.STREET;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity_.TYPE;
-
-import java.time.LocalDate;
-import org.springframework.data.jpa.domain.Specification;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 
 public interface InstalledBaseSpecification {
 

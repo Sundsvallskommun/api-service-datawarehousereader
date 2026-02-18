@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
-import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
-import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +9,12 @@ import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
+import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
+import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 
 public class InvoiceMapper {
 

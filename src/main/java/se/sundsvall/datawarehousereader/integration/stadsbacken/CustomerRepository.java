@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withCustomerId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withCustomerOrgIds;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withOrganizationId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withOrganizationName;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.List;
 import org.springframework.data.domain.Page;
@@ -18,6 +12,12 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRe
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerKey;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withCustomerId;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withCustomerOrgIds;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withOrganizationId;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.CustomerSpecification.withOrganizationName;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "customerRepository")

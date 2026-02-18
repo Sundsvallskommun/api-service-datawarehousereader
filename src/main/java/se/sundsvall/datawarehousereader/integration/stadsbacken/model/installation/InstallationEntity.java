@@ -1,7 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation;
 
-import static org.hibernate.annotations.FetchMode.SUBSELECT;
-
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -17,6 +15,8 @@ import java.util.Objects;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.type.NumericBooleanConverter;
+
+import static org.hibernate.annotations.FetchMode.SUBSELECT;
 
 @Entity
 @Table(schema = "kundinfo", name = "vInstallations")

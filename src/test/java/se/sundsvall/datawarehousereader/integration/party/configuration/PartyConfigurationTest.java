@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.party.configuration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
-import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT_ID;
-
 import feign.codec.ErrorDecoder;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -24,6 +18,12 @@ import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.dept44.configuration.feign.FeignMultiCustomizer;
 import se.sundsvall.dept44.configuration.feign.decoder.ProblemErrorDecoder;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static se.sundsvall.datawarehousereader.integration.party.configuration.PartyConfiguration.CLIENT_ID;
 
 @SpringBootTest(classes = Application.class)
 @ActiveProfiles("junit")

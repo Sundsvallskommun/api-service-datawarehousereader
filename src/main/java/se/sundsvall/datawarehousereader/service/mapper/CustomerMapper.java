@@ -1,18 +1,18 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
-import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
-import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
-import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
-
 import generated.se.sundsvall.party.PartyType;
 import java.util.List;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
+import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
+import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
 public class CustomerMapper {
 

@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withCustomerFlag;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withFacilityId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withLastModifiedDateBetween;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withType;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +10,12 @@ import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
+
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withCustomerFlag;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withFacilityId;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withLastModifiedDateBetween;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstallationSpecification.withType;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "installationRepository")

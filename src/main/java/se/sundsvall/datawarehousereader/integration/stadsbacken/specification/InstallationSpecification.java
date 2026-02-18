@@ -1,13 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
+import java.time.LocalDate;
+import org.springframework.data.jpa.domain.Specification;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
+
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity_.CUSTOMER_FLAG;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity_.FACILITY_ID;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity_.LAST_CHANGED_DATE;
 import static se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity_.TYPE;
-
-import java.time.LocalDate;
-import org.springframework.data.jpa.domain.Specification;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 
 public interface InstallationSpecification {
 

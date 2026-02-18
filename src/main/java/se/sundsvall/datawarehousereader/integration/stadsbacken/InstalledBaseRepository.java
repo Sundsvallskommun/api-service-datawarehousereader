@@ -1,16 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCareOf;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCity;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCompany;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCustomerId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withFacilityId;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withHouseName;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withLastModifiedDateBetween;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withPostCode;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withStreet;
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withType;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +10,17 @@ import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBasePar
 import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCareOf;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCity;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCompany;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withCustomerId;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withFacilityId;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withHouseName;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withLastModifiedDateBetween;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withPostCode;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withStreet;
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InstalledBaseSpecification.withType;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "installedBaseRepository")

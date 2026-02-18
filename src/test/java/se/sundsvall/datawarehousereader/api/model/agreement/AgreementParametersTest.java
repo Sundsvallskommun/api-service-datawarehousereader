@@ -1,5 +1,12 @@
 package se.sundsvall.datawarehousereader.api.model.agreement;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
+
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
@@ -12,13 +19,6 @@ import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 import static se.sundsvall.datawarehousereader.api.model.Category.WATER;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Sort;
 
 class AgreementParametersTest {
 

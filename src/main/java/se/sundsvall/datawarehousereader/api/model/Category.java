@@ -1,9 +1,9 @@
 package se.sundsvall.datawarehousereader.api.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import static java.lang.String.format;
 import static java.util.Arrays.stream;
-
-import io.swagger.v3.oas.annotations.media.Schema;
 
 @Schema(description = "Category", enumAsRef = true)
 public enum Category {

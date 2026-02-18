@@ -1,13 +1,13 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
-import static java.util.Objects.nonNull;
-import static org.springframework.util.CollectionUtils.isEmpty;
-
 import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
+
+import static java.util.Objects.nonNull;
+import static org.springframework.util.CollectionUtils.isEmpty;
 
 public class SpecificationBuilder<T> {
 

@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.lang.String.valueOf;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
-
 import generated.se.sundsvall.party.PartyType;
 import java.time.LocalDateTime;
 import java.util.Collections;
@@ -18,6 +12,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.customer.CustomerEngagement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.CustomerEntity;
+
+import static java.lang.String.valueOf;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
 
 class CustomerMapperTest {
 

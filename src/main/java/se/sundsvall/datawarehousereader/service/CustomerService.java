@@ -1,15 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.springframework.util.CollectionUtils.isEmpty;
-import static org.springframework.util.StringUtils.hasText;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toPagingAndSortingMetaData;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toSortString;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
-import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
-import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
-
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -32,6 +22,16 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.model.customer.M
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 import se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.springframework.util.CollectionUtils.isEmpty;
+import static org.springframework.util.StringUtils.hasText;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toPagingAndSortingMetaData;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerDetailMapper.toSortString;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toCustomerEngagements;
+import static se.sundsvall.datawarehousereader.service.mapper.CustomerMapper.toPartyType;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.removeHyphen;
 
 @Service
 public class CustomerService {

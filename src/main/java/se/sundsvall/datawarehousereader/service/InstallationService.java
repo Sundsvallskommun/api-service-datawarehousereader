@@ -1,8 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.util.Collections.emptyList;
-import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetailsList;
-
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -11,6 +8,9 @@ import se.sundsvall.datawarehousereader.api.model.installation.InstallationDetai
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstallationRepository;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import static java.util.Collections.emptyList;
+import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetailsList;
 
 @Service
 public class InstallationService {

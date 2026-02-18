@@ -1,7 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InvoiceSpecification.createSpecification;
-
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.inspector.WithRecompile;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
+
+import static se.sundsvall.datawarehousereader.integration.stadsbacken.specification.InvoiceSpecification.createSpecification;
 
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "invoiceRepository")

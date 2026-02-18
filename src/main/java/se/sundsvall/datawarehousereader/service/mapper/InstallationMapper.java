@@ -1,14 +1,14 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-
 import java.util.List;
 import java.util.Optional;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationDetails;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationMetaData;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationMetaDataEmbeddable;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
 
 public final class InstallationMapper {
 

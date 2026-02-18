@@ -1,9 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
-
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -13,6 +9,10 @@ import se.sundsvall.datawarehousereader.api.model.agreement.AgreementResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.service.mapper.AgreementMapper.toAgreements;
 
 @Service
 public class AgreementService {

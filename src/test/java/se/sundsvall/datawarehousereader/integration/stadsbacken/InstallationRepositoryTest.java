@@ -1,13 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_COOLING;
-import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
-import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
-import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY_TRADE;
-import static se.sundsvall.datawarehousereader.api.model.Category.WASTE_MANAGEMENT;
-
 import java.time.LocalDate;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
@@ -21,6 +13,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_COOLING;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY_TRADE;
+import static se.sundsvall.datawarehousereader.api.model.Category.WASTE_MANAGEMENT;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
