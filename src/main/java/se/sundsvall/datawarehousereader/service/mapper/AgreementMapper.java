@@ -1,10 +1,5 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static java.util.Objects.nonNull;
-import static java.util.Optional.ofNullable;
-import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -13,6 +8,11 @@ import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
+
+import static java.util.Collections.emptyList;
+import static java.util.Objects.nonNull;
+import static java.util.Optional.ofNullable;
+import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;
 
 public class AgreementMapper {
 

@@ -1,12 +1,5 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static java.util.Optional.ofNullable;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -23,6 +16,13 @@ import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationDetailsResponse;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
 import se.sundsvall.datawarehousereader.service.InstallationService;
+
+import static java.util.Optional.ofNullable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")

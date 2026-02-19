@@ -1,14 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
-
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -30,6 +21,15 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepositor
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
 @ExtendWith(MockitoExtension.class)
 class InvoiceServiceTest {

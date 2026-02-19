@@ -1,13 +1,13 @@
 package se.sundsvall.datawarehousereader.service.util;
 
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.apache.commons.lang3.StringUtils.containsNone;
-
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.apache.commons.lang3.StringUtils.containsNone;
 
 public class ServiceUtil {
 

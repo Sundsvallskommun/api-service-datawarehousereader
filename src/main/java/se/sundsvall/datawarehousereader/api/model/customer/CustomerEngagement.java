@@ -1,12 +1,12 @@
 package se.sundsvall.datawarehousereader.api.model.customer;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.Objects;
 import org.springframework.format.annotation.DateTimeFormat;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
+
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Schema(description = "Customer engagement model")
 public class CustomerEngagement {

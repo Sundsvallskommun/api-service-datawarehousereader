@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
-
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +12,12 @@ import org.springframework.data.domain.PageRequest;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstallationRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class InstallationServiceTest {

@@ -1,9 +1,5 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +8,10 @@ import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseIte
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseItemMetaData;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installedbase.InstalledBaseItemMetaDataEmbeddable;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
 
 class InstalledBaseMapperTest {
 	private static final String CARE_OF = "careOf";

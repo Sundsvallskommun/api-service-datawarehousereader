@@ -1,11 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.groups.Tuple.tuple;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
-import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -16,6 +10,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.groups.Tuple.tuple;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
+import static se.sundsvall.datawarehousereader.api.model.Category.ELECTRICITY;
 
 /**
  * Agreement repository tests.

@@ -1,9 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static java.util.stream.Collectors.groupingBy;
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
-import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +16,10 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRep
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import static java.util.stream.Collectors.groupingBy;
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
+import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
 @Service
 public class InvoiceService {

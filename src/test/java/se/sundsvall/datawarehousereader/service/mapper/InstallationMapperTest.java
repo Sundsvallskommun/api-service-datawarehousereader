@@ -1,17 +1,17 @@
 package se.sundsvall.datawarehousereader.service.mapper;
 
-import static java.util.Collections.emptyList;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
-import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetails;
-import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetailsList;
-
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import se.sundsvall.datawarehousereader.api.model.installation.InstallationMetaData;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.installation.InstallationMetaDataEmbeddable;
+
+import static java.util.Collections.emptyList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetails;
+import static se.sundsvall.datawarehousereader.service.mapper.InstallationMapper.toInstallationDetailsList;
 
 class InstallationMapperTest {
 

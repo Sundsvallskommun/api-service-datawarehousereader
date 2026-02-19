@@ -1,7 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
-
 import java.util.Collections;
 import java.util.List;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +9,8 @@ import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBasePar
 import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InstalledBaseRepository;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+
+import static se.sundsvall.datawarehousereader.service.mapper.InstalledBaseMapper.toInstalledBaseItems;
 
 @Service
 public class InstalledBaseService {

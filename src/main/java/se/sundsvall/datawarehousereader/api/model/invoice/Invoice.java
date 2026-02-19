@@ -1,13 +1,13 @@
 package se.sundsvall.datawarehousereader.api.model.invoice;
 
-import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
+
+import static io.swagger.v3.oas.annotations.media.Schema.AccessMode.READ_ONLY;
 
 @Schema(description = "Invoice model")
 public class Invoice {

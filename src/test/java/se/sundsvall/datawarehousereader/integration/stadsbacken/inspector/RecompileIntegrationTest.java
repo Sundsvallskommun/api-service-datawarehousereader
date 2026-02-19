@@ -1,8 +1,5 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.inspector;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import javax.sql.DataSource;
@@ -16,6 +13,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
  * Integration test to verify that the recompile hint is properly applied to SQL queries.

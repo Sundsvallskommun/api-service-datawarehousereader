@@ -1,10 +1,10 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.inspector;
 
-import static org.hibernate.cfg.JdbcSettings.STATEMENT_INSPECTOR;
-
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import static org.hibernate.cfg.JdbcSettings.STATEMENT_INSPECTOR;
 
 /**
  * Hibernate configuration to register the {@link RecompileStatementInspector} as a spring bean instead of enabling it

@@ -1,15 +1,5 @@
 package se.sundsvall.datawarehousereader.api;
 
-import static java.lang.String.valueOf;
-import static java.util.Collections.emptyList;
-import static java.util.Optional.ofNullable;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -29,6 +19,16 @@ import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.service.MeasurementService;
+
+import static java.lang.String.valueOf;
+import static java.util.Collections.emptyList;
+import static java.util.Optional.ofNullable;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("junit")
