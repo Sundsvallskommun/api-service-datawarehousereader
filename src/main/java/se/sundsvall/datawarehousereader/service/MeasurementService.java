@@ -4,14 +4,15 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementRepository;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+import se.sundsvall.dept44.problem.Problem;
+
+import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 
 @Service
 public class MeasurementService {
@@ -37,7 +38,7 @@ public class MeasurementService {
 		return switch (category) {
 			case DISTRICT_HEATING -> measurementRepository.getDistrictHeatingMeasurements(legalId, facilityId, aggregateOn, fromDateTime, toDateTime);
 			case ELECTRICITY -> measurementRepository.getElectricityMeasurements(legalId, facilityId, aggregateOn, fromDateTime, toDateTime);
-			default -> throw Problem.valueOf(Status.NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
+			default -> throw Problem.valueOf(NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
 		};
 	}
 }

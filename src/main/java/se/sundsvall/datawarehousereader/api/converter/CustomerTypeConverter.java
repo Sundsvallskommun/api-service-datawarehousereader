@@ -4,7 +4,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 
-import static org.zalando.problem.Status.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static se.sundsvall.datawarehousereader.Constants.INVALID_PARAMETER_CUSTOMER_TYPE;
 
 @Component

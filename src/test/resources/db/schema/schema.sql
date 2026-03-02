@@ -61,7 +61,7 @@
 
     create table kundinfo.vInstallations (
         BillLocationID int not null,
-        CustomerFlg int not null check (CustomerFlg in (0,1)),
+        CustomerFlg int not null check ((CustomerFlg in (0,1))),
         DateFrom datetime,
         DateTo datetime,
         InstallationsLastChangedDate datetime,

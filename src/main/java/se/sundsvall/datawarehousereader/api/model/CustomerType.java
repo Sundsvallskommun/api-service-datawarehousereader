@@ -3,8 +3,8 @@ package se.sundsvall.datawarehousereader.api.model;
 import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.stream.Stream;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
+import org.springframework.http.HttpStatus;
+import se.sundsvall.dept44.problem.Problem;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -21,7 +21,7 @@ public enum CustomerType {
 		this.stadsbackenTranslation = stadsbackenTranslation;
 	}
 
-	public static CustomerType fromValue(String value, Status statusCode, String statusText) {
+	public static CustomerType fromValue(String value, HttpStatus statusCode, String statusText) {
 		if (isBlank(value)) {
 			return null;
 		}
