@@ -3,16 +3,16 @@ package se.sundsvall.datawarehousereader.service.logic;
 import generated.se.sundsvall.party.PartyType;
 import java.util.Optional;
 import org.springframework.stereotype.Component;
-import org.zalando.problem.Problem;
-import org.zalando.problem.ThrowableProblem;
 import se.sundsvall.datawarehousereader.integration.party.PartyIntegration;
+import se.sundsvall.dept44.problem.Problem;
+import se.sundsvall.dept44.problem.ThrowableProblem;
 
 import static generated.se.sundsvall.party.PartyType.ENTERPRISE;
 import static generated.se.sundsvall.party.PartyType.PRIVATE;
 import static java.lang.String.format;
 import static java.util.Optional.empty;
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
-import static org.zalando.problem.Status.NOT_FOUND;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @Component
 public class PartyProvider {

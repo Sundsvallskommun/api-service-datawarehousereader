@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import org.zalando.problem.Problem;
-import org.zalando.problem.Status;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
@@ -16,8 +14,10 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRep
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
+import se.sundsvall.dept44.problem.Problem;
 
 import static java.util.stream.Collectors.groupingBy;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
@@ -55,7 +55,7 @@ public class InvoiceService {
 	public List<InvoiceDetail> getInvoiceDetails(final String organizationNumber, final long invoiceNumber) {
 		final var entities = invoiceDetailRepository.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
 		if (entities.isEmpty()) {
-			throw Problem.valueOf(Status.NOT_FOUND, String.format(INVOICE_DETAIL_NOT_FOUND, organizationNumber, invoiceNumber));
+			throw Problem.valueOf(NOT_FOUND, String.format(INVOICE_DETAIL_NOT_FOUND, organizationNumber, invoiceNumber));
 		}
 
 		return toDetails(entities);

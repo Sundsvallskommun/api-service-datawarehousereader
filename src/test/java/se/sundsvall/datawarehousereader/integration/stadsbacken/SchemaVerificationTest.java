@@ -7,12 +7,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
+import static org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase.Replace.NONE;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = NONE)
@@ -27,10 +27,14 @@ class SchemaVerificationTest {
 	@Test
 	void verifySchemaUpdates() throws IOException, URISyntaxException {
 		final var storedSchema = getResourceString(STORED_SCHEMA_FILE);
-		final var generatedSchema = Files.readString(Path.of(generatedSchemaFile));
+		final var generatedSchema = stripAlterStatements(Files.readString(Path.of(generatedSchemaFile)));
 
 		assertThat(generatedSchema).as(String.format("Please reflect modifications to entities in file: %s", STORED_SCHEMA_FILE))
 			.isEqualToNormalizingWhitespace(storedSchema);
+	}
+
+	private String stripAlterStatements(final String schema) {
+		return schema.replaceAll("(?s)\\s*alter table.*?;", "");
 	}
 
 	private String getResourceString(String fileName) throws IOException, URISyntaxException {

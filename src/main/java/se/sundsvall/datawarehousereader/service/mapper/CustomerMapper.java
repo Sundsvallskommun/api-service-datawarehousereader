@@ -9,7 +9,7 @@ import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
-import static org.zalando.problem.Status.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 import static se.sundsvall.datawarehousereader.service.util.ServiceUtil.toLocalDate;

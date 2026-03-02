@@ -12,14 +12,13 @@ import org.junit.jupiter.params.provider.EnumSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.zalando.problem.Status;
-import org.zalando.problem.ThrowableProblem;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementRepository;
 import se.sundsvall.datawarehousereader.service.logic.PartyProvider;
+import se.sundsvall.dept44.problem.ThrowableProblem;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -28,6 +27,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
+import static org.springframework.http.HttpStatus.NOT_IMPLEMENTED;
 
 @ExtendWith(MockitoExtension.class)
 class MeasurementServiceTest {
@@ -246,7 +246,7 @@ class MeasurementServiceTest {
 
 		assertThatThrownBy(() -> service.getMeasurements(municipalityId, category, aggregation, parameters))
 			.isInstanceOf(ThrowableProblem.class)
-			.hasFieldOrPropertyWithValue("status", Status.NOT_IMPLEMENTED)
+			.hasFieldOrPropertyWithValue("status", NOT_IMPLEMENTED)
 			.hasMessageContaining(category.name());
 
 		verify(partyProviderMock).translateToLegalId(municipalityId, parameters.getPartyId());
