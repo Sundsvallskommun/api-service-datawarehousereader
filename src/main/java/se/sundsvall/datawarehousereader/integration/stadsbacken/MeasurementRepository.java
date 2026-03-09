@@ -23,32 +23,34 @@ public class MeasurementRepository {
 	}
 
 	public List<Measurement> getElectricityMeasurements(final String legalId, final String facilityId,
-		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime) {
+		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
 
 		var parameters = new MapSqlParameterSource()
 			.addValue("legalId", legalId)
 			.addValue("facilityId", facilityId)
 			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
 			.addValue("toDate", Timestamp.valueOf(toDateTime))
-			.addValue("aggregation", aggregation != null ? aggregation.name() : null);
+			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
+			.addValue("display", display);
 
 		return jdbcTemplate.query(
-			"{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}",
+			"{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}",
 			parameters, new ElectricityMeasurementMapper(aggregation));
 	}
 
 	public List<Measurement> getDistrictHeatingMeasurements(final String legalId, final String facilityId,
-		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime) {
+		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
 
 		var parameters = new MapSqlParameterSource()
 			.addValue("legalId", legalId)
 			.addValue("facilityId", facilityId)
 			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
 			.addValue("toDate", Timestamp.valueOf(toDateTime))
-			.addValue("aggregation", aggregation != null ? aggregation.name() : null);
+			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
+			.addValue("display", display);
 
 		return jdbcTemplate.query(
-			"{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}",
+			"{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}",
 			parameters, new DistrictHeatingMeasurementMapper(aggregation));
 	}
 

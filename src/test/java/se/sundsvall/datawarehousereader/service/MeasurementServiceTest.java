@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
+import se.sundsvall.datawarehousereader.api.model.measurement.Display;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 import se.sundsvall.datawarehousereader.api.model.measurement.MeasurementParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.MeasurementRepository;
@@ -50,23 +51,25 @@ class MeasurementServiceTest {
 	void getElectricityMeasurementsWithAllParameters() {
 		final var municipalityId = "2281";
 		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
-		final var facilityId = "735999109151401011";
+		final var facilityId = List.of("735999109151401011");
 		final var legalId = "5591627751";
 		final var aggregation = Aggregation.HOUR;
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 		final var usage = BigDecimal.valueOf(100L);
+		final var display = Display.AGGREGATE;
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
 		parameters.setFacilityId(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
+		parameters.setDisplay(display);
 
 		final var expectedMeasurement = Measurement.create()
 			.withUuid("uuid-123")
 			.withCustomerOrgId(legalId)
-			.withFacilityId(facilityId)
+			.withFacilityId("735999109151401011")
 			.withFeedType("Production")
 			.withUnit("kWh")
 			.withUsage(usage)
@@ -76,10 +79,11 @@ class MeasurementServiceTest {
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
 		when(measurementRepositoryMock.getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime())).thenReturn(List.of(expectedMeasurement));
+			toDateTime.toLocalDateTime(),
+			"aggregate")).thenReturn(List.of(expectedMeasurement));
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
 
@@ -89,16 +93,53 @@ class MeasurementServiceTest {
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
 		verify(measurementRepositoryMock).getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime());
+			toDateTime.toLocalDateTime(),
+			"aggregate");
+	}
+
+	@Test
+	void getElectricityMeasurementsWithMultipleFacilityIds() {
+		final var municipalityId = "2281";
+		final var facilityIds = List.of("735999109151401011", "735999109151401012");
+		final var aggregation = Aggregation.DAY;
+		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
+
+		final var parameters = new MeasurementParameters();
+		parameters.setPartyId(null);
+		parameters.setFacilityId(facilityIds);
+		parameters.setFromDateTime(fromDateTime);
+		parameters.setToDateTime(toDateTime);
+
+		when(measurementRepositoryMock.getElectricityMeasurements(
+			null,
+			"735999109151401011,735999109151401012",
+			aggregation,
+			fromDateTime.toLocalDateTime(),
+			toDateTime.toLocalDateTime(),
+			null)).thenReturn(List.of());
+
+		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
+
+		assertThat(result).isEmpty();
+
+		verify(partyProviderMock, never()).translateToLegalId(any(), any());
+		verify(measurementRepositoryMock).getElectricityMeasurements(
+			null,
+			"735999109151401011,735999109151401012",
+			aggregation,
+			fromDateTime.toLocalDateTime(),
+			toDateTime.toLocalDateTime(),
+			null);
 	}
 
 	@Test
 	void getElectricityMeasurementsWithNullPartyId() {
 		final var municipalityId = "2281";
-		final var facilityId = "735999109151401011";
+		final var facilityId = List.of("735999109151401011");
 		final var aggregation = Aggregation.DAY;
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
@@ -111,10 +152,11 @@ class MeasurementServiceTest {
 
 		when(measurementRepositoryMock.getElectricityMeasurements(
 			null,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime())).thenReturn(List.of());
+			toDateTime.toLocalDateTime(),
+			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
 
@@ -123,17 +165,18 @@ class MeasurementServiceTest {
 		verify(partyProviderMock, never()).translateToLegalId(any(), any());
 		verify(measurementRepositoryMock).getElectricityMeasurements(
 			null,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime());
+			toDateTime.toLocalDateTime(),
+			null);
 	}
 
 	@Test
 	void getElectricityMeasurementsWithNullDateTimeParameters() {
 		final var municipalityId = "2281";
 		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
-		final var facilityId = "735999109151401011";
+		final var facilityId = List.of("735999109151401011");
 		final var legalId = "5591627751";
 		final var aggregation = Aggregation.MONTH;
 
@@ -146,8 +189,9 @@ class MeasurementServiceTest {
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
 		when(measurementRepositoryMock.getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
+			null,
 			null,
 			null)).thenReturn(List.of());
 
@@ -158,8 +202,9 @@ class MeasurementServiceTest {
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
 		verify(measurementRepositoryMock).getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
+			null,
 			null,
 			null);
 	}
@@ -168,7 +213,7 @@ class MeasurementServiceTest {
 	void getElectricityMeasurementsReturnsEmptyList() {
 		final var municipalityId = "2281";
 		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
-		final var facilityId = "735999109151401011";
+		final var facilityId = List.of("735999109151401011");
 		final var legalId = "5591627751";
 		final var aggregation = Aggregation.HOUR;
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
@@ -183,10 +228,11 @@ class MeasurementServiceTest {
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
 		when(measurementRepositoryMock.getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime())).thenReturn(List.of());
+			toDateTime.toLocalDateTime(),
+			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
 
@@ -195,10 +241,11 @@ class MeasurementServiceTest {
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
 		verify(measurementRepositoryMock).getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime());
+			toDateTime.toLocalDateTime(),
+			null);
 	}
 
 	@Test
@@ -206,7 +253,7 @@ class MeasurementServiceTest {
 		final var municipalityId = "2281";
 		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
 		final var legalId = "5591627751";
-		final var facilityId = "facilityId";
+		final var facilityId = List.of("facilityId");
 		final var aggregation = Aggregation.MONTH;
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
@@ -218,14 +265,14 @@ class MeasurementServiceTest {
 		parameters.setToDateTime(toDateTime);
 
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
-		when(measurementRepositoryMock.getDistrictHeatingMeasurements(legalId, facilityId, aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime())).thenReturn(List.of());
+		when(measurementRepositoryMock.getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.DISTRICT_HEATING, aggregation, parameters);
 
 		assertThat(result).isEmpty();
 
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
-		verify(measurementRepositoryMock).getDistrictHeatingMeasurements(legalId, facilityId, aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime());
+		verify(measurementRepositoryMock).getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null);
 	}
 
 	@ParameterizedTest
@@ -238,7 +285,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId("81471222-5798-11e9-ae24-57fa13b361e1");
-		parameters.setFacilityId("facilityId");
+		parameters.setFacilityId(List.of("facilityId"));
 		parameters.setFromDateTime(OffsetDateTime.now());
 		parameters.setToDateTime(OffsetDateTime.now());
 
@@ -257,7 +304,7 @@ class MeasurementServiceTest {
 	void getElectricityMeasurementsWithDifferentAggregations(Aggregation aggregation) {
 		final var municipalityId = "2281";
 		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
-		final var facilityId = "735999109151401011";
+		final var facilityId = List.of("735999109151401011");
 		final var legalId = "5591627751";
 		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
 		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
@@ -271,10 +318,11 @@ class MeasurementServiceTest {
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
 		when(measurementRepositoryMock.getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime())).thenReturn(List.of());
+			toDateTime.toLocalDateTime(),
+			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
 
@@ -283,9 +331,10 @@ class MeasurementServiceTest {
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
 		verify(measurementRepositoryMock).getElectricityMeasurements(
 			legalId,
-			facilityId,
+			"735999109151401011",
 			aggregation,
 			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime());
+			toDateTime.toLocalDateTime(),
+			null);
 	}
 }

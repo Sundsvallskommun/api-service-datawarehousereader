@@ -33,11 +33,12 @@ public class MeasurementService {
 		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyId -> partyProvider.translateToLegalId(municipalityId, partyId)).orElse(null);
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
 		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
-		final var facilityId = parameters.getFacilityId();
+		final var facilityId = Optional.ofNullable(parameters.getFacilityId()).map(ids -> String.join(",", ids)).orElse(null);
+		final var display = Optional.ofNullable(parameters.getDisplay()).map(d -> d.name().toLowerCase()).orElse(null);
 
 		return switch (category) {
-			case DISTRICT_HEATING -> measurementRepository.getDistrictHeatingMeasurements(legalId, facilityId, aggregateOn, fromDateTime, toDateTime);
-			case ELECTRICITY -> measurementRepository.getElectricityMeasurements(legalId, facilityId, aggregateOn, fromDateTime, toDateTime);
+			case DISTRICT_HEATING -> measurementRepository.getDistrictHeatingMeasurements(legalId, facilityId, aggregateOn, fromDateTime, toDateTime, display);
+			case ELECTRICITY -> measurementRepository.getElectricityMeasurements(legalId, facilityId, aggregateOn, fromDateTime, toDateTime, display);
 			default -> throw Problem.valueOf(NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));
 		};
 	}

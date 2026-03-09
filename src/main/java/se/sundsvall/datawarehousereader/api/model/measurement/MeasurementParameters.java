@@ -2,6 +2,7 @@ package se.sundsvall.datawarehousereader.api.model.measurement;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -16,8 +17,8 @@ public class MeasurementParameters {
 	@ValidUuid(nullable = true)
 	private String partyId;
 
-	@Schema(description = "Facility id", examples = "735999109151401011")
-	private String facilityId;
+	@Schema(description = "Facility id (one or more)", examples = "735999109151401011")
+	private List<String> facilityId;
 
 	@Schema(description = "Date and time for oldest measurement point to return. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
@@ -26,6 +27,9 @@ public class MeasurementParameters {
 	@Schema(description = "Date and time for youngest measurement point to return. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	private OffsetDateTime toDateTime;
+
+	@Schema(description = "Display mode for aggregated series", implementation = Display.class)
+	private Display display;
 
 	public static MeasurementParameters create() {
 		return new MeasurementParameters();
@@ -44,15 +48,15 @@ public class MeasurementParameters {
 		return this;
 	}
 
-	public String getFacilityId() {
+	public List<String> getFacilityId() {
 		return facilityId;
 	}
 
-	public void setFacilityId(String facilityId) {
+	public void setFacilityId(List<String> facilityId) {
 		this.facilityId = facilityId;
 	}
 
-	public MeasurementParameters withFacilityId(String facilityId) {
+	public MeasurementParameters withFacilityId(List<String> facilityId) {
 		this.facilityId = facilityId;
 		return this;
 	}
@@ -83,26 +87,40 @@ public class MeasurementParameters {
 		return this;
 	}
 
+	public Display getDisplay() {
+		return display;
+	}
+
+	public void setDisplay(Display display) {
+		this.display = display;
+	}
+
+	public MeasurementParameters withDisplay(Display display) {
+		this.display = display;
+		return this;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		MeasurementParameters that = (MeasurementParameters) o;
-		return Objects.equals(partyId, that.partyId) && Objects.equals(facilityId, that.facilityId) && Objects.equals(fromDateTime, that.fromDateTime) && Objects.equals(toDateTime, that.toDateTime);
+		return Objects.equals(partyId, that.partyId) && Objects.equals(facilityId, that.facilityId) && Objects.equals(fromDateTime, that.fromDateTime) && Objects.equals(toDateTime, that.toDateTime) && display == that.display;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(partyId, facilityId, fromDateTime, toDateTime);
+		return Objects.hash(partyId, facilityId, fromDateTime, toDateTime, display);
 	}
 
 	@Override
 	public String toString() {
 		return "MeasurementParameters{" +
 			"partyId='" + partyId + '\'' +
-			", facilityId='" + facilityId + '\'' +
+			", facilityId=" + facilityId +
 			", fromDateTime=" + fromDateTime +
 			", toDateTime=" + toDateTime +
+			", display=" + display +
 			'}';
 	}
 }

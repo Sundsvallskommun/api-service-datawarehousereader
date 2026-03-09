@@ -55,14 +55,15 @@ class MeasurementRepositoryTest {
 		final var facilityId = "735999109170208042";
 		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
 		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var display = "aggregate";
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.ElectricityMeasurementMapper.class)))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements(legalId, facilityId, aggregation, fromDateTime, toDateTime);
+		repository.getElectricityMeasurements(legalId, facilityId, aggregation, fromDateTime, toDateTime, display);
 
 		verify(jdbcTemplateMock).query(
-			eq("{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}"),
+			eq("{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}"),
 			parametersCaptor.capture(),
 			any(MeasurementRepository.ElectricityMeasurementMapper.class));
 
@@ -72,6 +73,7 @@ class MeasurementRepositoryTest {
 		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.valueOf(fromDateTime));
 		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.valueOf(toDateTime));
 		assertThat(parameters.getValue("aggregation")).isEqualTo(aggregation.name());
+		assertThat(parameters.getValue("display")).isEqualTo(display);
 	}
 
 	@Test
@@ -84,15 +86,16 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.ElectricityMeasurementMapper.class)))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements(legalId, facilityId, null, fromDateTime, toDateTime);
+		repository.getElectricityMeasurements(legalId, facilityId, null, fromDateTime, toDateTime, null);
 
 		verify(jdbcTemplateMock).query(
-			eq("{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}"),
+			eq("{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}"),
 			parametersCaptor.capture(),
 			any(MeasurementRepository.ElectricityMeasurementMapper.class));
 
 		final var parameters = parametersCaptor.getValue();
 		assertThat(parameters.getValue("aggregation")).isNull();
+		assertThat(parameters.getValue("display")).isNull();
 	}
 
 	@ParameterizedTest
@@ -102,14 +105,15 @@ class MeasurementRepositoryTest {
 		final var facilityId = "9115803075";
 		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
 		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var display = "onlyaggregated";
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictHeatingMeasurementMapper.class)))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements(legalId, facilityId, aggregation, fromDateTime, toDateTime);
+		repository.getDistrictHeatingMeasurements(legalId, facilityId, aggregation, fromDateTime, toDateTime, display);
 
 		verify(jdbcTemplateMock).query(
-			eq("{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}"),
+			eq("{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}"),
 			parametersCaptor.capture(),
 			any(MeasurementRepository.DistrictHeatingMeasurementMapper.class));
 
@@ -119,6 +123,7 @@ class MeasurementRepositoryTest {
 		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.valueOf(fromDateTime));
 		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.valueOf(toDateTime));
 		assertThat(parameters.getValue("aggregation")).isEqualTo(aggregation.name());
+		assertThat(parameters.getValue("display")).isEqualTo(display);
 	}
 
 	@Test
@@ -131,15 +136,16 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictHeatingMeasurementMapper.class)))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements(legalId, facilityId, null, fromDateTime, toDateTime);
+		repository.getDistrictHeatingMeasurements(legalId, facilityId, null, fromDateTime, toDateTime, null);
 
 		verify(jdbcTemplateMock).query(
-			eq("{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation)}"),
+			eq("{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}"),
 			parametersCaptor.capture(),
 			any(MeasurementRepository.DistrictHeatingMeasurementMapper.class));
 
 		final var parameters = parametersCaptor.getValue();
 		assertThat(parameters.getValue("aggregation")).isNull();
+		assertThat(parameters.getValue("display")).isNull();
 	}
 
 	@Test
@@ -151,7 +157,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now());
+		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -175,7 +181,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now());
+		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -192,7 +198,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now());
+		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -209,7 +215,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now());
+		repository.getElectricityMeasurements("legalId", "facilityId", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -226,7 +232,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now());
+		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -249,7 +255,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now());
+		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -266,7 +272,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now());
+		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -283,7 +289,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now());
+		repository.getDistrictHeatingMeasurements("legalId", "facilityId", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
