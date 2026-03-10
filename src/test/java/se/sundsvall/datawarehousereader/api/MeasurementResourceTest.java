@@ -74,7 +74,7 @@ class MeasurementResourceTest {
 		verify(serviceMock).getMeasurements(eq(MUNICIPALITY_ID), eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
 		final MeasurementParameters parameters = parametersCaptor.getValue();
 		assertThat(parameters.getPartyId()).isNull();
-		assertThat(parameters.getFacilityId()).isNull();
+		assertThat(parameters.getFacilityIds()).isNull();
 		assertThat(parameters.getFromDateTime()).isNull();
 		assertThat(parameters.getToDateTime()).isNull();
 		assertThat(parameters.getDisplay()).isNull();
@@ -97,7 +97,7 @@ class MeasurementResourceTest {
 		assertThat(response).isNotNull().isEqualTo(emptyList());
 		verify(serviceMock).getMeasurements(eq(MUNICIPALITY_ID), eq(CATEGORY), eq(AGGREGATION), parametersCaptor.capture());
 		final MeasurementParameters parameters = parametersCaptor.getValue();
-		assertThat(parameters.getFacilityId()).containsExactly(FACILITY_ID);
+		assertThat(parameters.getFacilityIds()).containsExactly(FACILITY_ID);
 		assertThat(parameters.getPartyId()).isEqualTo(PARTY_ID);
 		assertThat(parameters.getFromDateTime()).isEqualTo(FROM_DATE_TIME);
 		assertThat(parameters.getToDateTime()).isEqualTo(TO_DATE_TIME);

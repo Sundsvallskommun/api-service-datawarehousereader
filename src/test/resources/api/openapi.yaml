@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.1"
 servers:
-  - url: http://localhost:57033
+  - url: http://localhost:49672
     description: Generated server url
 tags:
   - name: Measurement
@@ -55,7 +55,7 @@ paths:
             description: PartyId (e.g. a personId or an organizationId)
             examples:
               - 81471222-5798-11e9-ae24-57fa13b361e1
-        - name: facilityId
+        - name: facilityIds
           in: query
           description: Facility id (one or more)
           required: false
@@ -1027,10 +1027,10 @@ components:
         instance:
           type: string
           format: uri
-        causeAsProblem:
-          $ref: "#/components/schemas/ThrowableProblem"
         detail:
           type: string
+        causeAsProblem:
+          $ref: "#/components/schemas/ThrowableProblem"
     ThrowableProblem:
       type: object
       properties:

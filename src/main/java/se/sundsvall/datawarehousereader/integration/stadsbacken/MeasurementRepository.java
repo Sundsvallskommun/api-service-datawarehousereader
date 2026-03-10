@@ -27,14 +27,14 @@ public class MeasurementRepository {
 
 		var parameters = new MapSqlParameterSource()
 			.addValue("legalId", legalId)
-			.addValue("facilityId", facilityId)
+			.addValue("facilityIds", facilityId)
 			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
 			.addValue("toDate", Timestamp.valueOf(toDateTime))
 			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
 			.addValue("display", display);
 
 		return jdbcTemplate.query(
-			"{call kundinfo.spMeasurementElectricity(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}",
+			"{call kundinfo.spMeasurementElectricity(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
 			parameters, new ElectricityMeasurementMapper(aggregation));
 	}
 
@@ -43,14 +43,14 @@ public class MeasurementRepository {
 
 		var parameters = new MapSqlParameterSource()
 			.addValue("legalId", legalId)
-			.addValue("facilityId", facilityId)
+			.addValue("facilityIds", facilityId)
 			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
 			.addValue("toDate", Timestamp.valueOf(toDateTime))
 			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
 			.addValue("display", display);
 
 		return jdbcTemplate.query(
-			"{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityId, :fromDate, :toDate, :aggregation, :display)}",
+			"{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
 			parameters, new DistrictHeatingMeasurementMapper(aggregation));
 	}
 

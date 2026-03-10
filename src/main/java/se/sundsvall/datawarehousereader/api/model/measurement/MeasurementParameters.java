@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.api.model.measurement;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -18,7 +19,8 @@ public class MeasurementParameters {
 	private String partyId;
 
 	@Schema(description = "Facility id (one or more)", examples = "735999109151401011")
-	private List<String> facilityId;
+	@JsonProperty("facilityId")
+	private List<String> facilityIds;
 
 	@Schema(description = "Date and time for oldest measurement point to return. Format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX, for example '2000-10-31T01:30:00.000-05:00'")
 	@DateTimeFormat(iso = ISO.DATE_TIME)
@@ -48,16 +50,20 @@ public class MeasurementParameters {
 		return this;
 	}
 
-	public List<String> getFacilityId() {
-		return facilityId;
+	public List<String> getFacilityIds() {
+		return facilityIds;
+	}
+
+	public void setFacilityIds(List<String> facilityIds) {
+		this.facilityIds = facilityIds;
 	}
 
 	public void setFacilityId(List<String> facilityId) {
-		this.facilityId = facilityId;
+		this.facilityIds = facilityId;
 	}
 
 	public MeasurementParameters withFacilityId(List<String> facilityId) {
-		this.facilityId = facilityId;
+		this.facilityIds = facilityId;
 		return this;
 	}
 
@@ -105,19 +111,19 @@ public class MeasurementParameters {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		MeasurementParameters that = (MeasurementParameters) o;
-		return Objects.equals(partyId, that.partyId) && Objects.equals(facilityId, that.facilityId) && Objects.equals(fromDateTime, that.fromDateTime) && Objects.equals(toDateTime, that.toDateTime) && display == that.display;
+		return Objects.equals(partyId, that.partyId) && Objects.equals(facilityIds, that.facilityIds) && Objects.equals(fromDateTime, that.fromDateTime) && Objects.equals(toDateTime, that.toDateTime) && display == that.display;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(partyId, facilityId, fromDateTime, toDateTime, display);
+		return Objects.hash(partyId, facilityIds, fromDateTime, toDateTime, display);
 	}
 
 	@Override
 	public String toString() {
 		return "MeasurementParameters{" +
 			"partyId='" + partyId + '\'' +
-			", facilityId=" + facilityId +
+			", facilityIds=" + facilityIds +
 			", fromDateTime=" + fromDateTime +
 			", toDateTime=" + toDateTime +
 			", display=" + display +

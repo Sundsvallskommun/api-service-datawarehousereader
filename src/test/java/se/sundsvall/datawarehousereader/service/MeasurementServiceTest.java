@@ -61,7 +61,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
-		parameters.setFacilityId(facilityId);
+		parameters.setFacilityIds(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 		parameters.setDisplay(display);
@@ -110,7 +110,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(null);
-		parameters.setFacilityId(facilityIds);
+		parameters.setFacilityIds(facilityIds);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 
@@ -146,7 +146,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(null);
-		parameters.setFacilityId(facilityId);
+		parameters.setFacilityIds(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 
@@ -182,7 +182,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
-		parameters.setFacilityId(facilityId);
+		parameters.setFacilityIds(facilityId);
 		parameters.setFromDateTime(null);
 		parameters.setToDateTime(null);
 
@@ -221,7 +221,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
-		parameters.setFacilityId(facilityId);
+		parameters.setFacilityIds(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 
@@ -260,7 +260,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
-		parameters.setFacilityId(facilityId);
+		parameters.setFacilityIds(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 
@@ -285,7 +285,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId("81471222-5798-11e9-ae24-57fa13b361e1");
-		parameters.setFacilityId(List.of("facilityId"));
+		parameters.setFacilityIds(List.of("facilityId"));
 		parameters.setFromDateTime(OffsetDateTime.now());
 		parameters.setToDateTime(OffsetDateTime.now());
 
@@ -311,7 +311,7 @@ class MeasurementServiceTest {
 
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId(partyId);
-		parameters.setFacilityId(facilityId);
+		parameters.setFacilityIds(facilityId);
 		parameters.setFromDateTime(fromDateTime);
 		parameters.setToDateTime(toDateTime);
 
