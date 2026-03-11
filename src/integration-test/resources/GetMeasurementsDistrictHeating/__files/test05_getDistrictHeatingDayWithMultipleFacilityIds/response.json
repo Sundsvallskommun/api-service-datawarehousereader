@@ -1,0 +1,20 @@
+[
+	{
+		"customerOrgId": "5591561234",
+		"facilityId": "9115803075",
+		"feedType": "energy",
+		"unit": "kWh",
+		"usage": 500.5,
+		"interpolation": 0,
+		"dateAndTime": "2022-03-22T23:00:00Z"
+	},
+	{
+		"customerOrgId": "5591561234",
+		"facilityId": "9261219043",
+		"feedType": "energy",
+		"unit": "kWh",
+		"usage": 600.3,
+		"interpolation": 0,
+		"dateAndTime": "2022-03-22T23:00:00Z"
+	}
+]

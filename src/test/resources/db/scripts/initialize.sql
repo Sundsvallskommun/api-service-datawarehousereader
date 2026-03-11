@@ -15,7 +15,8 @@ create schema kundinfo;
 
 create procedure kundinfo.spMeasurementDistrictHeating(@customerorgid as varchar(8000),
                                                        @anlaggningsID as varchar(255), @datum_start as datetime2,
-                                                       @datum_stop as datetime2, @aggregationLevel as varchar(50))
+                                                       @datum_stop as datetime2, @aggregationLevel as varchar(50),
+                                                       @display as varchar(50))
 as
 begin
     -- Test case: HOUR aggregation for legalId 5591561234 and facilityId 9115803075
@@ -56,6 +57,13 @@ begin
         union all select null, '5566661234', '9261219043', 'energy', 'kWh', cast(1567 as decimal(28,10)), cast('2022-03-25 00:00:00' as datetime), 0
     end
 
+    -- Test case: DAY aggregation for legalId 5591561234 with multiple facilityIds (comma-separated)
+    else if @customerorgid = '5591561234' and @anlaggningsID = '9115803075,9261219043' and @aggregationLevel = 'DAY'
+    begin
+        select null as uuid, '5591561234' as customerorgid, '9115803075' as facilityId, 'energy' as feedType, 'kWh' as unit, cast(500.5 as decimal(28,10)) as [usage], cast('2022-03-23 00:00:00' as datetime) as DateAndTime, 0 as isInterpolted
+        union all select null, '5591561234', '9261219043', 'energy', 'kWh', cast(600.3 as decimal(28,10)), cast('2022-03-23 00:00:00' as datetime), 0
+    end
+
     -- Test case: MONTH aggregation for legalId 5534567890 and facilityId 735999109113202014
     -- Production uses column name 'isInterpolated' (correct spelling) for MONTH
     else if @customerorgid = '5534567890' and @anlaggningsID = '735999109113202014' and @aggregationLevel = 'MONTH'
@@ -92,7 +100,8 @@ create procedure kundinfo.spMeasurementElectricity(
         @anlaggningsID varchar(255),
         @datum_start datetime2,
         @datum_stop datetime2,
-        @aggregationLevel varchar(50)
+        @aggregationLevel varchar(50),
+        @display varchar(50)
     )
     as
     begin
@@ -121,6 +130,22 @@ create procedure kundinfo.spMeasurementElectricity(
             select '16A64870-DF4D-4A27-A514-56297AB6F8D9', '5534567890', '735999109170208042', 'Energy', 'kWh',
                    cast(5.492 as decimal(28,10)), cast('2022-04-10 00:00:00' as datetime), 23
                        end
+
+            -- Test case: DAY aggregation for legalId 5534567890 with multiple facilityIds (comma-separated)
+            else if @customerorgid = '5534567890' and @anlaggningsID = '735999109170208042,735999109440512001' and @aggregationLevel = 'DAY'
+            begin
+                select '16A64870-DF4D-4A27-A514-56297AB6F8D9' as uuid,
+                       '5534567890' as customerorgid,
+                       '735999109170208042' as facilityId,
+                       'Energy' as feedType,
+                       'kWh' as unit,
+                       cast(4.587 as decimal(28,10)) as [usage],
+                       cast('2022-04-02 00:00:00' as datetime) as DateAndTime,
+                       24 as isInterpolted
+                union all
+                select '16A64870-DF4D-4A27-A514-56297AB6F8D9', '5534567890', '735999109440512001', 'Energy', 'kWh',
+                       cast(3.210 as decimal(28,10)), cast('2022-04-02 00:00:00' as datetime), 12
+            end
 
             -- Test case: HOUR aggregation for legalId 195211161234 and facilityId 735999109320425015
             -- Production does NOT return interpolation column for HOUR - mapper defaults to 0

@@ -80,4 +80,34 @@ class GetMeasurementsElectricityIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test05_getElectricityDayWithDisplay() {
+		setupCall()
+			.withServicePath(format(PATH, ELECTRICITY, DAY) +
+				"?partyId=16A64870-DF4D-4A27-A514-56297AB6F8D9" +
+				"&facilityId=735999109170208042" +
+				"&fromDateTime=2022-04-01T14:39:22.817Z" +
+				"&toDateTime=2022-04-10T14:39:22.817Z" +
+				"&display=AGGREGATE")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
+
+	@Test
+	void test06_getElectricityDayWithMultipleFacilityIds() {
+		setupCall()
+			.withServicePath(format(PATH, ELECTRICITY, DAY) +
+				"?partyId=16A64870-DF4D-4A27-A514-56297AB6F8D9" +
+				"&facilityId=735999109170208042" +
+				"&facilityId=735999109440512001" +
+				"&fromDateTime=2022-04-01T14:39:22.817Z" +
+				"&toDateTime=2022-04-10T14:39:22.817Z")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }

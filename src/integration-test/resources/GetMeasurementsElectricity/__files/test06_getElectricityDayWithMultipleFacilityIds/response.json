@@ -1,0 +1,22 @@
+[
+	{
+		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
+		"customerOrgId": "5534567890",
+		"facilityId": "735999109170208042",
+		"feedType": "Energy",
+		"unit": "kWh",
+		"usage": 4.587,
+		"interpolation": 24,
+		"dateAndTime": "2022-04-01T22:00:00Z"
+	},
+	{
+		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
+		"customerOrgId": "5534567890",
+		"facilityId": "735999109440512001",
+		"feedType": "Energy",
+		"unit": "kWh",
+		"usage": 3.21,
+		"interpolation": 12,
+		"dateAndTime": "2022-04-01T22:00:00Z"
+	}
+]
