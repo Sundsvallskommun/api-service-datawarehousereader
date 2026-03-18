@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
@@ -16,6 +17,7 @@ import se.sundsvall.dept44.models.api.paging.validation.ValidSortByProperty;
 
 @Schema(description = "Invoice request parameters model")
 @ValidSortByProperty(InvoiceEntity.class)
+@ParameterObject
 public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "39195"))
