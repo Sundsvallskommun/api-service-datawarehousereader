@@ -27,7 +27,7 @@ public interface InvoiceSpecification {
 
 	SpecificationBuilder<InvoiceEntity> BUILDER = new SpecificationBuilder<>();
 
-	static Specification<InvoiceEntity> createSpecification(InvoiceParameters parameters) {
+	static Specification<InvoiceEntity> createSpecification(final InvoiceParameters parameters) {
 		return Specification.allOf(withAdministration(parameters.getAdministration())
 			.and(withCustomerIds(toIntegers(parameters.getCustomerNumber()))
 				.and(withCustomerType(parameters.getCustomerType()))
@@ -39,58 +39,58 @@ public interface InvoiceSpecification {
 			.and(withInvoiceType(parameters.getInvoiceType()))
 			.and(withOcrNumber(parameters.getOcrNumber()))
 			.and(withOrganizationGroup(parameters.getOrganizationGroup()))
-			.and(withOrganizationId(parameters.getOrganizationNumber())));
+			.and(withOrganizationIds(parameters.getOrganizationNumbers())));
 	}
 
-	static Specification<InvoiceEntity> withCustomerIds(List<Integer> customerIds) {
+	static Specification<InvoiceEntity> withCustomerIds(final List<Integer> customerIds) {
 		return BUILDER.buildInFilterForInteger(CUSTOMER_ID, customerIds);
 	}
 
-	static Specification<InvoiceEntity> withCustomerType(CustomerType customerType) {
+	static Specification<InvoiceEntity> withCustomerType(final CustomerType customerType) {
 		return BUILDER.buildEqualFilter(CUSTOMER_TYPE, nonNull(customerType) ? customerType.getStadsbackenTranslation() : null);
 	}
 
-	static Specification<InvoiceEntity> withFacilityIds(List<String> facilityIds) {
+	static Specification<InvoiceEntity> withFacilityIds(final List<String> facilityIds) {
 		return BUILDER.buildInFilterForString(FACILITY_ID, facilityIds);
 	}
 
-	static Specification<InvoiceEntity> withAdministration(String administration) {
+	static Specification<InvoiceEntity> withAdministration(final String administration) {
 		return BUILDER.buildEqualFilter(ADMINISTRATION, administration);
 	}
 
-	static Specification<InvoiceEntity> withOcrNumber(Long ocrNumber) {
+	static Specification<InvoiceEntity> withOcrNumber(final Long ocrNumber) {
 		return BUILDER.buildEqualFilter(OCR_NUMBER, ocrNumber);
 	}
 
-	static Specification<InvoiceEntity> withInvoiceDate(LocalDate dateFrom, LocalDate dateTo) {
+	static Specification<InvoiceEntity> withInvoiceDate(final LocalDate dateFrom, final LocalDate dateTo) {
 		return BUILDER.buildDateFilter(INVOICE_DATE, dateFrom, dateTo);
 	}
 
-	static Specification<InvoiceEntity> withInvoiceName(String invoiceName) {
+	static Specification<InvoiceEntity> withInvoiceName(final String invoiceName) {
 		return BUILDER.buildEqualFilter(INVOICE_NAME, invoiceName);
 	}
 
-	static Specification<InvoiceEntity> withInvoiceNumber(Long invoiceNumber) {
+	static Specification<InvoiceEntity> withInvoiceNumber(final Long invoiceNumber) {
 		return BUILDER.buildEqualFilter(INVOICE_NUMBER, invoiceNumber);
 	}
 
-	static Specification<InvoiceEntity> withInvoiceType(String invoiceType) {
+	static Specification<InvoiceEntity> withInvoiceType(final String invoiceType) {
 		return BUILDER.buildEqualFilter(INVOICE_TYPE, invoiceType);
 	}
 
-	static Specification<InvoiceEntity> withInvoiceStatus(String invoiceStatus) {
+	static Specification<InvoiceEntity> withInvoiceStatus(final String invoiceStatus) {
 		return BUILDER.buildEqualFilter(INVOICE_STATUS, invoiceStatus);
 	}
 
-	static Specification<InvoiceEntity> withDueDate(LocalDate dateFrom, LocalDate dateTo) {
+	static Specification<InvoiceEntity> withDueDate(final LocalDate dateFrom, final LocalDate dateTo) {
 		return BUILDER.buildDateFilter(DUE_DATE, dateFrom, dateTo);
 	}
 
-	static Specification<InvoiceEntity> withOrganizationGroup(String organizationGroup) {
+	static Specification<InvoiceEntity> withOrganizationGroup(final String organizationGroup) {
 		return BUILDER.buildEqualFilter(ORGANIZATION_GROUP, organizationGroup);
 	}
 
-	static Specification<InvoiceEntity> withOrganizationId(String organizationId) {
-		return BUILDER.buildEqualFilter(ORGANIZATION_ID, organizationId);
+	static Specification<InvoiceEntity> withOrganizationIds(final List<String> organizationIds) {
+		return BUILDER.buildInFilterForString(ORGANIZATION_ID, organizationIds);
 	}
 }

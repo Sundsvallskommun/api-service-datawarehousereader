@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>se.sundsvall</groupId>
 	<artifactId>api-service-datawarehousereader</artifactId>
-	<version>5.1</version>
+	<version>5.2</version>
 	<name>api-service-datawarehousereader</name>
 	<description>A single store for fetching data used for tasks such as reporting, visualization and analytics.</description>
 	<properties>
