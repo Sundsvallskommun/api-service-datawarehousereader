@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.api.model.invoice;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
@@ -61,7 +62,8 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 	private String organizationGroup;
 
 	@Schema(description = "Organization number of invoice issuer", examples = "5565027223")
-	private String organizationNumber;
+	@JsonProperty("organizationNumber")
+	private List<String> organizationNumbers;
 
 	@Schema(description = "Administration", examples = "Sundsvall Elnät")
 	private String administration;
@@ -251,16 +253,20 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		return this;
 	}
 
-	public String getOrganizationNumber() {
-		return organizationNumber;
+	public List<String> getOrganizationNumbers() {
+		return organizationNumbers;
 	}
 
-	public void setOrganizationNumber(final String organizationNumber) {
-		this.organizationNumber = organizationNumber;
+	public void setOrganizationNumbers(final List<String> organizationNumbers) {
+		this.organizationNumbers = organizationNumbers;
 	}
 
-	public InvoiceParameters withOrganizationNumber(final String organizationNumber) {
-		this.organizationNumber = organizationNumber;
+	public void setOrganizationNumber(final List<String> organizationNumber) {
+		this.organizationNumbers = organizationNumber;
+	}
+
+	public InvoiceParameters withOrganizationNumbers(final List<String> organizationNumbers) {
+		this.organizationNumbers = organizationNumbers;
 		return this;
 	}
 
@@ -293,7 +299,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 		int result = super.hashCode();
 		result = (prime * result) + Objects.hash(administration, customerNumber, customerType, dueDateFrom, dueDateTo,
 			facilityIds, invoiceDateFrom, invoiceDateTo, invoiceName, invoiceNumber, invoiceStatus, invoiceType,
-			ocrNumber, organizationGroup, organizationNumber);
+			ocrNumber, organizationGroup, organizationNumbers);
 		return result;
 	}
 
@@ -319,7 +325,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 			&& Objects.equals(invoiceStatus, other.invoiceStatus) && Objects.equals(invoiceType, other.invoiceType)
 			&& Objects.equals(ocrNumber, other.ocrNumber)
 			&& Objects.equals(organizationGroup, other.organizationGroup)
-			&& Objects.equals(organizationNumber, other.organizationNumber);
+			&& Objects.equals(organizationNumbers, other.organizationNumbers);
 	}
 
 	@Override
@@ -338,7 +344,7 @@ public class InvoiceParameters extends AbstractParameterPagingAndSortingBase {
 			", dueDateFrom=" + dueDateFrom +
 			", dueDateTo=" + dueDateTo +
 			", organizationGroup='" + organizationGroup + '\'' +
-			", organizationNumber='" + organizationNumber + '\'' +
+			", organizationNumbers=" + organizationNumbers +
 			", administration='" + administration + '\'' +
 			'}';
 	}
