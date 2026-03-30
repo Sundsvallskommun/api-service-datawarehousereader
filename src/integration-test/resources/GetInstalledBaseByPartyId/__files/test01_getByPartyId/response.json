@@ -1,0 +1,39 @@
+{
+	"installedBase": [
+		{
+			"company": "Company A",
+			"customerNumber": "99001",
+			"type": "Type A",
+			"facilityId": "100000000000000001",
+			"placementId": 100001,
+			"careOf": "Care Of A",
+			"street": "Street 1",
+			"postCode": "11111",
+			"city": "CITY A",
+			"propertyDesignation": "HOUSE 1",
+			"dateFrom": "2024-01-01",
+			"dateLastModified": "2024-12-01"
+		},
+		{
+			"company": "Company B",
+			"customerNumber": "99001",
+			"type": "Type B",
+			"facilityId": "100000000000000002",
+			"placementId": 100002,
+			"careOf": "Care Of B",
+			"street": "Street 2",
+			"postCode": "22222",
+			"city": "CITY B",
+			"propertyDesignation": "HOUSE 2",
+			"dateFrom": "2024-02-01",
+			"dateLastModified": "2024-12-02"
+		}
+	],
+	"_meta": {
+		"totalRecords": 2,
+		"limit": 100,
+		"count": 2,
+		"totalPages": 1,
+		"page": 1
+	}
+}

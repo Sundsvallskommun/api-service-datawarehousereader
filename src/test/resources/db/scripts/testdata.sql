@@ -720,6 +720,7 @@ VALUES (321, 36652, 'Fastighetsförmedling AB', 'NJURUNDA', 'Sundsvall Energi AB
        (322, 36794, 'Fastighetsförmedling AB', 'SUNDSVALL', 'Sundsvall Energi AB', 10335, '2005-06-02 00:00:00.0', NULL,
         '9113203013', '85232', 'Gatan 24-28', 'Avfallsvåg', NULL);
 
+
 INSERT INTO kundinfo.vInstalledBaseMetadata (company, internalId, [key], [value], [type], displayName)
 VALUES (N'Sundsvall Elnät', 57, N'annualusage', '4990', 'kW', 'Beräknad årlig förbrukning'),
        (N'Sundsvall Elnät', 57, N'fusesize', '10', 'A', 'Säkringsstorlek'),

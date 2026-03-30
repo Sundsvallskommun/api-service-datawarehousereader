@@ -5,9 +5,9 @@ info:
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "5.2"
+  version: "5.3"
 servers:
-  - url: http://localhost:58640
+  - url: http://localhost:49992
     description: Generated server url
 tags:
   - name: Measurement
@@ -533,6 +533,102 @@ paths:
           required: false
           schema:
             $ref: "#/components/schemas/Direction"
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            description: Page number
+            examples:
+              - "1"
+            minimum: 1
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            type: integer
+            format: int32
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            examples:
+              - "15"
+            minimum: 1
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InstalledBaseResponse"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+      deprecated: true
+  /{municipalityId}/installedbase/{partyId}:
+    get:
+      tags:
+        - Installed base
+      summary: Get installed base information by party id
+      description: Resource returns installed bases for the given party id
+      operationId: getInstalledBaseByPartyId
+      parameters:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: partyId
+          in: path
+          description: Party id (UUID)
+          required: true
+          schema:
+            type: string
+          example: 898B3634-A2F9-483C-8808-37F3F25CF24E
+        - name: organizationIds
+          in: query
+          description: Comma-separated list of organization ids
+          required: false
+          schema:
+            type: string
+            description: Comma-separated list of organization ids
+            example: "123456789,123456987"
+          example: "123456789,123456987"
+        - name: date
+          in: query
+          description: Filter date
+          required: false
+          schema:
+            type: string
+            format: date
+            description: Filter date
+            example: 2025-06-01
+          example: 2025-06-01
+        - name: sortBy
+          in: query
+          description: Column to sort by
+          required: false
+          schema:
+            type: string
+            description: Column to sort by
+            example: Company
+          example: Company
         - name: page
           in: query
           description: Page number
@@ -1175,16 +1271,16 @@ components:
     Problem:
       type: object
       properties:
-        title:
-          type: string
-        detail:
-          type: string
         instance:
           type: string
           format: uri
         type:
           type: string
           format: uri
+        title:
+          type: string
+        detail:
+          type: string
         status:
           type: integer
           format: int32
@@ -1203,13 +1299,13 @@ components:
             $ref: "#/components/schemas/Violation"
         title:
           type: string
-        causeAsProblem:
-          $ref: "#/components/schemas/ThrowableProblem"
-        detail:
-          type: string
         instance:
           type: string
           format: uri
+        detail:
+          type: string
+        causeAsProblem:
+          $ref: "#/components/schemas/ThrowableProblem"
     ThrowableProblem:
       type: object
       properties:
