@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -14,6 +15,8 @@ import se.sundsvall.datawarehousereader.api.model.measurement.Aggregation;
 import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 
 @Repository
+
+@CircuitBreaker(name = "measurementRepository")
 public class MeasurementRepository {
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;

@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.api;
 
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -111,6 +112,88 @@ class InstalledBaseResourceFailuresTest {
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
 			tuple("installedBaseParameters",
 				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [facilityId, city, type, dateFrom, internalId, houseName, careOf, street, customerId, dateTo, company, postCode, id, lastChangedDate]."));
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
+	void getInstalledBaseByPartyIdInvalidUuid() {
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/{partyId}")
+			.build("not-a-valid-uuid"))
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("getInstalledBaseByPartyId.partyId", "not a valid UUID"));
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
+	void getInstalledBaseByPartyIdInvalidMunicipalityId() {
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path("/invalid-municipality/installedbase/{partyId}")
+			.build(UUID.randomUUID().toString()))
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("getInstalledBaseByPartyId.municipalityId", "not a valid municipality ID"));
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
+	void getInstalledBaseByPartyIdPageLessThanMinimum() {
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/{partyId}")
+			.queryParam("page", 0)
+			.build(UUID.randomUUID().toString()))
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("page", "must be greater than or equal to 1"));
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
+	void getInstalledBaseByPartyIdLimitMoreThanMaximum() {
+		final var response = webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/{partyId}")
+			.queryParam("limit", 1001)
+			.build(UUID.randomUUID().toString()))
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("limit", "Page limit cannot be greater than 1000"));
 
 		verifyNoInteractions(serviceMock);
 	}

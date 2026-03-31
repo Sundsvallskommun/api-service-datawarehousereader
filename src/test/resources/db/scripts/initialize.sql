@@ -9,6 +9,7 @@ drop table if exists kundinfo.vAgreements;
 drop procedure if exists kundinfo.spMeasurementDistrictHeating;
 drop procedure if exists kundinfo.spMeasurementElectricity;
 drop function if exists kundinfo.fnCustomerDetailWithPagingAndSort;
+drop function if exists kundinfo.fnInstalledBaseWithPagingAndSort;
 
 drop schema if exists kundinfo;
 create schema kundinfo;

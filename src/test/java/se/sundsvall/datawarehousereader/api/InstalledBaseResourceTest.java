@@ -1,5 +1,7 @@
 package se.sundsvall.datawarehousereader.api;
 
+import java.time.LocalDate;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -21,6 +23,8 @@ import se.sundsvall.datawarehousereader.service.InstalledBaseService;
 import static java.util.Optional.ofNullable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -132,6 +136,50 @@ class InstalledBaseResourceTest {
 		assertThat(parameters.getPostCode()).isNull();
 		assertThat(parameters.getStreet()).isNull();
 		assertThat(parameters.getType()).isNull();
+	}
+
+	@Test
+	void getInstalledBaseByPartyIdAllParams() {
+		final var partyId = UUID.randomUUID().toString();
+		final var organizationIds = "5564786647,5565027223";
+		final var date = LocalDate.of(2025, 6, 1);
+		final var sortBy = "Company";
+
+		when(serviceMock.getInstalledBase(any(Integer.class), any(Integer.class), any(), any(), any(), any()))
+			.thenReturn(InstalledBaseResponse.create());
+
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/{partyId}")
+			.queryParam("organizationIds", organizationIds)
+			.queryParam("date", date.toString())
+			.queryParam("sortBy", sortBy)
+			.queryParam("page", PAGE)
+			.queryParam("limit", LIMIT)
+			.build(partyId))
+			.exchange()
+			.expectStatus().isOk()
+			.expectHeader().contentType(APPLICATION_JSON)
+			.expectBody(InstalledBaseResponse.class)
+			.isEqualTo(InstalledBaseResponse.create());
+
+		verify(serviceMock).getInstalledBase(PAGE, LIMIT, organizationIds, date, partyId, sortBy);
+	}
+
+	@Test
+	void getInstalledBaseByPartyIdDefaultValues() {
+		final var partyId = UUID.randomUUID().toString();
+
+		when(serviceMock.getInstalledBase(any(Integer.class), any(Integer.class), any(), any(), any(), any()))
+			.thenReturn(InstalledBaseResponse.create());
+
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/{partyId}")
+			.build(partyId))
+			.exchange()
+			.expectStatus().isOk()
+			.expectHeader().contentType(APPLICATION_JSON)
+			.expectBody(InstalledBaseResponse.class)
+			.isEqualTo(InstalledBaseResponse.create());
+
+		verify(serviceMock).getInstalledBase(eq(DEFAULT_PAGE), eq(DEFAULT_LIMIT), isNull(), isNull(), eq(partyId), isNull());
 	}
 
 	private MultiValueMap<String, String> createParameterMap(Integer page, Integer limit, String company, String customerNumber, String type, String careOf, String street, String number, String postCode, String city) {
