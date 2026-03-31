@@ -161,7 +161,7 @@ class InstalledBaseResourceTest {
 			.expectBody(InstalledBaseResponse.class)
 			.isEqualTo(InstalledBaseResponse.create());
 
-		verify(serviceMock).getInstalledBase(eq(PAGE), eq(LIMIT), eq(organizationIds), eq(date), eq(partyId), eq(sortBy));
+		verify(serviceMock).getInstalledBase(PAGE, LIMIT, organizationIds, date, partyId, sortBy);
 	}
 
 	@Test

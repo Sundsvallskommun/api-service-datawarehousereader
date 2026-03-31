@@ -38,6 +38,10 @@ class InstalledBaseResource {
 		this.installedBaseService = installedBaseService;
 	}
 
+	/**
+	 * @deprecated Use {@link #getInstalledBaseByPartyId(String, String, InstalledBasePartyParameters)} instead. This method
+	 *             will be removed in future releases.
+	 */
 	@Deprecated(forRemoval = true)
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@Operation(summary = "Get installed base information", deprecated = true, description = "Resource returns all installed bases matching provided search parameters", responses = {
