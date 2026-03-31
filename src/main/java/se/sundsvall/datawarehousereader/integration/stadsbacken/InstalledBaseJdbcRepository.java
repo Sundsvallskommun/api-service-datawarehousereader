@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import se.sundsvall.datawarehousereader.api.model.installedbase.InstalledBaseRes
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 @Repository
+@CircuitBreaker(name = "installedBaseJdbcRepository")
 public class InstalledBaseJdbcRepository {
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;

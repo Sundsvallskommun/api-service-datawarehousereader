@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.3"
 servers:
-  - url: http://localhost:49992
+  - url: http://localhost:53654
     description: Generated server url
 tags:
   - name: Measurement
@@ -608,8 +608,8 @@ paths:
           schema:
             type: string
             description: Comma-separated list of organization ids
-            example: "123456789,123456987"
-          example: "123456789,123456987"
+            examples:
+              - "123456789,123456987"
         - name: date
           in: query
           description: Filter date
@@ -618,8 +618,8 @@ paths:
             type: string
             format: date
             description: Filter date
-            example: 2025-06-01
-          example: 2025-06-01
+            examples:
+              - 2025-06-01
         - name: sortBy
           in: query
           description: Column to sort by
@@ -627,8 +627,8 @@ paths:
           schema:
             type: string
             description: Column to sort by
-            example: Company
-          example: Company
+            examples:
+              - Company
         - name: page
           in: query
           description: Page number
@@ -1277,9 +1277,9 @@ components:
         type:
           type: string
           format: uri
-        title:
-          type: string
         detail:
+          type: string
+        title:
           type: string
         status:
           type: integer

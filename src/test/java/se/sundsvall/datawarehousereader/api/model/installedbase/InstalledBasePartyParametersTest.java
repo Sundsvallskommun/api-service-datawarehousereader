@@ -39,10 +39,10 @@ class InstalledBasePartyParametersTest {
 		final var date = LocalDate.now().minusDays(30);
 		final var sortBy = "Company";
 
-		final var parameters = InstalledBasePartyParameters.create();
-		parameters.setOrganizationIds(organizationIds);
-		parameters.setDate(date);
-		parameters.setSortBy(sortBy);
+		final var parameters = InstalledBasePartyParameters.create()
+			.withOrganizationIds(organizationIds)
+			.withDate(date)
+			.withSortBy(sortBy);
 
 		assertThat(parameters).isNotNull();
 		assertThat(parameters.getOrganizationIds()).isEqualTo(organizationIds);

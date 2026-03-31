@@ -10,17 +10,22 @@ import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingBase;
 @ParameterObject
 public class InstalledBasePartyParameters extends AbstractParameterPagingBase {
 
-	@Schema(description = "Comma-separated list of organization ids", example = "123456789,123456987")
+	@Schema(description = "Comma-separated list of organization ids", examples = "123456789,123456987")
 	private String organizationIds;
 
-	@Schema(description = "Filter date", example = "2025-06-01")
+	@Schema(description = "Filter date", examples = "2025-06-01")
 	private LocalDate date;
 
-	@Schema(description = "Column to sort by", example = "Company")
+	@Schema(description = "Column to sort by", examples = "Company")
 	private String sortBy;
 
 	public static InstalledBasePartyParameters create() {
 		return new InstalledBasePartyParameters();
+	}
+
+	public InstalledBasePartyParameters withOrganizationIds(final String organizationIds) {
+		this.organizationIds = organizationIds;
+		return this;
 	}
 
 	public String getOrganizationIds() {
@@ -31,12 +36,22 @@ public class InstalledBasePartyParameters extends AbstractParameterPagingBase {
 		this.organizationIds = organizationIds;
 	}
 
+	public InstalledBasePartyParameters withDate(final LocalDate date) {
+		this.date = date;
+		return this;
+	}
+
 	public LocalDate getDate() {
 		return date;
 	}
 
 	public void setDate(final LocalDate date) {
 		this.date = date;
+	}
+
+	public InstalledBasePartyParameters withSortBy(final String sortBy) {
+		this.sortBy = sortBy;
+		return this;
 	}
 
 	public String getSortBy() {

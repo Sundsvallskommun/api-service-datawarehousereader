@@ -42,7 +42,7 @@ class InstalledBaseResource {
 	 * @deprecated Use {@link #getInstalledBaseByPartyId(String, String, InstalledBasePartyParameters)} instead. This method
 	 *             will be removed in future releases.
 	 */
-	@Deprecated(forRemoval = true)
+	@Deprecated(forRemoval = true, since = "2026-03-31")
 	@GetMapping(produces = APPLICATION_JSON_VALUE)
 	@Operation(summary = "Get installed base information", deprecated = true, description = "Resource returns all installed bases matching provided search parameters", responses = {
 		@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true),
