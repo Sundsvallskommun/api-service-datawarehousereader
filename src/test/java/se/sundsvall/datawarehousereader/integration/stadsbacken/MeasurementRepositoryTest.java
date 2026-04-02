@@ -297,6 +297,130 @@ class MeasurementRepositoryTest {
 		assertThat(result.getInterpolation()).isZero();
 	}
 
+	@ParameterizedTest
+	@EnumSource(Aggregation.class)
+	void getDistrictCoolingMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
+		final var legalId = "5591561234";
+		final var facilityIds = "9115803075";
+		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
+		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var display = "onlyaggregated";
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictCoolingMeasurementMapper.class)))
+			.thenReturn(List.of());
+
+		repository.getDistrictCoolingMeasurements(legalId, facilityIds, aggregation, fromDateTime, toDateTime, display);
+
+		verify(jdbcTemplateMock).query(
+			eq("{call kundinfo.spMeasurementDistrictCooling(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}"),
+			parametersCaptor.capture(),
+			any(MeasurementRepository.DistrictCoolingMeasurementMapper.class));
+
+		final var parameters = parametersCaptor.getValue();
+		assertThat(parameters.getValue("legalId")).isEqualTo(legalId);
+		assertThat(parameters.getValue("facilityIds")).isEqualTo(facilityIds);
+		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.valueOf(fromDateTime));
+		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.valueOf(toDateTime));
+		assertThat(parameters.getValue("aggregation")).isEqualTo(aggregation.name());
+		assertThat(parameters.getValue("display")).isEqualTo(display);
+	}
+
+	@Test
+	void getDistrictCoolingMeasurementsWithNullAggregation() {
+		final var legalId = "5591561234";
+		final var facilityIds = "9115803075";
+		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
+		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictCoolingMeasurementMapper.class)))
+			.thenReturn(List.of());
+
+		repository.getDistrictCoolingMeasurements(legalId, facilityIds, null, fromDateTime, toDateTime, null);
+
+		verify(jdbcTemplateMock).query(
+			eq("{call kundinfo.spMeasurementDistrictCooling(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}"),
+			parametersCaptor.capture(),
+			any(MeasurementRepository.DistrictCoolingMeasurementMapper.class));
+
+		final var parameters = parametersCaptor.getValue();
+		assertThat(parameters.getValue("aggregation")).isNull();
+		assertThat(parameters.getValue("display")).isNull();
+	}
+
+	@Test
+	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
+		final var expectedOffsetDateTime = OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
+		final var expectedTimestamp = Timestamp.from(expectedOffsetDateTime.toInstant());
+		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
+			.thenReturn(List.of());
+
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now(), null);
+
+		final var mapper = rowMapperCaptor.getValue();
+		final var result = mapper.mapRow(resultSetMock, 0);
+
+		assertThat(result.getUuid()).isEqualTo("uuid-456");
+		assertThat(result.getCustomerOrgId()).isEqualTo("5591561234");
+		assertThat(result.getFacilityId()).isEqualTo("9115803075");
+		assertThat(result.getFeedType()).isEqualTo("Aktiv");
+		assertThat(result.getUnit()).isEqualTo("kWh");
+		assertThat(result.getUsage()).isEqualTo(BigDecimal.valueOf(7910L));
+		assertThat(result.getInterpolation()).isZero();
+		assertThat(result.getDateAndTime()).isEqualTo(expectedOffsetDateTime);
+	}
+
+	@Test
+	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForQuarterAggregation() throws SQLException {
+		final var expectedTimestamp = Timestamp.from(OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC).toInstant());
+		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
+			.thenReturn(List.of());
+
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now(), null);
+
+		final var mapper = rowMapperCaptor.getValue();
+		final var result = mapper.mapRow(resultSetMock, 0);
+
+		assertThat(result.getInterpolation()).isZero();
+	}
+
+	@Test
+	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForDayAggregation() throws SQLException {
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 3, 23, 0, 0, 0));
+		setupResultSetMock("uuid-789", "5566661234", "9261219043", "energy", "kWh", BigDecimal.valueOf(1393L), expectedTimestamp);
+		when(resultSetMock.getInt("isInterpolted")).thenReturn(0);
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
+			.thenReturn(List.of());
+
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now(), null);
+
+		final var mapper = rowMapperCaptor.getValue();
+		final var result = mapper.mapRow(resultSetMock, 0);
+
+		assertThat(result.getInterpolation()).isZero();
+	}
+
+	@Test
+	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForMonthAggregation() throws SQLException {
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, 2, 1, 0, 0, 0));
+		setupResultSetMock("uuid-abc", "5534567890", "735999109113202014", "Aktiv", "kWh", BigDecimal.valueOf(1772), expectedTimestamp);
+		when(resultSetMock.getInt("isInterpolated")).thenReturn(0);
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
+			.thenReturn(List.of());
+
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now(), null);
+
+		final var mapper = rowMapperCaptor.getValue();
+		final var result = mapper.mapRow(resultSetMock, 0);
+
+		assertThat(result.getInterpolation()).isZero();
+	}
+
 	private void setupResultSetMock(String uuid, String customerOrgId, String facilityIds, String feedType, String unit, BigDecimal usage, Timestamp dateAndTime) throws SQLException {
 		when(resultSetMock.getString("uuid")).thenReturn(uuid);
 		when(resultSetMock.getString("customerorgid")).thenReturn(customerOrgId);

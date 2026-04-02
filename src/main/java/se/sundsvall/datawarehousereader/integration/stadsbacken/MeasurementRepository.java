@@ -57,6 +57,51 @@ public class MeasurementRepository {
 			parameters, new DistrictHeatingMeasurementMapper(aggregation));
 	}
 
+	public List<Measurement> getDistrictCoolingMeasurements(final String legalId, final String facilityId,
+		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
+
+		var parameters = new MapSqlParameterSource()
+			.addValue("legalId", legalId)
+			.addValue("facilityIds", facilityId)
+			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
+			.addValue("toDate", Timestamp.valueOf(toDateTime))
+			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
+			.addValue("display", display);
+
+		return jdbcTemplate.query(
+			"{call kundinfo.spMeasurementDistrictCooling(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
+			parameters, new DistrictCoolingMeasurementMapper(aggregation));
+	}
+
+	static class DistrictCoolingMeasurementMapper implements RowMapper<Measurement> {
+		private final Aggregation aggregation;
+
+		DistrictCoolingMeasurementMapper(final Aggregation aggregation) {
+			this.aggregation = aggregation;
+		}
+
+		@Override
+		public Measurement mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
+			return Measurement.create()
+				.withUuid(resultSet.getString("uuid"))
+				.withCustomerOrgId(resultSet.getString("customerorgid"))
+				.withFacilityId(resultSet.getString("facilityId"))
+				.withFeedType(resultSet.getString("feedType"))
+				.withUnit(resultSet.getString("unit"))
+				.withUsage(resultSet.getBigDecimal("usage"))
+				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC))
+				.withInterpolation(getInterpolation(resultSet));
+		}
+
+		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
+			return switch (aggregation) {
+				case HOUR, QUARTER -> 0;
+				case MONTH -> resultSet.getInt("isInterpolated");
+				case DAY -> resultSet.getInt("isInterpolted");
+			};
+		}
+	}
+
 	static class DistrictHeatingMeasurementMapper implements RowMapper<Measurement> {
 		private final Aggregation aggregation;
 
@@ -73,8 +118,8 @@ public class MeasurementRepository {
 				.withFeedType(resultSet.getString("feedType"))
 				.withUnit(resultSet.getString("unit"))
 				.withUsage(resultSet.getBigDecimal("usage"))
-				.withInterpolation(getInterpolation(resultSet))
-				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC));
+				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC))
+				.withInterpolation(getInterpolation(resultSet));
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {

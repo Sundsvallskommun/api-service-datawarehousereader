@@ -37,6 +37,7 @@ public class MeasurementService {
 		final var display = Optional.ofNullable(parameters.getDisplay()).map(d -> d.name().toLowerCase()).orElse(null);
 
 		return switch (category) {
+			case DISTRICT_COOLING -> measurementRepository.getDistrictCoolingMeasurements(legalId, facilityIds, aggregateOn, fromDateTime, toDateTime, display);
 			case DISTRICT_HEATING -> measurementRepository.getDistrictHeatingMeasurements(legalId, facilityIds, aggregateOn, fromDateTime, toDateTime, display);
 			case ELECTRICITY -> measurementRepository.getElectricityMeasurements(legalId, facilityIds, aggregateOn, fromDateTime, toDateTime, display);
 			default -> throw Problem.valueOf(NOT_IMPLEMENTED, String.format(CATEGORY_NOT_IMPLEMENTED, category));

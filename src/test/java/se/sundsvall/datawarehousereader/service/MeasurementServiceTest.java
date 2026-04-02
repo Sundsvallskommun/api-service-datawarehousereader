@@ -275,9 +275,36 @@ class MeasurementServiceTest {
 		verify(measurementRepositoryMock).getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null);
 	}
 
+	@Test
+	void getDistrictCoolingMeasurementsReturnsEmptyList() {
+		final var municipalityId = "2281";
+		final var partyId = "81471222-5798-11e9-ae24-57fa13b361e1";
+		final var legalId = "5591627751";
+		final var facilityId = List.of("facilityId");
+		final var aggregation = Aggregation.MONTH;
+		final var fromDateTime = OffsetDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2023, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
+
+		final var parameters = new MeasurementParameters();
+		parameters.setPartyId(partyId);
+		parameters.setFacilityIds(facilityId);
+		parameters.setFromDateTime(fromDateTime);
+		parameters.setToDateTime(toDateTime);
+
+		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
+		when(measurementRepositoryMock.getDistrictCoolingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null)).thenReturn(List.of());
+
+		final var result = service.getMeasurements(municipalityId, Category.DISTRICT_COOLING, aggregation, parameters);
+
+		assertThat(result).isEmpty();
+
+		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
+		verify(measurementRepositoryMock).getDistrictCoolingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null);
+	}
+
 	@ParameterizedTest
 	@EnumSource(value = Category.class, names = {
-		"COMMUNICATION", "DISTRICT_COOLING", "ELECTRICITY_TRADE", "WASTE_MANAGEMENT", "WATER"
+		"COMMUNICATION", "ELECTRICITY_TRADE", "WASTE_MANAGEMENT", "WATER"
 	})
 	void getNotImplementedCategoryThrowsProblem(Category category) {
 		final var municipalityId = "2281";
