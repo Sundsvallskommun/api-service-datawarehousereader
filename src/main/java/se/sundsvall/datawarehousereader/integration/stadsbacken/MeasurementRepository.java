@@ -19,6 +19,23 @@ import se.sundsvall.datawarehousereader.api.model.measurement.Measurement;
 @CircuitBreaker(name = "measurementRepository")
 public class MeasurementRepository {
 
+	private static final String LEGAL_ID = "legalId";
+	private static final String FACILITY_IDS = "facilityIds";
+	private static final String FROM_DATE = "fromDate";
+	private static final String TO_DATE = "toDate";
+	private static final String AGGREGATION = "aggregation";
+	private static final String DISPLAY = "display";
+
+	private static final String UUID = "uuid";
+	private static final String CUSTOMER_ORG_ID = "customerorgid";
+	private static final String FACILITY_ID = "facilityId";
+	private static final String FEED_TYPE = "feedType";
+	private static final String UNIT = "unit";
+	private static final String USAGE = "usage";
+	private static final String DATE_AND_TIME = "DateAndTime";
+	private static final String IS_INTERPOLATED = "isInterpolated";
+	private static final String IS_INTERPOLTED = "isInterpolted";
+
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
 	public MeasurementRepository(final NamedParameterJdbcTemplate jdbcTemplate) {
@@ -29,12 +46,12 @@ public class MeasurementRepository {
 		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
 
 		var parameters = new MapSqlParameterSource()
-			.addValue("legalId", legalId)
-			.addValue("facilityIds", facilityId)
-			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
-			.addValue("toDate", Timestamp.valueOf(toDateTime))
-			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
-			.addValue("display", display);
+			.addValue(LEGAL_ID, legalId)
+			.addValue(FACILITY_IDS, facilityId)
+			.addValue(FROM_DATE, Timestamp.valueOf(fromDateTime))
+			.addValue(TO_DATE, Timestamp.valueOf(toDateTime))
+			.addValue(AGGREGATION, aggregation != null ? aggregation.name() : null)
+			.addValue(DISPLAY, display);
 
 		return jdbcTemplate.query(
 			"{call kundinfo.spMeasurementElectricity(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
@@ -45,16 +62,61 @@ public class MeasurementRepository {
 		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
 
 		var parameters = new MapSqlParameterSource()
-			.addValue("legalId", legalId)
-			.addValue("facilityIds", facilityId)
-			.addValue("fromDate", Timestamp.valueOf(fromDateTime))
-			.addValue("toDate", Timestamp.valueOf(toDateTime))
-			.addValue("aggregation", aggregation != null ? aggregation.name() : null)
-			.addValue("display", display);
+			.addValue(LEGAL_ID, legalId)
+			.addValue(FACILITY_IDS, facilityId)
+			.addValue(FROM_DATE, Timestamp.valueOf(fromDateTime))
+			.addValue(TO_DATE, Timestamp.valueOf(toDateTime))
+			.addValue(AGGREGATION, aggregation != null ? aggregation.name() : null)
+			.addValue(DISPLAY, display);
 
 		return jdbcTemplate.query(
 			"{call kundinfo.spMeasurementDistrictHeating(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
 			parameters, new DistrictHeatingMeasurementMapper(aggregation));
+	}
+
+	public List<Measurement> getDistrictCoolingMeasurements(final String legalId, final String facilityId,
+		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
+
+		var parameters = new MapSqlParameterSource()
+			.addValue(LEGAL_ID, legalId)
+			.addValue(FACILITY_IDS, facilityId)
+			.addValue(FROM_DATE, Timestamp.valueOf(fromDateTime))
+			.addValue(TO_DATE, Timestamp.valueOf(toDateTime))
+			.addValue(AGGREGATION, aggregation != null ? aggregation.name() : null)
+			.addValue(DISPLAY, display);
+
+		return jdbcTemplate.query(
+			"{call kundinfo.spMeasurementDistrictCooling(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
+			parameters, new DistrictCoolingMeasurementMapper(aggregation));
+	}
+
+	static class DistrictCoolingMeasurementMapper implements RowMapper<Measurement> {
+		private final Aggregation aggregation;
+
+		DistrictCoolingMeasurementMapper(final Aggregation aggregation) {
+			this.aggregation = aggregation;
+		}
+
+		@Override
+		public Measurement mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
+			return Measurement.create()
+				.withUuid(resultSet.getString(UUID))
+				.withCustomerOrgId(resultSet.getString(CUSTOMER_ORG_ID))
+				.withFacilityId(resultSet.getString(FACILITY_ID))
+				.withFeedType(resultSet.getString(FEED_TYPE))
+				.withUnit(resultSet.getString(UNIT))
+				.withUsage(resultSet.getBigDecimal(USAGE))
+				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atOffset(ZoneOffset.UTC))
+				.withInterpolation(getInterpolation(resultSet));
+		}
+
+		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
+			return switch (aggregation) {
+				case HOUR, QUARTER -> 0;
+				case MONTH -> resultSet.getInt(IS_INTERPOLATED);
+				case DAY -> resultSet.getInt(IS_INTERPOLTED);
+			};
+		}
 	}
 
 	static class DistrictHeatingMeasurementMapper implements RowMapper<Measurement> {
@@ -67,21 +129,21 @@ public class MeasurementRepository {
 		@Override
 		public Measurement mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 			return Measurement.create()
-				.withUuid(resultSet.getString("uuid"))
-				.withCustomerOrgId(resultSet.getString("customerorgid"))
-				.withFacilityId(resultSet.getString("facilityId"))
-				.withFeedType(resultSet.getString("feedType"))
-				.withUnit(resultSet.getString("unit"))
-				.withUsage(resultSet.getBigDecimal("usage"))
-				.withInterpolation(getInterpolation(resultSet))
-				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC));
+				.withUuid(resultSet.getString(UUID))
+				.withCustomerOrgId(resultSet.getString(CUSTOMER_ORG_ID))
+				.withFacilityId(resultSet.getString(FACILITY_ID))
+				.withFeedType(resultSet.getString(FEED_TYPE))
+				.withUnit(resultSet.getString(UNIT))
+				.withUsage(resultSet.getBigDecimal(USAGE))
+				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atOffset(ZoneOffset.UTC))
+				.withInterpolation(getInterpolation(resultSet));
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
 				case HOUR, QUARTER -> 0;
-				case MONTH -> resultSet.getInt("isInterpolated");
-				case DAY -> resultSet.getInt("isInterpolted");
+				case MONTH -> resultSet.getInt(IS_INTERPOLATED);
+				case DAY -> resultSet.getInt(IS_INTERPOLTED);
 			};
 		}
 	}
@@ -96,21 +158,21 @@ public class MeasurementRepository {
 		@Override
 		public Measurement mapRow(final ResultSet resultSet, final int rowNum) throws SQLException {
 			return Measurement.create()
-				.withUuid(resultSet.getString("uuid"))
-				.withCustomerOrgId(resultSet.getString("customerorgid"))
-				.withFacilityId(resultSet.getString("facilityId"))
-				.withFeedType(resultSet.getString("feedType"))
-				.withUnit(resultSet.getString("unit"))
-				.withUsage(resultSet.getBigDecimal("usage"))
-				.withInterpolation(getInterpolation(resultSet))
-				.withDateAndTime(resultSet.getTimestamp("DateAndTime").toInstant().atOffset(ZoneOffset.UTC));
+				.withUuid(resultSet.getString(UUID))
+				.withCustomerOrgId(resultSet.getString(CUSTOMER_ORG_ID))
+				.withFacilityId(resultSet.getString(FACILITY_ID))
+				.withFeedType(resultSet.getString(FEED_TYPE))
+				.withUnit(resultSet.getString(UNIT))
+				.withUsage(resultSet.getBigDecimal(USAGE))
+				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atOffset(ZoneOffset.UTC))
+				.withInterpolation(getInterpolation(resultSet));
 		}
 
 		private Integer getInterpolation(final ResultSet resultSet) throws SQLException {
 			return switch (aggregation) {
 				case HOUR -> 0;
-				case MONTH -> resultSet.getInt("isInterpolated");
-				case DAY, QUARTER -> resultSet.getInt("isInterpolted");
+				case MONTH -> resultSet.getInt(IS_INTERPOLATED);
+				case DAY, QUARTER -> resultSet.getInt(IS_INTERPOLTED);
 			};
 		}
 	}

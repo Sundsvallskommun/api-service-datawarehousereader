@@ -6,6 +6,7 @@ drop table if exists kundinfo.vInstallations;
 drop table if exists kundinfo.vInvoiceDetail_Test_251126;
 drop table if exists kundinfo.vInvoice_Test_251126;
 drop table if exists kundinfo.vAgreements;
+drop procedure if exists kundinfo.spMeasurementDistrictCooling;
 drop procedure if exists kundinfo.spMeasurementDistrictHeating;
 drop procedure if exists kundinfo.spMeasurementElectricity;
 drop function if exists kundinfo.fnCustomerDetailWithPagingAndSort;
@@ -13,6 +14,50 @@ drop function if exists kundinfo.fnInstalledBaseWithPagingAndSort;
 
 drop schema if exists kundinfo;
 create schema kundinfo;
+
+create procedure kundinfo.spMeasurementDistrictCooling(@customerorgid as varchar(8000),
+                                                       @anlaggningsID as varchar(255), @datum_start as datetime2,
+                                                       @datum_stop as datetime2, @aggregationLevel as varchar(50),
+                                                       @display as varchar(50))
+as
+begin
+    -- Test case: HOUR aggregation for legalId 5591561234 and facilityId 9115803075
+    if @customerorgid = '5591561234' and @anlaggningsID = '9115803075' and @aggregationLevel = 'HOUR'
+    begin
+        select 'C1D2E3F4-93AC-480B-821D-E238C8F4D952' as uuid, '5591561234' as customerorgid, '9115803075' as facilityId, 'Aktiv' as feedType, 'kWh' as unit, cast(3210.04 as decimal(28,10)) as [usage], cast('2022-01-01 01:00:00' as datetime) as DateAndTime
+        union all select 'C1D2E3F4-93AC-480B-821D-E238C8F4D952', '5591561234', '9115803075', 'Aktiv', 'kWh', cast(3210.18 as decimal(28,10)), cast('2022-01-01 02:00:00' as datetime)
+        union all select 'C1D2E3F4-93AC-480B-821D-E238C8F4D952', '5591561234', '9115803075', 'Aktiv', 'kWh', cast(3210.33 as decimal(28,10)), cast('2022-01-01 03:00:00' as datetime)
+    end
+
+    -- Test case: DAY aggregation for legalId 5566661234 and facilityId 9261219043
+    else if @customerorgid = '5566661234' and @anlaggningsID = '9261219043' and @aggregationLevel = 'DAY'
+    begin
+        select null as uuid, '5566661234' as customerorgid, '9261219043' as facilityId, 'energy' as feedType, 'kWh' as unit, cast(593 as decimal(28,10)) as [usage], cast('2022-03-23 00:00:00' as datetime) as DateAndTime, 0 as isInterpolted
+        union all select null, '5566661234', '9261219043', 'energy', 'kWh', cast(603 as decimal(28,10)), cast('2022-03-24 00:00:00' as datetime), 0
+        union all select null, '5566661234', '9261219043', 'energy', 'kWh', cast(567 as decimal(28,10)), cast('2022-03-25 00:00:00' as datetime), 0
+    end
+
+    -- Test case: MONTH aggregation for legalId 5534567890 and facilityId 735999109113202014
+    else if @customerorgid = '5534567890' and @anlaggningsID = '735999109113202014' and @aggregationLevel = 'MONTH'
+    begin
+        select null as uuid, '5534567890' as customerorgid, '735999109113202014' as facilityId, 'Aktiv' as feedType, 'kWh' as unit, cast(772.10 as decimal(28,10)) as [usage], cast('2018-02-01 00:00:00' as datetime) as DateAndTime, 0 as isInterpolated
+        union all select null, '5534567890', '735999109113202014', 'Aktiv', 'kWh', cast(860.90 as decimal(28,10)), cast('2018-03-01 00:00:00' as datetime), 0
+        union all select null, '5534567890', '735999109113202014', 'Aktiv', 'kWh', cast(761.68 as decimal(28,10)), cast('2018-04-01 00:00:00' as datetime), 0
+    end
+
+    -- Default: return empty result set
+    else
+    begin
+        select cast(null as varchar(36)) as uuid,
+               cast(null as varchar(8000)) as customerorgid,
+               cast(null as varchar(255)) as facilityId,
+               cast(null as varchar(255)) as feedType,
+               cast(null as varchar(255)) as unit,
+               cast(null as decimal(28,10)) as [usage],
+               cast(null as datetime) as DateAndTime
+        where 1 = 0
+    end
+end;
 
 create procedure kundinfo.spMeasurementDistrictHeating(@customerorgid as varchar(8000),
                                                        @anlaggningsID as varchar(255), @datum_start as datetime2,

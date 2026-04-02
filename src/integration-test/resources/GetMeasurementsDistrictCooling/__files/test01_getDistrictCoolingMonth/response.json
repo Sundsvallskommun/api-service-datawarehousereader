@@ -1,0 +1,29 @@
+[
+	{
+		"customerOrgId": "5534567890",
+		"facilityId": "735999109113202014",
+		"feedType": "Aktiv",
+		"unit": "kWh",
+		"usage": 772.1,
+		"interpolation": 0,
+		"dateAndTime": "2018-01-31T23:00:00Z"
+	},
+	{
+		"customerOrgId": "5534567890",
+		"facilityId": "735999109113202014",
+		"feedType": "Aktiv",
+		"unit": "kWh",
+		"usage": 860.9,
+		"interpolation": 0,
+		"dateAndTime": "2018-02-28T23:00:00Z"
+	},
+	{
+		"customerOrgId": "5534567890",
+		"facilityId": "735999109113202014",
+		"feedType": "Aktiv",
+		"unit": "kWh",
+		"usage": 761.68,
+		"interpolation": 0,
+		"dateAndTime": "2018-03-31T22:00:00Z"
+	}
+]
