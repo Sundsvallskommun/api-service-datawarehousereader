@@ -6,7 +6,7 @@
 		"unit": "kWh",
 		"usage": 1772.1,
 		"interpolation": 0,
-		"dateAndTime": "2018-01-31T23:00:00Z"
+		"dateAndTime": "2018-02-01T00:00:00+01:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -15,7 +15,7 @@
 		"unit": "kWh",
 		"usage": 2060.9,
 		"interpolation": 0,
-		"dateAndTime": "2018-02-28T23:00:00Z"
+		"dateAndTime": "2018-03-01T00:00:00+01:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -24,7 +24,7 @@
 		"unit": "kWh",
 		"usage": 1961.68,
 		"interpolation": 0,
-		"dateAndTime": "2018-03-31T22:00:00Z"
+		"dateAndTime": "2018-04-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -33,7 +33,7 @@
 		"unit": "kWh",
 		"usage": 1896.27,
 		"interpolation": 0,
-		"dateAndTime": "2018-04-30T22:00:00Z"
+		"dateAndTime": "2018-05-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -42,7 +42,7 @@
 		"unit": "kWh",
 		"usage": 1691.52,
 		"interpolation": 0,
-		"dateAndTime": "2018-05-31T22:00:00Z"
+		"dateAndTime": "2018-06-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -51,7 +51,7 @@
 		"unit": "kWh",
 		"usage": 1752.58,
 		"interpolation": 0,
-		"dateAndTime": "2018-06-30T22:00:00Z"
+		"dateAndTime": "2018-07-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -60,7 +60,7 @@
 		"unit": "kWh",
 		"usage": 1884.22,
 		"interpolation": 0,
-		"dateAndTime": "2018-07-31T22:00:00Z"
+		"dateAndTime": "2018-08-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -69,7 +69,7 @@
 		"unit": "kWh",
 		"usage": 1781.29,
 		"interpolation": 0,
-		"dateAndTime": "2018-08-31T22:00:00Z"
+		"dateAndTime": "2018-09-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -78,7 +78,7 @@
 		"unit": "kWh",
 		"usage": 1853.54,
 		"interpolation": 0,
-		"dateAndTime": "2018-09-30T22:00:00Z"
+		"dateAndTime": "2018-10-01T00:00:00+02:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -87,7 +87,7 @@
 		"unit": "kWh",
 		"usage": 2116.19,
 		"interpolation": 0,
-		"dateAndTime": "2018-10-31T23:00:00Z"
+		"dateAndTime": "2018-11-01T00:00:00+01:00"
 	},
 	{
 		"customerOrgId": "5534567890",
@@ -96,6 +96,6 @@
 		"unit": "kWh",
 		"usage": 2111.47,
 		"interpolation": 0,
-		"dateAndTime": "2018-11-30T23:00:00Z"
+		"dateAndTime": "2018-12-01T00:00:00+01:00"
 	}
 ]

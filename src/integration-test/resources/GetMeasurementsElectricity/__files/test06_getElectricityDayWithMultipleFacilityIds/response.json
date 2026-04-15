@@ -7,7 +7,7 @@
 		"unit": "kWh",
 		"usage": 4.587,
 		"interpolation": 24,
-		"dateAndTime": "2022-04-01T22:00:00Z"
+		"dateAndTime": "2022-04-02T00:00:00+02:00"
 	},
 	{
 		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
@@ -17,6 +17,6 @@
 		"unit": "kWh",
 		"usage": 3.21,
 		"interpolation": 12,
-		"dateAndTime": "2022-04-01T22:00:00Z"
+		"dateAndTime": "2022-04-02T00:00:00+02:00"
 	}
 ]
