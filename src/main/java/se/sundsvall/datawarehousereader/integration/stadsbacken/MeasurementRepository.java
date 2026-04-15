@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -106,7 +106,7 @@ public class MeasurementRepository {
 				.withFeedType(resultSet.getString(FEED_TYPE))
 				.withUnit(resultSet.getString(UNIT))
 				.withUsage(resultSet.getBigDecimal(USAGE))
-				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atOffset(ZoneOffset.UTC))
+				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime())
 				.withInterpolation(getInterpolation(resultSet));
 		}
 
@@ -135,7 +135,7 @@ public class MeasurementRepository {
 				.withFeedType(resultSet.getString(FEED_TYPE))
 				.withUnit(resultSet.getString(UNIT))
 				.withUsage(resultSet.getBigDecimal(USAGE))
-				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atOffset(ZoneOffset.UTC))
+				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime())
 				.withInterpolation(getInterpolation(resultSet));
 		}
 
@@ -164,7 +164,7 @@ public class MeasurementRepository {
 				.withFeedType(resultSet.getString(FEED_TYPE))
 				.withUnit(resultSet.getString(UNIT))
 				.withUsage(resultSet.getBigDecimal(USAGE))
-				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atOffset(ZoneOffset.UTC))
+				.withDateAndTime(resultSet.getTimestamp(DATE_AND_TIME).toInstant().atZone(ZoneId.systemDefault()).toOffsetDateTime())
 				.withInterpolation(getInterpolation(resultSet));
 		}
 

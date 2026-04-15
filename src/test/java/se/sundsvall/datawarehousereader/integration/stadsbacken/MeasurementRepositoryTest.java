@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -150,8 +151,9 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
-		final var expectedOffsetDateTime = OffsetDateTime.of(2022, 4, 11, 10, 0, 0, 0, ZoneOffset.UTC);
-		final var expectedTimestamp = Timestamp.from(expectedOffsetDateTime.toInstant());
+		final var expectedInstant = OffsetDateTime.of(2022, 4, 11, 10, 0, 0, 0, ZoneOffset.UTC).toInstant();
+		final var expectedOffsetDateTime = expectedInstant.atZone(ZoneId.systemDefault()).toOffsetDateTime();
+		final var expectedTimestamp = Timestamp.from(expectedInstant);
 		setupResultSetMock("uuid-123", "5534567890", "facilityIds", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -225,8 +227,9 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
-		final var expectedOffsetDateTime = OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
-		final var expectedTimestamp = Timestamp.from(expectedOffsetDateTime.toInstant());
+		final var expectedInstant = OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC).toInstant();
+		final var expectedOffsetDateTime = expectedInstant.atZone(ZoneId.systemDefault()).toOffsetDateTime();
+		final var expectedTimestamp = Timestamp.from(expectedInstant);
 		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
@@ -349,8 +352,9 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForHourAggregation() throws SQLException {
-		final var expectedOffsetDateTime = OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC);
-		final var expectedTimestamp = Timestamp.from(expectedOffsetDateTime.toInstant());
+		final var expectedInstant = OffsetDateTime.of(2022, 1, 1, 10, 0, 0, 0, ZoneOffset.UTC).toInstant();
+		final var expectedOffsetDateTime = expectedInstant.atZone(ZoneId.systemDefault()).toOffsetDateTime();
+		final var expectedTimestamp = Timestamp.from(expectedInstant);
 		setupResultSetMock("uuid-456", "5591561234", "9115803075", "Aktiv", "kWh", BigDecimal.valueOf(7910L), expectedTimestamp);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
