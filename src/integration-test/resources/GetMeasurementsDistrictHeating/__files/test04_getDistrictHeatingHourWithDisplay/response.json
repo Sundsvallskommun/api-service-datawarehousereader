@@ -7,7 +7,7 @@
 		"unit": "kWh",
 		"usage": 7910.04,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T00:00:00Z"
+		"dateAndTime": "2022-01-01T01:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -17,7 +17,7 @@
 		"unit": "kWh",
 		"usage": 7910.18,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T01:00:00Z"
+		"dateAndTime": "2022-01-01T02:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -27,7 +27,7 @@
 		"unit": "kWh",
 		"usage": 7910.33,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T02:00:00Z"
+		"dateAndTime": "2022-01-01T03:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -37,7 +37,7 @@
 		"unit": "kWh",
 		"usage": 7910.47,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T03:00:00Z"
+		"dateAndTime": "2022-01-01T04:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -47,7 +47,7 @@
 		"unit": "kWh",
 		"usage": 7910.61,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T04:00:00Z"
+		"dateAndTime": "2022-01-01T05:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -57,7 +57,7 @@
 		"unit": "kWh",
 		"usage": 7910.75,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T05:00:00Z"
+		"dateAndTime": "2022-01-01T06:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -67,7 +67,7 @@
 		"unit": "kWh",
 		"usage": 7910.89,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T06:00:00Z"
+		"dateAndTime": "2022-01-01T07:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -77,7 +77,7 @@
 		"unit": "kWh",
 		"usage": 7911.03,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T07:00:00Z"
+		"dateAndTime": "2022-01-01T08:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -87,7 +87,7 @@
 		"unit": "kWh",
 		"usage": 7911.17,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T08:00:00Z"
+		"dateAndTime": "2022-01-01T09:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -97,7 +97,7 @@
 		"unit": "kWh",
 		"usage": 7911.31,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T09:00:00Z"
+		"dateAndTime": "2022-01-01T10:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -107,7 +107,7 @@
 		"unit": "kWh",
 		"usage": 7911.45,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T10:00:00Z"
+		"dateAndTime": "2022-01-01T11:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -117,7 +117,7 @@
 		"unit": "kWh",
 		"usage": 7911.6,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T11:00:00Z"
+		"dateAndTime": "2022-01-01T12:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -127,7 +127,7 @@
 		"unit": "kWh",
 		"usage": 7911.75,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T12:00:00Z"
+		"dateAndTime": "2022-01-01T13:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -137,7 +137,7 @@
 		"unit": "kWh",
 		"usage": 7911.91,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T13:00:00Z"
+		"dateAndTime": "2022-01-01T14:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -147,7 +147,7 @@
 		"unit": "kWh",
 		"usage": 7912.06,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T14:00:00Z"
+		"dateAndTime": "2022-01-01T15:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -157,7 +157,7 @@
 		"unit": "kWh",
 		"usage": 7912.23,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T15:00:00Z"
+		"dateAndTime": "2022-01-01T16:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -167,7 +167,7 @@
 		"unit": "kWh",
 		"usage": 7912.39,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T16:00:00Z"
+		"dateAndTime": "2022-01-01T17:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -177,7 +177,7 @@
 		"unit": "kWh",
 		"usage": 7912.54,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T17:00:00Z"
+		"dateAndTime": "2022-01-01T18:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -187,7 +187,7 @@
 		"unit": "kWh",
 		"usage": 7912.71,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T18:00:00Z"
+		"dateAndTime": "2022-01-01T19:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -197,7 +197,7 @@
 		"unit": "kWh",
 		"usage": 7912.89,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T19:00:00Z"
+		"dateAndTime": "2022-01-01T20:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -207,7 +207,7 @@
 		"unit": "kWh",
 		"usage": 7913.06,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T20:00:00Z"
+		"dateAndTime": "2022-01-01T21:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -217,7 +217,7 @@
 		"unit": "kWh",
 		"usage": 7913.23,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T21:00:00Z"
+		"dateAndTime": "2022-01-01T22:00:00+01:00"
 	},
 	{
 		"uuid": "A0B52C5B-93AC-480B-821D-E238C8F4D952",
@@ -227,6 +227,6 @@
 		"unit": "kWh",
 		"usage": 7913.38,
 		"interpolation": 0,
-		"dateAndTime": "2022-01-01T22:00:00Z"
+		"dateAndTime": "2022-01-01T23:00:00+01:00"
 	}
 ]

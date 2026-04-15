@@ -6,7 +6,7 @@
 		"unit": "kWh",
 		"usage": 500.5,
 		"interpolation": 0,
-		"dateAndTime": "2022-03-22T23:00:00Z"
+		"dateAndTime": "2022-03-23T00:00:00+01:00"
 	},
 	{
 		"customerOrgId": "5591561234",
@@ -15,6 +15,6 @@
 		"unit": "kWh",
 		"usage": 600.3,
 		"interpolation": 0,
-		"dateAndTime": "2022-03-22T23:00:00Z"
+		"dateAndTime": "2022-03-23T00:00:00+01:00"
 	}
 ]

@@ -7,7 +7,7 @@
 		"unit": "kWh",
 		"usage": 4.587,
 		"interpolation": 24,
-		"dateAndTime": "2022-04-01T22:00:00Z"
+		"dateAndTime": "2022-04-02T00:00:00+02:00"
 	},
 	{
 		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
@@ -17,7 +17,7 @@
 		"unit": "kWh",
 		"usage": 5.879,
 		"interpolation": 23,
-		"dateAndTime": "2022-04-02T22:00:00Z"
+		"dateAndTime": "2022-04-03T00:00:00+02:00"
 	},
 	{
 		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
@@ -27,7 +27,7 @@
 		"unit": "kWh",
 		"usage": 6.41,
 		"interpolation": 0,
-		"dateAndTime": "2022-04-07T22:00:00Z"
+		"dateAndTime": "2022-04-08T00:00:00+02:00"
 	},
 	{
 		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
@@ -37,7 +37,7 @@
 		"unit": "kWh",
 		"usage": 4.587,
 		"interpolation": 24,
-		"dateAndTime": "2022-04-08T22:00:00Z"
+		"dateAndTime": "2022-04-09T00:00:00+02:00"
 	},
 	{
 		"uuid": "16A64870-DF4D-4A27-A514-56297AB6F8D9",
@@ -47,6 +47,6 @@
 		"unit": "kWh",
 		"usage": 5.492,
 		"interpolation": 23,
-		"dateAndTime": "2022-04-09T22:00:00Z"
+		"dateAndTime": "2022-04-10T00:00:00+02:00"
 	}
 ]
