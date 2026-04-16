@@ -4,7 +4,7 @@ import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import org.springframework.jdbc.core.RowMapper;
@@ -43,13 +43,13 @@ public class MeasurementRepository {
 	}
 
 	public List<Measurement> getElectricityMeasurements(final String legalId, final String facilityId,
-		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
+		final Aggregation aggregation, final OffsetDateTime fromDateTime, final OffsetDateTime toDateTime, final String display) {
 
-		var parameters = new MapSqlParameterSource()
+		final var parameters = new MapSqlParameterSource()
 			.addValue(LEGAL_ID, legalId)
 			.addValue(FACILITY_IDS, facilityId)
-			.addValue(FROM_DATE, Timestamp.valueOf(fromDateTime))
-			.addValue(TO_DATE, Timestamp.valueOf(toDateTime))
+			.addValue(FROM_DATE, toTimestamp(fromDateTime))
+			.addValue(TO_DATE, toTimestamp(toDateTime))
 			.addValue(AGGREGATION, aggregation != null ? aggregation.name() : null)
 			.addValue(DISPLAY, display);
 
@@ -59,13 +59,13 @@ public class MeasurementRepository {
 	}
 
 	public List<Measurement> getDistrictHeatingMeasurements(final String legalId, final String facilityId,
-		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
+		final Aggregation aggregation, final OffsetDateTime fromDateTime, final OffsetDateTime toDateTime, final String display) {
 
-		var parameters = new MapSqlParameterSource()
+		final var parameters = new MapSqlParameterSource()
 			.addValue(LEGAL_ID, legalId)
 			.addValue(FACILITY_IDS, facilityId)
-			.addValue(FROM_DATE, Timestamp.valueOf(fromDateTime))
-			.addValue(TO_DATE, Timestamp.valueOf(toDateTime))
+			.addValue(FROM_DATE, toTimestamp(fromDateTime))
+			.addValue(TO_DATE, toTimestamp(toDateTime))
 			.addValue(AGGREGATION, aggregation != null ? aggregation.name() : null)
 			.addValue(DISPLAY, display);
 
@@ -75,13 +75,13 @@ public class MeasurementRepository {
 	}
 
 	public List<Measurement> getDistrictCoolingMeasurements(final String legalId, final String facilityId,
-		final Aggregation aggregation, final LocalDateTime fromDateTime, final LocalDateTime toDateTime, final String display) {
+		final Aggregation aggregation, final OffsetDateTime fromDateTime, final OffsetDateTime toDateTime, final String display) {
 
-		var parameters = new MapSqlParameterSource()
+		final var parameters = new MapSqlParameterSource()
 			.addValue(LEGAL_ID, legalId)
 			.addValue(FACILITY_IDS, facilityId)
-			.addValue(FROM_DATE, Timestamp.valueOf(fromDateTime))
-			.addValue(TO_DATE, Timestamp.valueOf(toDateTime))
+			.addValue(FROM_DATE, toTimestamp(fromDateTime))
+			.addValue(TO_DATE, toTimestamp(toDateTime))
 			.addValue(AGGREGATION, aggregation != null ? aggregation.name() : null)
 			.addValue(DISPLAY, display);
 
@@ -175,5 +175,9 @@ public class MeasurementRepository {
 				case DAY, QUARTER -> resultSet.getInt(IS_INTERPOLTED);
 			};
 		}
+	}
+
+	private Timestamp toTimestamp(final OffsetDateTime dateTime) {
+		return dateTime == null ? null : Timestamp.from(dateTime.toInstant());
 	}
 }

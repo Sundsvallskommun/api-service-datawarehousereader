@@ -81,8 +81,8 @@ class MeasurementServiceTest {
 			legalId,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			"aggregate")).thenReturn(List.of(expectedMeasurement));
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
@@ -95,8 +95,8 @@ class MeasurementServiceTest {
 			legalId,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			"aggregate");
 	}
 
@@ -118,8 +118,8 @@ class MeasurementServiceTest {
 			null,
 			"735999109151401011,735999109151401012",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
@@ -131,8 +131,8 @@ class MeasurementServiceTest {
 			null,
 			"735999109151401011,735999109151401012",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null);
 	}
 
@@ -154,8 +154,8 @@ class MeasurementServiceTest {
 			null,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
@@ -167,8 +167,8 @@ class MeasurementServiceTest {
 			null,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null);
 	}
 
@@ -230,8 +230,8 @@ class MeasurementServiceTest {
 			legalId,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
@@ -243,8 +243,42 @@ class MeasurementServiceTest {
 			legalId,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
+			null);
+	}
+
+	@Test
+	void getElectricityMeasurementsPreservesOffsetDateTimeInstants() {
+		final var municipalityId = "2281";
+		final var aggregation = Aggregation.MONTH;
+		final var fromDateTime = OffsetDateTime.parse("2026-01-01T00:00:00Z");
+		final var toDateTime = OffsetDateTime.parse("2026-12-31T23:59:59Z");
+
+		final var parameters = new MeasurementParameters();
+		parameters.setFacilityIds(List.of("735999109452158010"));
+		parameters.setFromDateTime(fromDateTime);
+		parameters.setToDateTime(toDateTime);
+
+		when(measurementRepositoryMock.getElectricityMeasurements(
+			null,
+			"735999109452158010",
+			aggregation,
+			fromDateTime,
+			toDateTime,
+			null)).thenReturn(List.of());
+
+		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
+
+		assertThat(result).isEmpty();
+
+		verify(partyProviderMock, never()).translateToLegalId(any(), any());
+		verify(measurementRepositoryMock).getElectricityMeasurements(
+			null,
+			"735999109452158010",
+			aggregation,
+			fromDateTime,
+			toDateTime,
 			null);
 	}
 
@@ -265,14 +299,14 @@ class MeasurementServiceTest {
 		parameters.setToDateTime(toDateTime);
 
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
-		when(measurementRepositoryMock.getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null)).thenReturn(List.of());
+		when(measurementRepositoryMock.getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime, toDateTime, null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.DISTRICT_HEATING, aggregation, parameters);
 
 		assertThat(result).isEmpty();
 
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
-		verify(measurementRepositoryMock).getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null);
+		verify(measurementRepositoryMock).getDistrictHeatingMeasurements(legalId, "facilityId", aggregation, fromDateTime, toDateTime, null);
 	}
 
 	@Test
@@ -292,14 +326,14 @@ class MeasurementServiceTest {
 		parameters.setToDateTime(toDateTime);
 
 		when(partyProviderMock.translateToLegalId(municipalityId, partyId)).thenReturn(legalId);
-		when(measurementRepositoryMock.getDistrictCoolingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null)).thenReturn(List.of());
+		when(measurementRepositoryMock.getDistrictCoolingMeasurements(legalId, "facilityId", aggregation, fromDateTime, toDateTime, null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.DISTRICT_COOLING, aggregation, parameters);
 
 		assertThat(result).isEmpty();
 
 		verify(partyProviderMock).translateToLegalId(municipalityId, partyId);
-		verify(measurementRepositoryMock).getDistrictCoolingMeasurements(legalId, "facilityId", aggregation, fromDateTime.toLocalDateTime(), toDateTime.toLocalDateTime(), null);
+		verify(measurementRepositoryMock).getDistrictCoolingMeasurements(legalId, "facilityId", aggregation, fromDateTime, toDateTime, null);
 	}
 
 	@ParameterizedTest
@@ -347,8 +381,8 @@ class MeasurementServiceTest {
 			legalId,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null)).thenReturn(List.of());
 
 		final var result = service.getMeasurements(municipalityId, Category.ELECTRICITY, aggregation, parameters);
@@ -360,8 +394,8 @@ class MeasurementServiceTest {
 			legalId,
 			"735999109151401011",
 			aggregation,
-			fromDateTime.toLocalDateTime(),
-			toDateTime.toLocalDateTime(),
+			fromDateTime,
+			toDateTime,
 			null);
 	}
 }
