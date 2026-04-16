@@ -54,8 +54,8 @@ class MeasurementRepositoryTest {
 	void getElectricityMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
 		final var legalId = "5534567890";
 		final var facilityIds = "735999109170208042";
-		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
-		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2022, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 		final var display = "aggregate";
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.ElectricityMeasurementMapper.class)))
@@ -71,8 +71,8 @@ class MeasurementRepositoryTest {
 		final var parameters = parametersCaptor.getValue();
 		assertThat(parameters.getValue("legalId")).isEqualTo(legalId);
 		assertThat(parameters.getValue("facilityIds")).isEqualTo(facilityIds);
-		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.valueOf(fromDateTime));
-		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.valueOf(toDateTime));
+		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.from(fromDateTime.toInstant()));
+		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.from(toDateTime.toInstant()));
 		assertThat(parameters.getValue("aggregation")).isEqualTo(aggregation.name());
 		assertThat(parameters.getValue("display")).isEqualTo(display);
 	}
@@ -81,8 +81,8 @@ class MeasurementRepositoryTest {
 	void getElectricityMeasurementsWithNullAggregation() {
 		final var legalId = "5534567890";
 		final var facilityIds = "735999109170208042";
-		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
-		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2022, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.ElectricityMeasurementMapper.class)))
 			.thenReturn(List.of());
@@ -99,13 +99,35 @@ class MeasurementRepositoryTest {
 		assertThat(parameters.getValue("display")).isNull();
 	}
 
+	@Test
+	void getElectricityMeasurementsConvertsOffsetsToUtcInstants() {
+		final var legalId = "5534567890";
+		final var facilityIds = "735999109452158010";
+		final var fromDateTime = OffsetDateTime.parse("2026-01-01T00:00:00+01:00");
+		final var toDateTime = OffsetDateTime.parse("2026-12-31T23:59:59+01:00");
+
+		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.ElectricityMeasurementMapper.class)))
+			.thenReturn(List.of());
+
+		repository.getElectricityMeasurements(legalId, facilityIds, Aggregation.MONTH, fromDateTime, toDateTime, null);
+
+		verify(jdbcTemplateMock).query(
+			eq("{call kundinfo.spMeasurementElectricity(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}"),
+			parametersCaptor.capture(),
+			any(MeasurementRepository.ElectricityMeasurementMapper.class));
+
+		final var parameters = parametersCaptor.getValue();
+		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.from(fromDateTime.toInstant()));
+		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.from(toDateTime.toInstant()));
+	}
+
 	@ParameterizedTest
 	@EnumSource(Aggregation.class)
 	void getDistrictHeatingMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
 		final var legalId = "5591561234";
 		final var facilityIds = "9115803075";
-		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
-		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2022, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 		final var display = "onlyaggregated";
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictHeatingMeasurementMapper.class)))
@@ -121,8 +143,8 @@ class MeasurementRepositoryTest {
 		final var parameters = parametersCaptor.getValue();
 		assertThat(parameters.getValue("legalId")).isEqualTo(legalId);
 		assertThat(parameters.getValue("facilityIds")).isEqualTo(facilityIds);
-		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.valueOf(fromDateTime));
-		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.valueOf(toDateTime));
+		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.from(fromDateTime.toInstant()));
+		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.from(toDateTime.toInstant()));
 		assertThat(parameters.getValue("aggregation")).isEqualTo(aggregation.name());
 		assertThat(parameters.getValue("display")).isEqualTo(display);
 	}
@@ -131,8 +153,8 @@ class MeasurementRepositoryTest {
 	void getDistrictHeatingMeasurementsWithNullAggregation() {
 		final var legalId = "5591561234";
 		final var facilityIds = "9115803075";
-		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
-		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2022, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictHeatingMeasurementMapper.class)))
 			.thenReturn(List.of());
@@ -159,7 +181,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -183,7 +205,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -200,7 +222,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -217,7 +239,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -235,7 +257,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -258,7 +280,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -275,7 +297,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -292,7 +314,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -305,8 +327,8 @@ class MeasurementRepositoryTest {
 	void getDistrictCoolingMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
 		final var legalId = "5591561234";
 		final var facilityIds = "9115803075";
-		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
-		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2022, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 		final var display = "onlyaggregated";
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictCoolingMeasurementMapper.class)))
@@ -322,8 +344,8 @@ class MeasurementRepositoryTest {
 		final var parameters = parametersCaptor.getValue();
 		assertThat(parameters.getValue("legalId")).isEqualTo(legalId);
 		assertThat(parameters.getValue("facilityIds")).isEqualTo(facilityIds);
-		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.valueOf(fromDateTime));
-		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.valueOf(toDateTime));
+		assertThat(parameters.getValue("fromDate")).isEqualTo(Timestamp.from(fromDateTime.toInstant()));
+		assertThat(parameters.getValue("toDate")).isEqualTo(Timestamp.from(toDateTime.toInstant()));
 		assertThat(parameters.getValue("aggregation")).isEqualTo(aggregation.name());
 		assertThat(parameters.getValue("display")).isEqualTo(display);
 	}
@@ -332,8 +354,8 @@ class MeasurementRepositoryTest {
 	void getDistrictCoolingMeasurementsWithNullAggregation() {
 		final var legalId = "5591561234";
 		final var facilityIds = "9115803075";
-		final var fromDateTime = LocalDateTime.of(2022, 1, 1, 0, 0, 0);
-		final var toDateTime = LocalDateTime.of(2022, 12, 31, 23, 59, 59);
+		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
+		final var toDateTime = OffsetDateTime.of(2022, 12, 31, 23, 59, 59, 0, ZoneOffset.UTC);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), any(MeasurementRepository.DistrictCoolingMeasurementMapper.class)))
 			.thenReturn(List.of());
@@ -360,7 +382,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.HOUR, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -383,7 +405,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -400,7 +422,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.DAY, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -417,7 +439,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.MONTH, LocalDateTime.now(), LocalDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.now(), OffsetDateTime.now(), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);

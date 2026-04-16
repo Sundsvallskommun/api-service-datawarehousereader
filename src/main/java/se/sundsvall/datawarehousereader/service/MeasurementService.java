@@ -1,6 +1,5 @@
 package se.sundsvall.datawarehousereader.service;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
@@ -31,8 +30,8 @@ public class MeasurementService {
 
 	public List<Measurement> getMeasurements(final String municipalityId, final Category category, final Aggregation aggregateOn, final MeasurementParameters parameters) {
 		final var legalId = Optional.ofNullable(parameters.getPartyId()).map(partyId -> partyProvider.translateToLegalId(municipalityId, partyId)).orElse(null);
-		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
-		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).map(OffsetDateTime::toLocalDateTime).orElse(null);
+		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime()).orElse(null);
+		final var toDateTime = Optional.ofNullable(parameters.getToDateTime()).orElse(null);
 		final var facilityIds = Optional.ofNullable(parameters.getFacilityIds()).map(ids -> String.join(",", ids)).orElse(null);
 		final var display = Optional.ofNullable(parameters.getDisplay()).map(d -> d.name().toLowerCase()).orElse(null);
 
