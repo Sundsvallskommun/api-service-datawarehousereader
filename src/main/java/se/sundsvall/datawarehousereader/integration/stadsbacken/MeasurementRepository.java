@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -35,7 +37,7 @@ public class MeasurementRepository {
 	private static final String DATE_AND_TIME = "DateAndTime";
 	private static final String IS_INTERPOLATED = "isInterpolated";
 	private static final String IS_INTERPOLTED = "isInterpolted";
-
+	private static final ZoneId STOCKHOLM = ZoneId.of("Europe/Stockholm");
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
 	public MeasurementRepository(final NamedParameterJdbcTemplate jdbcTemplate) {
@@ -88,6 +90,14 @@ public class MeasurementRepository {
 		return jdbcTemplate.query(
 			"{call kundinfo.spMeasurementDistrictCooling(:legalId, :facilityIds, :fromDate, :toDate, :aggregation, :display)}",
 			parameters, new DistrictCoolingMeasurementMapper(aggregation));
+	}
+
+	Timestamp toTimestamp(final OffsetDateTime dateTime) {
+		return Optional.ofNullable(dateTime)
+			.map(dt -> dt.atZoneSameInstant(STOCKHOLM))
+			.map(ZonedDateTime::toLocalDateTime)
+			.map(Timestamp::valueOf)
+			.orElse(null);
 	}
 
 	static class DistrictCoolingMeasurementMapper implements RowMapper<Measurement> {
@@ -175,9 +185,5 @@ public class MeasurementRepository {
 				case DAY, QUARTER -> resultSet.getInt(IS_INTERPOLTED);
 			};
 		}
-	}
-
-	private Timestamp toTimestamp(final OffsetDateTime dateTime) {
-		return dateTime == null ? null : Timestamp.from(dateTime.toInstant());
 	}
 }

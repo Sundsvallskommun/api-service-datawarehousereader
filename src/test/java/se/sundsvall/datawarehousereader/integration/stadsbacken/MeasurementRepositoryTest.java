@@ -9,10 +9,13 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
@@ -34,24 +37,67 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class MeasurementRepositoryTest {
 
+	private static final ZoneId STOCKHOLM = ZoneId.of("Europe/Stockholm");
 	@Mock
 	private NamedParameterJdbcTemplate jdbcTemplateMock;
-
 	@Mock
 	private ResultSet resultSetMock;
-
 	@Captor
 	private ArgumentCaptor<MapSqlParameterSource> parametersCaptor;
-
 	@Captor
 	private ArgumentCaptor<RowMapper<Measurement>> rowMapperCaptor;
-
 	@InjectMocks
 	private MeasurementRepository repository;
 
+	private static Stream<Arguments> timestampCases() {
+		return Stream.of(
+			Arguments.of("null input returns null",
+				null,
+				null),
+			Arguments.of("UTC converts to CET (winter)",
+				OffsetDateTime.parse("2025-11-30T22:59:59Z"),
+				Timestamp.valueOf("2025-11-30 23:59:59")),
+			Arguments.of("UTC converts to CEST (summer)",
+				OffsetDateTime.parse("2025-07-15T10:00:00Z"),
+				Timestamp.valueOf("2025-07-15 12:00:00")),
+			Arguments.of("already in CET is preserved",
+				OffsetDateTime.parse("2025-11-30T23:59:59+01:00"),
+				Timestamp.valueOf("2025-11-30 23:59:59")),
+			Arguments.of("already in CEST is preserved",
+				OffsetDateTime.parse("2025-07-15T12:00:00+02:00"),
+				Timestamp.valueOf("2025-07-15 12:00:00")),
+			Arguments.of("positive non-Stockholm offset (Tokyo +09:00)",
+				OffsetDateTime.parse("2025-11-30T20:00:00+09:00"),
+				Timestamp.valueOf("2025-11-30 12:00:00")),
+			Arguments.of("negative offset (New York -05:00)",
+				OffsetDateTime.parse("2025-11-30T12:00:00-05:00"),
+				Timestamp.valueOf("2025-11-30 18:00:00")),
+			Arguments.of("midnight rolls forward across date",
+				OffsetDateTime.parse("2025-11-30T23:59:59Z"),
+				Timestamp.valueOf("2025-12-01 00:59:59")),
+			Arguments.of("midnight rolls backward across date",
+				OffsetDateTime.parse("2025-12-01T00:30:00+09:00"),
+				Timestamp.valueOf("2025-11-30 16:30:00")),
+			Arguments.of("DST spring-forward (02:00 -> 03:00)",
+				OffsetDateTime.parse("2024-03-31T01:00:00Z"),
+				Timestamp.valueOf("2024-03-31 03:00:00")),
+			Arguments.of("DST fall-back (03:00 -> 02:00)",
+				OffsetDateTime.parse("2024-10-27T01:00:00Z"),
+				Timestamp.valueOf("2024-10-27 02:00:00")),
+			Arguments.of("nanosecond precision preserved",
+				OffsetDateTime.parse("2025-06-15T12:00:00.123456789+02:00"),
+				Timestamp.valueOf("2025-06-15 12:00:00.123456789")),
+			Arguments.of("pre-epoch date",
+				OffsetDateTime.parse("1959-04-12T14:30:00+01:00"),
+				Timestamp.valueOf("1959-04-12 14:30:00")),
+			Arguments.of("distant future date",
+				OffsetDateTime.parse("2099-12-31T23:59:59+01:00"),
+				Timestamp.valueOf("2099-12-31 23:59:59")));
+	}
+
 	@ParameterizedTest
 	@EnumSource(Aggregation.class)
-	void getElectricityMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
+	void getElectricityMeasurementsCallsCorrectStoredProcedure(final Aggregation aggregation) {
 		final var legalId = "5534567890";
 		final var facilityIds = "735999109170208042";
 		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
@@ -123,7 +169,7 @@ class MeasurementRepositoryTest {
 
 	@ParameterizedTest
 	@EnumSource(Aggregation.class)
-	void getDistrictHeatingMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
+	void getDistrictHeatingMeasurementsCallsCorrectStoredProcedure(final Aggregation aggregation) {
 		final var legalId = "5591561234";
 		final var facilityIds = "9115803075";
 		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
@@ -324,7 +370,7 @@ class MeasurementRepositoryTest {
 
 	@ParameterizedTest
 	@EnumSource(Aggregation.class)
-	void getDistrictCoolingMeasurementsCallsCorrectStoredProcedure(Aggregation aggregation) {
+	void getDistrictCoolingMeasurementsCallsCorrectStoredProcedure(final Aggregation aggregation) {
 		final var legalId = "5591561234";
 		final var facilityIds = "9115803075";
 		final var fromDateTime = OffsetDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneOffset.UTC);
@@ -447,7 +493,7 @@ class MeasurementRepositoryTest {
 		assertThat(result.getInterpolation()).isZero();
 	}
 
-	private void setupResultSetMock(String uuid, String customerOrgId, String facilityIds, String feedType, String unit, BigDecimal usage, Timestamp dateAndTime) throws SQLException {
+	private void setupResultSetMock(final String uuid, final String customerOrgId, final String facilityIds, final String feedType, final String unit, final BigDecimal usage, final Timestamp dateAndTime) throws SQLException {
 		when(resultSetMock.getString("uuid")).thenReturn(uuid);
 		when(resultSetMock.getString("customerorgid")).thenReturn(customerOrgId);
 		when(resultSetMock.getString("facilityId")).thenReturn(facilityIds);
@@ -456,4 +502,11 @@ class MeasurementRepositoryTest {
 		when(resultSetMock.getBigDecimal("usage")).thenReturn(usage);
 		when(resultSetMock.getTimestamp("DateAndTime")).thenReturn(dateAndTime);
 	}
+
+	@ParameterizedTest(name = "{0}")
+	@MethodSource("timestampCases")
+	void toTimestamp_convertsToStockholmLocalTime(final String name, final OffsetDateTime input, final Timestamp expected) {
+		assertThat(repository.toTimestamp(input)).isEqualTo(expected);
+	}
+
 }
