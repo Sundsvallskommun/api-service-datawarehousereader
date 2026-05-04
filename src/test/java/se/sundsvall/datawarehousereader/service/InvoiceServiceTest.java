@@ -1,5 +1,6 @@
 package se.sundsvall.datawarehousereader.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -14,8 +15,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoice;
+import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceParameters;
+import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
@@ -39,6 +44,9 @@ class InvoiceServiceTest {
 
 	@Mock
 	private InvoiceDetailRepository invoiceDetailRepositoryMock;
+
+	@Mock
+	private InvoiceJdbcRepository invoiceJdbcRepositoryMock;
 
 	@InjectMocks
 	private InvoiceService service;
@@ -118,6 +126,89 @@ class InvoiceServiceTest {
 		assertThat(result.getInvoices()).hasSameElementsAs(toInvoices(Map.of(
 			1L, List.of(invoiceEntity1),
 			2L, List.of(invoiceEntity2))));
+	}
+
+	@Test
+	void getInvoicesForCustomer_enrichesEachInvoiceWithDetails() {
+		final var customerNumber = "216870";
+		final var organizationA = "5565027223";
+		final var organizationB = "5564786647";
+		final var invoiceA = 295334999L;
+		final var invoiceB = 60003118415L;
+
+		final var parameters = CustomerInvoiceParameters.create()
+			.withOrganizationIds(List.of("5565027223", "5564786647"))
+			.withPeriodFrom(LocalDate.of(2025, 1, 1))
+			.withPeriodTo(LocalDate.of(2025, 12, 31))
+			.withSortBy("periodFrom");
+		parameters.setPage(2);
+		parameters.setLimit(5);
+
+		final var first = CustomerInvoice.create()
+			.withInvoiceNumber(invoiceA)
+			.withOrganizationNumber(organizationA);
+		final var second = CustomerInvoice.create()
+			.withInvoiceNumber(invoiceB)
+			.withOrganizationNumber(organizationB);
+		final var jdbcResponse = CustomerInvoiceResponse.create().withInvoices(List.of(first, second));
+
+		final var detailA = new InvoiceDetailEntity();
+		final var detailB = new InvoiceDetailEntity();
+
+		when(invoiceJdbcRepositoryMock.getInvoices(2, 5, "5565027223,5564786647", customerNumber,
+			LocalDate.of(2025, 1, 1), LocalDate.of(2025, 12, 31), "periodFrom"))
+			.thenReturn(jdbcResponse);
+		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationA, invoiceA))
+			.thenReturn(List.of(detailA));
+		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationB, invoiceB))
+			.thenReturn(List.of(detailB));
+
+		final var result = service.getInvoicesForCustomer(customerNumber, parameters);
+
+		assertThat(result).isSameAs(jdbcResponse);
+		assertThat(result.getInvoices().getFirst().getDetails())
+			.usingRecursiveComparison().isEqualTo(InvoiceMapper.toDetails(List.of(detailA)));
+		assertThat(result.getInvoices().get(1).getDetails())
+			.usingRecursiveComparison().isEqualTo(InvoiceMapper.toDetails(List.of(detailB)));
+
+		verify(invoiceJdbcRepositoryMock).getInvoices(2, 5, "5565027223,5564786647", customerNumber,
+			LocalDate.of(2025, 1, 1), LocalDate.of(2025, 12, 31), "periodFrom");
+		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationA, invoiceA);
+		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationB, invoiceB);
+	}
+
+	@Test
+	void getInvoicesForCustomer_emptyPage_doesNotCallDetailRepository() {
+		final var customerNumber = "216870";
+		final var parameters = CustomerInvoiceParameters.create();
+		final var emptyResponse = CustomerInvoiceResponse.create().withInvoices(List.of());
+
+		when(invoiceJdbcRepositoryMock.getInvoices(any(), any(), any(), any(), any(), any(), any()))
+			.thenReturn(emptyResponse);
+
+		final var result = service.getInvoicesForCustomer(customerNumber, parameters);
+
+		assertThat(result.getInvoices()).isEmpty();
+		verify(invoiceJdbcRepositoryMock).getInvoices(any(), any(), any(), any(), any(), any(), any());
+	}
+
+	@Test
+	void getInvoicesForCustomer_invoiceWithNoDetails_setsEmptyList() {
+		final var customerNumber = "216870";
+		final var parameters = CustomerInvoiceParameters.create();
+		final var invoice = CustomerInvoice.create()
+			.withInvoiceNumber(1L)
+			.withOrganizationNumber("orgX");
+
+		when(invoiceJdbcRepositoryMock.getInvoices(any(), any(), any(), any(), any(), any(), any()))
+			.thenReturn(CustomerInvoiceResponse.create().withInvoices(List.of(invoice)));
+		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber("orgX", 1L))
+			.thenReturn(List.of());
+
+		final var result = service.getInvoicesForCustomer(customerNumber, parameters);
+
+		assertThat(result.getInvoices().getFirst().getDetails()).isEmpty();
+		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber("orgX", 1L);
 	}
 
 	@Test

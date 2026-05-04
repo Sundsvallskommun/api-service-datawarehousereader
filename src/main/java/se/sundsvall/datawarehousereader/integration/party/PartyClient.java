@@ -26,11 +26,11 @@ public interface PartyClient {
 	 *                                                      provided partyType and partyId if found.
 	 * @throws se.sundsvall.dept44.problem.ThrowableProblem
 	 */
-	@GetMapping(path = "/{municipalityId}/{type}/{partyId}/legalId", produces = TEXT_PLAIN_VALUE)
+	@GetMapping(path = "/{municipalityId}/{partyType}/{partyId}/legalId", produces = TEXT_PLAIN_VALUE)
 	Optional<String> getLegalId(
-		@PathVariable("type") PartyType partyType,
-		@PathVariable("municipalityId") String municipalityId,
-		@PathVariable("partyId") String partyId);
+		@PathVariable PartyType partyType,
+		@PathVariable String municipalityId,
+		@PathVariable String partyId);
 
 	/**
 	 * Get party-ID by legalId (personalNumber or organizationNumber).
@@ -44,9 +44,9 @@ public interface PartyClient {
 	 *                                                      provided partyType and legalId if found.
 	 * @throws se.sundsvall.dept44.problem.ThrowableProblem
 	 */
-	@GetMapping(path = "/{municipalityId}/{type}/{legalId}/partyId", produces = TEXT_PLAIN_VALUE)
+	@GetMapping(path = "/{municipalityId}/{partyType}/{legalId}/partyId", produces = TEXT_PLAIN_VALUE)
 	Optional<String> getPartyId(
-		@PathVariable("type") PartyType partyType,
-		@PathVariable("municipalityId") String municipalityId,
-		@PathVariable("legalId") String legalId);
+		@PathVariable PartyType partyType,
+		@PathVariable String municipalityId,
+		@PathVariable String legalId);
 }

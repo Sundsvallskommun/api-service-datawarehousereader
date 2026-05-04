@@ -1,13 +1,13 @@
 openapi: 3.1.0
 info:
   title: api-datawarehousereader
-  contact: { }
+  contact: {}
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "5.3"
+  version: "5.4"
 servers:
-  - url: http://localhost:53654
+  - url: http://localhost:55930
     description: Generated server url
 tags:
   - name: Measurement
@@ -395,6 +395,118 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
+        "500":
+          description: Internal Server error
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+  /{municipalityId}/invoices/customers/{customerNumber}:
+    get:
+      tags:
+        - Invoice
+      summary: Get invoices for a customer
+      description: "Resource returns invoices matching the given customer number,\
+        \ optionally filtered by organization and invoice period"
+      operationId: getInvoicesForCustomer
+      parameters:
+        - name: municipalityId
+          in: path
+          description: Municipality id
+          required: true
+          schema:
+            type: string
+          example: 2281
+        - name: customerNumber
+          in: path
+          description: Customer number
+          required: true
+          schema:
+            type: string
+          example: 216870
+        - name: organizationIds
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: string
+              description: Organization id of invoice issuer
+              examples:
+                - "5565027223"
+        - name: periodFrom
+          in: query
+          description: Earliest invoice period start. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            format: date
+            description: Earliest invoice period start. Format is YYYY-MM-DD.
+            examples:
+              - 2025-01-01
+        - name: periodTo
+          in: query
+          description: Latest invoice period end. Format is YYYY-MM-DD.
+          required: false
+          schema:
+            type: string
+            format: date
+            description: Latest invoice period end. Format is YYYY-MM-DD.
+            examples:
+              - 2025-12-31
+        - name: sortBy
+          in: query
+          description: Column to sort by.
+          required: false
+          schema:
+            type: string
+            description: Column to sort by.
+            examples:
+              - periodFrom
+              - periodTo
+              - InvoiceDate
+              - DueDate
+              - InvoiceNumber
+              - TotalAmount
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+            description: Page number
+            examples:
+              - "1"
+            minimum: 1
+        - name: limit
+          in: query
+          description: Result size per page. Maximum allowed value is dynamically configured
+          required: false
+          schema:
+            type: integer
+            format: int32
+            description: Result size per page. Maximum allowed value is dynamically
+              configured
+            examples:
+              - "15"
+            minimum: 1
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CustomerInvoiceResponse"
+        "400":
+          description: Bad request
+          content:
+            application/problem+json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/Problem"
+                  - $ref: "#/components/schemas/ConstraintViolationProblem"
         "500":
           description: Internal Server error
           content:
@@ -1271,16 +1383,16 @@ components:
     Problem:
       type: object
       properties:
+        title:
+          type: string
+        detail:
+          type: string
         instance:
           type: string
           format: uri
         type:
           type: string
           format: uri
-        detail:
-          type: string
-        title:
-          type: string
         status:
           type: integer
           format: int32
@@ -1299,13 +1411,13 @@ components:
             $ref: "#/components/schemas/Violation"
         title:
           type: string
+        causeAsProblem:
+          $ref: "#/components/schemas/ThrowableProblem"
+        detail:
+          type: string
         instance:
           type: string
           format: uri
-        detail:
-          type: string
-        causeAsProblem:
-          $ref: "#/components/schemas/ThrowableProblem"
     ThrowableProblem:
       type: object
       properties:
@@ -1322,7 +1434,7 @@ components:
         instance:
           type: string
           format: uri
-        causeAsProblem: { }
+        causeAsProblem: {}
     Violation:
       type: object
       properties:
@@ -1767,6 +1879,204 @@ components:
           description: Facility id
           examples:
             - "735999109151401011"
+          readOnly: true
+    CustomerInvoice:
+      type: object
+      description: Customer invoice model
+      properties:
+        customerNumber:
+          type: string
+          description: Customer number
+          examples:
+            - "123456"
+          readOnly: true
+        customerType:
+          $ref: "#/components/schemas/CustomerType"
+          readOnly: true
+        facilityId:
+          type: string
+          description: Facility id
+          examples:
+            - "735999109425048010"
+          readOnly: true
+        invoiceNumber:
+          type: integer
+          format: int64
+          description: Invoice number
+          examples:
+            - "123456789"
+          readOnly: true
+        invoiceId:
+          type: integer
+          format: int64
+          description: Invoice id
+          examples:
+            - "1062916396"
+          readOnly: true
+        jointInvoiceId:
+          type: integer
+          format: int64
+          description: Joint invoice id
+          examples:
+            - "123"
+          readOnly: true
+        invoiceDate:
+          type: string
+          format: date
+          description: Invoice date
+          examples:
+            - 2025-10-08
+          readOnly: true
+        invoiceName:
+          type: string
+          description: Invoice name
+          examples:
+            - 123456789.pdf
+          readOnly: true
+        invoiceType:
+          type: string
+          description: Invoice type
+          examples:
+            - Faktura
+          readOnly: true
+        invoiceDescription:
+          type: string
+          description: Invoice description
+          examples:
+            - El
+          readOnly: true
+        invoiceStatus:
+          type: string
+          description: Invoice status
+          examples:
+            - Betalad
+          readOnly: true
+        ocrNumber:
+          type: integer
+          format: int64
+          description: OCR number
+          examples:
+            - "295334999"
+          readOnly: true
+        dueDate:
+          type: string
+          format: date
+          description: Due date
+          examples:
+            - 2025-10-28
+          readOnly: true
+        periodFrom:
+          type: string
+          format: date
+          description: Invoice period start
+          examples:
+            - 2025-09-01
+          readOnly: true
+        periodTo:
+          type: string
+          format: date
+          description: Invoice period end
+          examples:
+            - 2025-09-30
+          readOnly: true
+        totalAmount:
+          type: number
+          description: Total amount
+          examples:
+            - "1234.00"
+          readOnly: true
+        amountVatIncluded:
+          type: number
+          description: Amount included VAT
+          examples:
+            - "1233.51"
+          readOnly: true
+        amountVatExcluded:
+          type: number
+          description: Amount excluded VAT
+          examples:
+            - "986.81"
+          readOnly: true
+        vatEligibleAmount:
+          type: number
+          description: Amount eligible for VAT
+          examples:
+            - "986.81"
+          readOnly: true
+        rounding:
+          type: number
+          description: Rounding
+          examples:
+            - "0.49"
+          readOnly: true
+        organizationGroup:
+          type: string
+          description: Organization group
+          examples:
+            - stadsbacken
+          readOnly: true
+        organizationNumber:
+          type: string
+          description: Organization number of invoice issuer
+          examples:
+            - "5565027223"
+          readOnly: true
+        administration:
+          type: string
+          description: Administration
+          examples:
+            - Sundsvall Elnät
+          readOnly: true
+        street:
+          type: string
+          description: Street
+          examples:
+            - Ankeborgsvägen 11
+          readOnly: true
+        postCode:
+          type: string
+          description: Postal code
+          examples:
+            - "87654"
+          readOnly: true
+        city:
+          type: string
+          description: City
+          examples:
+            - Sundsvall
+          readOnly: true
+        careOf:
+          type: string
+          description: Care of address
+          examples:
+            - Anka Kalle
+          readOnly: true
+        invoiceReference:
+          type: string
+          description: Invoice reference
+          readOnly: true
+        pdfAvailable:
+          type: boolean
+          description: Is pdf-version of invoice available
+          examples:
+            - "true"
+          readOnly: true
+        details:
+          type: array
+          items:
+            $ref: "#/components/schemas/InvoiceDetail"
+            readOnly: true
+    CustomerInvoiceResponse:
+      type: object
+      description: Customer invoice response model
+      properties:
+        invoices:
+          type: array
+          items:
+            $ref: "#/components/schemas/CustomerInvoice"
+            readOnly: true
+        _meta:
+          $ref: "#/components/schemas/PagingAndSortingMetaData"
           readOnly: true
     InstalledBaseItem:
       type: object
@@ -2323,4 +2633,4 @@ components:
         _meta:
           $ref: "#/components/schemas/PagingAndSortingMetaData"
           readOnly: true
-  securitySchemes: { }
+  securitySchemes: {}

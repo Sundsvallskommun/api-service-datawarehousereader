@@ -18,6 +18,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import se.sundsvall.datawarehousereader.Application;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
+import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceParameters;
+import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceResponse;
@@ -164,6 +166,66 @@ class InvoiceResourceTest {
 		assertThat(parameters.getOcrNumber()).isNull();
 		assertThat(parameters.getOrganizationGroup()).isNull();
 		assertThat(parameters.getPage()).isEqualTo(DEFAULT_PAGE);
+	}
+
+	@Test
+	void getInvoicesForCustomer_allParams() {
+		final var organizationIds = "5565027223,5564786647";
+		final var periodFrom = LocalDate.of(2025, 1, 1);
+		final var periodTo = LocalDate.of(2025, 12, 31);
+		final var sortBy = "periodFrom";
+
+		when(serviceMock.getInvoicesForCustomer(any(), any())).thenReturn(CustomerInvoiceResponse.create());
+
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/customers/{customerNumber}")
+			.queryParam("organizationIds", organizationIds)
+			.queryParam("periodFrom", periodFrom.format(DateTimeFormatter.ISO_LOCAL_DATE))
+			.queryParam("periodTo", periodTo.format(DateTimeFormatter.ISO_LOCAL_DATE))
+			.queryParam("sortBy", sortBy)
+			.queryParam("page", String.valueOf(PAGE))
+			.queryParam("limit", String.valueOf(LIMIT))
+			.build("216870"))
+			.exchange()
+			.expectStatus().isOk()
+			.expectHeader().contentType(APPLICATION_JSON)
+			.expectBody(CustomerInvoiceResponse.class)
+			.isEqualTo(CustomerInvoiceResponse.create());
+
+		final var customerCaptor = ArgumentCaptor.forClass(String.class);
+		final var paramsCaptor = ArgumentCaptor.forClass(CustomerInvoiceParameters.class);
+		verify(serviceMock).getInvoicesForCustomer(customerCaptor.capture(), paramsCaptor.capture());
+
+		assertThat(customerCaptor.getValue()).isEqualTo("216870");
+		final var captured = paramsCaptor.getValue();
+		assertThat(captured.getOrganizationIds()).containsExactly("5565027223", "5564786647");
+		assertThat(captured.getPeriodFrom()).isEqualTo(periodFrom);
+		assertThat(captured.getPeriodTo()).isEqualTo(periodTo);
+		assertThat(captured.getSortBy()).isEqualTo(sortBy);
+		assertThat(captured.getPage()).isEqualTo(PAGE);
+		assertThat(captured.getLimit()).isEqualTo(LIMIT);
+	}
+
+	@Test
+	void getInvoicesForCustomer_defaults() {
+		when(serviceMock.getInvoicesForCustomer(any(), any())).thenReturn(CustomerInvoiceResponse.create());
+
+		webTestClient.get().uri(PATH + "/customers/{customerNumber}", "216870")
+			.exchange()
+			.expectStatus().isOk()
+			.expectHeader().contentType(APPLICATION_JSON)
+			.expectBody(CustomerInvoiceResponse.class)
+			.isEqualTo(CustomerInvoiceResponse.create());
+
+		final var paramsCaptor = ArgumentCaptor.forClass(CustomerInvoiceParameters.class);
+		verify(serviceMock).getInvoicesForCustomer(any(), paramsCaptor.capture());
+
+		final var captured = paramsCaptor.getValue();
+		assertThat(captured.getOrganizationIds()).isNull();
+		assertThat(captured.getPeriodFrom()).isNull();
+		assertThat(captured.getPeriodTo()).isNull();
+		assertThat(captured.getSortBy()).isNull();
+		assertThat(captured.getPage()).isEqualTo(DEFAULT_PAGE);
+		assertThat(captured.getLimit()).isEqualTo(DEFAULT_LIMIT);
 	}
 
 	@Test
