@@ -11,6 +11,7 @@ drop procedure if exists kundinfo.spMeasurementDistrictHeating;
 drop procedure if exists kundinfo.spMeasurementElectricity;
 drop function if exists kundinfo.fnCustomerDetailWithPagingAndSort;
 drop function if exists kundinfo.fnInstalledBaseWithPagingAndSort;
+drop function if exists kundinfo.fnInvoiceNumberWithPagingAndSort;
 
 drop schema if exists kundinfo;
 create schema kundinfo;
