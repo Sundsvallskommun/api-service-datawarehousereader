@@ -25,7 +25,9 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate periodTo;
 
-	@Schema(description = "Column to sort by", examples = "periodFrom")
+	@Schema(description = "Column to sort by.", examples = {
+		"periodFrom", "periodTo", "InvoiceDate", "DueDate", "InvoiceNumber", "TotalAmount"
+	})
 	private String sortBy;
 
 	public static CustomerInvoiceParameters create() {
