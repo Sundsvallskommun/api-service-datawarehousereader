@@ -17,19 +17,15 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepos
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
-import se.sundsvall.dept44.problem.Problem;
 
 import static java.util.Collections.emptyList;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.groupingBy;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
 @Service
 public class InvoiceService {
-
-	private static final String INVOICE_DETAIL_NOT_FOUND = "No invoicedetails found for invoice issuer '%s' and invoicenumber '%s'";
 
 	private final InvoiceRepository invoiceRepository;
 
@@ -84,11 +80,6 @@ public class InvoiceService {
 	}
 
 	public List<InvoiceDetail> getInvoiceDetails(final String organizationNumber, final long invoiceNumber) {
-		final var entities = invoiceDetailRepository.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
-		if (entities.isEmpty()) {
-			throw Problem.valueOf(NOT_FOUND, String.format(INVOICE_DETAIL_NOT_FOUND, organizationNumber, invoiceNumber));
-		}
-
-		return toDetails(entities);
+		return toDetails(invoiceDetailRepository.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber));
 	}
 }

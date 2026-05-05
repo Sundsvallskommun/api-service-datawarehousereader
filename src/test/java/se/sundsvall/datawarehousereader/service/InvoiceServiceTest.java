@@ -25,10 +25,8 @@ import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepositor
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper;
-import se.sundsvall.dept44.problem.Problem;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -212,16 +210,15 @@ class InvoiceServiceTest {
 	}
 
 	@Test
-	void getInvoiceDetails_notFound() {
+	void getInvoiceDetails_noMatch() {
 		var organizationNumber = "1234567890";
 		var invoiceNumber = 987654L;
 
 		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber)).thenReturn(List.of());
 
-		assertThatThrownBy(() -> service.getInvoiceDetails(organizationNumber, invoiceNumber))
-			.isInstanceOfAny(Problem.class)
-			.hasMessageContaining(String.format("Not Found: No invoicedetails found for invoice issuer '%s' and invoicenumber '%s'", organizationNumber, invoiceNumber));
+		var result = service.getInvoiceDetails(organizationNumber, invoiceNumber);
 
+		assertThat(result).isEmpty();
 		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
 	}
 

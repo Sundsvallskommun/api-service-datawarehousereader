@@ -1,7 +1,6 @@
 package se.sundsvall.datawarehousereader.apptest.invoices;
 
 import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
 import static org.springframework.http.HttpStatus.OK;
 
 import org.junit.jupiter.api.Test;
@@ -36,7 +35,7 @@ class GetInvoiceDetailsIT extends AbstractAppTest {
 		setupCall()
 			.withServicePath(String.format(PATH, "5565027223", "999999999"))
 			.withHttpMethod(GET)
-			.withExpectedResponseStatus(NOT_FOUND)
+			.withExpectedResponseStatus(OK)
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
