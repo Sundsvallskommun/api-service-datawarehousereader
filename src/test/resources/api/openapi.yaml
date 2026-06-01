@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.5"
 servers:
-- url: http://localhost:53261
+- url: http://localhost:65131
   description: Generated server url
 tags:
 - name: Measurement
@@ -63,7 +63,7 @@ paths:
           type: array
           description: Facility id (one or more)
           examples:
-          - "735999109151401011"
+          - 735999109151401011
           items:
             type: string
             description: Facility id (one or more)
@@ -173,7 +173,7 @@ paths:
           format: int64
           description: Invoice number
           examples:
-          - "767915994"
+          - 767915994
       - name: invoiceDateFrom
         in: query
         description: Earliest invoice date. Format is YYYY-MM-DD.
@@ -230,7 +230,7 @@ paths:
           format: int64
           description: OCR number
           examples:
-          - "767915994"
+          - 767915994
       - name: dueDateFrom
         in: query
         description: Earliest due date. Format is YYYY-MM-DD.
@@ -268,7 +268,7 @@ paths:
           type: array
           description: Organization number of invoice issuer
           examples:
-          - "5565027223"
+          - 5565027223
           items:
             type: string
             description: Organization number of invoice issuer
@@ -309,7 +309,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -321,7 +321,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -472,7 +472,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -484,7 +484,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -649,7 +649,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -661,7 +661,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -745,7 +745,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -757,7 +757,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -868,7 +868,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -880,7 +880,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -982,7 +982,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -994,7 +994,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -1092,7 +1092,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -1104,7 +1104,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -1156,7 +1156,9 @@ paths:
         description: Customer number
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Customer number
           examples:
           - "10007"
@@ -1165,7 +1167,9 @@ paths:
         description: Facility Id
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Facility Id
           examples:
           - "1223334"
@@ -1181,7 +1185,9 @@ paths:
         description: Billing Id
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Billing Id
           examples:
           - "222333"
@@ -1190,7 +1196,9 @@ paths:
         description: Agreement Id
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Agreement Id
           examples:
           - "333444"
@@ -1199,7 +1207,9 @@ paths:
         description: Description
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Description
           examples:
           - Avtalet avser fjärrvärme
@@ -1208,7 +1218,9 @@ paths:
         description: Shows if agreement is a main-agreement or not
         required: false
         schema:
-          type: boolean
+          type:
+          - boolean
+          - "null"
           description: Shows if agreement is a main-agreement or not
           examples:
           - "true"
@@ -1217,7 +1229,9 @@ paths:
         description: Shows if agreement include binding or not
         required: false
         schema:
-          type: boolean
+          type:
+          - boolean
+          - "null"
           description: Shows if agreement include binding or not
           examples:
           - "false"
@@ -1226,7 +1240,9 @@ paths:
         description: Rule of binding if exists
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Rule of binding if exists
           examples:
           - 10 mån binding
@@ -1235,7 +1251,9 @@ paths:
         description: Placement status for agreement
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Placement status for agreement
           examples:
           - Tillkopplad
@@ -1244,7 +1262,9 @@ paths:
         description: Net area id for agreement
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Net area id for agreement
           examples:
           - SUV
@@ -1253,7 +1273,9 @@ paths:
         description: Site address connected to the agreement
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           description: Site address connected to the agreement
           examples:
           - Första gatan 2
@@ -1263,7 +1285,9 @@ paths:
           be null if not applicable)
         required: false
         schema:
-          type: boolean
+          type:
+          - boolean
+          - "null"
           description: Signal if the agreement is a production agreement or not (can
             be null if not applicable)
           examples:
@@ -1273,7 +1297,9 @@ paths:
         description: From-date in validity of agreement
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           format: date
           description: From-date in validity of agreement
       - name: toDate
@@ -1281,7 +1307,9 @@ paths:
         description: To-date in validity of agreement
         required: false
         schema:
-          type: string
+          type:
+          - string
+          - "null"
           format: date
           description: To-date in validity of agreement
       - name: active
@@ -1290,7 +1318,9 @@ paths:
           => today). Null shows both active and inactive
         required: false
         schema:
-          type: boolean
+          type:
+          - boolean
+          - "null"
           description: Shows if agreement is active ('fromDate' <= today and 'toDate'
             => today). Null shows both active and inactive
           examples:
@@ -1321,7 +1351,7 @@ paths:
           default: 1
           description: Page number
           examples:
-          - "1"
+          - 1
           minimum: 1
       - name: limit
         in: query
@@ -1333,7 +1363,7 @@ paths:
           description: Result size per page. Maximum allowed value is dynamically
             configured
           examples:
-          - "15"
+          - 15
           minimum: 1
       responses:
         "200":
@@ -1377,9 +1407,9 @@ components:
     Problem:
       type: object
       properties:
-        detail:
-          type: string
         title:
+          type: string
+        detail:
           type: string
         instance:
           type: string
@@ -1499,14 +1529,14 @@ components:
           type: number
           description: Usage value
           examples:
-          - "1500"
+          - 1500
           readOnly: true
         interpolation:
           type: integer
           format: int32
           description: Interpolation value indicating data quality
           examples:
-          - "0"
+          - 0
           readOnly: true
         dateAndTime:
           type: string
@@ -1548,8 +1578,8 @@ components:
           type: array
           description: List of facility ids
           examples:
-          - "735999109151404321"
-          - "735999109151401234"
+          - 735999109151404321
+          - 735999109151401234
           items:
             type: string
           readOnly: true
@@ -1569,7 +1599,7 @@ components:
           format: int64
           description: Invoice number
           examples:
-          - "767915994"
+          - 767915994
           readOnly: true
         invoiceDate:
           type: string
@@ -1601,7 +1631,7 @@ components:
           format: int64
           description: Ocr number
           examples:
-          - "767915994"
+          - 767915994
           readOnly: true
         dueDate:
           type: string
@@ -1614,37 +1644,37 @@ components:
           type: number
           description: Total amount
           examples:
-          - "1116.00"
+          - 1116.0
           readOnly: true
         amountVatIncluded:
           type: number
           description: Amount included VAT
           examples:
-          - "1115.62"
+          - 1115.62
           readOnly: true
         amountVatExcluded:
           type: number
           description: Amount excluded VAT
           examples:
-          - "892.50"
+          - 892.5
           readOnly: true
         vatEligibleAmount:
           type: number
           description: Amount eligible for VAT
           examples:
-          - "892.50"
+          - 892.5
           readOnly: true
         rounding:
           type: number
           description: Rounding
           examples:
-          - "0.38"
+          - 0.38
           readOnly: true
         vat:
           type: number
           description: VAT
           examples:
-          - "892.50"
+          - 892.5
           readOnly: true
         reversedVat:
           type: boolean
@@ -1727,35 +1757,35 @@ components:
           format: int32
           description: Current page
           examples:
-          - "5"
+          - 5
           readOnly: true
         limit:
           type: integer
           format: int32
           description: Displayed objects per page
           examples:
-          - "20"
+          - 20
           readOnly: true
         count:
           type: integer
           format: int32
           description: Displayed objects on current page
           examples:
-          - "13"
+          - 13
           readOnly: true
         totalRecords:
           type: integer
           format: int64
           description: Total amount of hits based on provided search parameters
           examples:
-          - "98"
+          - 98
           readOnly: true
         totalPages:
           type: integer
           format: int32
           description: Total amount of pages based on provided search parameters
           examples:
-          - "23"
+          - 23
           readOnly: true
         sortBy:
           type: array
@@ -1779,39 +1809,39 @@ components:
           format: int64
           description: Invoice number
           examples:
-          - "767915994"
+          - 767915994
           readOnly: true
         amount:
           type: number
           description: Amount
           examples:
-          - "66.97"
+          - 66.97
           readOnly: true
         amountVatExcluded:
           type: number
           description: Amount excluded VAT
           examples:
-          - "53.57"
+          - 53.57
           readOnly: true
         vat:
           type: number
           description: VAT
           examples:
-          - "13.40"
+          - 13.4
           readOnly: true
         vatRate:
           type: number
           format: double
           description: VAT rate
           examples:
-          - "25.0"
+          - 25.0
           readOnly: true
         quantity:
           type: number
           format: double
           description: Quantity
           examples:
-          - "154.39"
+          - 154.39
           readOnly: true
         unit:
           type: string
@@ -1823,7 +1853,7 @@ components:
           type: number
           description: Price per unit
           examples:
-          - "0.347"
+          - 0.347
           readOnly: true
         periodFrom:
           type: string
@@ -1848,7 +1878,7 @@ components:
           format: int32
           description: Product code
           examples:
-          - "1404"
+          - 1404
           readOnly: true
         productName:
           type: string
@@ -1898,21 +1928,21 @@ components:
           format: int64
           description: Invoice number
           examples:
-          - "123456789"
+          - 123456789
           readOnly: true
         invoiceId:
           type: integer
           format: int64
           description: Invoice id
           examples:
-          - "1062916396"
+          - 1062916396
           readOnly: true
         jointInvoiceId:
           type: integer
           format: int64
           description: Joint invoice id
           examples:
-          - "123"
+          - 123
           readOnly: true
         invoiceDate:
           type: string
@@ -1950,7 +1980,7 @@ components:
           format: int64
           description: OCR number
           examples:
-          - "295334999"
+          - 295334999
           readOnly: true
         dueDate:
           type: string
@@ -1977,31 +2007,31 @@ components:
           type: number
           description: Total amount
           examples:
-          - "1234.00"
+          - 1234.0
           readOnly: true
         amountVatIncluded:
           type: number
           description: Amount included VAT
           examples:
-          - "1233.51"
+          - 1233.51
           readOnly: true
         amountVatExcluded:
           type: number
           description: Amount excluded VAT
           examples:
-          - "986.81"
+          - 986.81
           readOnly: true
         vatEligibleAmount:
           type: number
           description: Amount eligible for VAT
           examples:
-          - "986.81"
+          - 986.81
           readOnly: true
         rounding:
           type: number
           description: Rounding
           examples:
-          - "0.49"
+          - 0.49
           readOnly: true
         organizationGroup:
           type: string
@@ -2105,7 +2135,7 @@ components:
           format: int32
           description: Placement id
           examples:
-          - "5263"
+          - 5263
           readOnly: true
         careOf:
           type: string
@@ -2162,7 +2192,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/InstalledBaseItemMetaData"
-            maxItems: 1000
             readOnly: true
           maxItems: 1000
     InstalledBaseItemMetaData:
@@ -2232,7 +2261,7 @@ components:
           format: int32
           description: Placement id
           examples:
-          - "5263"
+          - 5263
           readOnly: true
         careOf:
           type: string
@@ -2289,7 +2318,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/InstallationMetaData"
-            maxItems: 1000
             readOnly: true
           maxItems: 1000
     InstallationDetailsResponse:
@@ -2466,7 +2494,7 @@ components:
           format: int32
           description: Customer category ID
           examples:
-          - "1"
+          - 1
           readOnly: true
         customerCategoryDescription:
           type: string
