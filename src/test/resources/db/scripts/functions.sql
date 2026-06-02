@@ -43,7 +43,7 @@ CREATE OR ALTER FUNCTION kundinfo.fnInvoiceNumberWithPagingAndSort(
       @PageNumber      int,
       @PageSize        int,
       @organizationid  varchar(max),
-      @CustomerId      varchar(50),
+      @CustomerId      varchar(max),
       @periodFrom      date,
       @periodTo        date,
       @SortBy          nvarchar(max))
@@ -66,7 +66,8 @@ CREATE OR ALTER FUNCTION kundinfo.fnInvoiceNumberWithPagingAndSort(
               CAST(v.InvoiceNumber AS bigint) AS InvoiceID         -- fake
           FROM kundinfo.vInvoice_Test_251126 v
           WHERE
-              (@CustomerId   IS NULL OR CAST(v.CustomerId AS varchar(50)) = @CustomerId)
+              (@CustomerId   IS NULL
+                   OR CAST(v.CustomerId AS varchar(50)) IN (SELECT value FROM STRING_SPLIT(@CustomerId, ',')))
               AND (@periodFrom IS NULL OR v.InvoiceDate >= @periodFrom)
               AND (@periodTo   IS NULL OR v.InvoiceDate <= @periodTo)
               AND (@organizationid IS NULL

@@ -57,26 +57,34 @@ public class InvoiceService {
 			.withInvoices(invoices);
 	}
 
-	public CustomerInvoiceResponse getInvoicesForCustomer(final String customerNumber, final CustomerInvoiceParameters parameters) {
-		final var organizationIds = ofNullable(parameters.getOrganizationIds())
-			.filter(ids -> !ids.isEmpty())
-			.map(ids -> String.join(",", ids))
-			.orElse(null);
+	public CustomerInvoiceResponse getInvoicesForCustomer(final CustomerInvoiceParameters parameters) {
+		final var customerNumbers = toCommaSeparated(parameters.getCustomerNumbers());
+		final var organizationIds = toCommaSeparated(parameters.getOrganizationIds());
+		final var facilityIds = toCommaSeparated(parameters.getFacilityIds());
 
 		final var response = invoiceJdbcRepository.getInvoices(
 			parameters.getPage(),
 			parameters.getLimit(),
 			organizationIds,
-			customerNumber,
+			customerNumbers,
 			parameters.getPeriodFrom(),
 			parameters.getPeriodTo(),
-			parameters.getSortBy());
+			parameters.getSortBy(),
+			facilityIds,
+			parameters.getStatus());
 
 		ofNullable(response.getInvoices()).orElse(emptyList())
 			.forEach(invoice -> invoice.setDetails(toDetails(
 				invoiceDetailRepository.findAllByOrganizationIdAndInvoiceNumber(invoice.getOrganizationNumber(), invoice.getInvoiceNumber()))));
 
 		return response;
+	}
+
+	private static String toCommaSeparated(final List<String> values) {
+		return ofNullable(values)
+			.filter(list -> !list.isEmpty())
+			.map(list -> String.join(",", list))
+			.orElse(null);
 	}
 
 	public List<InvoiceDetail> getInvoiceDetails(final String organizationNumber, final long invoiceNumber) {

@@ -175,29 +175,33 @@ class InvoiceResourceTest {
 		final var periodTo = LocalDate.of(2025, 12, 31);
 		final var sortBy = "periodFrom";
 
-		when(serviceMock.getInvoicesForCustomer(any(), any())).thenReturn(CustomerInvoiceResponse.create());
+		when(serviceMock.getInvoicesForCustomer(any())).thenReturn(CustomerInvoiceResponse.create());
 
-		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/customers/{customerNumber}")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/customers")
+			.queryParam("customerNumbers", "216870", "600606")
 			.queryParam("organizationIds", organizationIds)
+			.queryParam("facilityIds", "735999109425048010", "735999109425048011")
+			.queryParam("status", "Betalad")
 			.queryParam("periodFrom", periodFrom.format(DateTimeFormatter.ISO_LOCAL_DATE))
 			.queryParam("periodTo", periodTo.format(DateTimeFormatter.ISO_LOCAL_DATE))
 			.queryParam("sortBy", sortBy)
 			.queryParam("page", String.valueOf(PAGE))
 			.queryParam("limit", String.valueOf(LIMIT))
-			.build("216870"))
+			.build())
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
 			.expectBody(CustomerInvoiceResponse.class)
 			.isEqualTo(CustomerInvoiceResponse.create());
 
-		final var customerCaptor = ArgumentCaptor.forClass(String.class);
 		final var paramsCaptor = ArgumentCaptor.forClass(CustomerInvoiceParameters.class);
-		verify(serviceMock).getInvoicesForCustomer(customerCaptor.capture(), paramsCaptor.capture());
+		verify(serviceMock).getInvoicesForCustomer(paramsCaptor.capture());
 
-		assertThat(customerCaptor.getValue()).isEqualTo("216870");
 		final var captured = paramsCaptor.getValue();
+		assertThat(captured.getCustomerNumbers()).containsExactly("216870", "600606");
 		assertThat(captured.getOrganizationIds()).containsExactly("5565027223", "5564786647");
+		assertThat(captured.getFacilityIds()).containsExactly("735999109425048010", "735999109425048011");
+		assertThat(captured.getStatus()).isEqualTo("Betalad");
 		assertThat(captured.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(captured.getPeriodTo()).isEqualTo(periodTo);
 		assertThat(captured.getSortBy()).isEqualTo(sortBy);
@@ -207,9 +211,11 @@ class InvoiceResourceTest {
 
 	@Test
 	void getInvoicesForCustomer_defaults() {
-		when(serviceMock.getInvoicesForCustomer(any(), any())).thenReturn(CustomerInvoiceResponse.create());
+		when(serviceMock.getInvoicesForCustomer(any())).thenReturn(CustomerInvoiceResponse.create());
 
-		webTestClient.get().uri(PATH + "/customers/{customerNumber}", "216870")
+		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/customers")
+			.queryParam("customerNumbers", "216870")
+			.build())
 			.exchange()
 			.expectStatus().isOk()
 			.expectHeader().contentType(APPLICATION_JSON)
@@ -217,10 +223,13 @@ class InvoiceResourceTest {
 			.isEqualTo(CustomerInvoiceResponse.create());
 
 		final var paramsCaptor = ArgumentCaptor.forClass(CustomerInvoiceParameters.class);
-		verify(serviceMock).getInvoicesForCustomer(any(), paramsCaptor.capture());
+		verify(serviceMock).getInvoicesForCustomer(paramsCaptor.capture());
 
 		final var captured = paramsCaptor.getValue();
+		assertThat(captured.getCustomerNumbers()).containsExactly("216870");
 		assertThat(captured.getOrganizationIds()).isNull();
+		assertThat(captured.getFacilityIds()).isNull();
+		assertThat(captured.getStatus()).isNull();
 		assertThat(captured.getPeriodFrom()).isNull();
 		assertThat(captured.getPeriodTo()).isNull();
 		assertThat(captured.getSortBy()).isNull();

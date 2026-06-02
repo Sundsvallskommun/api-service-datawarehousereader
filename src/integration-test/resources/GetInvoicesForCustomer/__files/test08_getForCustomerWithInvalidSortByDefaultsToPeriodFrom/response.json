@@ -3,6 +3,9 @@
 		"count": 5,
 		"limit": 100,
 		"page": 1,
+		"sortBy": [
+			"periodFrom"
+		],
 		"totalPages": 1,
 		"totalRecords": 5
 	},

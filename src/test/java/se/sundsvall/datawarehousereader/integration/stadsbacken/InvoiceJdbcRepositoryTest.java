@@ -9,6 +9,10 @@ import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Captor;
@@ -40,56 +44,117 @@ class InvoiceJdbcRepositoryTest {
 	@Captor
 	private ArgumentCaptor<MapSqlParameterSource> parametersCaptor;
 
+	@Captor
+	private ArgumentCaptor<String> sqlCaptor;
+
 	@Nested
 	class GetInvoices {
 
 		@Test
 		void getInvoices_withAllParameters_passesCorrectParameters() {
-			final var pageNumber = 1;
+			final var pageNumber = 2;
 			final var pageSize = 10;
 			final var organizationIds = "5565027223,5564786647";
-			final var customerId = "216870";
+			final var customerIds = "216870,600606";
 			final var periodFrom = LocalDate.of(2025, 1, 1);
 			final var periodTo = LocalDate.of(2025, 12, 31);
-			final var sortBy = "periodFrom";
+			final var sortBy = "InvoiceNumber";
+			final var facilityIds = "735999109425048010";
+			final var invoiceStatus = "Betalad";
 
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
 
-			repository.getInvoices(pageNumber, pageSize, organizationIds, customerId, periodFrom, periodTo, sortBy);
+			repository.getInvoices(pageNumber, pageSize, organizationIds, customerIds, periodFrom, periodTo, sortBy, facilityIds, invoiceStatus);
 
 			verify(jdbcTemplate).query(
-				anyString(),
+				sqlCaptor.capture(),
 				parametersCaptor.capture(),
 				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
 
 			final var params = parametersCaptor.getValue();
-			assertThat(params.getValue("pageNumber")).isEqualTo(pageNumber);
-			assertThat(params.getValue("pageSize")).isEqualTo(pageSize);
+			assertThat(params.getValue("functionPageNumber")).isEqualTo(1);
+			assertThat(params.getValue("functionPageSize")).isEqualTo(1_000_000);
 			assertThat(params.getValue("organizationIds")).isEqualTo(organizationIds);
-			assertThat(params.getValue("customerId")).isEqualTo(customerId);
+			assertThat(params.getValue("customerIds")).isEqualTo(customerIds);
 			assertThat(params.getValue("periodFrom")).isEqualTo(periodFrom);
 			assertThat(params.getValue("periodTo")).isEqualTo(periodTo);
-			assertThat(params.getValue("sortBy")).isEqualTo(sortBy);
+			assertThat(params.getValue("sortBy")).isEqualTo("InvoiceNumber");
+			assertThat(params.getValue("facilityIds")).isEqualTo(facilityIds);
+			assertThat(params.getValue("invoiceStatus")).isEqualTo(invoiceStatus);
+			assertThat(params.getValue("offset")).isEqualTo(10);
+			assertThat(params.getValue("fetch")).isEqualTo(10);
+			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.InvoiceNumber");
 		}
 
 		@Test
-		void getInvoices_withNullOptionalParameters_passesNullValues() {
+		void getInvoices_withNullOptionalParameters_passesNullAndDefaultedValues() {
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
 
-			repository.getInvoices(1, 10, null, "216870", null, null, null);
+			repository.getInvoices(1, 10, null, "216870", null, null, null, null, null);
 
 			verify(jdbcTemplate).query(
-				anyString(),
+				sqlCaptor.capture(),
 				parametersCaptor.capture(),
 				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
 
 			final var params = parametersCaptor.getValue();
 			assertThat(params.getValue("organizationIds")).isNull();
+			assertThat(params.getValue("customerIds")).isEqualTo("216870");
 			assertThat(params.getValue("periodFrom")).isNull();
 			assertThat(params.getValue("periodTo")).isNull();
-			assertThat(params.getValue("sortBy")).isNull();
+			assertThat(params.getValue("facilityIds")).isNull();
+			assertThat(params.getValue("invoiceStatus")).isNull();
+			assertThat(params.getValue("offset")).isEqualTo(0);
+			assertThat(params.getValue("fetch")).isEqualTo(10);
+			// null sortBy is defaulted to periodFrom for both the function argument and the order by
+			assertThat(params.getValue("sortBy")).isEqualTo("periodFrom");
+			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.periodFrom");
+		}
+
+		@Test
+		void getInvoices_withInvalidSortBy_defaultsToPeriodFrom() {
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
+				.thenReturn(CustomerInvoiceResponse.create());
+
+			repository.getInvoices(1, 10, null, "216870", null, null, "garble", null, null);
+
+			verify(jdbcTemplate).query(
+				sqlCaptor.capture(),
+				parametersCaptor.capture(),
+				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
+
+			assertThat(parametersCaptor.getValue().getValue("sortBy")).isEqualTo("periodFrom");
+			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.periodFrom");
+		}
+	}
+
+	@Nested
+	class ResolveSortColumn {
+
+		@ParameterizedTest
+		@CsvSource({
+			"periodFrom, periodFrom",
+			"PERIODTO, periodTo",
+			"invoicedate, InvoiceDate",
+			"DueDate, DueDate",
+			"invoicenumber, InvoiceNumber",
+			"totalamount, TotalAmount",
+			"' periodFrom ', periodFrom",
+			"garble, periodFrom"
+		})
+		void resolvesToWhitelistedColumnOrDefault(final String input, final String expected) {
+			assertThat(InvoiceJdbcRepository.resolveSortColumn(input)).isEqualTo(expected);
+		}
+
+		@ParameterizedTest
+		@NullAndEmptySource
+		@ValueSource(strings = {
+			"   "
+		})
+		void resolvesNullOrBlankToDefault(final String input) {
+			assertThat(InvoiceJdbcRepository.resolveSortColumn(input)).isEqualTo("periodFrom");
 		}
 	}
 
@@ -136,9 +201,7 @@ class InvoiceJdbcRepositoryTest {
 			when(resultSet.getString("InvoiceReference")).thenReturn(null, (String) null);
 			when(resultSet.getBoolean("pdfAvailable")).thenReturn(false, true);
 
-			when(resultSet.getInt("TotalRecords")).thenReturn(7);
-			when(resultSet.getFloat("TotalPages")).thenReturn(3.0f);
-			when(resultSet.getInt("Count")).thenReturn(3);
+			when(resultSet.getInt("FilteredTotalRecords")).thenReturn(23);
 
 			final var result = extractor.extractData(resultSet);
 
@@ -160,8 +223,8 @@ class InvoiceJdbcRepositoryTest {
 			final var meta = result.getMetaData();
 			assertThat(meta.getPage()).isEqualTo(1);
 			assertThat(meta.getLimit()).isEqualTo(10);
-			assertThat(meta.getCount()).isEqualTo(3);
-			assertThat(meta.getTotalRecords()).isEqualTo(7);
+			assertThat(meta.getCount()).isEqualTo(2);
+			assertThat(meta.getTotalRecords()).isEqualTo(23);
 			assertThat(meta.getTotalPages()).isEqualTo(3);
 			assertThat(meta.getSortBy()).containsExactly("periodFrom");
 		}
@@ -218,9 +281,7 @@ class InvoiceJdbcRepositoryTest {
 			when(resultSet.getString("CareOf")).thenReturn(null);
 			when(resultSet.getString("InvoiceReference")).thenReturn(null);
 			when(resultSet.getBoolean("pdfAvailable")).thenReturn(false);
-			when(resultSet.getInt("TotalRecords")).thenReturn(1);
-			when(resultSet.getFloat("TotalPages")).thenReturn(1.0f);
-			when(resultSet.getInt("Count")).thenReturn(1);
+			when(resultSet.getInt("FilteredTotalRecords")).thenReturn(1);
 
 			final var result = extractor.extractData(resultSet);
 
@@ -238,20 +299,18 @@ class InvoiceJdbcRepositoryTest {
 		}
 
 		@Test
-		void extractData_metadataReadOnceForFirstRow() throws SQLException {
+		void extractData_computesPaginationFromFilteredTotal() throws SQLException {
 			final var extractor = new CustomerInvoiceResponseExtractor(2, 5, "periodFrom");
 			when(resultSet.next()).thenReturn(true, false);
 
-			when(resultSet.getInt("TotalRecords")).thenReturn(42);
-			when(resultSet.getFloat("TotalPages")).thenReturn(9.0f);
-			when(resultSet.getInt("Count")).thenReturn(5);
+			when(resultSet.getInt("FilteredTotalRecords")).thenReturn(42);
 
 			final var result = extractor.extractData(resultSet);
 
 			assertThat(result.getInvoices()).hasSize(1);
 			assertThat(result.getMetaData().getPage()).isEqualTo(2);
 			assertThat(result.getMetaData().getLimit()).isEqualTo(5);
-			assertThat(result.getMetaData().getCount()).isEqualTo(5);
+			assertThat(result.getMetaData().getCount()).isEqualTo(1);
 			assertThat(result.getMetaData().getTotalRecords()).isEqualTo(42);
 			assertThat(result.getMetaData().getTotalPages()).isEqualTo(9);
 			assertThat(result.getMetaData().getSortBy()).isEqualTo(List.of("periodFrom"));

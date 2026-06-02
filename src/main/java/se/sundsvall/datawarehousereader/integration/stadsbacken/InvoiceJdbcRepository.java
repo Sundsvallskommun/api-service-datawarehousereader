@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,6 +17,7 @@ import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
+import static java.util.Optional.ofNullable;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
@@ -23,16 +26,55 @@ import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 @CircuitBreaker(name = "invoiceJdbcRepository")
 public class InvoiceJdbcRepository {
 
-	private static final String PAGE_NUMBER = "pageNumber";
-	private static final String PAGE_SIZE = "pageSize";
+	private static final String FUNCTION_PAGE_NUMBER = "functionPageNumber";
+	private static final String FUNCTION_PAGE_SIZE = "functionPageSize";
 	private static final String ORGANIZATION_IDS = "organizationIds";
-	private static final String CUSTOMER_ID = "customerId";
+	private static final String CUSTOMER_IDS = "customerIds";
 	private static final String PERIOD_FROM = "periodFrom";
 	private static final String PERIOD_TO = "periodTo";
 	private static final String SORT_BY = "sortBy";
+	private static final String FACILITY_IDS = "facilityIds";
+	private static final String INVOICE_STATUS = "invoiceStatus";
+	private static final String OFFSET = "offset";
+	private static final String FETCH = "fetch";
 
-	private static final String SQL = "select * from [kundinfo].[fnInvoiceNumberWithPagingAndSort] "
-		+ "( :pageNumber, :pageSize, :organizationIds, :customerId, :periodFrom, :periodTo, :sortBy )";
+	/**
+	 * The function pages internally, but status and facility filtering must be applied to the full result set after the
+	 * function has run. The function is therefore called for "all" rows (page one, very large page size) and the actual
+	 * filtering, sorting and paging is performed by the wrapping query below.
+	 */
+	private static final int FUNCTION_PAGE_SIZE_VALUE = 1_000_000;
+
+	private static final String DEFAULT_SORT_COLUMN = "periodFrom";
+
+	/**
+	 * Whitelist mapping a (lower cased) requested sortBy value to the actual column name used both as function argument and
+	 * in the wrapping ORDER BY clause. Anything not present here (including null/blank) falls back to
+	 * {@link #DEFAULT_SORT_COLUMN},
+	 * which also guards the ORDER BY against SQL injection since the column name is concatenated into the statement.
+	 */
+	private static final Map<String, String> ALLOWED_SORT_COLUMNS = Map.of(
+		"periodfrom", "periodFrom",
+		"periodto", "periodTo",
+		"invoicedate", "InvoiceDate",
+		"duedate", "DueDate",
+		"invoicenumber", "InvoiceNumber",
+		"totalamount", "TotalAmount");
+
+	private static final String ORDER_BY_PLACEHOLDER = "{orderByColumns}";
+
+	/** Stable tie breaker so paging is deterministic when the primary sort column has duplicate values. */
+	private static final String TIE_BREAKER_COLUMN = "inner_query.InvoiceNumber";
+
+	private static final String SQL_TEMPLATE = """
+		SELECT inner_query.*, COUNT(*) OVER () AS FilteredTotalRecords
+		FROM [kundinfo].[fnInvoiceNumberWithPagingAndSort] ( :functionPageNumber, :functionPageSize, :organizationIds, :customerIds, :periodFrom, :periodTo, :sortBy ) AS inner_query
+		WHERE (:invoiceStatus IS NULL OR inner_query.InvoiceStatus = :invoiceStatus)
+		  AND (:facilityIds IS NULL OR EXISTS (
+		        SELECT 1 FROM STRING_SPLIT(:facilityIds, ',') facility
+		        WHERE inner_query.FacilityId LIKE '%' + LTRIM(RTRIM(facility.value)) + '%'))
+		ORDER BY {orderByColumns}
+		OFFSET :offset ROWS FETCH NEXT :fetch ROWS ONLY""";
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -41,20 +83,47 @@ public class InvoiceJdbcRepository {
 	}
 
 	public CustomerInvoiceResponse getInvoices(final Integer pageNumber, final Integer pageSize,
-		final String organizationIds, final String customerId,
-		final LocalDate periodFrom, final LocalDate periodTo, final String sortBy) {
+		final String organizationIds, final String customerIds,
+		final LocalDate periodFrom, final LocalDate periodTo, final String sortBy,
+		final String facilityIds, final String invoiceStatus) {
+
+		final var sortColumn = resolveSortColumn(sortBy);
+		final var metadataSortBy = isSupplied(sortBy) ? sortColumn : null;
 
 		final var parameters = new MapSqlParameterSource()
-			.addValue(PAGE_NUMBER, pageNumber)
-			.addValue(PAGE_SIZE, pageSize)
+			.addValue(FUNCTION_PAGE_NUMBER, 1)
+			.addValue(FUNCTION_PAGE_SIZE, FUNCTION_PAGE_SIZE_VALUE)
 			.addValue(ORGANIZATION_IDS, organizationIds)
-			.addValue(CUSTOMER_ID, customerId)
+			.addValue(CUSTOMER_IDS, customerIds)
 			.addValue(PERIOD_FROM, periodFrom)
 			.addValue(PERIOD_TO, periodTo)
-			.addValue(SORT_BY, sortBy);
+			.addValue(SORT_BY, sortColumn)
+			.addValue(FACILITY_IDS, facilityIds)
+			.addValue(INVOICE_STATUS, invoiceStatus)
+			.addValue(OFFSET, (pageNumber - 1) * pageSize)
+			.addValue(FETCH, pageSize);
 
-		return jdbcTemplate.query(SQL, parameters,
-			new CustomerInvoiceResponseExtractor(pageNumber, pageSize, sortBy));
+		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumn));
+
+		return jdbcTemplate.query(sql, parameters,
+			new CustomerInvoiceResponseExtractor(pageNumber, pageSize, metadataSortBy));
+	}
+
+	private static String buildOrderByColumns(final String sortColumn) {
+		final var primaryColumn = "inner_query." + sortColumn;
+		// Avoid "column specified more than once in the order by list" when sorting by the tie breaker itself.
+		return primaryColumn.equals(TIE_BREAKER_COLUMN) ? primaryColumn : primaryColumn + ", " + TIE_BREAKER_COLUMN;
+	}
+
+	static String resolveSortColumn(final String sortBy) {
+		return ofNullable(sortBy)
+			.map(value -> value.trim().toLowerCase(Locale.ROOT))
+			.map(ALLOWED_SORT_COLUMNS::get)
+			.orElse(DEFAULT_SORT_COLUMN);
+	}
+
+	private static boolean isSupplied(final String sortBy) {
+		return sortBy != null && !sortBy.isBlank();
 	}
 
 	static class CustomerInvoiceResponseExtractor implements ResultSetExtractor<CustomerInvoiceResponse> {
@@ -73,22 +142,20 @@ public class InvoiceJdbcRepository {
 		public CustomerInvoiceResponse extractData(final ResultSet rs) throws SQLException, DataAccessException {
 			final List<CustomerInvoice> items = new ArrayList<>();
 			var totalRecords = 0;
-			var totalPages = 0;
-			var count = 0;
 
 			while (rs.next()) {
 				items.add(mapRow(rs));
 				if (items.size() == 1) {
-					totalRecords = rs.getInt("TotalRecords");
-					totalPages = (int) rs.getFloat("TotalPages");
-					count = rs.getInt("Count");
+					totalRecords = rs.getInt("FilteredTotalRecords");
 				}
 			}
+
+			final var totalPages = pageSize == 0 ? 0 : (int) Math.ceil((double) totalRecords / pageSize);
 
 			final var metaData = PagingAndSortingMetaData.create()
 				.withPage(pageNumber)
 				.withLimit(pageSize)
-				.withCount(count)
+				.withCount(items.size())
 				.withTotalRecords(totalRecords)
 				.withTotalPages(totalPages)
 				.withSortBy(sortBy != null ? List.of(sortBy) : null);

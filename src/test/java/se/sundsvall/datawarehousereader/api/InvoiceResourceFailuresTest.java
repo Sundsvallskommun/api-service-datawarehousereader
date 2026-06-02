@@ -169,6 +169,25 @@ class InvoiceResourceFailuresTest {
 	}
 
 	@Test
+	void getInvoicesForCustomerMissingCustomerNumbers() {
+		final var response = webTestClient.get().uri(PATH + "/customers")
+			.exchange()
+			.expectStatus().isBadRequest()
+			.expectHeader().contentType(APPLICATION_PROBLEM_JSON_VALUE)
+			.expectBody(ConstraintViolationProblem.class)
+			.returnResult()
+			.getResponseBody();
+
+		assertThat(response).isNotNull();
+		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
+		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
+		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
+			tuple("customerNumbers", "must not be empty"));
+
+		verifyNoInteractions(serviceMock);
+	}
+
+	@Test
 	void getInvoicesDetailsInvalidOrganizationNumber() {
 		final var response = webTestClient.get().uri(PATH + "/{organizationNumber}/{invoiceNumber}/details", "INVALID_ORG_NUMBER", "123")
 			.exchange()

@@ -7,7 +7,7 @@ info:
     url: https://opensource.org/licenses/MIT
   version: "5.5"
 servers:
-- url: http://localhost:65131
+- url: http://localhost:53033
   description: Generated server url
 tags:
 - name: Measurement
@@ -395,13 +395,14 @@ paths:
             application/problem+json:
               schema:
                 $ref: "#/components/schemas/Problem"
-  /{municipalityId}/invoices/customers/{customerNumber}:
+  /{municipalityId}/invoices/customers:
     get:
       tags:
       - Invoice
-      summary: Get invoices for a customer
-      description: "Resource returns invoices matching the given customer number,\
-        \ optionally filtered by organization and invoice period"
+      summary: Get invoices for one or more customers
+      description: "Resource returns invoices matching the provided customer numbers,\
+        \ optionally filtered by organization, facility id, invoice status and invoice\
+        \ period"
       operationId: getInvoicesForCustomer
       parameters:
       - name: municipalityId
@@ -411,13 +412,17 @@ paths:
         schema:
           type: string
         example: 2281
-      - name: customerNumber
-        in: path
-        description: Customer number
+      - name: customerNumbers
+        in: query
         required: true
         schema:
-          type: string
-        example: 216870
+          type: array
+          items:
+            type: string
+            description: Customer numbers
+            examples:
+            - "216870"
+          minItems: 1
       - name: organizationIds
         in: query
         required: false
@@ -428,6 +433,26 @@ paths:
             description: Organization id of invoice issuer
             examples:
             - "5565027223"
+      - name: facilityIds
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            description: Facility ids to filter by. A row matches if any of its facility
+              ids contains a requested value
+            examples:
+            - "735999109425048010"
+      - name: status
+        in: query
+        description: Invoice status
+        required: false
+        schema:
+          type: string
+          description: Invoice status
+          examples:
+          - Betalad
       - name: periodFrom
         in: query
         description: Earliest invoice period start. Format is YYYY-MM-DD.
@@ -1435,10 +1460,10 @@ components:
             $ref: "#/components/schemas/Violation"
         title:
           type: string
-        causeAsProblem:
-          $ref: "#/components/schemas/ThrowableProblem"
         detail:
           type: string
+        causeAsProblem:
+          $ref: "#/components/schemas/ThrowableProblem"
         instance:
           type: string
           format: uri

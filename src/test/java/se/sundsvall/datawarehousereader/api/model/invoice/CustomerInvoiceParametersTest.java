@@ -36,19 +36,28 @@ class CustomerInvoiceParametersTest {
 
 	@Test
 	void testCreatePattern() {
+		final var customerNumbers = List.of("216870", "600606");
 		final var organizationIds = List.of("5565027223", "5564786647");
+		final var facilityIds = List.of("735999109425048010");
+		final var status = "Betalad";
 		final var periodFrom = now().minusMonths(3);
 		final var periodTo = now();
 		final var sortBy = "periodFrom";
 
 		final var parameters = CustomerInvoiceParameters.create()
+			.withCustomerNumbers(customerNumbers)
 			.withOrganizationIds(organizationIds)
+			.withFacilityIds(facilityIds)
+			.withStatus(status)
 			.withPeriodFrom(periodFrom)
 			.withPeriodTo(periodTo)
 			.withSortBy(sortBy);
 
 		assertThat(parameters).isNotNull();
+		assertThat(parameters.getCustomerNumbers()).isEqualTo(customerNumbers);
 		assertThat(parameters.getOrganizationIds()).isEqualTo(organizationIds);
+		assertThat(parameters.getFacilityIds()).isEqualTo(facilityIds);
+		assertThat(parameters.getStatus()).isEqualTo(status);
 		assertThat(parameters.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(parameters.getPeriodTo()).isEqualTo(periodTo);
 		assertThat(parameters.getSortBy()).isEqualTo(sortBy);
