@@ -12,6 +12,7 @@ import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceResponse;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerInvoiceQuery;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
@@ -58,20 +59,18 @@ public class InvoiceService {
 	}
 
 	public CustomerInvoiceResponse getInvoicesForCustomer(final CustomerInvoiceParameters parameters) {
-		final var customerNumbers = toCommaSeparated(parameters.getCustomerNumbers());
-		final var organizationIds = toCommaSeparated(parameters.getOrganizationIds());
-		final var facilityIds = toCommaSeparated(parameters.getFacilityIds());
+		final var query = CustomerInvoiceQuery.create()
+			.withPage(parameters.getPage())
+			.withLimit(parameters.getLimit())
+			.withCustomerIds(toCommaSeparated(parameters.getCustomerNumbers()))
+			.withOrganizationIds(toCommaSeparated(parameters.getOrganizationIds()))
+			.withFacilityIds(toCommaSeparated(parameters.getFacilityIds()))
+			.withStatus(parameters.getStatus())
+			.withPeriodFrom(parameters.getPeriodFrom())
+			.withPeriodTo(parameters.getPeriodTo())
+			.withSortBy(parameters.getSortBy());
 
-		final var response = invoiceJdbcRepository.getInvoices(
-			parameters.getPage(),
-			parameters.getLimit(),
-			organizationIds,
-			customerNumbers,
-			parameters.getPeriodFrom(),
-			parameters.getPeriodTo(),
-			parameters.getSortBy(),
-			facilityIds,
-			parameters.getStatus());
+		final var response = invoiceJdbcRepository.getInvoices(query);
 
 		ofNullable(response.getInvoices()).orElse(emptyList())
 			.forEach(invoice -> invoice.setDetails(toDetails(

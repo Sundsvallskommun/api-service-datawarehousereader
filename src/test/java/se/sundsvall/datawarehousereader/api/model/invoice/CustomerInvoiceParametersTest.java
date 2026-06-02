@@ -38,7 +38,7 @@ class CustomerInvoiceParametersTest {
 	void testCreatePattern() {
 		final var customerNumbers = List.of("216870", "600606");
 		final var organizationIds = List.of("5565027223", "5564786647");
-		final var facilityIds = List.of("735999109425048010");
+		final var facilityIds = List.of("735999109425048010", "735999109425048011");
 		final var status = "Betalad";
 		final var periodFrom = now().minusMonths(3);
 		final var periodTo = now();

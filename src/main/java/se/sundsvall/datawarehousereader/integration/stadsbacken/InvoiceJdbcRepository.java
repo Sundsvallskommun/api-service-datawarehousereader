@@ -22,6 +22,13 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 
+// The sortable column names (periodFrom, periodTo, ...) coincidentally match some bind-parameter name constants
+// (PERIOD_FROM, PERIOD_TO) but are a different concept - SQL column names - so they are kept as literals like every other
+// column name, rather than reusing the parameter constants. Suppresses the resulting duplicate-literal warnings
+// (SonarLint java:S1192 / IntelliJ DuplicateStringLiteralInspection).
+@SuppressWarnings({
+	"java:S1192", "DuplicateStringLiteralInspection"
+})
 @Repository
 @CircuitBreaker(name = "invoiceJdbcRepository")
 public class InvoiceJdbcRepository {
@@ -82,31 +89,28 @@ public class InvoiceJdbcRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public CustomerInvoiceResponse getInvoices(final Integer pageNumber, final Integer pageSize,
-		final String organizationIds, final String customerIds,
-		final LocalDate periodFrom, final LocalDate periodTo, final String sortBy,
-		final String facilityIds, final String invoiceStatus) {
+	public CustomerInvoiceResponse getInvoices(final CustomerInvoiceQuery query) {
 
-		final var sortColumn = resolveSortColumn(sortBy);
-		final var metadataSortBy = isSupplied(sortBy) ? sortColumn : null;
+		final var sortColumn = resolveSortColumn(query.getSortBy());
+		final var metadataSortBy = isSupplied(query.getSortBy()) ? sortColumn : null;
 
 		final var parameters = new MapSqlParameterSource()
 			.addValue(FUNCTION_PAGE_NUMBER, 1)
 			.addValue(FUNCTION_PAGE_SIZE, FUNCTION_PAGE_SIZE_VALUE)
-			.addValue(ORGANIZATION_IDS, organizationIds)
-			.addValue(CUSTOMER_IDS, customerIds)
-			.addValue(PERIOD_FROM, periodFrom)
-			.addValue(PERIOD_TO, periodTo)
+			.addValue(ORGANIZATION_IDS, query.getOrganizationIds())
+			.addValue(CUSTOMER_IDS, query.getCustomerIds())
+			.addValue(PERIOD_FROM, query.getPeriodFrom())
+			.addValue(PERIOD_TO, query.getPeriodTo())
 			.addValue(SORT_BY, sortColumn)
-			.addValue(FACILITY_IDS, facilityIds)
-			.addValue(INVOICE_STATUS, invoiceStatus)
-			.addValue(OFFSET, (pageNumber - 1) * pageSize)
-			.addValue(FETCH, pageSize);
+			.addValue(FACILITY_IDS, query.getFacilityIds())
+			.addValue(INVOICE_STATUS, query.getStatus())
+			.addValue(OFFSET, (query.getPage() - 1) * query.getLimit())
+			.addValue(FETCH, query.getLimit());
 
 		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumn));
 
 		return jdbcTemplate.query(sql, parameters,
-			new CustomerInvoiceResponseExtractor(pageNumber, pageSize, metadataSortBy));
+			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy));
 	}
 
 	private static String buildOrderByColumns(final String sortColumn) {

@@ -52,20 +52,28 @@ class InvoiceJdbcRepositoryTest {
 
 		@Test
 		void getInvoices_withAllParameters_passesCorrectParameters() {
-			final var pageNumber = 2;
-			final var pageSize = 10;
 			final var organizationIds = "5565027223,5564786647";
 			final var customerIds = "216870,600606";
 			final var periodFrom = LocalDate.of(2025, 1, 1);
 			final var periodTo = LocalDate.of(2025, 12, 31);
-			final var sortBy = "InvoiceNumber";
 			final var facilityIds = "735999109425048010";
 			final var invoiceStatus = "Betalad";
+
+			final var query = CustomerInvoiceQuery.create()
+				.withPage(2)
+				.withLimit(10)
+				.withOrganizationIds(organizationIds)
+				.withCustomerIds(customerIds)
+				.withPeriodFrom(periodFrom)
+				.withPeriodTo(periodTo)
+				.withSortBy("InvoiceNumber")
+				.withFacilityIds(facilityIds)
+				.withStatus(invoiceStatus);
 
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
 
-			repository.getInvoices(pageNumber, pageSize, organizationIds, customerIds, periodFrom, periodTo, sortBy, facilityIds, invoiceStatus);
+			repository.getInvoices(query);
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
@@ -92,7 +100,10 @@ class InvoiceJdbcRepositoryTest {
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
 
-			repository.getInvoices(1, 10, null, "216870", null, null, null, null, null);
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("216870"));
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
@@ -118,7 +129,11 @@ class InvoiceJdbcRepositoryTest {
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
 
-			repository.getInvoices(1, 10, null, "216870", null, null, "garble", null, null);
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("216870")
+				.withSortBy("garble"));
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
