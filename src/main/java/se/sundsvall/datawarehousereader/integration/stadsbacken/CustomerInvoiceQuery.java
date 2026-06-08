@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Parameter object for {@link InvoiceJdbcRepository#getInvoices(CustomerInvoiceQuery)}.
@@ -29,8 +30,12 @@ public class CustomerInvoiceQuery {
 		return page;
 	}
 
-	public CustomerInvoiceQuery withPage(final Integer page) {
+	public void setPage(final Integer page) {
 		this.page = page;
+	}
+
+	public CustomerInvoiceQuery withPage(final Integer page) {
+		this.setPage(page);
 		return this;
 	}
 
@@ -38,8 +43,12 @@ public class CustomerInvoiceQuery {
 		return limit;
 	}
 
-	public CustomerInvoiceQuery withLimit(final Integer limit) {
+	public void setLimit(final Integer limit) {
 		this.limit = limit;
+	}
+
+	public CustomerInvoiceQuery withLimit(final Integer limit) {
+		this.setLimit(limit);
 		return this;
 	}
 
@@ -47,8 +56,12 @@ public class CustomerInvoiceQuery {
 		return customerIds;
 	}
 
-	public CustomerInvoiceQuery withCustomerIds(final String customerIds) {
+	public void setCustomerIds(final String customerIds) {
 		this.customerIds = customerIds;
+	}
+
+	public CustomerInvoiceQuery withCustomerIds(final String customerIds) {
+		this.setCustomerIds(customerIds);
 		return this;
 	}
 
@@ -56,8 +69,12 @@ public class CustomerInvoiceQuery {
 		return organizationIds;
 	}
 
-	public CustomerInvoiceQuery withOrganizationIds(final String organizationIds) {
+	public void setOrganizationIds(final String organizationIds) {
 		this.organizationIds = organizationIds;
+	}
+
+	public CustomerInvoiceQuery withOrganizationIds(final String organizationIds) {
+		this.setOrganizationIds(organizationIds);
 		return this;
 	}
 
@@ -65,8 +82,12 @@ public class CustomerInvoiceQuery {
 		return facilityIds;
 	}
 
-	public CustomerInvoiceQuery withFacilityIds(final String facilityIds) {
+	public void setFacilityIds(final String facilityIds) {
 		this.facilityIds = facilityIds;
+	}
+
+	public CustomerInvoiceQuery withFacilityIds(final String facilityIds) {
+		this.setFacilityIds(facilityIds);
 		return this;
 	}
 
@@ -74,8 +95,12 @@ public class CustomerInvoiceQuery {
 		return status;
 	}
 
-	public CustomerInvoiceQuery withStatus(final String status) {
+	public void setStatus(final String status) {
 		this.status = status;
+	}
+
+	public CustomerInvoiceQuery withStatus(final String status) {
+		this.setStatus(status);
 		return this;
 	}
 
@@ -83,8 +108,12 @@ public class CustomerInvoiceQuery {
 		return periodFrom;
 	}
 
-	public CustomerInvoiceQuery withPeriodFrom(final LocalDate periodFrom) {
+	public void setPeriodFrom(final LocalDate periodFrom) {
 		this.periodFrom = periodFrom;
+	}
+
+	public CustomerInvoiceQuery withPeriodFrom(final LocalDate periodFrom) {
+		this.setPeriodFrom(periodFrom);
 		return this;
 	}
 
@@ -92,8 +121,12 @@ public class CustomerInvoiceQuery {
 		return periodTo;
 	}
 
-	public CustomerInvoiceQuery withPeriodTo(final LocalDate periodTo) {
+	public void setPeriodTo(final LocalDate periodTo) {
 		this.periodTo = periodTo;
+	}
+
+	public CustomerInvoiceQuery withPeriodTo(final LocalDate periodTo) {
+		this.setPeriodTo(periodTo);
 		return this;
 	}
 
@@ -101,8 +134,49 @@ public class CustomerInvoiceQuery {
 		return sortBy;
 	}
 
-	public CustomerInvoiceQuery withSortBy(final String sortBy) {
+	public void setSortBy(final String sortBy) {
 		this.sortBy = sortBy;
+	}
+
+	public CustomerInvoiceQuery withSortBy(final String sortBy) {
+		this.setSortBy(sortBy);
 		return this;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(page, limit, customerIds, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy);
+	}
+
+	@Override
+	public boolean equals(final Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof final CustomerInvoiceQuery other)) {
+			return false;
+		}
+		return Objects.equals(page, other.page)
+			&& Objects.equals(limit, other.limit)
+			&& Objects.equals(customerIds, other.customerIds)
+			&& Objects.equals(organizationIds, other.organizationIds)
+			&& Objects.equals(facilityIds, other.facilityIds)
+			&& Objects.equals(status, other.status)
+			&& Objects.equals(periodFrom, other.periodFrom)
+			&& Objects.equals(periodTo, other.periodTo)
+			&& Objects.equals(sortBy, other.sortBy);
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerInvoiceQuery [page=" + page
+			+ ", limit=" + limit
+			+ ", customerIds=" + customerIds
+			+ ", organizationIds=" + organizationIds
+			+ ", facilityIds=" + facilityIds
+			+ ", status=" + status
+			+ ", periodFrom=" + periodFrom
+			+ ", periodTo=" + periodTo
+			+ ", sortBy=" + sortBy + "]";
 	}
 }
