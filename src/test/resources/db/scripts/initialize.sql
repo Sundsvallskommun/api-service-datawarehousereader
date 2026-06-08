@@ -128,6 +128,16 @@ begin
         union all select null, '5534567890', '735999109113202014', 'Aktiv', 'kWh', cast(2111.47 as decimal(28,10)), cast('2018-12-01 00:00:00' as datetime), 0
     end
 
+    -- Test case: DAY aggregation for legalId 5591561234 and facilityId 9999999999
+    -- Regression (HYDRAN-2314): proves a 'corrected_aggregated' feedType passes through
+    -- the Java mapper unchanged (no feedType filtering). @display is ignored by this mock.
+    else if @customerorgid = '5591561234' and @anlaggningsID = '9999999999' and @aggregationLevel = 'DAY'
+    begin
+        select null as uuid, '5591561234' as customerorgid, '9999999999' as facilityId, 'energy_aggregated' as feedType, 'kWh' as unit, cast(300.8 as decimal(28,10)) as [usage], cast('2022-03-23 00:00:00' as datetime) as DateAndTime, 0 as isInterpolted
+        union all select null, '5591561234', '9999999999', 'energy_aggregated', 'kWh', cast(300.9 as decimal(28,10)), cast('2022-03-24 00:00:00' as datetime), 0
+        union all select null, '5591561234', '9999999999', 'corrected_aggregated', 'kWh', cast(280.5 as decimal(28,10)), cast('2022-03-23 00:00:00' as datetime), 0
+    end
+
     -- Default: return empty result set
     else
     begin

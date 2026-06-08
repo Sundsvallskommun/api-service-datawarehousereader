@@ -95,4 +95,19 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test06_getDistrictHeatingDayWithCorrectedAggregated() {
+		setupCall()
+			.withServicePath(format(PATH, DISTRICT_HEATING, DAY) +
+				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D95" +
+				"&facilityId=9999999999" +
+				"&fromDateTime=2022-03-23T00:00:00.000Z" +
+				"&toDateTime=2022-03-25T23:59:59.817Z" +
+				"&display=ONLYAGGREGATED")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }
