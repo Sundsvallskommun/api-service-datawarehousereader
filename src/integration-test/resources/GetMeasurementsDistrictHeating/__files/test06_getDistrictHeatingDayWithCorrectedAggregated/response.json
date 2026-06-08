@@ -1,0 +1,29 @@
+[
+	{
+		"customerOrgId": "5591561234",
+		"facilityId": "9999999999",
+		"feedType": "energy_aggregated",
+		"unit": "kWh",
+		"usage": 300.8,
+		"interpolation": 0,
+		"dateAndTime": "2022-03-23T00:00:00+01:00"
+	},
+	{
+		"customerOrgId": "5591561234",
+		"facilityId": "9999999999",
+		"feedType": "energy_aggregated",
+		"unit": "kWh",
+		"usage": 300.9,
+		"interpolation": 0,
+		"dateAndTime": "2022-03-24T00:00:00+01:00"
+	},
+	{
+		"customerOrgId": "5591561234",
+		"facilityId": "9999999999",
+		"feedType": "corrected_aggregated",
+		"unit": "kWh",
+		"usage": 280.5,
+		"interpolation": 0,
+		"dateAndTime": "2022-03-23T00:00:00+01:00"
+	}
+]
