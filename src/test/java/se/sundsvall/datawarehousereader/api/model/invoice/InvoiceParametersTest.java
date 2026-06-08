@@ -14,7 +14,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToStringExcluding;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSettersExcluding;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +22,7 @@ class InvoiceParametersTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+		registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -42,14 +41,14 @@ class InvoiceParametersTest {
 		final var customerType = CustomerType.PRIVATE;
 		final var facilityIds = List.of("735999109151401011", "735999109151401012");
 		final var invoiceNumber = 767915994L;
-		final var invoiceDateFrom = now().minusDays(10);
-		final var invoiceDateTo = now();
+		final var invoiceDateFrom = LocalDate.parse("2024-01-01").minusDays(10);
+		final var invoiceDateTo = LocalDate.parse("2024-01-01");
 		final var invoiceName = "765801493.pdf";
 		final var invoiceType = "Faktura";
 		final var invoiceStatus = "Skickad";
 		final var ocrNumber = 767915994L;
-		final var dueDateFrom = now().minusDays(10);
-		final var dueDateTo = now();
+		final var dueDateFrom = LocalDate.parse("2024-01-01").minusDays(10);
+		final var dueDateTo = LocalDate.parse("2024-01-01");
 		final var organizationGroup = "ORGGRP1";
 		final var organizationNumbers = List.of("5561234567");
 		final var administration = "ADMIN1";

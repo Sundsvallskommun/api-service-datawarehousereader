@@ -13,7 +13,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.LocalDate.now;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -21,7 +20,7 @@ class InstallationParameterTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+		registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test

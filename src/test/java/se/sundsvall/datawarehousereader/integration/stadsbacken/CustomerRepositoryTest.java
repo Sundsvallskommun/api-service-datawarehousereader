@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ class CustomerRepositoryTest {
 				tuple(38308, "5523456789", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
 				tuple(600675, "2020001000", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
 				tuple(10335, "5534567890", "Enterprise", "5564786647", "Sundsvall Energi AB", true, null),
-				tuple(10335, "5534567890", "Enterprise", "5565027223", "Sundsvall Elnät", false, LocalDateTime.of(2095, 1, 1, 0, 0)));
+				tuple(10335, "5534567890", "Enterprise", "5565027223", "Sundsvall Elnät", false, LocalDateTime.of(2095, Month.JANUARY, 1, 0, 0)));
 	}
 
 	@Test

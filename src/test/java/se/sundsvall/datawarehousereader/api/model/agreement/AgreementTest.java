@@ -20,7 +20,7 @@ class AgreementTest {
 
 	@BeforeAll
 	static void setup() {
-		BeanMatchers.registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
+		BeanMatchers.registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -49,8 +49,8 @@ class AgreementTest {
 		final var netAreaId = "netAreaId";
 		final var siteAddress = "siteAddress";
 		final var production = true;
-		final var fromDate = LocalDate.now().minusMonths(10L);
-		final var toDate = LocalDate.now();
+		final var fromDate = LocalDate.parse("2024-01-01").minusMonths(10L);
+		final var toDate = LocalDate.parse("2024-01-01");
 		final var active = Boolean.TRUE;
 
 		final var agreement = Agreement.create()

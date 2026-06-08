@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.service;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.AfterEach;
@@ -139,8 +140,8 @@ class InvoiceServiceTest {
 			.withOrganizationIds(List.of("5565027223", "5564786647"))
 			.withFacilityIds(List.of("123456789012345670", "123456789012345671"))
 			.withStatus("Betalad")
-			.withPeriodFrom(LocalDate.of(2025, 1, 1))
-			.withPeriodTo(LocalDate.of(2025, 12, 31))
+			.withPeriodFrom(LocalDate.of(2025, Month.JANUARY, 1))
+			.withPeriodTo(LocalDate.of(2025, Month.DECEMBER, 31))
 			.withSortBy("periodFrom");
 		parameters.setPage(2);
 		parameters.setLimit(5);
@@ -179,8 +180,8 @@ class InvoiceServiceTest {
 		assertThat(query.getOrganizationIds()).isEqualTo("5565027223,5564786647");
 		assertThat(query.getFacilityIds()).isEqualTo("123456789012345670,123456789012345671");
 		assertThat(query.getStatus()).isEqualTo("Betalad");
-		assertThat(query.getPeriodFrom()).isEqualTo(LocalDate.of(2025, 1, 1));
-		assertThat(query.getPeriodTo()).isEqualTo(LocalDate.of(2025, 12, 31));
+		assertThat(query.getPeriodFrom()).isEqualTo(LocalDate.of(2025, Month.JANUARY, 1));
+		assertThat(query.getPeriodTo()).isEqualTo(LocalDate.of(2025, Month.DECEMBER, 31));
 		assertThat(query.getSortBy()).isEqualTo("periodFrom");
 		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationA, invoiceA);
 		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationB, invoiceB);

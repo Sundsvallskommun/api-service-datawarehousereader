@@ -20,7 +20,7 @@ class InstalledBaseItemEntityTest {
 
 	@BeforeAll
 	static void setup() {
-		BeanMatchers.registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
+		BeanMatchers.registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -47,7 +47,7 @@ class InstalledBaseItemEntityTest {
 		final var internalId = 321;
 		final var metaData = List.of(new InstalledBaseItemMetaDataEmbeddable());
 		final var facilityId = "facilityId";
-		final var lastChangedDate = LocalDate.now();
+		final var lastChangedDate = LocalDate.parse("2024-01-01");
 		final var postCode = "postCode";
 		final var street = "street";
 		final var type = "type";

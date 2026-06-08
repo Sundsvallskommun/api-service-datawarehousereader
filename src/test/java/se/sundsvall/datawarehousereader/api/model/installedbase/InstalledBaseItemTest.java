@@ -20,7 +20,7 @@ class InstalledBaseItemTest {
 
 	@BeforeAll
 	static void setup() {
-		BeanMatchers.registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
+		BeanMatchers.registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -41,7 +41,7 @@ class InstalledBaseItemTest {
 		final var customerNumber = "101";
 		final var dateFrom = LocalDate.MIN;
 		final var dateTo = LocalDate.MAX;
-		final var lastModifiedDate = LocalDate.now();
+		final var lastModifiedDate = LocalDate.parse("2024-01-01");
 		final var facilityId = "facilityId";
 		final var metaData = List.of(InstalledBaseItemMetaData.create());
 		final var postCode = "postCode";

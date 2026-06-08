@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.api;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -142,7 +143,7 @@ class InstalledBaseResourceTest {
 	void getInstalledBaseByPartyIdAllParams() {
 		final var partyId = UUID.randomUUID().toString();
 		final var organizationIds = "5564786647,5565027223";
-		final var date = LocalDate.of(2025, 6, 1);
+		final var date = LocalDate.of(2025, Month.JUNE, 1);
 		final var sortBy = "Company";
 
 		when(serviceMock.getInstalledBase(any(Integer.class), any(Integer.class), any(), any(), any(), any()))

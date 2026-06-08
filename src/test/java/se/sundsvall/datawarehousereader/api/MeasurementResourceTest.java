@@ -49,8 +49,8 @@ class MeasurementResourceTest {
 	private static final int LIMIT = 17;
 	private static final String PARTY_ID = "81471222-5798-11e9-ae24-57fa13b361e1";
 	private static final String FACILITY_ID = "facilityId";
-	private static final OffsetDateTime FROM_DATE_TIME = OffsetDateTime.now().minusMonths(1);
-	private static final OffsetDateTime TO_DATE_TIME = OffsetDateTime.now();
+	private static final OffsetDateTime FROM_DATE_TIME = OffsetDateTime.parse("2024-01-01T00:00:00Z").minusMonths(1);
+	private static final OffsetDateTime TO_DATE_TIME = OffsetDateTime.parse("2024-01-01T00:00:00Z");
 
 	@MockitoBean
 	private MeasurementService serviceMock;

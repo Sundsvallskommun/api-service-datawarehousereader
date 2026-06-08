@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -54,8 +55,8 @@ class InvoiceJdbcRepositoryTest {
 		void getInvoices_withAllParameters_passesCorrectParameters() {
 			final var organizationIds = "5565027223,5564786647";
 			final var customerIds = "123456,600606";
-			final var periodFrom = LocalDate.of(2025, 1, 1);
-			final var periodTo = LocalDate.of(2025, 12, 31);
+			final var periodFrom = LocalDate.of(2025, Month.JANUARY, 1);
+			final var periodTo = LocalDate.of(2025, Month.DECEMBER, 31);
 			final var facilityIds = "123456789012345670";
 			final var invoiceStatus = "Betalad";
 
@@ -192,15 +193,15 @@ class InvoiceJdbcRepositoryTest {
 			when(resultSet.getLong("InvoiceID")).thenReturn(0L, 1062916396L);
 			when(resultSet.getLong("JointInvoiceid")).thenReturn(-1L, 0L);
 			when(resultSet.wasNull()).thenReturn(false, true, false, true, false, false, false, false);
-			when(resultSet.getDate("InvoiceDate")).thenReturn(Date.valueOf(LocalDate.of(2025, 10, 8)), Date.valueOf(LocalDate.of(2025, 11, 10)));
+			when(resultSet.getDate("InvoiceDate")).thenReturn(Date.valueOf(LocalDate.of(2025, Month.OCTOBER, 8)), Date.valueOf(LocalDate.of(2025, Month.NOVEMBER, 10)));
 			when(resultSet.getString("InvoiceName")).thenReturn("295334999.pdf", "60003118415.pdf");
 			when(resultSet.getString("InvoiceType")).thenReturn("Faktura", "Faktura");
 			when(resultSet.getString("InvoiceDescription")).thenReturn("El", "El");
 			when(resultSet.getString("InvoiceStatus")).thenReturn("Betalad", "Betalad");
 			when(resultSet.getLong("OcrNumber")).thenReturn(295334999L, 60003118415L);
-			when(resultSet.getDate("DueDate")).thenReturn(Date.valueOf(LocalDate.of(2025, 10, 28)), Date.valueOf(LocalDate.of(2025, 12, 1)));
-			when(resultSet.getDate("periodFrom")).thenReturn(Date.valueOf(LocalDate.of(2025, 9, 1)), Date.valueOf(LocalDate.of(2025, 9, 30)));
-			when(resultSet.getDate("periodTo")).thenReturn(Date.valueOf(LocalDate.of(2025, 9, 30)), Date.valueOf(LocalDate.of(2025, 10, 31)));
+			when(resultSet.getDate("DueDate")).thenReturn(Date.valueOf(LocalDate.of(2025, Month.OCTOBER, 28)), Date.valueOf(LocalDate.of(2025, Month.DECEMBER, 1)));
+			when(resultSet.getDate("periodFrom")).thenReturn(Date.valueOf(LocalDate.of(2025, Month.SEPTEMBER, 1)), Date.valueOf(LocalDate.of(2025, Month.SEPTEMBER, 30)));
+			when(resultSet.getDate("periodTo")).thenReturn(Date.valueOf(LocalDate.of(2025, Month.SEPTEMBER, 30)), Date.valueOf(LocalDate.of(2025, Month.OCTOBER, 31)));
 			when(resultSet.getBigDecimal("TotalAmount")).thenReturn(new BigDecimal("1234.00"), new BigDecimal("1940.00"));
 			when(resultSet.getBigDecimal("AmountVatIncluded")).thenReturn(new BigDecimal("1233.51"), new BigDecimal("1940.00"));
 			when(resultSet.getBigDecimal("AmountVatExcluded")).thenReturn(new BigDecimal("986.81"), new BigDecimal("1552.05"));
@@ -229,8 +230,8 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(first.getInvoiceNumber()).isEqualTo(295334999L);
 			assertThat(first.getOrganizationNumber()).isEqualTo("5565027223");
 			assertThat(first.getFacilityIds()).containsExactly("facility1", "facility2");
-			assertThat(first.getPeriodFrom()).isEqualTo(LocalDate.of(2025, 9, 1));
-			assertThat(first.getPeriodTo()).isEqualTo(LocalDate.of(2025, 9, 30));
+			assertThat(first.getPeriodFrom()).isEqualTo(LocalDate.of(2025, Month.SEPTEMBER, 1));
+			assertThat(first.getPeriodTo()).isEqualTo(LocalDate.of(2025, Month.SEPTEMBER, 30));
 
 			final var second = result.getInvoices().get(1);
 			assertThat(second.getOrganizationNumber()).isEqualTo("5564786647");

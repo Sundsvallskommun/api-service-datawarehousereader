@@ -14,7 +14,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.OffsetDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 
@@ -22,7 +21,7 @@ class CustomerDetailsParametersTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), OffsetDateTime.class);
+		registerValueGenerator(() -> OffsetDateTime.parse("2024-01-01T00:00:00Z").plusDays(new Random().nextInt()), OffsetDateTime.class);
 	}
 
 	@Test
@@ -39,7 +38,7 @@ class CustomerDetailsParametersTest {
 	void testCreatePattern() {
 		final var partyId = List.of("partyId1", "partyId2");
 		final var customerEngagementOrgId = "someCustomerEngagementOrgId";
-		final var fromDateTime = OffsetDateTime.now();
+		final var fromDateTime = OffsetDateTime.parse("2024-01-01T00:00:00Z");
 
 		final var parameters = CustomerDetailsParameters.create()
 			.withPartyId(partyId)

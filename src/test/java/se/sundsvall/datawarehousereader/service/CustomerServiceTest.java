@@ -128,7 +128,7 @@ class CustomerServiceTest {
 		final var sortBy = "customerOrgId";
 		final var customerEngagementOrgId = "5564786647";
 		final var parameters = CustomerDetailsParameters.create()
-			.withFromDateTime(OffsetDateTime.now())
+			.withFromDateTime(OffsetDateTime.parse("2024-01-01T00:00:00Z"))
 			.withCustomerEngagementOrgId(customerEngagementOrgId)
 			.withPartyId(List.of(RANDOM_UUID));
 		parameters.setPage(1);
@@ -161,7 +161,7 @@ class CustomerServiceTest {
 		final var sortBy = "customerOrgId";
 		final var customerEngagementOrgId = "5564786647";
 		final var parameters = CustomerDetailsParameters.create()
-			.withFromDateTime(OffsetDateTime.now())
+			.withFromDateTime(OffsetDateTime.parse("2024-01-01T00:00:00Z"))
 			.withCustomerEngagementOrgId(customerEngagementOrgId);
 		parameters.setPage(1);
 		parameters.setLimit(limit);
@@ -193,7 +193,7 @@ class CustomerServiceTest {
 		final var limit = 100;
 		final var customerEngagementOrgId = "5564786647";
 		final var parameters = CustomerDetailsParameters.create()
-			.withFromDateTime(OffsetDateTime.now())
+			.withFromDateTime(OffsetDateTime.parse("2024-01-01T00:00:00Z"))
 			.withCustomerEngagementOrgId(customerEngagementOrgId);
 		parameters.setPage(1);
 		parameters.setLimit(limit);

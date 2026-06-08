@@ -15,7 +15,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 import static java.math.BigDecimal.valueOf;
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +23,7 @@ class InvoiceTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+		registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -48,10 +47,10 @@ class InvoiceTest {
 		final var currency = "currency";
 		final var customerNumber = "1234";
 		final var customerType = CustomerType.PRIVATE;
-		final var dueDate = now();
+		final var dueDate = LocalDate.parse("2024-01-01");
 		final var facilityId = "facilityId";
 		final var facilityIds = new HashSet<>(List.of(facilityId));
-		final var invoiceDate = now().minusDays(15);
+		final var invoiceDate = LocalDate.parse("2024-01-01").minusDays(15);
 		final var invoiceDescription = "invoiceDescription";
 		final var invoiceDescriptions = new HashSet<>(List.of(invoiceDescription));
 		final var invoiceName = "invoiceName";

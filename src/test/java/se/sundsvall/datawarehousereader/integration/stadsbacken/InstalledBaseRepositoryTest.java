@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.time.LocalDate;
+import java.time.Month;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -158,8 +159,8 @@ class InstalledBaseRepositoryTest {
 	@Test
 	void getInstalledBaseByCustomerIdAndModifiedBetween() {
 		final var params = createParameters("10335", "Sundsvall Energi AB", null);
-		params.setLastModifiedDateFrom(LocalDate.of(2017, 12, 3));
-		params.setLastModifiedDateTom(LocalDate.of(2017, 12, 6));
+		params.setLastModifiedDateFrom(LocalDate.of(2017, Month.DECEMBER, 3));
+		params.setLastModifiedDateTom(LocalDate.of(2017, Month.DECEMBER, 6));
 
 		final var page = repository.findAllByParameters(params, PageRequest.of(0, 100));
 
@@ -179,16 +180,16 @@ class InstalledBaseRepositoryTest {
 				InstalledBaseItemEntity::getType,
 				InstalledBaseItemEntity::getLastChangedDate)
 			.containsExactly(
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38186, "735999109324902055", "Vägen 2223", "Elhandel", LocalDate.of(2017, 12, 3)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38126, "735999109144502091", "Gatan 21 B 4010170", "Elhandel", LocalDate.of(2017, 12, 4)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37817, "735999109144515107", "Vägen 1112", "Elhandel", LocalDate.of(2017, 12, 5)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, 12, 6)));
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38186, "735999109324902055", "Vägen 2223", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 3)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -38126, "735999109144502091", "Gatan 21 B 4010170", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 4)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37817, "735999109144515107", "Vägen 1112", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 5)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 6)));
 	}
 
 	@Test
 	void getInstalledBaseByCustomerIdAndModifiedLaterThan() {
 		final var params = createParameters("10335", "Sundsvall Energi AB", null);
-		params.setLastModifiedDateFrom(LocalDate.of(2017, 12, 6));
+		params.setLastModifiedDateFrom(LocalDate.of(2017, Month.DECEMBER, 6));
 
 		final var page = repository.findAllByParameters(params, PageRequest.of(0, 100));
 
@@ -208,11 +209,11 @@ class InstalledBaseRepositoryTest {
 				InstalledBaseItemEntity::getType,
 				InstalledBaseItemEntity::getLastChangedDate)
 			.containsExactly(
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, 12, 6)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36920, "735999109122811214", "Gatan 27", "Elhandel", LocalDate.of(2017, 12, 7)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36827, "735999109140702235", "Gatan 4 B 4170153", "Elhandel", LocalDate.of(2017, 12, 7)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36437, "735999109141108111", "Gatan 32", "Elhandel", LocalDate.of(2017, 12, 8)),
-				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36019, "735999109141106155", "Vägen 6", "Elhandel", LocalDate.of(2017, 12, 8)));
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -37402, "735999109144517538", "Gatan 17 F 4010965", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 6)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36920, "735999109122811214", "Gatan 27", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 7)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36827, "735999109140702235", "Gatan 4 B 4170153", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 7)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36437, "735999109141108111", "Gatan 32", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 8)),
+				tuple("Fastighetsförmedling AB", "Sundsvall Energi AB", 10335, -36019, "735999109141106155", "Vägen 6", "Elhandel", LocalDate.of(2017, Month.DECEMBER, 8)));
 	}
 
 	private static InstalledBaseParameters createParameters(String customerNumber, String company, String facilityId) {

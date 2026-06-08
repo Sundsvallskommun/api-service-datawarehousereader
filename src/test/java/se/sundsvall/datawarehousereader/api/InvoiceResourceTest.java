@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.api;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -48,14 +49,14 @@ class InvoiceResourceTest {
 	private static final CustomerType CUSTOMER_TYPE = CustomerType.ENTERPRISE;
 	private static final String FACILITY_ID = "facilityId";
 	private static final long INVOICE_NUMBER = 333L;
-	private static final LocalDate INVOICE_DATE_FROM = LocalDate.now().minusYears(2);
-	private static final LocalDate INVOICE_DATE_TO = LocalDate.now().minusYears(1);
+	private static final LocalDate INVOICE_DATE_FROM = LocalDate.parse("2024-01-01").minusYears(2);
+	private static final LocalDate INVOICE_DATE_TO = LocalDate.parse("2024-01-01").minusYears(1);
 	private static final String INVOICE_NAME = "invoiceName";
 	private static final String INVOICE_TYPE = "invoiceType";
 	private static final String INVOICE_STATUS = "invoiceStatus";
 	private static final long OCR_NUMBER = 444L;
-	private static final LocalDate DUE_DATE_FROM = LocalDate.now().minusMonths(1);
-	private static final LocalDate DUE_DATE_TO = LocalDate.now();
+	private static final LocalDate DUE_DATE_FROM = LocalDate.parse("2024-01-01").minusMonths(1);
+	private static final LocalDate DUE_DATE_TO = LocalDate.parse("2024-01-01");
 	private static final String ORGANIZATION_GROUP = "organizationGroup";
 	private static final String ORGANIZATION_NUMBER = "5565027223";
 	private static final String ADMINISTRATION = "administration";
@@ -171,8 +172,8 @@ class InvoiceResourceTest {
 	@Test
 	void getInvoicesForCustomer_allParams() {
 		final var organizationIds = "5565027223,5564786647";
-		final var periodFrom = LocalDate.of(2025, 1, 1);
-		final var periodTo = LocalDate.of(2025, 12, 31);
+		final var periodFrom = LocalDate.of(2025, Month.JANUARY, 1);
+		final var periodTo = LocalDate.of(2025, Month.DECEMBER, 31);
 		final var sortBy = "periodFrom";
 
 		when(serviceMock.getInvoicesForCustomer(any())).thenReturn(CustomerInvoiceResponse.create());

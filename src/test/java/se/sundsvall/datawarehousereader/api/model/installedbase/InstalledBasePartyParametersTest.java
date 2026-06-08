@@ -11,7 +11,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,7 +19,7 @@ class InstalledBasePartyParametersTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+		registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -36,7 +35,7 @@ class InstalledBasePartyParametersTest {
 	@Test
 	void testCreatePattern() {
 		final var organizationIds = "123456789,123456987";
-		final var date = LocalDate.now().minusDays(30);
+		final var date = LocalDate.parse("2024-01-01").minusDays(30);
 		final var sortBy = "Company";
 
 		final var parameters = InstalledBasePartyParameters.create()

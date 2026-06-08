@@ -29,7 +29,7 @@ class CustomerDetailMapperTest {
 
 	@Test
 	void testToCustomerDetails() {
-		final var moveInDate = LocalDateTime.now();
+		final var moveInDate = LocalDateTime.parse("2024-01-01T00:00");
 
 		final var entity = CustomerDetailEntity.create()
 			.withCustomerOrgId("customerOrgId")

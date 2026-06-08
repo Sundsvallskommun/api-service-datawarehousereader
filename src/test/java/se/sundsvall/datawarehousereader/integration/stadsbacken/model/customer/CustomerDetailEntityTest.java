@@ -11,7 +11,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
@@ -20,7 +19,7 @@ class CustomerDetailEntityTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDateTime.class);
+		registerValueGenerator(() -> LocalDateTime.parse("2024-01-01T00:00").plusDays(new Random().nextInt()), LocalDateTime.class);
 	}
 
 	@Test
@@ -55,7 +54,7 @@ class CustomerDetailEntityTest {
 		final var organizationId = "organizationId";
 		final var organizationName = "organizationName";
 		final var active = true;
-		final var moveInDate = LocalDateTime.now().plusDays(new Random().nextInt());
+		final var moveInDate = LocalDateTime.parse("2024-01-01T00:00").plusDays(new Random().nextInt());
 		final var metadata = MetadataEmbeddable.create();
 
 		final var entity = CustomerDetailEntity.create()

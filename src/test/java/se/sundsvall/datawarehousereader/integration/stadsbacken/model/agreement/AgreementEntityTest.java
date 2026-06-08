@@ -11,7 +11,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.AllOf.allOf;
@@ -20,7 +19,7 @@ class AgreementEntityTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDateTime.class);
+		registerValueGenerator(() -> LocalDateTime.parse("2024-01-01T00:00").plusDays(new Random().nextInt()), LocalDateTime.class);
 	}
 
 	@Test
@@ -50,8 +49,8 @@ class AgreementEntityTest {
 		final var netAreaId = "netAreaId";
 		final var placementStatus = "placementStatus";
 		final var siteAddress = "siteAddress";
-		final var fromDate = LocalDateTime.now().minusDays(7);
-		final var toDate = LocalDateTime.now();
+		final var fromDate = LocalDateTime.parse("2024-01-01T00:00").minusDays(7);
+		final var toDate = LocalDateTime.parse("2024-01-01T00:00");
 
 		final var entity = AgreementEntity.create()
 			.withUuid(uuid)

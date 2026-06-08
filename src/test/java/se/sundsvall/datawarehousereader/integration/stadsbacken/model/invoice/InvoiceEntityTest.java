@@ -20,7 +20,7 @@ class InvoiceEntityTest {
 
 	@BeforeAll
 	static void setup() {
-		BeanMatchers.registerValueGenerator(() -> LocalDate.now().plusDays(new Random().nextInt()), LocalDate.class);
+		BeanMatchers.registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
