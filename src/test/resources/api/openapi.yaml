@@ -421,7 +421,7 @@ paths:
             type: string
             description: Customer numbers
             examples:
-            - "216870"
+            - "123456"
           minItems: 1
       - name: organizationIds
         in: query
@@ -443,7 +443,7 @@ paths:
             description: Facility ids to filter by. A row matches if any of its facility
               ids contains a requested value
             examples:
-            - "735999109425048010"
+            - "123456789012345670"
       - name: status
         in: query
         description: Invoice status
@@ -1942,11 +1942,13 @@ components:
         customerType:
           $ref: "#/components/schemas/CustomerType"
           readOnly: true
-        facilityId:
-          type: string
-          description: Facility id
+        facilityIds:
+          type: array
+          description: List of facility ids
           examples:
-          - "735999109425048010"
+          - 123456789012345670
+          items:
+            type: string
           readOnly: true
         invoiceNumber:
           type: integer

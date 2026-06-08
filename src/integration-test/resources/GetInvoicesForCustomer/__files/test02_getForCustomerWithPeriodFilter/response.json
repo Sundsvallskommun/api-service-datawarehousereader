@@ -86,7 +86,9 @@
 				}
 			],
 			"dueDate": "2019-10-29",
-			"facilityId": "735999109261218707",
+			"facilityIds": [
+				"735999109261218707"
+			],
 			"invoiceDate": "2019-10-09",
 			"invoiceDescription": "El",
 			"invoiceId": 137968194,
@@ -186,7 +188,9 @@
 				}
 			],
 			"dueDate": "2019-10-29",
-			"facilityId": "735999109140205897",
+			"facilityIds": [
+				"735999109140205897"
+			],
 			"invoiceDate": "2019-10-09",
 			"invoiceDescription": "El",
 			"invoiceId": 137968293,
@@ -303,7 +307,9 @@
 				}
 			],
 			"dueDate": "2019-10-29",
-			"facilityId": "735999109144630886",
+			"facilityIds": [
+				"735999109144630886"
+			],
 			"invoiceDate": "2019-10-09",
 			"invoiceDescription": "El",
 			"invoiceId": 137968392,

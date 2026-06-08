@@ -109,4 +109,28 @@ class GetInvoicesForCustomerIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test10_getForCustomerWithCommaSeparatedFacilityIds() {
+		// Customer 707070 has one invoice whose FacilityId column packs two ids ("...0001,...0002") and one with an
+		// unrelated id ("...0003"). Filtering by the second packed id must match only the former.
+		setupCall()
+			.withServicePath(PATH + "?customerNumbers=707070&facilityIds=735999109700000002")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
+
+	@Test
+	void test11_getForCustomerWithMultipleFacilityIds() {
+		// Two requested facility ids, each matching a different invoice of customer 707070, must be OR:ed together so
+		// both invoices are returned (ordered by the InvoiceNumber tie-breaker, since both share the same period).
+		setupCall()
+			.withServicePath(PATH + "?customerNumbers=707070&facilityIds=735999109700000001,735999109700000003")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -18,6 +19,7 @@ import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceRespons
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import static java.util.Optional.ofNullable;
+import static java.util.function.Predicate.not;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
@@ -173,7 +175,7 @@ public class InvoiceJdbcRepository {
 			return CustomerInvoice.create()
 				.withCustomerNumber(rs.getString("CustomerId"))
 				.withCustomerType(fromValue(rs.getString("CustomerType"), INTERNAL_SERVER_ERROR, UNKNOWN_CUSTOMER_TYPE))
-				.withFacilityId(rs.getString("FacilityId"))
+				.withFacilityIds(toFacilityIds(rs.getString("FacilityId")))
 				.withInvoiceNumber(getNullableLong(rs, "InvoiceNumber"))
 				.withInvoiceId(getNullableLong(rs, "InvoiceID"))
 				.withJointInvoiceId(getNullableLong(rs, "JointInvoiceid"))
@@ -200,6 +202,20 @@ public class InvoiceJdbcRepository {
 				.withCareOf(rs.getString("CareOf"))
 				.withInvoiceReference(rs.getString("InvoiceReference"))
 				.withPdfAvailable(getNullableBoolean(rs, "pdfAvailable"));
+		}
+
+		/**
+		 * The source FacilityId column may pack several facility ids as a comma separated string. Split it into discrete
+		 * ids so the response exposes a real list rather than a single comma separated value. Null/blank yields an empty
+		 * list.
+		 */
+		private static List<String> toFacilityIds(final String facilityId) {
+			return ofNullable(facilityId)
+				.map(value -> Arrays.stream(value.split(","))
+					.map(String::trim)
+					.filter(not(String::isBlank))
+					.toList())
+				.orElseGet(List::of);
 		}
 
 		private static LocalDate toLocalDate(final java.sql.Date date) {

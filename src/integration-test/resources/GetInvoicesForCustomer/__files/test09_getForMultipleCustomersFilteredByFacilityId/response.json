@@ -86,7 +86,9 @@
 				}
 			],
 			"dueDate": "2019-10-29",
-			"facilityId": "735999109261218707",
+			"facilityIds": [
+				"735999109261218707"
+			],
 			"invoiceDate": "2019-10-09",
 			"invoiceDescription": "El",
 			"invoiceId": 137968194,

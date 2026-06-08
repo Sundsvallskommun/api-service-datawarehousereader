@@ -40,7 +40,7 @@ class InvoiceRepositoryTest {
 		assertThat(result.getNumber()).isZero();
 		assertThat(result.getNumberOfElements()).isEqualTo(100);
 		assertThat(result.getTotalPages()).isEqualTo(2);
-		assertThat(result.getTotalElements()).isEqualTo(177);
+		assertThat(result.getTotalElements()).isEqualTo(179);
 		assertThat(result.getContent()).hasSize(100);
 	}
 

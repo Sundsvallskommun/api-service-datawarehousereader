@@ -53,10 +53,10 @@ class InvoiceJdbcRepositoryTest {
 		@Test
 		void getInvoices_withAllParameters_passesCorrectParameters() {
 			final var organizationIds = "5565027223,5564786647";
-			final var customerIds = "216870,600606";
+			final var customerIds = "123456,600606";
 			final var periodFrom = LocalDate.of(2025, 1, 1);
 			final var periodTo = LocalDate.of(2025, 12, 31);
-			final var facilityIds = "735999109425048010";
+			final var facilityIds = "123456789012345670";
 			final var invoiceStatus = "Betalad";
 
 			final var query = CustomerInvoiceQuery.create()
@@ -103,7 +103,7 @@ class InvoiceJdbcRepositoryTest {
 			repository.getInvoices(CustomerInvoiceQuery.create()
 				.withPage(1)
 				.withLimit(10)
-				.withCustomerIds("216870"));
+				.withCustomerIds("123456"));
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
@@ -112,7 +112,7 @@ class InvoiceJdbcRepositoryTest {
 
 			final var params = parametersCaptor.getValue();
 			assertThat(params.getValue("organizationIds")).isNull();
-			assertThat(params.getValue("customerIds")).isEqualTo("216870");
+			assertThat(params.getValue("customerIds")).isEqualTo("123456");
 			assertThat(params.getValue("periodFrom")).isNull();
 			assertThat(params.getValue("periodTo")).isNull();
 			assertThat(params.getValue("facilityIds")).isNull();
@@ -132,7 +132,7 @@ class InvoiceJdbcRepositoryTest {
 			repository.getInvoices(CustomerInvoiceQuery.create()
 				.withPage(1)
 				.withLimit(10)
-				.withCustomerIds("216870")
+				.withCustomerIds("123456")
 				.withSortBy("garble"));
 
 			verify(jdbcTemplate).query(
@@ -185,9 +185,9 @@ class InvoiceJdbcRepositoryTest {
 
 			when(resultSet.next()).thenReturn(true, true, false);
 
-			when(resultSet.getString("CustomerId")).thenReturn("216870", "216870");
+			when(resultSet.getString("CustomerId")).thenReturn("123456", "123456");
 			when(resultSet.getString("CustomerType")).thenReturn("Private", "Private");
-			when(resultSet.getString("FacilityId")).thenReturn("facility1", "facility2");
+			when(resultSet.getString("FacilityId")).thenReturn("facility1,facility2", "facility3");
 			when(resultSet.getLong("InvoiceNumber")).thenReturn(295334999L, 60003118415L);
 			when(resultSet.getLong("InvoiceID")).thenReturn(0L, 1062916396L);
 			when(resultSet.getLong("JointInvoiceid")).thenReturn(-1L, 0L);
@@ -224,16 +224,18 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(result.getInvoices()).hasSize(2);
 
 			final var first = result.getInvoices().getFirst();
-			assertThat(first.getCustomerNumber()).isEqualTo("216870");
+			assertThat(first.getCustomerNumber()).isEqualTo("123456");
 			assertThat(first.getCustomerType()).isEqualTo(CustomerType.PRIVATE);
 			assertThat(first.getInvoiceNumber()).isEqualTo(295334999L);
 			assertThat(first.getOrganizationNumber()).isEqualTo("5565027223");
+			assertThat(first.getFacilityIds()).containsExactly("facility1", "facility2");
 			assertThat(first.getPeriodFrom()).isEqualTo(LocalDate.of(2025, 9, 1));
 			assertThat(first.getPeriodTo()).isEqualTo(LocalDate.of(2025, 9, 30));
 
 			final var second = result.getInvoices().get(1);
 			assertThat(second.getOrganizationNumber()).isEqualTo("5564786647");
 			assertThat(second.getInvoiceNumber()).isEqualTo(60003118415L);
+			assertThat(second.getFacilityIds()).containsExactly("facility3");
 
 			final var meta = result.getMetaData();
 			assertThat(meta.getPage()).isEqualTo(1);
@@ -276,7 +278,7 @@ class InvoiceJdbcRepositoryTest {
 			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, null);
 			when(resultSet.next()).thenReturn(true, false);
 
-			when(resultSet.getString("CustomerId")).thenReturn("216870");
+			when(resultSet.getString("CustomerId")).thenReturn("123456");
 			when(resultSet.getString("CustomerType")).thenReturn("Private");
 			when(resultSet.getString("FacilityId")).thenReturn(null);
 			when(resultSet.getLong(anyString())).thenReturn(0L);
@@ -301,6 +303,7 @@ class InvoiceJdbcRepositoryTest {
 			final var result = extractor.extractData(resultSet);
 
 			final var item = result.getInvoices().getFirst();
+			assertThat(item.getFacilityIds()).isEmpty();
 			assertThat(item.getInvoiceNumber()).isNull();
 			assertThat(item.getInvoiceId()).isNull();
 			assertThat(item.getJointInvoiceId()).isNull();

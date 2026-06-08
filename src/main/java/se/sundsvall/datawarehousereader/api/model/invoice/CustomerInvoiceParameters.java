@@ -15,14 +15,14 @@ import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingBase;
 @ParameterObject
 public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 
-	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "216870"), minItems = 1)
+	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "123456"), minItems = 1)
 	@NotEmpty
 	private List<String> customerNumbers;
 
 	@ArraySchema(schema = @Schema(description = "Organization id of invoice issuer", examples = "5565027223"))
 	private List<String> organizationIds;
 
-	@ArraySchema(schema = @Schema(description = "Facility ids to filter by. A row matches if any of its facility ids contains a requested value", examples = "735999109425048010"))
+	@ArraySchema(schema = @Schema(description = "Facility ids to filter by. A row matches if any of its facility ids contains a requested value", examples = "123456789012345670"))
 	private List<String> facilityIds;
 
 	@Schema(description = "Invoice status", examples = "Betalad")

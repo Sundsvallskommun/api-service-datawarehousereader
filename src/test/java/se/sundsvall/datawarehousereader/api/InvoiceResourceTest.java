@@ -178,9 +178,9 @@ class InvoiceResourceTest {
 		when(serviceMock.getInvoicesForCustomer(any())).thenReturn(CustomerInvoiceResponse.create());
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/customers")
-			.queryParam("customerNumbers", "216870", "600606")
+			.queryParam("customerNumbers", "123456", "600606")
 			.queryParam("organizationIds", organizationIds)
-			.queryParam("facilityIds", "735999109425048010", "735999109425048011")
+			.queryParam("facilityIds", "123456789012345670", "123456789012345671")
 			.queryParam("status", "Betalad")
 			.queryParam("periodFrom", periodFrom.format(DateTimeFormatter.ISO_LOCAL_DATE))
 			.queryParam("periodTo", periodTo.format(DateTimeFormatter.ISO_LOCAL_DATE))
@@ -198,9 +198,9 @@ class InvoiceResourceTest {
 		verify(serviceMock).getInvoicesForCustomer(paramsCaptor.capture());
 
 		final var captured = paramsCaptor.getValue();
-		assertThat(captured.getCustomerNumbers()).containsExactly("216870", "600606");
+		assertThat(captured.getCustomerNumbers()).containsExactly("123456", "600606");
 		assertThat(captured.getOrganizationIds()).containsExactly("5565027223", "5564786647");
-		assertThat(captured.getFacilityIds()).containsExactly("735999109425048010", "735999109425048011");
+		assertThat(captured.getFacilityIds()).containsExactly("123456789012345670", "123456789012345671");
 		assertThat(captured.getStatus()).isEqualTo("Betalad");
 		assertThat(captured.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(captured.getPeriodTo()).isEqualTo(periodTo);
@@ -214,7 +214,7 @@ class InvoiceResourceTest {
 		when(serviceMock.getInvoicesForCustomer(any())).thenReturn(CustomerInvoiceResponse.create());
 
 		webTestClient.get().uri(uriBuilder -> uriBuilder.path(PATH + "/customers")
-			.queryParam("customerNumbers", "216870")
+			.queryParam("customerNumbers", "123456")
 			.build())
 			.exchange()
 			.expectStatus().isOk()
@@ -226,7 +226,7 @@ class InvoiceResourceTest {
 		verify(serviceMock).getInvoicesForCustomer(paramsCaptor.capture());
 
 		final var captured = paramsCaptor.getValue();
-		assertThat(captured.getCustomerNumbers()).containsExactly("216870");
+		assertThat(captured.getCustomerNumbers()).containsExactly("123456");
 		assertThat(captured.getOrganizationIds()).isNull();
 		assertThat(captured.getFacilityIds()).isNull();
 		assertThat(captured.getStatus()).isNull();

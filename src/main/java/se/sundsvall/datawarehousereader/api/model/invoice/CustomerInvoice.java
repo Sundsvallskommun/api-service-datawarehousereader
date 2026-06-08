@@ -19,8 +19,8 @@ public class CustomerInvoice {
 	@Schema(implementation = CustomerType.class, accessMode = READ_ONLY)
 	private CustomerType customerType;
 
-	@Schema(description = "Facility id", examples = "735999109425048010", accessMode = READ_ONLY)
-	private String facilityId;
+	@Schema(description = "List of facility ids", examples = "123456789012345670", accessMode = READ_ONLY)
+	private List<String> facilityIds;
 
 	@Schema(description = "Invoice number", examples = "123456789", accessMode = READ_ONLY)
 	private Long invoiceNumber;
@@ -133,16 +133,16 @@ public class CustomerInvoice {
 		return this;
 	}
 
-	public String getFacilityId() {
-		return facilityId;
+	public List<String> getFacilityIds() {
+		return facilityIds;
 	}
 
-	public void setFacilityId(final String facilityId) {
-		this.facilityId = facilityId;
+	public void setFacilityIds(final List<String> facilityIds) {
+		this.facilityIds = facilityIds;
 	}
 
-	public CustomerInvoice withFacilityId(final String facilityId) {
-		this.facilityId = facilityId;
+	public CustomerInvoice withFacilityIds(final List<String> facilityIds) {
+		this.facilityIds = facilityIds;
 		return this;
 	}
 
@@ -503,7 +503,7 @@ public class CustomerInvoice {
 			return false;
 		final CustomerInvoice that = (CustomerInvoice) o;
 		return Objects.equals(customerNumber, that.customerNumber) && customerType == that.customerType
-			&& Objects.equals(facilityId, that.facilityId) && Objects.equals(invoiceNumber, that.invoiceNumber)
+			&& Objects.equals(facilityIds, that.facilityIds) && Objects.equals(invoiceNumber, that.invoiceNumber)
 			&& Objects.equals(invoiceId, that.invoiceId) && Objects.equals(jointInvoiceId, that.jointInvoiceId)
 			&& Objects.equals(invoiceDate, that.invoiceDate) && Objects.equals(invoiceName, that.invoiceName)
 			&& Objects.equals(invoiceType, that.invoiceType) && Objects.equals(invoiceDescription, that.invoiceDescription)
@@ -521,7 +521,7 @@ public class CustomerInvoice {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(customerNumber, customerType, facilityId, invoiceNumber, invoiceId, jointInvoiceId,
+		return Objects.hash(customerNumber, customerType, facilityIds, invoiceNumber, invoiceId, jointInvoiceId,
 			invoiceDate, invoiceName, invoiceType, invoiceDescription, invoiceStatus, ocrNumber, dueDate,
 			periodFrom, periodTo, totalAmount, amountVatIncluded, amountVatExcluded, vatEligibleAmount, rounding,
 			organizationGroup, organizationNumber, administration, street, postCode, city, careOf,
@@ -533,7 +533,7 @@ public class CustomerInvoice {
 		return "CustomerInvoice{" +
 			"customerNumber='" + customerNumber + '\'' +
 			", customerType=" + customerType +
-			", facilityId='" + facilityId + '\'' +
+			", facilityIds=" + facilityIds +
 			", invoiceNumber=" + invoiceNumber +
 			", invoiceId=" + invoiceId +
 			", jointInvoiceId=" + jointInvoiceId +

@@ -38,9 +38,9 @@ class CustomerInvoiceTest {
 
 	@Test
 	void testCreatePattern() {
-		final var customerNumber = "216870";
+		final var customerNumber = "123456";
 		final var customerType = CustomerType.PRIVATE;
-		final var facilityId = "facilityId";
+		final var facilityIds = List.of("facilityId1", "facilityId2");
 		final var invoiceNumber = 295334999L;
 		final var invoiceId = 1062916396L;
 		final var jointInvoiceId = -1L;
@@ -72,7 +72,7 @@ class CustomerInvoiceTest {
 		final var invoice = CustomerInvoice.create()
 			.withCustomerNumber(customerNumber)
 			.withCustomerType(customerType)
-			.withFacilityId(facilityId)
+			.withFacilityIds(facilityIds)
 			.withInvoiceNumber(invoiceNumber)
 			.withInvoiceId(invoiceId)
 			.withJointInvoiceId(jointInvoiceId)
@@ -104,7 +104,7 @@ class CustomerInvoiceTest {
 		assertThat(invoice).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(invoice.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(invoice.getCustomerType()).isEqualTo(customerType);
-		assertThat(invoice.getFacilityId()).isEqualTo(facilityId);
+		assertThat(invoice.getFacilityIds()).isEqualTo(facilityIds);
 		assertThat(invoice.getInvoiceNumber()).isEqualTo(invoiceNumber);
 		assertThat(invoice.getInvoiceId()).isEqualTo(invoiceId);
 		assertThat(invoice.getJointInvoiceId()).isEqualTo(jointInvoiceId);

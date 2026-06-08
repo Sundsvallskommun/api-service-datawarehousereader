@@ -2296,6 +2296,25 @@ VALUES (10335, N'Enterprise', '2019-11-08', '735999109173514010', 'stadsbacken',
         N'Skickad', 138024294, N'138024294.pdf', 'Faktura', 'El', 'Fakturor', '85185', 'SUNDSVALL',
         'Fastighetsförmedling AB', 'false');
 
+-- Customer 707070 carries comma separated FacilityId values in a single column, mirroring how the source data can pack
+-- several facility ids together. Invoice 700000001 holds two ids; invoice 700000002 holds an unrelated single id. Used by
+-- GetInvoicesForCustomerIT to verify the facility filter matches an id embedded in such a list and excludes non-matches.
+-- Status is Skickad (the common value) to avoid colliding with the invoiceStatus=Krediterad filter test.
+INSERT INTO kundinfo.vInvoice_Test_251126 (CustomerId, CustomerType, DueDate, FacilityId, OrganizationGroup,
+                                           Administration, OrganizationId, TotalAmount, AmountVatIncluded,
+                                           AmountVatExcluded, VatEligiblaAmount, Rounding, Vat, ReversedVat, Currency,
+                                           InvoiceDate, InvoiceNumber, InvoiceStatus, OcrNumber, InvoiceName,
+                                           InvoiceType, InvoiceDescription, Street, PostalCode, City, CareOf,
+                                           PdfAvailable)
+VALUES (707070, N'Enterprise', '2019-11-01', '735999109700000001,735999109700000002', 'stadsbacken', 'Sundsvall Elnät',
+        '5565027223', 1900.0000, 1900.0000, 1520.0000, 1520.0000, 0.0000, 1520.0000, N'false', 'sek', '2019-10-02',
+        700000001, N'Skickad', 700000001, N'700000001.pdf', 'Faktura', 'El', 'DB79B,  FE 11040', '83882', 'FRÖSÖN',
+        'Fräscha fastigheter AB', 'true'),
+       (707070, N'Enterprise', '2019-11-01', '735999109700000003', 'stadsbacken', 'Sundsvall Elnät',
+        '5565027223', 1900.0000, 1900.0000, 1520.0000, 1520.0000, 0.0000, 1520.0000, N'false', 'sek', '2019-10-02',
+        700000002, N'Skickad', 700000002, N'700000002.pdf', 'Faktura', 'El', 'DB79B,  FE 11040', '83882', 'FRÖSÖN',
+        'Fräscha fastigheter AB', 'true');
+
 -- vInvoiceDetail
 INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,

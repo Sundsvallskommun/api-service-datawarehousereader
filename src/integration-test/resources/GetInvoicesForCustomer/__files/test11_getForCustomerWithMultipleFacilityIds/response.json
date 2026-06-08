@@ -1,0 +1,78 @@
+{
+	"_meta": {
+		"count": 2,
+		"limit": 100,
+		"page": 1,
+		"totalPages": 1,
+		"totalRecords": 2
+	},
+	"invoices": [
+		{
+			"administration": "Sundsvall Elnät",
+			"amountVatExcluded": 1520.0,
+			"amountVatIncluded": 1900.0,
+			"careOf": "Fräscha fastigheter AB",
+			"city": "FRÖSÖN",
+			"customerNumber": "707070",
+			"customerType": "Enterprise",
+			"details": [],
+			"dueDate": "2019-11-01",
+			"facilityIds": [
+				"735999109700000001",
+				"735999109700000002"
+			],
+			"invoiceDate": "2019-10-02",
+			"invoiceDescription": "El",
+			"invoiceId": 700000001,
+			"invoiceName": "700000001.pdf",
+			"invoiceNumber": 700000001,
+			"invoiceStatus": "Skickad",
+			"invoiceType": "Faktura",
+			"jointInvoiceId": -1,
+			"ocrNumber": 700000001,
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"pdfAvailable": true,
+			"periodFrom": "2019-10-02",
+			"periodTo": "2019-11-01",
+			"postCode": "83882",
+			"rounding": 0.0,
+			"street": "DB79B,  FE 11040",
+			"totalAmount": 1900.0,
+			"vatEligibleAmount": 1520.0
+		},
+		{
+			"administration": "Sundsvall Elnät",
+			"amountVatExcluded": 1520.0,
+			"amountVatIncluded": 1900.0,
+			"careOf": "Fräscha fastigheter AB",
+			"city": "FRÖSÖN",
+			"customerNumber": "707070",
+			"customerType": "Enterprise",
+			"details": [],
+			"dueDate": "2019-11-01",
+			"facilityIds": [
+				"735999109700000003"
+			],
+			"invoiceDate": "2019-10-02",
+			"invoiceDescription": "El",
+			"invoiceId": 700000002,
+			"invoiceName": "700000002.pdf",
+			"invoiceNumber": 700000002,
+			"invoiceStatus": "Skickad",
+			"invoiceType": "Faktura",
+			"jointInvoiceId": -1,
+			"ocrNumber": 700000002,
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"pdfAvailable": true,
+			"periodFrom": "2019-10-02",
+			"periodTo": "2019-11-01",
+			"postCode": "83882",
+			"rounding": 0.0,
+			"street": "DB79B,  FE 11040",
+			"totalAmount": 1900.0,
+			"vatEligibleAmount": 1520.0
+		}
+	]
+}

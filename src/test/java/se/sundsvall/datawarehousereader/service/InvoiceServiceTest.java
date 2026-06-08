@@ -135,9 +135,9 @@ class InvoiceServiceTest {
 		final var invoiceB = 60003118415L;
 
 		final var parameters = CustomerInvoiceParameters.create()
-			.withCustomerNumbers(List.of("216870"))
+			.withCustomerNumbers(List.of("123456"))
 			.withOrganizationIds(List.of("5565027223", "5564786647"))
-			.withFacilityIds(List.of("735999109425048010", "735999109425048011"))
+			.withFacilityIds(List.of("123456789012345670", "123456789012345671"))
 			.withStatus("Betalad")
 			.withPeriodFrom(LocalDate.of(2025, 1, 1))
 			.withPeriodTo(LocalDate.of(2025, 12, 31))
@@ -175,9 +175,9 @@ class InvoiceServiceTest {
 		final var query = queryCaptor.getValue();
 		assertThat(query.getPage()).isEqualTo(2);
 		assertThat(query.getLimit()).isEqualTo(5);
-		assertThat(query.getCustomerIds()).isEqualTo("216870");
+		assertThat(query.getCustomerIds()).isEqualTo("123456");
 		assertThat(query.getOrganizationIds()).isEqualTo("5565027223,5564786647");
-		assertThat(query.getFacilityIds()).isEqualTo("735999109425048010,735999109425048011");
+		assertThat(query.getFacilityIds()).isEqualTo("123456789012345670,123456789012345671");
 		assertThat(query.getStatus()).isEqualTo("Betalad");
 		assertThat(query.getPeriodFrom()).isEqualTo(LocalDate.of(2025, 1, 1));
 		assertThat(query.getPeriodTo()).isEqualTo(LocalDate.of(2025, 12, 31));
@@ -189,7 +189,7 @@ class InvoiceServiceTest {
 	@Test
 	void getInvoicesForCustomer_joinsMultipleCustomerNumbers() {
 		final var parameters = CustomerInvoiceParameters.create()
-			.withCustomerNumbers(List.of("216870", "600606"));
+			.withCustomerNumbers(List.of("123456", "600606"));
 
 		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
 			.thenReturn(CustomerInvoiceResponse.create().withInvoices(List.of()));
@@ -199,7 +199,7 @@ class InvoiceServiceTest {
 		final var queryCaptor = ArgumentCaptor.forClass(CustomerInvoiceQuery.class);
 		verify(invoiceJdbcRepositoryMock).getInvoices(queryCaptor.capture());
 		final var query = queryCaptor.getValue();
-		assertThat(query.getCustomerIds()).isEqualTo("216870,600606");
+		assertThat(query.getCustomerIds()).isEqualTo("123456,600606");
 		assertThat(query.getOrganizationIds()).isNull();
 		assertThat(query.getFacilityIds()).isNull();
 		assertThat(query.getStatus()).isNull();
@@ -209,7 +209,7 @@ class InvoiceServiceTest {
 
 	@Test
 	void getInvoicesForCustomer_emptyPage_doesNotCallDetailRepository() {
-		final var parameters = CustomerInvoiceParameters.create().withCustomerNumbers(List.of("216870"));
+		final var parameters = CustomerInvoiceParameters.create().withCustomerNumbers(List.of("123456"));
 		final var emptyResponse = CustomerInvoiceResponse.create().withInvoices(List.of());
 
 		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
@@ -223,7 +223,7 @@ class InvoiceServiceTest {
 
 	@Test
 	void getInvoicesForCustomer_invoiceWithNoDetails_setsEmptyList() {
-		final var parameters = CustomerInvoiceParameters.create().withCustomerNumbers(List.of("216870"));
+		final var parameters = CustomerInvoiceParameters.create().withCustomerNumbers(List.of("123456"));
 		final var invoice = CustomerInvoice.create()
 			.withInvoiceNumber(1L)
 			.withOrganizationNumber("orgX");
