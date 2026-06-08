@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
@@ -43,6 +44,7 @@ class CustomerInvoiceQueryTest {
 		final var periodFrom = LocalDate.parse("2025-01-01");
 		final var periodTo = LocalDate.parse("2025-12-31");
 		final var sortBy = "periodFrom";
+		final var sortDirection = Sort.Direction.DESC;
 
 		final var query = CustomerInvoiceQuery.create()
 			.withPage(page)
@@ -53,7 +55,8 @@ class CustomerInvoiceQueryTest {
 			.withStatus(status)
 			.withPeriodFrom(periodFrom)
 			.withPeriodTo(periodTo)
-			.withSortBy(sortBy);
+			.withSortBy(sortBy)
+			.withSortDirection(sortDirection);
 
 		assertThat(query).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(query.getPage()).isEqualTo(page);
@@ -65,6 +68,7 @@ class CustomerInvoiceQueryTest {
 		assertThat(query.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(query.getPeriodTo()).isEqualTo(periodTo);
 		assertThat(query.getSortBy()).isEqualTo(sortBy);
+		assertThat(query.getSortDirection()).isEqualTo(sortDirection);
 	}
 
 	@Test

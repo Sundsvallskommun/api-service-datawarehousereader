@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
@@ -42,6 +43,7 @@ class CustomerInvoiceParametersTest {
 		final var periodFrom = LocalDate.parse("2024-01-01").minusMonths(3);
 		final var periodTo = LocalDate.parse("2024-01-01");
 		final var sortBy = "periodFrom";
+		final var sortDirection = Sort.Direction.DESC;
 
 		final var parameters = CustomerInvoiceParameters.create()
 			.withCustomerNumbers(customerNumbers)
@@ -50,7 +52,8 @@ class CustomerInvoiceParametersTest {
 			.withStatus(status)
 			.withPeriodFrom(periodFrom)
 			.withPeriodTo(periodTo)
-			.withSortBy(sortBy);
+			.withSortBy(sortBy)
+			.withSortDirection(sortDirection);
 
 		assertThat(parameters).isNotNull();
 		assertThat(parameters.getCustomerNumbers()).isEqualTo(customerNumbers);
@@ -60,6 +63,7 @@ class CustomerInvoiceParametersTest {
 		assertThat(parameters.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(parameters.getPeriodTo()).isEqualTo(periodTo);
 		assertThat(parameters.getSortBy()).isEqualTo(sortBy);
+		assertThat(parameters.getSortDirection()).isEqualTo(sortDirection);
 	}
 
 	@Test

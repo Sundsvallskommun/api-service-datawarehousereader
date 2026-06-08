@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webtestclient.autoconfigure.AutoConfigureWebTestClient;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -186,6 +187,7 @@ class InvoiceResourceTest {
 			.queryParam("periodFrom", periodFrom.format(DateTimeFormatter.ISO_LOCAL_DATE))
 			.queryParam("periodTo", periodTo.format(DateTimeFormatter.ISO_LOCAL_DATE))
 			.queryParam("sortBy", sortBy)
+			.queryParam("sortDirection", "DESC")
 			.queryParam("page", String.valueOf(PAGE))
 			.queryParam("limit", String.valueOf(LIMIT))
 			.build())
@@ -206,6 +208,7 @@ class InvoiceResourceTest {
 		assertThat(captured.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(captured.getPeriodTo()).isEqualTo(periodTo);
 		assertThat(captured.getSortBy()).isEqualTo(sortBy);
+		assertThat(captured.getSortDirection()).isEqualTo(Sort.Direction.DESC);
 		assertThat(captured.getPage()).isEqualTo(PAGE);
 		assertThat(captured.getLimit()).isEqualTo(LIMIT);
 	}
@@ -234,6 +237,7 @@ class InvoiceResourceTest {
 		assertThat(captured.getPeriodFrom()).isNull();
 		assertThat(captured.getPeriodTo()).isNull();
 		assertThat(captured.getSortBy()).isNull();
+		assertThat(captured.getSortDirection()).isNull();
 		assertThat(captured.getPage()).isEqualTo(DEFAULT_PAGE);
 		assertThat(captured.getLimit()).isEqualTo(DEFAULT_LIMIT);
 	}

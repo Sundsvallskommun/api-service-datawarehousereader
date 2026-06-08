@@ -68,7 +68,8 @@ public class InvoiceService {
 			.withStatus(parameters.getStatus())
 			.withPeriodFrom(parameters.getPeriodFrom())
 			.withPeriodTo(parameters.getPeriodTo())
-			.withSortBy(parameters.getSortBy());
+			.withSortBy(parameters.getSortBy())
+			.withSortDirection(parameters.getSortDirection());
 
 		final var response = invoiceJdbcRepository.getInvoices(query);
 

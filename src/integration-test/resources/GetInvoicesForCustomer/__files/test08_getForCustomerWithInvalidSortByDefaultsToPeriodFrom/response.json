@@ -6,6 +6,7 @@
 		"sortBy": [
 			"periodFrom"
 		],
+		"sortDirection": "ASC",
 		"totalPages": 1,
 		"totalRecords": 5
 	},

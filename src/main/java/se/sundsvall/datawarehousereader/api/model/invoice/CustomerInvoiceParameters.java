@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingBase;
@@ -40,6 +41,11 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 		"periodFrom", "periodTo", "InvoiceDate", "DueDate", "InvoiceNumber", "TotalAmount"
 	})
 	private String sortBy;
+
+	@Schema(description = "The sort order direction. Defaults to ASC when omitted.", examples = {
+		"ASC", "DESC"
+	}, enumAsRef = true)
+	private Sort.Direction sortDirection;
 
 	public static CustomerInvoiceParameters create() {
 		return new CustomerInvoiceParameters();
@@ -136,11 +142,24 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 		return this;
 	}
 
+	public Sort.Direction getSortDirection() {
+		return sortDirection;
+	}
+
+	public void setSortDirection(final Sort.Direction sortDirection) {
+		this.sortDirection = sortDirection;
+	}
+
+	public CustomerInvoiceParameters withSortDirection(final Sort.Direction sortDirection) {
+		this.sortDirection = sortDirection;
+		return this;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(customerNumbers, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy);
+		result = prime * result + Objects.hash(customerNumbers, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy, sortDirection);
 		return result;
 	}
 
@@ -161,7 +180,8 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 			&& Objects.equals(status, other.status)
 			&& Objects.equals(periodFrom, other.periodFrom)
 			&& Objects.equals(periodTo, other.periodTo)
-			&& Objects.equals(sortBy, other.sortBy);
+			&& Objects.equals(sortBy, other.sortBy)
+			&& sortDirection == other.sortDirection;
 	}
 
 	@Override
@@ -173,6 +193,7 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 			+ ", periodFrom=" + periodFrom
 			+ ", periodTo=" + periodTo
 			+ ", sortBy=" + sortBy
+			+ ", sortDirection=" + sortDirection
 			+ ", page=" + page
 			+ ", limit=" + limit + "]";
 	}

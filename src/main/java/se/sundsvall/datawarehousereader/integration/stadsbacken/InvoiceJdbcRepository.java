@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -94,7 +95,9 @@ public class InvoiceJdbcRepository {
 	public CustomerInvoiceResponse getInvoices(final CustomerInvoiceQuery query) {
 
 		final var sortColumn = resolveSortColumn(query.getSortBy());
+		final var sortDirection = resolveSortDirection(query.getSortDirection());
 		final var metadataSortBy = isSupplied(query.getSortBy()) ? sortColumn : null;
+		final var metadataSortDirection = metadataSortBy != null ? sortDirection : null;
 
 		final var parameters = new MapSqlParameterSource()
 			.addValue(FUNCTION_PAGE_NUMBER, 1)
@@ -109,16 +112,22 @@ public class InvoiceJdbcRepository {
 			.addValue(OFFSET, (query.getPage() - 1) * query.getLimit())
 			.addValue(FETCH, query.getLimit());
 
-		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumn));
+		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumn, sortDirection));
 
 		return jdbcTemplate.query(sql, parameters,
-			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy));
+			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy, metadataSortDirection));
 	}
 
-	private static String buildOrderByColumns(final String sortColumn) {
+	/**
+	 * The requested direction is applied to the primary sort column only. The {@link #TIE_BREAKER_COLUMN} is always kept
+	 * ascending; it exists solely to make paging deterministic, so its direction is irrelevant. {@code direction.name()}
+	 * yields the literal {@code ASC} or {@code DESC}, so concatenating it into the statement is injection safe.
+	 */
+	private static String buildOrderByColumns(final String sortColumn, final Sort.Direction direction) {
 		final var primaryColumn = "inner_query." + sortColumn;
+		final var primaryClause = primaryColumn + " " + direction.name();
 		// Avoid "column specified more than once in the order by list" when sorting by the tie breaker itself.
-		return primaryColumn.equals(TIE_BREAKER_COLUMN) ? primaryColumn : primaryColumn + ", " + TIE_BREAKER_COLUMN;
+		return primaryColumn.equals(TIE_BREAKER_COLUMN) ? primaryClause : primaryClause + ", " + TIE_BREAKER_COLUMN;
 	}
 
 	static String resolveSortColumn(final String sortBy) {
@@ -126,6 +135,11 @@ public class InvoiceJdbcRepository {
 			.map(value -> value.trim().toLowerCase(Locale.ROOT))
 			.map(ALLOWED_SORT_COLUMNS::get)
 			.orElse(DEFAULT_SORT_COLUMN);
+	}
+
+	/** A null direction (nothing requested) defaults to ascending, mirroring SQL's own default. */
+	static Sort.Direction resolveSortDirection(final Sort.Direction sortDirection) {
+		return ofNullable(sortDirection).orElse(Sort.DEFAULT_DIRECTION);
 	}
 
 	private static boolean isSupplied(final String sortBy) {
@@ -137,11 +151,13 @@ public class InvoiceJdbcRepository {
 		private final int pageNumber;
 		private final int pageSize;
 		private final String sortBy;
+		private final Sort.Direction sortDirection;
 
-		CustomerInvoiceResponseExtractor(final int pageNumber, final int pageSize, final String sortBy) {
+		CustomerInvoiceResponseExtractor(final int pageNumber, final int pageSize, final String sortBy, final Sort.Direction sortDirection) {
 			this.pageNumber = pageNumber;
 			this.pageSize = pageSize;
 			this.sortBy = sortBy;
+			this.sortDirection = sortDirection;
 		}
 
 		@Override
@@ -164,7 +180,8 @@ public class InvoiceJdbcRepository {
 				.withCount(items.size())
 				.withTotalRecords(totalRecords)
 				.withTotalPages(totalPages)
-				.withSortBy(sortBy != null ? List.of(sortBy) : null);
+				.withSortBy(sortBy != null ? List.of(sortBy) : null)
+				.withSortDirection(sortDirection);
 
 			return CustomerInvoiceResponse.create()
 				.withMetaData(metaData)
