@@ -26,10 +26,10 @@ class InvoiceMapperTest {
 	private static final String CURRENCY = "currency";
 	private static final int CUSTOMER_ID = 1337;
 	private static final CustomerType CUSTOMER_TYPE = CustomerType.PRIVATE;
-	private static final LocalDate DUE_DATE = LocalDate.now().minusDays(30);
+	private static final LocalDate DUE_DATE = LocalDate.parse("2024-01-01").minusDays(30);
 	private static final String FACILITY_ID = "facilityId";
 	private static final Set<String> FACILITY_IDS = new HashSet<>(List.of(FACILITY_ID));
-	private static final LocalDate INVOICE_DATE = LocalDate.now();
+	private static final LocalDate INVOICE_DATE = LocalDate.parse("2024-01-01");
 	private static final String INVOICE_DESCRIPTION = "invoiceDescription";
 	private static final Set<String> INVOICE_DESCRIPTIONS = new HashSet<>(List.of(INVOICE_DESCRIPTION));
 	private static final String INVOICE_NAME = "invoiceName";

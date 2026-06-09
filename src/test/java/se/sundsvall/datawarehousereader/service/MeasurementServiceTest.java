@@ -347,8 +347,8 @@ class MeasurementServiceTest {
 		final var parameters = new MeasurementParameters();
 		parameters.setPartyId("81471222-5798-11e9-ae24-57fa13b361e1");
 		parameters.setFacilityIds(List.of("facilityId"));
-		parameters.setFromDateTime(OffsetDateTime.now());
-		parameters.setToDateTime(OffsetDateTime.now());
+		parameters.setFromDateTime(OffsetDateTime.parse("2024-01-01T00:00:00Z"));
+		parameters.setToDateTime(OffsetDateTime.parse("2024-01-01T00:00:00Z"));
 
 		when(partyProviderMock.translateToLegalId(any(), any())).thenReturn("legalId");
 

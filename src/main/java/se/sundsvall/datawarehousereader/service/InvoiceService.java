@@ -12,6 +12,7 @@ import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceResponse;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerInvoiceQuery;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
@@ -57,26 +58,32 @@ public class InvoiceService {
 			.withInvoices(invoices);
 	}
 
-	public CustomerInvoiceResponse getInvoicesForCustomer(final String customerNumber, final CustomerInvoiceParameters parameters) {
-		final var organizationIds = ofNullable(parameters.getOrganizationIds())
-			.filter(ids -> !ids.isEmpty())
-			.map(ids -> String.join(",", ids))
-			.orElse(null);
+	public CustomerInvoiceResponse getInvoicesForCustomer(final CustomerInvoiceParameters parameters) {
+		final var query = CustomerInvoiceQuery.create()
+			.withPage(parameters.getPage())
+			.withLimit(parameters.getLimit())
+			.withCustomerIds(toCommaSeparated(parameters.getCustomerNumbers()))
+			.withOrganizationIds(toCommaSeparated(parameters.getOrganizationIds()))
+			.withFacilityIds(toCommaSeparated(parameters.getFacilityIds()))
+			.withStatus(parameters.getStatus())
+			.withPeriodFrom(parameters.getPeriodFrom())
+			.withPeriodTo(parameters.getPeriodTo())
+			.withSortBy(parameters.getSortBy());
 
-		final var response = invoiceJdbcRepository.getInvoices(
-			parameters.getPage(),
-			parameters.getLimit(),
-			organizationIds,
-			customerNumber,
-			parameters.getPeriodFrom(),
-			parameters.getPeriodTo(),
-			parameters.getSortBy());
+		final var response = invoiceJdbcRepository.getInvoices(query);
 
 		ofNullable(response.getInvoices()).orElse(emptyList())
 			.forEach(invoice -> invoice.setDetails(toDetails(
 				invoiceDetailRepository.findAllByOrganizationIdAndInvoiceNumber(invoice.getOrganizationNumber(), invoice.getInvoiceNumber()))));
 
 		return response;
+	}
+
+	private static String toCommaSeparated(final List<String> values) {
+		return ofNullable(values)
+			.filter(list -> !list.isEmpty())
+			.map(list -> String.join(",", list))
+			.orElse(null);
 	}
 
 	public List<InvoiceDetail> getInvoiceDetails(final String organizationNumber, final long invoiceNumber) {

@@ -33,8 +33,10 @@ class AgreementMapperTest {
 	private static final String NET_AREA_ID = "netAreaId";
 	private static final String SITE_ADDRESS = "siteAddress";
 	private static final String PRODUCTION = "false";
-	private static final LocalDate FROM_DATE = LocalDate.now().minusMonths(10L);
-	private static final LocalDate TO_DATE = LocalDate.now();
+	// Far past/future so the agreement is unambiguously active (started, not ended) regardless of when the test runs,
+	// since AgreementMapper.isActive() compares against the real system clock.
+	private static final LocalDate FROM_DATE = LocalDate.parse("2020-01-01");
+	private static final LocalDate TO_DATE = LocalDate.parse("9999-12-31");
 
 	@Test
 	void toAgreementsWithNull() {
@@ -113,7 +115,7 @@ class AgreementMapperTest {
 
 	@Test
 	void toAgreementsActiveWithToDateNull() {
-		final var fromDate = LocalDate.now();
+		final var fromDate = LocalDate.parse("2024-01-01");
 
 		final var entity = AgreementEntity.create()
 			.withFromDate(fromDate.atTime(LocalTime.MAX))
@@ -135,8 +137,8 @@ class AgreementMapperTest {
 
 	@Test
 	void toAgreementsActiveWithToDateInFuture() {
-		final var fromDate = LocalDate.now();
-		final var toDate = LocalDate.now().plusDays(1);
+		final var fromDate = LocalDate.parse("2020-01-01");
+		final var toDate = LocalDate.parse("9999-01-01");
 
 		final var entity = AgreementEntity.create()
 			.withFromDate(fromDate.atTime(LocalTime.MAX))
@@ -158,8 +160,8 @@ class AgreementMapperTest {
 
 	@Test
 	void toAgreementsActiveWithToDateInThePast() {
-		final var fromDate = LocalDate.now().minusDays(2);
-		final var toDate = LocalDate.now().minusDays(1);
+		final var fromDate = LocalDate.parse("2024-01-01").minusDays(2);
+		final var toDate = LocalDate.parse("2024-01-01").minusDays(1);
 
 		final var entity = AgreementEntity.create()
 			.withFromDate(fromDate.atTime(LocalTime.MAX))

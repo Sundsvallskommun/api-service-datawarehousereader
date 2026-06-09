@@ -18,12 +18,12 @@ class InstalledBaseMapperTest {
 	private static final String CITY = "city";
 	private static final String COMPANY = "company";
 	private static final int CUSTOMER_ID = 123;
-	private static final LocalDate DATE_FROM = LocalDate.now().minusWeeks(1);
-	private static final LocalDate DATE_TO = LocalDate.now().plusWeeks(1);
+	private static final LocalDate DATE_FROM = LocalDate.parse("2024-01-01").minusWeeks(1);
+	private static final LocalDate DATE_TO = LocalDate.parse("2024-01-01").plusWeeks(1);
 	private static final int INTERNAL_ID = 456;
 	private static final String FACILITY_ID = "facilityId";
 	private static final String HOUSE_NAME = "houseName";
-	private static final LocalDate LAST_CHANGED_DATE = LocalDate.now();
+	private static final LocalDate LAST_CHANGED_DATE = LocalDate.parse("2024-01-01");
 	private static final String POST_CODE = "postCode";
 	private static final String STREET = "street";
 	private static final String TYPE = "type";

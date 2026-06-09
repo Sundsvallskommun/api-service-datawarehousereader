@@ -5840,13 +5840,79 @@
 			"city": "Sundsvall",
 			"careOf": "Fastighetsförmedling AB",
 			"pdfAvailable": false
+		},
+		{
+			"customerNumber": "707070",
+			"customerType": "Enterprise",
+			"facilityIds": [
+				"735999109700000001,735999109700000002"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 700000001,
+			"invoiceDate": "2019-10-02",
+			"invoiceName": "700000001.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 700000001,
+			"dueDate": "2019-11-01",
+			"totalAmount": 1900.0000,
+			"amountVatIncluded": 1900.0000,
+			"amountVatExcluded": 1520.0000,
+			"vatEligibleAmount": 1520.0000,
+			"rounding": 0.0000,
+			"vat": 1520.0000,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "DB79B,  FE 11040",
+			"postCode": "83882",
+			"city": "FRÖSÖN",
+			"careOf": "Fräscha fastigheter AB",
+			"pdfAvailable": true
+		},
+		{
+			"customerNumber": "707070",
+			"customerType": "Enterprise",
+			"facilityIds": [
+				"735999109700000003"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 700000002,
+			"invoiceDate": "2019-10-02",
+			"invoiceName": "700000002.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 700000002,
+			"dueDate": "2019-11-01",
+			"totalAmount": 1900.0000,
+			"amountVatIncluded": 1900.0000,
+			"amountVatExcluded": 1520.0000,
+			"vatEligibleAmount": 1520.0000,
+			"rounding": 0.0000,
+			"vat": 1520.0000,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "DB79B,  FE 11040",
+			"postCode": "83882",
+			"city": "FRÖSÖN",
+			"careOf": "Fräscha fastigheter AB",
+			"pdfAvailable": true
 		}
 	],
 	"_meta": {
 		"page": 1,
 		"limit": 200,
-		"count": 177,
-		"totalRecords": 177,
+		"count": 179,
+		"totalRecords": 179,
 		"totalPages": 1,
 		"sortBy": [
 			"invoiceDescription",

@@ -95,8 +95,8 @@ class AgreementServiceTest {
 			.withCategory(List.of(Category.ELECTRICITY))
 			.withMainAgreement(true)
 			.withBinding(true)
-			.withFromDate(LocalDate.now().minusMonths(2L))
-			.withToDate(LocalDate.now());
+			.withFromDate(LocalDate.parse("2024-01-01").minusMonths(2L))
+			.withToDate(LocalDate.parse("2024-01-01"));
 		params.setLimit(limit);
 		params.setPage(page);
 

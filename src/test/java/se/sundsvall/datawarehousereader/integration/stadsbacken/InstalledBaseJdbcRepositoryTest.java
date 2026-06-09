@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -47,7 +48,7 @@ class InstalledBaseJdbcRepositoryTest {
 			final var pageNumber = 1;
 			final var pageSize = 100;
 			final var organizationIds = "5564786647,5565027223";
-			final var date = LocalDate.of(2025, 6, 1);
+			final var date = LocalDate.of(2025, Month.JUNE, 1);
 			final var uuid = "898B3634-A2F9-483C-8808-37F3F25CF24E";
 			final var sortBy = "Company";
 
@@ -119,9 +120,9 @@ class InstalledBaseJdbcRepositoryTest {
 			when(resultSet.getString("Postcode")).thenReturn("85630", "85644");
 			when(resultSet.getString("City")).thenReturn("SUNDSVALL", "SUNDSVALL");
 			when(resultSet.getString("HouseName")).thenReturn("VASA 1", "SPELMANNEN 2");
-			when(resultSet.getDate("DateFrom")).thenReturn(Date.valueOf(LocalDate.of(2025, 6, 1)), Date.valueOf(LocalDate.of(1950, 1, 1)));
+			when(resultSet.getDate("DateFrom")).thenReturn(Date.valueOf(LocalDate.of(2025, Month.JUNE, 1)), Date.valueOf(LocalDate.of(1950, Month.JANUARY, 1)));
 			when(resultSet.getDate("DateTo")).thenReturn(null, (Date) null);
-			when(resultSet.getDate("InstalledBaseLastChangedDate")).thenReturn(Date.valueOf(LocalDate.of(2025, 10, 30)), Date.valueOf(LocalDate.of(2025, 10, 30)));
+			when(resultSet.getDate("InstalledBaseLastChangedDate")).thenReturn(Date.valueOf(LocalDate.of(2025, Month.OCTOBER, 30)), Date.valueOf(LocalDate.of(2025, Month.OCTOBER, 30)));
 
 			// Pagination columns (read from the first row only)
 			when(resultSet.getInt("TotalRecords")).thenReturn(2766);
@@ -146,16 +147,16 @@ class InstalledBaseJdbcRepositoryTest {
 			assertThat(firstItem.getPostCode()).isEqualTo("85630");
 			assertThat(firstItem.getCity()).isEqualTo("SUNDSVALL");
 			assertThat(firstItem.getPropertyDesignation()).isEqualTo("VASA 1");
-			assertThat(firstItem.getDateFrom()).isEqualTo(LocalDate.of(2025, 6, 1));
+			assertThat(firstItem.getDateFrom()).isEqualTo(LocalDate.of(2025, Month.JUNE, 1));
 			assertThat(firstItem.getDateTo()).isNull();
-			assertThat(firstItem.getDateLastModified()).isEqualTo(LocalDate.of(2025, 10, 30));
+			assertThat(firstItem.getDateLastModified()).isEqualTo(LocalDate.of(2025, Month.OCTOBER, 30));
 
 			final var secondItem = result.getInstalledBase().get(1);
 			assertThat(secondItem.getCompany()).isEqualTo("Sundsvall Elnät");
 			assertThat(secondItem.getType()).isEqualTo("El");
 			assertThat(secondItem.getStreet()).isEqualTo("Trafikgatan 7B");
 			assertThat(secondItem.getPropertyDesignation()).isEqualTo("SPELMANNEN 2");
-			assertThat(secondItem.getDateFrom()).isEqualTo(LocalDate.of(1950, 1, 1));
+			assertThat(secondItem.getDateFrom()).isEqualTo(LocalDate.of(1950, Month.JANUARY, 1));
 
 			final var metaData = result.getMetaData();
 			assertThat(metaData.getPage()).isEqualTo(1);
@@ -252,9 +253,9 @@ class InstalledBaseJdbcRepositoryTest {
 			when(resultSet.getString("Postcode")).thenReturn("12345");
 			when(resultSet.getString("City")).thenReturn("Stockholm");
 			when(resultSet.getString("HouseName")).thenReturn("House 1");
-			when(resultSet.getDate("DateFrom")).thenReturn(Date.valueOf(LocalDate.of(2020, 1, 1)));
-			when(resultSet.getDate("DateTo")).thenReturn(Date.valueOf(LocalDate.of(2023, 12, 31)));
-			when(resultSet.getDate("InstalledBaseLastChangedDate")).thenReturn(Date.valueOf(LocalDate.of(2023, 6, 15)));
+			when(resultSet.getDate("DateFrom")).thenReturn(Date.valueOf(LocalDate.of(2020, Month.JANUARY, 1)));
+			when(resultSet.getDate("DateTo")).thenReturn(Date.valueOf(LocalDate.of(2023, Month.DECEMBER, 31)));
+			when(resultSet.getDate("InstalledBaseLastChangedDate")).thenReturn(Date.valueOf(LocalDate.of(2023, Month.JUNE, 15)));
 			when(resultSet.getInt("TotalRecords")).thenReturn(42);
 			when(resultSet.getFloat("TotalPages")).thenReturn(5.0f);
 			when(resultSet.getInt("Count")).thenReturn(10);
@@ -272,9 +273,9 @@ class InstalledBaseJdbcRepositoryTest {
 			assertThat(result.getMetaData().getSortBy()).isEqualTo(List.of("Street"));
 
 			final var item = result.getInstalledBase().getFirst();
-			assertThat(item.getDateFrom()).isEqualTo(LocalDate.of(2020, 1, 1));
-			assertThat(item.getDateTo()).isEqualTo(LocalDate.of(2023, 12, 31));
-			assertThat(item.getDateLastModified()).isEqualTo(LocalDate.of(2023, 6, 15));
+			assertThat(item.getDateFrom()).isEqualTo(LocalDate.of(2020, Month.JANUARY, 1));
+			assertThat(item.getDateTo()).isEqualTo(LocalDate.of(2023, Month.DECEMBER, 31));
+			assertThat(item.getDateLastModified()).isEqualTo(LocalDate.of(2023, Month.JUNE, 15));
 		}
 	}
 }

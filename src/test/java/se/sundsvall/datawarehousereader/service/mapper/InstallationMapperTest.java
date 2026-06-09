@@ -19,12 +19,12 @@ class InstallationMapperTest {
 		.withCareOf("careOf")
 		.withCity("city")
 		.withCompany("company")
-		.withDateFrom(LocalDate.now().minusWeeks(1))
-		.withDateTo(LocalDate.now().plusWeeks(1))
+		.withDateFrom(LocalDate.parse("2024-01-01").minusWeeks(1))
+		.withDateTo(LocalDate.parse("2024-01-01").plusWeeks(1))
 		.withFacilityId("facilityId")
 		.withHouseName("houseName")
 		.withInternalId(456)
-		.withLastChangedDate(LocalDate.now())
+		.withLastChangedDate(LocalDate.parse("2024-01-01"))
 		.withPostCode("postCode")
 		.withStreet("street")
 		.withType("type")
@@ -56,8 +56,8 @@ class InstallationMapperTest {
 			assertThat(installationDetails.getCareOf()).isEqualTo("careOf");
 			assertThat(installationDetails.getCity()).isEqualTo("city");
 			assertThat(installationDetails.getCompany()).isEqualTo("company");
-			assertThat(installationDetails.getDateFrom()).isEqualTo(LocalDate.now().minusWeeks(1));
-			assertThat(installationDetails.getDateTo()).isEqualTo(LocalDate.now().plusWeeks(1));
+			assertThat(installationDetails.getDateFrom()).isEqualTo(LocalDate.parse("2024-01-01").minusWeeks(1));
+			assertThat(installationDetails.getDateTo()).isEqualTo(LocalDate.parse("2024-01-01").plusWeeks(1));
 			assertThat(installationDetails.getFacilityId()).isEqualTo("facilityId");
 			assertThat(installationDetails.getPlacementId()).isEqualTo(456);
 			assertThat(installationDetails.getPostCode()).isEqualTo("postCode");

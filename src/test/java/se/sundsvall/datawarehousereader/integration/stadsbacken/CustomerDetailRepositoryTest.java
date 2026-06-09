@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
@@ -22,7 +23,7 @@ class CustomerDetailRepositoryTest {
 	@Autowired
 	private CustomerDetailRepository repository;
 
-	private final LocalDateTime now = LocalDateTime.now();
+	private final LocalDateTime now = LocalDateTime.parse("2024-01-01T00:00");
 
 	@Test
 	void findWithCustomerEngagementOrgIdAndPartyIds() {
@@ -133,8 +134,8 @@ class CustomerDetailRepositoryTest {
 				CustomerDetailEntity::getMoveInDate)
 			.containsExactlyInAnyOrder(
 				tuple("9F395F51-B5ED-401B-B700-EF70CBB15D90", 123414, "20070101-1234", "5565027225", "Some other Elnät", 1, "Privatperson", "Test Testorsson3", null, "Testvägen106", "85234", "Sundsvall", null, "+46701740605",
-					null, null, "test3@sundsvall.com", false, true, false, LocalDateTime.of(2095, 1, 1, 0, 0)),
+					null, null, "test3@sundsvall.com", false, true, false, LocalDateTime.of(2095, Month.JANUARY, 1, 0, 0)),
 				tuple(null, 123415, "20070101-1234", "5565027225", "Some other Elnät", 1, "Privatperson", "Test Testorsson4", null, "Testvägen106", "85234", "Sundsvall", null, "+46701740605",
-					null, null, "test4@sundsvall.com", false, true, false, LocalDateTime.of(2095, 1, 1, 0, 0)));
+					null, null, "test4@sundsvall.com", false, true, false, LocalDateTime.of(2095, Month.JANUARY, 1, 0, 0)));
 	}
 }

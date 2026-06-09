@@ -14,7 +14,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
 import static java.math.BigDecimal.valueOf;
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,7 +22,7 @@ class CustomerInvoiceTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+		registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -38,21 +37,21 @@ class CustomerInvoiceTest {
 
 	@Test
 	void testCreatePattern() {
-		final var customerNumber = "216870";
+		final var customerNumber = "123456";
 		final var customerType = CustomerType.PRIVATE;
-		final var facilityId = "facilityId";
+		final var facilityIds = List.of("facilityId1", "facilityId2");
 		final var invoiceNumber = 295334999L;
 		final var invoiceId = 1062916396L;
 		final var jointInvoiceId = -1L;
-		final var invoiceDate = now().minusDays(20);
+		final var invoiceDate = LocalDate.parse("2024-01-01").minusDays(20);
 		final var invoiceName = "295334999.pdf";
 		final var invoiceType = "Faktura";
 		final var invoiceDescription = "El";
 		final var invoiceStatus = "Betalad";
 		final var ocrNumber = 295334999L;
-		final var dueDate = now().plusDays(10);
-		final var periodFrom = now().minusMonths(1);
-		final var periodTo = now();
+		final var dueDate = LocalDate.parse("2024-01-01").plusDays(10);
+		final var periodFrom = LocalDate.parse("2024-01-01").minusMonths(1);
+		final var periodTo = LocalDate.parse("2024-01-01");
 		final var totalAmount = valueOf(1234);
 		final var amountVatIncluded = valueOf(1233);
 		final var amountVatExcluded = valueOf(986);
@@ -72,7 +71,7 @@ class CustomerInvoiceTest {
 		final var invoice = CustomerInvoice.create()
 			.withCustomerNumber(customerNumber)
 			.withCustomerType(customerType)
-			.withFacilityId(facilityId)
+			.withFacilityIds(facilityIds)
 			.withInvoiceNumber(invoiceNumber)
 			.withInvoiceId(invoiceId)
 			.withJointInvoiceId(jointInvoiceId)
@@ -104,7 +103,7 @@ class CustomerInvoiceTest {
 		assertThat(invoice).isNotNull().hasNoNullFieldsOrProperties();
 		assertThat(invoice.getCustomerNumber()).isEqualTo(customerNumber);
 		assertThat(invoice.getCustomerType()).isEqualTo(customerType);
-		assertThat(invoice.getFacilityId()).isEqualTo(facilityId);
+		assertThat(invoice.getFacilityIds()).isEqualTo(facilityIds);
 		assertThat(invoice.getInvoiceNumber()).isEqualTo(invoiceNumber);
 		assertThat(invoice.getInvoiceId()).isEqualTo(invoiceId);
 		assertThat(invoice.getJointInvoiceId()).isEqualTo(jointInvoiceId);

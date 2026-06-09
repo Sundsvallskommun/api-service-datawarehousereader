@@ -230,13 +230,79 @@
 			"city": "SUNDSVALL",
 			"careOf": "Fastighetsförmedling AB",
 			"pdfAvailable": false
+		},
+		{
+			"customerNumber": "10335",
+			"customerType": "Enterprise",
+			"facilityIds": [
+				"735999109144509472"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 767196496,
+			"invoiceDate": "2019-10-08",
+			"invoiceName": "767196496.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 767196496,
+			"dueDate": "2019-11-07",
+			"totalAmount": 166.0000,
+			"amountVatIncluded": 165.7000,
+			"amountVatExcluded": 132.5600,
+			"vatEligibleAmount": 132.5600,
+			"rounding": 0.3000,
+			"vat": 132.5600,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "Fakturor",
+			"postCode": "85185",
+			"city": "SUNDSVALL",
+			"careOf": "Fastighetsförmedling AB",
+			"pdfAvailable": false
+		},
+		{
+			"customerNumber": "10335",
+			"customerType": "Enterprise",
+			"facilityIds": [
+				"735999109232306327"
+			],
+			"invoiceDescriptions": [
+				"El"
+			],
+			"invoiceNumber": 767171796,
+			"invoiceDate": "2019-10-08",
+			"invoiceName": "767171796.pdf",
+			"invoiceType": "Faktura",
+			"invoiceStatus": "Skickad",
+			"ocrNumber": 767171796,
+			"dueDate": "2019-11-07",
+			"totalAmount": 279.0000,
+			"amountVatIncluded": 278.7900,
+			"amountVatExcluded": 223.0300,
+			"vatEligibleAmount": 223.0300,
+			"rounding": 0.2100,
+			"vat": 223.0300,
+			"reversedVat": false,
+			"currency": "sek",
+			"organizationGroup": "stadsbacken",
+			"organizationNumber": "5565027223",
+			"administration": "Sundsvall Elnät",
+			"street": "Fakturor",
+			"postCode": "85185",
+			"city": "SUNDSVALL",
+			"careOf": "Fastighetsförmedling AB",
+			"pdfAvailable": false
 		}
 	],
 	"_meta": {
 		"page": 18,
 		"limit": 10,
-		"count": 7,
-		"totalRecords": 177,
+		"count": 9,
+		"totalRecords": 179,
 		"totalPages": 18
 	}
 }

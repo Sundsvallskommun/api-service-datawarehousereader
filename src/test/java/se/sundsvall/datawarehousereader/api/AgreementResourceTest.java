@@ -51,8 +51,8 @@ class AgreementResourceTest {
 	private static final Boolean MAIN_AGREEMENT = true;
 	private static final Boolean BINDING = false;
 	private static final String BINDING_RULE = "bindingRule";
-	private static final LocalDate FROM_DATE = LocalDate.now().minusMonths(10L);
-	private static final LocalDate TO_DATE = LocalDate.now();
+	private static final LocalDate FROM_DATE = LocalDate.parse("2024-01-01").minusMonths(10L);
+	private static final LocalDate TO_DATE = LocalDate.parse("2024-01-01");
 	private static final String PATH = "/" + MUNICIPALITY_ID + "/agreements";
 
 	@MockitoBean

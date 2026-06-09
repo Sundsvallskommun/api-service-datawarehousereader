@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
@@ -181,7 +182,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -198,14 +199,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForDayAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 4, 11, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, Month.APRIL, 11, 0, 0, 0));
 		setupResultSetMock("uuid-123", "5534567890", "facilityIds", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(24);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -215,14 +216,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForQuarterAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, Month.JANUARY, 1, 0, 0, 0));
 		setupResultSetMock("uuid-123", "5534567890", "facilityIds", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(5);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -232,14 +233,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void electricityMeasurementMapperMapsResultSetCorrectlyForMonthAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 1, 1, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, Month.JANUARY, 1, 0, 0, 0));
 		setupResultSetMock("uuid-123", "5534567890", "facilityIds", "Energy", "kWh", BigDecimal.valueOf(100L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolated")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getElectricityMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -257,7 +258,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -280,7 +281,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -290,14 +291,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForDayAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 3, 23, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, Month.MARCH, 23, 0, 0, 0));
 		setupResultSetMock("uuid-789", "5566661234", "9261219043", "energy", "kWh", BigDecimal.valueOf(1393L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -307,14 +308,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtHeatingMeasurementMapperMapsResultSetCorrectlyForMonthAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, 2, 1, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, Month.FEBRUARY, 1, 0, 0, 0));
 		setupResultSetMock("uuid-abc", "5534567890", "735999109113202014", "Aktiv", "kWh", BigDecimal.valueOf(1772), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolated")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictHeatingMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -382,7 +383,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.HOUR, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -405,7 +406,7 @@ class MeasurementRepositoryTest {
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.QUARTER, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -415,14 +416,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForDayAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, 3, 23, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2022, Month.MARCH, 23, 0, 0, 0));
 		setupResultSetMock("uuid-789", "5566661234", "9261219043", "energy", "kWh", BigDecimal.valueOf(1393L), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolted")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.DAY, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);
@@ -432,14 +433,14 @@ class MeasurementRepositoryTest {
 
 	@Test
 	void districtCoolingMeasurementMapperMapsResultSetCorrectlyForMonthAggregation() throws SQLException {
-		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, 2, 1, 0, 0, 0));
+		final var expectedTimestamp = Timestamp.valueOf(LocalDateTime.of(2018, Month.FEBRUARY, 1, 0, 0, 0));
 		setupResultSetMock("uuid-abc", "5534567890", "735999109113202014", "Aktiv", "kWh", BigDecimal.valueOf(1772), expectedTimestamp);
 		when(resultSetMock.getInt("isInterpolated")).thenReturn(0);
 
 		when(jdbcTemplateMock.query(anyString(), any(MapSqlParameterSource.class), rowMapperCaptor.capture()))
 			.thenReturn(List.of());
 
-		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.now(), OffsetDateTime.now(), null);
+		repository.getDistrictCoolingMeasurements("legalId", "facilityIds", Aggregation.MONTH, OffsetDateTime.parse("2024-01-01T00:00:00Z"), OffsetDateTime.parse("2024-01-01T00:00:00Z"), null);
 
 		final var mapper = rowMapperCaptor.getValue();
 		final var result = mapper.mapRow(resultSetMock, 0);

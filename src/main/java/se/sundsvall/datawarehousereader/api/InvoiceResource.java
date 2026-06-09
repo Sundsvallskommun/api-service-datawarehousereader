@@ -56,8 +56,8 @@ class InvoiceResource {
 		return ok(invoiceService.getInvoices(searchParams));
 	}
 
-	@GetMapping(path = "/customers/{customerNumber}", produces = APPLICATION_JSON_VALUE)
-	@Operation(summary = "Get invoices for a customer", description = "Resource returns invoices matching the given customer number, optionally filtered by organization and invoice period", responses = {
+	@GetMapping(path = "/customers", produces = APPLICATION_JSON_VALUE)
+	@Operation(summary = "Get invoices for one or more customers", description = "Resource returns invoices matching the provided customer numbers, optionally filtered by organization, facility id, invoice status and invoice period", responses = {
 		@ApiResponse(responseCode = "200", description = "Successful operation", useReturnTypeSchema = true),
 		@ApiResponse(responseCode = "400", description = "Bad request", content = @Content(mediaType = APPLICATION_PROBLEM_JSON_VALUE, schema = @Schema(oneOf = {
 			Problem.class, ConstraintViolationProblem.class
@@ -66,10 +66,9 @@ class InvoiceResource {
 	})
 	ResponseEntity<CustomerInvoiceResponse> getInvoicesForCustomer(
 		@Parameter(name = "municipalityId", description = "Municipality id", example = "2281") @ValidMunicipalityId @PathVariable final String municipalityId,
-		@Parameter(name = "customerNumber", description = "Customer number", example = "216870", required = true) @PathVariable final String customerNumber,
 		@Valid final CustomerInvoiceParameters parameters) {
 
-		return ok(invoiceService.getInvoicesForCustomer(customerNumber, parameters));
+		return ok(invoiceService.getInvoicesForCustomer(parameters));
 	}
 
 	@GetMapping(path = "/{organizationNumber}/{invoiceNumber}/details", produces = APPLICATION_JSON_VALUE)

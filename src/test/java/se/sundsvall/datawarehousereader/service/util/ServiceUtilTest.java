@@ -114,6 +114,6 @@ class ServiceUtilTest {
 	@Test
 	void testToLocalDate() {
 		assertThat(ServiceUtil.toLocalDate(null)).isNull();
-		assertThat(ServiceUtil.toLocalDate(LocalDateTime.now())).isEqualTo(LocalDate.now());
+		assertThat(ServiceUtil.toLocalDate(LocalDateTime.parse("2024-01-01T00:00"))).isEqualTo(LocalDate.parse("2024-01-01"));
 	}
 }

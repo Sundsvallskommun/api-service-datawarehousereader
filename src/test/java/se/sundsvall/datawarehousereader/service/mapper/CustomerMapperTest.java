@@ -45,7 +45,7 @@ class CustomerMapperTest {
 		final var organizationId = "organizationId";
 		final var organizationName = "organizationName";
 		final var active = true;
-		final var moveInDate = LocalDateTime.now();
+		final var moveInDate = LocalDateTime.parse("2024-01-01T00:00");
 
 		final var entity = CustomerEntity.create()
 			.withCustomerId(customerId)

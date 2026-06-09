@@ -13,7 +13,6 @@ import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanHashCode;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanToString;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidGettersAndSetters;
 import static com.google.code.beanmatchers.BeanMatchers.registerValueGenerator;
-import static java.time.LocalDate.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -24,7 +23,7 @@ class AgreementParametersTest {
 
 	@BeforeAll
 	static void setup() {
-		registerValueGenerator(() -> now().plusDays(new Random().nextInt()), LocalDate.class);
+		registerValueGenerator(() -> LocalDate.parse("2024-01-01").plusDays(new Random().nextInt()), LocalDate.class);
 	}
 
 	@Test
@@ -53,8 +52,8 @@ class AgreementParametersTest {
 		final var netAreaId = "netAreaId";
 		final var siteAddress = "siteAddress";
 		final var production = true;
-		final var fromDate = LocalDate.now().minusYears(1L);
-		final var toDate = LocalDate.now();
+		final var fromDate = LocalDate.parse("2024-01-01").minusYears(1L);
+		final var toDate = LocalDate.parse("2024-01-01");
 		final var active = Boolean.TRUE;
 
 		final var agreementParameters = AgreementParameters.create()

@@ -39,7 +39,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @ActiveProfiles("junit")
 class CustomerResourceTest {
 
-	private static final OffsetDateTime START_DATE_TIME = OffsetDateTime.now();
+	private static final OffsetDateTime START_DATE_TIME = OffsetDateTime.parse("2024-01-01T00:00:00Z");
 	private static final int DEFAULT_PAGE = 1;
 	private static final int DEFAULT_LIMIT = 100;
 	private static final int PAGE = 12;

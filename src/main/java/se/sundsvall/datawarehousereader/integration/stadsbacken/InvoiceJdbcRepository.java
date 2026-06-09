@@ -5,7 +5,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -15,24 +18,72 @@ import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
+import static java.util.Optional.ofNullable;
+import static java.util.function.Predicate.not;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static se.sundsvall.datawarehousereader.Constants.UNKNOWN_CUSTOMER_TYPE;
 import static se.sundsvall.datawarehousereader.api.model.CustomerType.fromValue;
 
+// The sortable column names (periodFrom, periodTo, ...) coincidentally match some bind-parameter name constants
+// (PERIOD_FROM, PERIOD_TO) but are a different concept - SQL column names - so they are kept as literals like every other
+// column name, rather than reusing the parameter constants. Suppresses the resulting duplicate-literal warnings
+// (SonarLint java:S1192 / IntelliJ DuplicateStringLiteralInspection).
+@SuppressWarnings({
+	"java:S1192", "DuplicateStringLiteralInspection"
+})
 @Repository
 @CircuitBreaker(name = "invoiceJdbcRepository")
 public class InvoiceJdbcRepository {
 
-	private static final String PAGE_NUMBER = "pageNumber";
-	private static final String PAGE_SIZE = "pageSize";
+	private static final String FUNCTION_PAGE_NUMBER = "functionPageNumber";
+	private static final String FUNCTION_PAGE_SIZE = "functionPageSize";
 	private static final String ORGANIZATION_IDS = "organizationIds";
-	private static final String CUSTOMER_ID = "customerId";
+	private static final String CUSTOMER_IDS = "customerIds";
 	private static final String PERIOD_FROM = "periodFrom";
 	private static final String PERIOD_TO = "periodTo";
 	private static final String SORT_BY = "sortBy";
+	private static final String FACILITY_IDS = "facilityIds";
+	private static final String INVOICE_STATUS = "invoiceStatus";
+	private static final String OFFSET = "offset";
+	private static final String FETCH = "fetch";
 
-	private static final String SQL = "select * from [kundinfo].[fnInvoiceNumberWithPagingAndSort] "
-		+ "( :pageNumber, :pageSize, :organizationIds, :customerId, :periodFrom, :periodTo, :sortBy )";
+	/**
+	 * The function pages internally, but status and facility filtering must be applied to the full result set after the
+	 * function has run. The function is therefore called for "all" rows (page one, very large page size) and the actual
+	 * filtering, sorting and paging is performed by the wrapping query below.
+	 */
+	private static final int FUNCTION_PAGE_SIZE_VALUE = 1_000_000;
+
+	private static final String DEFAULT_SORT_COLUMN = "periodFrom";
+
+	/**
+	 * Whitelist mapping a (lower cased) requested sortBy value to the actual column name used both as function argument and
+	 * in the wrapping ORDER BY clause. Anything not present here (including null/blank) falls back to
+	 * {@link #DEFAULT_SORT_COLUMN},
+	 * which also guards the ORDER BY against SQL injection since the column name is concatenated into the statement.
+	 */
+	private static final Map<String, String> ALLOWED_SORT_COLUMNS = Map.of(
+		"periodfrom", "periodFrom",
+		"periodto", "periodTo",
+		"invoicedate", "InvoiceDate",
+		"duedate", "DueDate",
+		"invoicenumber", "InvoiceNumber",
+		"totalamount", "TotalAmount");
+
+	private static final String ORDER_BY_PLACEHOLDER = "{orderByColumns}";
+
+	/** Stable tie breaker so paging is deterministic when the primary sort column has duplicate values. */
+	private static final String TIE_BREAKER_COLUMN = "inner_query.InvoiceNumber";
+
+	private static final String SQL_TEMPLATE = """
+		SELECT inner_query.*, COUNT(*) OVER () AS FilteredTotalRecords
+		FROM [kundinfo].[fnInvoiceNumberWithPagingAndSort] ( :functionPageNumber, :functionPageSize, :organizationIds, :customerIds, :periodFrom, :periodTo, :sortBy ) AS inner_query
+		WHERE (:invoiceStatus IS NULL OR inner_query.InvoiceStatus = :invoiceStatus)
+		  AND (:facilityIds IS NULL OR EXISTS (
+		        SELECT 1 FROM STRING_SPLIT(:facilityIds, ',') facility
+		        WHERE inner_query.FacilityId LIKE '%' + LTRIM(RTRIM(facility.value)) + '%'))
+		ORDER BY {orderByColumns}
+		OFFSET :offset ROWS FETCH NEXT :fetch ROWS ONLY""";
 
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
@@ -40,21 +91,45 @@ public class InvoiceJdbcRepository {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public CustomerInvoiceResponse getInvoices(final Integer pageNumber, final Integer pageSize,
-		final String organizationIds, final String customerId,
-		final LocalDate periodFrom, final LocalDate periodTo, final String sortBy) {
+	public CustomerInvoiceResponse getInvoices(final CustomerInvoiceQuery query) {
+
+		final var sortColumn = resolveSortColumn(query.getSortBy());
+		final var metadataSortBy = isSupplied(query.getSortBy()) ? sortColumn : null;
 
 		final var parameters = new MapSqlParameterSource()
-			.addValue(PAGE_NUMBER, pageNumber)
-			.addValue(PAGE_SIZE, pageSize)
-			.addValue(ORGANIZATION_IDS, organizationIds)
-			.addValue(CUSTOMER_ID, customerId)
-			.addValue(PERIOD_FROM, periodFrom)
-			.addValue(PERIOD_TO, periodTo)
-			.addValue(SORT_BY, sortBy);
+			.addValue(FUNCTION_PAGE_NUMBER, 1)
+			.addValue(FUNCTION_PAGE_SIZE, FUNCTION_PAGE_SIZE_VALUE)
+			.addValue(ORGANIZATION_IDS, query.getOrganizationIds())
+			.addValue(CUSTOMER_IDS, query.getCustomerIds())
+			.addValue(PERIOD_FROM, query.getPeriodFrom())
+			.addValue(PERIOD_TO, query.getPeriodTo())
+			.addValue(SORT_BY, sortColumn)
+			.addValue(FACILITY_IDS, query.getFacilityIds())
+			.addValue(INVOICE_STATUS, query.getStatus())
+			.addValue(OFFSET, (query.getPage() - 1) * query.getLimit())
+			.addValue(FETCH, query.getLimit());
 
-		return jdbcTemplate.query(SQL, parameters,
-			new CustomerInvoiceResponseExtractor(pageNumber, pageSize, sortBy));
+		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumn));
+
+		return jdbcTemplate.query(sql, parameters,
+			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy));
+	}
+
+	private static String buildOrderByColumns(final String sortColumn) {
+		final var primaryColumn = "inner_query." + sortColumn;
+		// Avoid "column specified more than once in the order by list" when sorting by the tie breaker itself.
+		return primaryColumn.equals(TIE_BREAKER_COLUMN) ? primaryColumn : primaryColumn + ", " + TIE_BREAKER_COLUMN;
+	}
+
+	static String resolveSortColumn(final String sortBy) {
+		return ofNullable(sortBy)
+			.map(value -> value.trim().toLowerCase(Locale.ROOT))
+			.map(ALLOWED_SORT_COLUMNS::get)
+			.orElse(DEFAULT_SORT_COLUMN);
+	}
+
+	private static boolean isSupplied(final String sortBy) {
+		return sortBy != null && !sortBy.isBlank();
 	}
 
 	static class CustomerInvoiceResponseExtractor implements ResultSetExtractor<CustomerInvoiceResponse> {
@@ -73,22 +148,20 @@ public class InvoiceJdbcRepository {
 		public CustomerInvoiceResponse extractData(final ResultSet rs) throws SQLException, DataAccessException {
 			final List<CustomerInvoice> items = new ArrayList<>();
 			var totalRecords = 0;
-			var totalPages = 0;
-			var count = 0;
 
 			while (rs.next()) {
 				items.add(mapRow(rs));
 				if (items.size() == 1) {
-					totalRecords = rs.getInt("TotalRecords");
-					totalPages = (int) rs.getFloat("TotalPages");
-					count = rs.getInt("Count");
+					totalRecords = rs.getInt("FilteredTotalRecords");
 				}
 			}
+
+			final var totalPages = pageSize == 0 ? 0 : (int) Math.ceil((double) totalRecords / pageSize);
 
 			final var metaData = PagingAndSortingMetaData.create()
 				.withPage(pageNumber)
 				.withLimit(pageSize)
-				.withCount(count)
+				.withCount(items.size())
 				.withTotalRecords(totalRecords)
 				.withTotalPages(totalPages)
 				.withSortBy(sortBy != null ? List.of(sortBy) : null);
@@ -102,7 +175,7 @@ public class InvoiceJdbcRepository {
 			return CustomerInvoice.create()
 				.withCustomerNumber(rs.getString("CustomerId"))
 				.withCustomerType(fromValue(rs.getString("CustomerType"), INTERNAL_SERVER_ERROR, UNKNOWN_CUSTOMER_TYPE))
-				.withFacilityId(rs.getString("FacilityId"))
+				.withFacilityIds(toFacilityIds(rs.getString("FacilityId")))
 				.withInvoiceNumber(getNullableLong(rs, "InvoiceNumber"))
 				.withInvoiceId(getNullableLong(rs, "InvoiceID"))
 				.withJointInvoiceId(getNullableLong(rs, "JointInvoiceid"))
@@ -129,6 +202,20 @@ public class InvoiceJdbcRepository {
 				.withCareOf(rs.getString("CareOf"))
 				.withInvoiceReference(rs.getString("InvoiceReference"))
 				.withPdfAvailable(getNullableBoolean(rs, "pdfAvailable"));
+		}
+
+		/**
+		 * The source FacilityId column may pack several facility ids as a comma separated string. Split it into discrete
+		 * ids so the response exposes a real list rather than a single comma separated value. Null/blank yields an empty
+		 * list.
+		 */
+		private static List<String> toFacilityIds(final String facilityId) {
+			return ofNullable(facilityId)
+				.map(value -> Arrays.stream(value.split(","))
+					.map(String::trim)
+					.filter(not(String::isBlank))
+					.toList())
+				.orElseGet(List::of);
 		}
 
 		private static LocalDate toLocalDate(final java.sql.Date date) {
