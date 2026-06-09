@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import org.springframework.data.domain.Sort;
 
@@ -21,7 +22,7 @@ public class CustomerInvoiceQuery {
 	private String status;
 	private LocalDate periodFrom;
 	private LocalDate periodTo;
-	private String sortBy;
+	private List<String> sortBy;
 	private Sort.Direction sortDirection;
 
 	public static CustomerInvoiceQuery create() {
@@ -132,15 +133,15 @@ public class CustomerInvoiceQuery {
 		return this;
 	}
 
-	public String getSortBy() {
+	public List<String> getSortBy() {
 		return sortBy;
 	}
 
-	public void setSortBy(final String sortBy) {
+	public void setSortBy(final List<String> sortBy) {
 		this.sortBy = sortBy;
 	}
 
-	public CustomerInvoiceQuery withSortBy(final String sortBy) {
+	public CustomerInvoiceQuery withSortBy(final List<String> sortBy) {
 		this.setSortBy(sortBy);
 		return this;
 	}

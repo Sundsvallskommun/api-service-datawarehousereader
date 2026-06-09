@@ -475,21 +475,22 @@ paths:
           - 2025-12-31
       - name: sortBy
         in: query
-        description: Column to sort by.
         required: false
         schema:
-          type: string
-          description: Column to sort by.
-          examples:
-          - periodFrom
-          - periodTo
-          - InvoiceDate
-          - DueDate
-          - InvoiceNumber
-          - TotalAmount
+          type: array
+          items:
+            type: string
+            description: Column to sort by
+            examples:
+            - periodFrom
+            - periodTo
+            - InvoiceDate
+            - DueDate
+            - InvoiceNumber
+            - TotalAmount
       - name: sortDirection
         in: query
-        description: The sort order direction. Defaults to ASC when omitted.
+        description: The sort order direction
         required: false
         schema:
           $ref: "#/components/schemas/Direction"

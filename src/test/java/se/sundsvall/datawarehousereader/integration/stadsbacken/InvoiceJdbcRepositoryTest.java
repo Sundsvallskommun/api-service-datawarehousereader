@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -69,7 +69,7 @@ class InvoiceJdbcRepositoryTest {
 				.withCustomerIds(customerIds)
 				.withPeriodFrom(periodFrom)
 				.withPeriodTo(periodTo)
-				.withSortBy("InvoiceNumber")
+				.withSortBy(List.of("InvoiceNumber"))
 				.withSortDirection(Sort.Direction.DESC)
 				.withFacilityIds(facilityIds)
 				.withStatus(invoiceStatus);
@@ -110,7 +110,7 @@ class InvoiceJdbcRepositoryTest {
 				.withPage(1)
 				.withLimit(10)
 				.withCustomerIds("123456")
-				.withSortBy("periodFrom")
+				.withSortBy(List.of("periodFrom"))
 				.withSortDirection(Sort.Direction.DESC));
 
 			verify(jdbcTemplate).query(
@@ -122,6 +122,29 @@ class InvoiceJdbcRepositoryTest {
 		}
 
 		@Test
+		void getInvoices_withMultipleSortColumns_buildsMultiColumnOrderByAndPassesPrimaryToFunction() {
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
+				.thenReturn(CustomerInvoiceResponse.create());
+
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("123456")
+				.withSortBy(List.of("periodFrom", "invoicedate"))
+				.withSortDirection(Sort.Direction.DESC));
+
+			verify(jdbcTemplate).query(
+				sqlCaptor.capture(),
+				parametersCaptor.capture(),
+				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
+
+			assertThat(sqlCaptor.getValue())
+				.contains("ORDER BY inner_query.periodFrom DESC, inner_query.InvoiceDate DESC, inner_query.InvoiceNumber");
+			// the SQL function only takes a single sort column, so it receives the primary (first) one
+			assertThat(parametersCaptor.getValue().getValue("sortBy")).isEqualTo("periodFrom");
+		}
+
+		@Test
 		void getInvoices_withNullDirection_defaultsToAscending() {
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
@@ -130,7 +153,7 @@ class InvoiceJdbcRepositoryTest {
 				.withPage(1)
 				.withLimit(10)
 				.withCustomerIds("123456")
-				.withSortBy("periodTo"));
+				.withSortBy(List.of("periodTo")));
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
@@ -178,7 +201,7 @@ class InvoiceJdbcRepositoryTest {
 				.withPage(1)
 				.withLimit(10)
 				.withCustomerIds("123456")
-				.withSortBy("garble"));
+				.withSortBy(List.of("garble")));
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
@@ -191,7 +214,7 @@ class InvoiceJdbcRepositoryTest {
 	}
 
 	@Nested
-	class ResolveSortColumn {
+	class ResolveSortColumns {
 
 		@ParameterizedTest
 		@CsvSource({
@@ -201,20 +224,42 @@ class InvoiceJdbcRepositoryTest {
 			"DueDate, DueDate",
 			"invoicenumber, InvoiceNumber",
 			"totalamount, TotalAmount",
-			"' periodFrom ', periodFrom",
-			"garble, periodFrom"
+			"' periodFrom ', periodFrom"
 		})
-		void resolvesToWhitelistedColumnOrDefault(final String input, final String expected) {
-			assertThat(InvoiceJdbcRepository.resolveSortColumn(input)).isEqualTo(expected);
+		void mapsValueToWhitelistedColumn(final String input, final String expected) {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of(input))).containsExactly(expected);
+		}
+
+		@Test
+		void keepsAllWhitelistedColumnsInRequestedOrder() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of("periodFrom", "invoicedate", "DUEDATE")))
+				.containsExactly("periodFrom", "InvoiceDate", "DueDate");
+		}
+
+		@Test
+		void dropsUnknownColumnsButKeepsValidOnes() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of("periodFrom", "garble", "totalamount")))
+				.containsExactly("periodFrom", "TotalAmount");
+		}
+
+		@Test
+		void ignoresNullElements() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(Arrays.asList("periodFrom", null)))
+				.containsExactly("periodFrom");
 		}
 
 		@ParameterizedTest
-		@NullAndEmptySource
 		@ValueSource(strings = {
-			"   "
+			"garble", "   "
 		})
-		void resolvesNullOrBlankToDefault(final String input) {
-			assertThat(InvoiceJdbcRepository.resolveSortColumn(input)).isEqualTo("periodFrom");
+		void defaultsToPeriodFromWhenNoValidColumn(final String input) {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of(input))).containsExactly("periodFrom");
+		}
+
+		@Test
+		void defaultsToPeriodFromWhenNullOrEmpty() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(null)).containsExactly("periodFrom");
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of())).containsExactly("periodFrom");
 		}
 	}
 
@@ -241,7 +286,7 @@ class InvoiceJdbcRepositoryTest {
 
 		@Test
 		void extractData_withMultipleRows_returnsItemsAndPagination() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, "periodFrom", Sort.Direction.ASC);
+			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, List.of("periodFrom"), Sort.Direction.ASC);
 
 			when(resultSet.next()).thenReturn(true, true, false);
 
@@ -309,7 +354,7 @@ class InvoiceJdbcRepositoryTest {
 
 		@Test
 		void extractData_withEmptyResultSet_returnsEmptyListAndZeroPagination() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, "periodFrom", Sort.Direction.ASC);
+			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, List.of("periodFrom"), Sort.Direction.ASC);
 			when(resultSet.next()).thenReturn(false);
 
 			final var result = extractor.extractData(resultSet);
@@ -381,7 +426,7 @@ class InvoiceJdbcRepositoryTest {
 
 		@Test
 		void extractData_computesPaginationFromFilteredTotal() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(2, 5, "periodFrom", Sort.Direction.DESC);
+			final var extractor = new CustomerInvoiceResponseExtractor(2, 5, List.of("periodFrom"), Sort.Direction.DESC);
 			when(resultSet.next()).thenReturn(true, false);
 
 			when(resultSet.getInt("FilteredTotalRecords")).thenReturn(42);

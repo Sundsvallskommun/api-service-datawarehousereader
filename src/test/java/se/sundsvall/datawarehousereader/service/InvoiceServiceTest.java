@@ -142,7 +142,7 @@ class InvoiceServiceTest {
 			.withStatus("Betalad")
 			.withPeriodFrom(LocalDate.of(2025, Month.JANUARY, 1))
 			.withPeriodTo(LocalDate.of(2025, Month.DECEMBER, 31))
-			.withSortBy("periodFrom")
+			.withSortBy(List.of("periodFrom", "InvoiceDate"))
 			.withSortDirection(Sort.Direction.DESC);
 		parameters.setPage(2);
 		parameters.setLimit(5);
@@ -183,7 +183,7 @@ class InvoiceServiceTest {
 		assertThat(query.getStatus()).isEqualTo("Betalad");
 		assertThat(query.getPeriodFrom()).isEqualTo(LocalDate.of(2025, Month.JANUARY, 1));
 		assertThat(query.getPeriodTo()).isEqualTo(LocalDate.of(2025, Month.DECEMBER, 31));
-		assertThat(query.getSortBy()).isEqualTo("periodFrom");
+		assertThat(query.getSortBy()).isEqualTo(List.of("periodFrom", "InvoiceDate"));
 		assertThat(query.getSortDirection()).isEqualTo(Sort.Direction.DESC);
 		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationA, invoiceA);
 		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationB, invoiceB);

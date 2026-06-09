@@ -175,7 +175,6 @@ class InvoiceResourceTest {
 		final var organizationIds = "5565027223,5564786647";
 		final var periodFrom = LocalDate.of(2025, Month.JANUARY, 1);
 		final var periodTo = LocalDate.of(2025, Month.DECEMBER, 31);
-		final var sortBy = "periodFrom";
 
 		when(serviceMock.getInvoicesForCustomer(any())).thenReturn(CustomerInvoiceResponse.create());
 
@@ -186,7 +185,7 @@ class InvoiceResourceTest {
 			.queryParam("status", "Betalad")
 			.queryParam("periodFrom", periodFrom.format(DateTimeFormatter.ISO_LOCAL_DATE))
 			.queryParam("periodTo", periodTo.format(DateTimeFormatter.ISO_LOCAL_DATE))
-			.queryParam("sortBy", sortBy)
+			.queryParam("sortBy", "periodFrom", "InvoiceDate")
 			.queryParam("sortDirection", "DESC")
 			.queryParam("page", String.valueOf(PAGE))
 			.queryParam("limit", String.valueOf(LIMIT))
@@ -207,7 +206,7 @@ class InvoiceResourceTest {
 		assertThat(captured.getStatus()).isEqualTo("Betalad");
 		assertThat(captured.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(captured.getPeriodTo()).isEqualTo(periodTo);
-		assertThat(captured.getSortBy()).isEqualTo(sortBy);
+		assertThat(captured.getSortBy()).containsExactly("periodFrom", "InvoiceDate");
 		assertThat(captured.getSortDirection()).isEqualTo(Sort.Direction.DESC);
 		assertThat(captured.getPage()).isEqualTo(PAGE);
 		assertThat(captured.getLimit()).isEqualTo(LIMIT);
@@ -237,7 +236,7 @@ class InvoiceResourceTest {
 		assertThat(captured.getPeriodFrom()).isNull();
 		assertThat(captured.getPeriodTo()).isNull();
 		assertThat(captured.getSortBy()).isNull();
-		assertThat(captured.getSortDirection()).isNull();
+		assertThat(captured.getSortDirection()).isEqualTo(Sort.Direction.ASC);
 		assertThat(captured.getPage()).isEqualTo(DEFAULT_PAGE);
 		assertThat(captured.getLimit()).isEqualTo(DEFAULT_LIMIT);
 	}
