@@ -9,7 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import org.springframework.dao.DataAccessException;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -92,9 +94,10 @@ public class InvoiceJdbcRepository {
 	}
 
 	public CustomerInvoiceResponse getInvoices(final CustomerInvoiceQuery query) {
-
-		final var sortColumn = resolveSortColumn(query.getSortBy());
-		final var metadataSortBy = isSupplied(query.getSortBy()) ? sortColumn : null;
+		final var sortColumns = resolveSortColumns(query.getSortBy());
+		final var sortDirection = resolveSortDirection(query.getSortDirection());
+		final var metadataSortBy = isSupplied(query.getSortBy()) ? sortColumns : null;
+		final var metadataSortDirection = metadataSortBy != null ? sortDirection : null;
 
 		final var parameters = new MapSqlParameterSource()
 			.addValue(FUNCTION_PAGE_NUMBER, 1)
@@ -103,45 +106,74 @@ public class InvoiceJdbcRepository {
 			.addValue(CUSTOMER_IDS, query.getCustomerIds())
 			.addValue(PERIOD_FROM, query.getPeriodFrom())
 			.addValue(PERIOD_TO, query.getPeriodTo())
-			.addValue(SORT_BY, sortColumn)
+			.addValue(SORT_BY, sortColumns.getFirst())  // resolveSortColumns always returns at least DEFAULT_SORT_COLUMN, i.e. no null here
 			.addValue(FACILITY_IDS, query.getFacilityIds())
 			.addValue(INVOICE_STATUS, query.getStatus())
 			.addValue(OFFSET, (query.getPage() - 1) * query.getLimit())
 			.addValue(FETCH, query.getLimit());
 
-		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumn));
+		final var sql = SQL_TEMPLATE.replace(ORDER_BY_PLACEHOLDER, buildOrderByColumns(sortColumns, sortDirection));
 
 		return jdbcTemplate.query(sql, parameters,
-			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy));
+			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy, metadataSortDirection));
 	}
 
-	private static String buildOrderByColumns(final String sortColumn) {
-		final var primaryColumn = "inner_query." + sortColumn;
-		// Avoid "column specified more than once in the order by list" when sorting by the tie breaker itself.
-		return primaryColumn.equals(TIE_BREAKER_COLUMN) ? primaryColumn : primaryColumn + ", " + TIE_BREAKER_COLUMN;
+	/**
+	 * Applies the requested direction to every primary sort column, then appends the {@link #TIE_BREAKER_COLUMN} so paging
+	 * stays deterministic when the primary columns have duplicate values. The tie breaker is always kept ascending (its
+	 * direction is irrelevant) and is omitted when it is already one of the requested columns, since a column may appear
+	 * only once in an ORDER BY. {@code direction.name()} yields the literal {@code ASC} or {@code DESC} and every column
+	 * comes from the whitelist, so concatenating them into the statement is injection safe.
+	 */
+	private static String buildOrderByColumns(final List<String> sortColumns, final Sort.Direction direction) {
+		final var clauses = new ArrayList<String>();
+		sortColumns.forEach(column -> clauses.add("inner_query." + column + " " + direction.name()));
+		if (sortColumns.stream().noneMatch(column -> ("inner_query." + column).equals(TIE_BREAKER_COLUMN))) {
+			clauses.add(TIE_BREAKER_COLUMN);
+		}
+		return String.join(", ", clauses);
 	}
 
-	static String resolveSortColumn(final String sortBy) {
-		return ofNullable(sortBy)
+	/**
+	 * Maps each requested sort value to its whitelisted column, dropping anything not in the whitelist (which also guards
+	 * the ORDER BY against SQL injection). Falls back to {@link #DEFAULT_SORT_COLUMN} when nothing valid remains, so the
+	 * result is always non-empty.
+	 */
+	static List<String> resolveSortColumns(final List<String> sortBy) {
+		final var resolved = ofNullable(sortBy).orElseGet(List::of).stream()
+			.filter(Objects::nonNull)
 			.map(value -> value.trim().toLowerCase(Locale.ROOT))
 			.map(ALLOWED_SORT_COLUMNS::get)
-			.orElse(DEFAULT_SORT_COLUMN);
+			.filter(Objects::nonNull)
+			.toList();
+
+		if (resolved.isEmpty()) {
+			return List.of(DEFAULT_SORT_COLUMN);
+		}
+		return resolved;
 	}
 
-	private static boolean isSupplied(final String sortBy) {
-		return sortBy != null && !sortBy.isBlank();
+	/** A null direction (nothing requested) defaults to ascending, mirroring SQL's own default. */
+	static Sort.Direction resolveSortDirection(final Sort.Direction sortDirection) {
+		return ofNullable(sortDirection).orElse(Sort.DEFAULT_DIRECTION);
+	}
+
+	private static boolean isSupplied(final List<String> sortBy) {
+		return sortBy != null && sortBy.stream().anyMatch(value -> value != null && !value.isBlank());
 	}
 
 	static class CustomerInvoiceResponseExtractor implements ResultSetExtractor<CustomerInvoiceResponse> {
 
 		private final int pageNumber;
 		private final int pageSize;
-		private final String sortBy;
+		private final List<String> sortBy;
+		private final Sort.Direction sortDirection;
 
-		CustomerInvoiceResponseExtractor(final int pageNumber, final int pageSize, final String sortBy) {
+		CustomerInvoiceResponseExtractor(final int pageNumber, final int pageSize, final List<String> sortBy, final Sort.Direction sortDirection) {
 			this.pageNumber = pageNumber;
 			this.pageSize = pageSize;
 			this.sortBy = sortBy;
+			this.sortDirection = sortDirection;
 		}
 
 		@Override
@@ -164,7 +196,8 @@ public class InvoiceJdbcRepository {
 				.withCount(items.size())
 				.withTotalRecords(totalRecords)
 				.withTotalPages(totalPages)
-				.withSortBy(sortBy != null ? List.of(sortBy) : null);
+				.withSortBy(sortBy)
+				.withSortDirection(sortDirection);
 
 			return CustomerInvoiceResponse.create()
 				.withMetaData(metaData)

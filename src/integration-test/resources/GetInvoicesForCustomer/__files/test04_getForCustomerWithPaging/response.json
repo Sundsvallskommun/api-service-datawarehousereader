@@ -6,6 +6,7 @@
 		"sortBy": [
 			"InvoiceNumber"
 		],
+		"sortDirection": "ASC",
 		"totalPages": 3,
 		"totalRecords": 5
 	},

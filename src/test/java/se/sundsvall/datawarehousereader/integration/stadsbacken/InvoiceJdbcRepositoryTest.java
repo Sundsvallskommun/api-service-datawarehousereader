@@ -6,13 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.ArgumentMatchers;
@@ -20,6 +21,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -67,7 +69,8 @@ class InvoiceJdbcRepositoryTest {
 				.withCustomerIds(customerIds)
 				.withPeriodFrom(periodFrom)
 				.withPeriodTo(periodTo)
-				.withSortBy("InvoiceNumber")
+				.withSortBy(List.of("InvoiceNumber"))
+				.withSortDirection(Sort.Direction.DESC)
 				.withFacilityIds(facilityIds)
 				.withStatus(invoiceStatus);
 
@@ -93,7 +96,71 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(params.getValue("invoiceStatus")).isEqualTo(invoiceStatus);
 			assertThat(params.getValue("offset")).isEqualTo(10);
 			assertThat(params.getValue("fetch")).isEqualTo(10);
-			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.InvoiceNumber");
+			// InvoiceNumber is also the tie breaker, so it appears once with the requested direction
+			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.InvoiceNumber DESC")
+				.doesNotContain("inner_query.InvoiceNumber DESC, inner_query.InvoiceNumber");
+		}
+
+		@Test
+		void getInvoices_withDescendingDirection_appendsDescToPrimaryColumnAndKeepsTieBreakerAscending() {
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
+				.thenReturn(CustomerInvoiceResponse.create());
+
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("123456")
+				.withSortBy(List.of("periodFrom"))
+				.withSortDirection(Sort.Direction.DESC));
+
+			verify(jdbcTemplate).query(
+				sqlCaptor.capture(),
+				parametersCaptor.capture(),
+				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
+
+			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.periodFrom DESC, inner_query.InvoiceNumber");
+		}
+
+		@Test
+		void getInvoices_withMultipleSortColumns_buildsMultiColumnOrderByAndPassesPrimaryToFunction() {
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
+				.thenReturn(CustomerInvoiceResponse.create());
+
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("123456")
+				.withSortBy(List.of("periodFrom", "invoicedate"))
+				.withSortDirection(Sort.Direction.DESC));
+
+			verify(jdbcTemplate).query(
+				sqlCaptor.capture(),
+				parametersCaptor.capture(),
+				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
+
+			assertThat(sqlCaptor.getValue())
+				.contains("ORDER BY inner_query.periodFrom DESC, inner_query.InvoiceDate DESC, inner_query.InvoiceNumber");
+			// the SQL function only takes a single sort column, so it receives the primary (first) one
+			assertThat(parametersCaptor.getValue().getValue("sortBy")).isEqualTo("periodFrom");
+		}
+
+		@Test
+		void getInvoices_withNullDirection_defaultsToAscending() {
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
+				.thenReturn(CustomerInvoiceResponse.create());
+
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("123456")
+				.withSortBy(List.of("periodTo")));
+
+			verify(jdbcTemplate).query(
+				sqlCaptor.capture(),
+				parametersCaptor.capture(),
+				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
+
+			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.periodTo ASC, inner_query.InvoiceNumber");
 		}
 
 		@Test
@@ -134,7 +201,7 @@ class InvoiceJdbcRepositoryTest {
 				.withPage(1)
 				.withLimit(10)
 				.withCustomerIds("123456")
-				.withSortBy("garble"));
+				.withSortBy(List.of("garble")));
 
 			verify(jdbcTemplate).query(
 				sqlCaptor.capture(),
@@ -147,7 +214,7 @@ class InvoiceJdbcRepositoryTest {
 	}
 
 	@Nested
-	class ResolveSortColumn {
+	class ResolveSortColumns {
 
 		@ParameterizedTest
 		@CsvSource({
@@ -157,20 +224,57 @@ class InvoiceJdbcRepositoryTest {
 			"DueDate, DueDate",
 			"invoicenumber, InvoiceNumber",
 			"totalamount, TotalAmount",
-			"' periodFrom ', periodFrom",
-			"garble, periodFrom"
+			"' periodFrom ', periodFrom"
 		})
-		void resolvesToWhitelistedColumnOrDefault(final String input, final String expected) {
-			assertThat(InvoiceJdbcRepository.resolveSortColumn(input)).isEqualTo(expected);
+		void mapsValueToWhitelistedColumn(final String input, final String expected) {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of(input))).containsExactly(expected);
+		}
+
+		@Test
+		void keepsAllWhitelistedColumnsInRequestedOrder() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of("periodFrom", "invoicedate", "DUEDATE")))
+				.containsExactly("periodFrom", "InvoiceDate", "DueDate");
+		}
+
+		@Test
+		void dropsUnknownColumnsButKeepsValidOnes() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of("periodFrom", "garble", "totalamount")))
+				.containsExactly("periodFrom", "TotalAmount");
+		}
+
+		@Test
+		void ignoresNullElements() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(Arrays.asList("periodFrom", null)))
+				.containsExactly("periodFrom");
 		}
 
 		@ParameterizedTest
-		@NullAndEmptySource
 		@ValueSource(strings = {
-			"   "
+			"garble", "   "
 		})
-		void resolvesNullOrBlankToDefault(final String input) {
-			assertThat(InvoiceJdbcRepository.resolveSortColumn(input)).isEqualTo("periodFrom");
+		void defaultsToPeriodFromWhenNoValidColumn(final String input) {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of(input))).containsExactly("periodFrom");
+		}
+
+		@Test
+		void defaultsToPeriodFromWhenNullOrEmpty() {
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(null)).containsExactly("periodFrom");
+			assertThat(InvoiceJdbcRepository.resolveSortColumns(List.of())).containsExactly("periodFrom");
+		}
+	}
+
+	@Nested
+	class ResolveSortDirection {
+
+		@ParameterizedTest
+		@EnumSource(Sort.Direction.class)
+		void keepsSuppliedDirection(final Sort.Direction direction) {
+			assertThat(InvoiceJdbcRepository.resolveSortDirection(direction)).isEqualTo(direction);
+		}
+
+		@Test
+		void defaultsNullToAscending() {
+			assertThat(InvoiceJdbcRepository.resolveSortDirection(null)).isEqualTo(Sort.Direction.ASC);
 		}
 	}
 
@@ -182,7 +286,7 @@ class InvoiceJdbcRepositoryTest {
 
 		@Test
 		void extractData_withMultipleRows_returnsItemsAndPagination() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, "periodFrom");
+			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, List.of("periodFrom"), Sort.Direction.ASC);
 
 			when(resultSet.next()).thenReturn(true, true, false);
 
@@ -245,11 +349,12 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(meta.getTotalRecords()).isEqualTo(23);
 			assertThat(meta.getTotalPages()).isEqualTo(3);
 			assertThat(meta.getSortBy()).containsExactly("periodFrom");
+			assertThat(meta.getSortDirection()).isEqualTo(Sort.Direction.ASC);
 		}
 
 		@Test
 		void extractData_withEmptyResultSet_returnsEmptyListAndZeroPagination() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, "periodFrom");
+			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, List.of("periodFrom"), Sort.Direction.ASC);
 			when(resultSet.next()).thenReturn(false);
 
 			final var result = extractor.extractData(resultSet);
@@ -262,21 +367,23 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(result.getMetaData().getTotalRecords()).isZero();
 			assertThat(result.getMetaData().getTotalPages()).isZero();
 			assertThat(result.getMetaData().getSortBy()).containsExactly("periodFrom");
+			assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.ASC);
 		}
 
 		@Test
 		void extractData_withNullSortBy_returnsNullSortByInMetadata() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, null);
+			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, null, null);
 			when(resultSet.next()).thenReturn(false);
 
 			final var result = extractor.extractData(resultSet);
 
 			assertThat(result.getMetaData().getSortBy()).isNull();
+			assertThat(result.getMetaData().getSortDirection()).isNull();
 		}
 
 		@Test
 		void extractData_withNullDatesAndNumbers_mapsToNulls() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, null);
+			final var extractor = new CustomerInvoiceResponseExtractor(1, 10, null, null);
 			when(resultSet.next()).thenReturn(true, false);
 
 			when(resultSet.getString("CustomerId")).thenReturn("123456");
@@ -319,7 +426,7 @@ class InvoiceJdbcRepositoryTest {
 
 		@Test
 		void extractData_computesPaginationFromFilteredTotal() throws SQLException {
-			final var extractor = new CustomerInvoiceResponseExtractor(2, 5, "periodFrom");
+			final var extractor = new CustomerInvoiceResponseExtractor(2, 5, List.of("periodFrom"), Sort.Direction.DESC);
 			when(resultSet.next()).thenReturn(true, false);
 
 			when(resultSet.getInt("FilteredTotalRecords")).thenReturn(42);
@@ -333,6 +440,7 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(result.getMetaData().getTotalRecords()).isEqualTo(42);
 			assertThat(result.getMetaData().getTotalPages()).isEqualTo(9);
 			assertThat(result.getMetaData().getSortBy()).isEqualTo(List.of("periodFrom"));
+			assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.DESC);
 		}
 	}
 }

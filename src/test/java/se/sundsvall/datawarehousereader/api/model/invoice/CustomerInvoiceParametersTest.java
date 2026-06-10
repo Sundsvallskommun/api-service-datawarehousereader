@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Sort;
 
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanConstructor;
 import static com.google.code.beanmatchers.BeanMatchers.hasValidBeanEquals;
@@ -41,7 +42,10 @@ class CustomerInvoiceParametersTest {
 		final var status = "Betalad";
 		final var periodFrom = LocalDate.parse("2024-01-01").minusMonths(3);
 		final var periodTo = LocalDate.parse("2024-01-01");
-		final var sortBy = "periodFrom";
+		final var sortBy = List.of("periodFrom", "InvoiceDate");
+		final var sortDirection = Sort.Direction.DESC;
+		final var page = 1;
+		final var limit = 5;
 
 		final var parameters = CustomerInvoiceParameters.create()
 			.withCustomerNumbers(customerNumbers)
@@ -50,7 +54,10 @@ class CustomerInvoiceParametersTest {
 			.withStatus(status)
 			.withPeriodFrom(periodFrom)
 			.withPeriodTo(periodTo)
-			.withSortBy(sortBy);
+			.withSortBy(sortBy)
+			.withSortDirection(sortDirection)
+			.withPage(page)
+			.withLimit(limit);
 
 		assertThat(parameters).isNotNull();
 		assertThat(parameters.getCustomerNumbers()).isEqualTo(customerNumbers);
@@ -60,18 +67,23 @@ class CustomerInvoiceParametersTest {
 		assertThat(parameters.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(parameters.getPeriodTo()).isEqualTo(periodTo);
 		assertThat(parameters.getSortBy()).isEqualTo(sortBy);
+		assertThat(parameters.getSortDirection()).isEqualTo(sortDirection);
+		assertThat(parameters.getPage()).isEqualTo(page);
+		assertThat(parameters.getLimit()).isEqualTo(limit);
 	}
 
 	@Test
 	void testNoDirtOnCreatedBean() {
 		assertThat(CustomerInvoiceParameters.create())
-			.hasAllNullFieldsOrPropertiesExcept("page", "limit")
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection")
 			.hasFieldOrPropertyWithValue("page", 1)
-			.hasFieldOrPropertyWithValue("limit", 100);
+			.hasFieldOrPropertyWithValue("limit", 100)
+			.hasFieldOrPropertyWithValue("sortDirection", Sort.Direction.ASC);
 
 		assertThat(new CustomerInvoiceParameters())
-			.hasAllNullFieldsOrPropertiesExcept("page", "limit")
+			.hasAllNullFieldsOrPropertiesExcept("page", "limit", "sortDirection")
 			.hasFieldOrPropertyWithValue("page", 1)
-			.hasFieldOrPropertyWithValue("limit", 100);
+			.hasFieldOrPropertyWithValue("limit", 100)
+			.hasFieldOrPropertyWithValue("sortDirection", Sort.Direction.ASC);
 	}
 }

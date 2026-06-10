@@ -1,7 +1,9 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
+import org.springframework.data.domain.Sort;
 
 /**
  * Parameter object for {@link InvoiceJdbcRepository#getInvoices(CustomerInvoiceQuery)}.
@@ -20,7 +22,8 @@ public class CustomerInvoiceQuery {
 	private String status;
 	private LocalDate periodFrom;
 	private LocalDate periodTo;
-	private String sortBy;
+	private List<String> sortBy;
+	private Sort.Direction sortDirection;
 
 	public static CustomerInvoiceQuery create() {
 		return new CustomerInvoiceQuery();
@@ -130,22 +133,35 @@ public class CustomerInvoiceQuery {
 		return this;
 	}
 
-	public String getSortBy() {
+	public List<String> getSortBy() {
 		return sortBy;
 	}
 
-	public void setSortBy(final String sortBy) {
+	public void setSortBy(final List<String> sortBy) {
 		this.sortBy = sortBy;
 	}
 
-	public CustomerInvoiceQuery withSortBy(final String sortBy) {
+	public CustomerInvoiceQuery withSortBy(final List<String> sortBy) {
 		this.setSortBy(sortBy);
+		return this;
+	}
+
+	public Sort.Direction getSortDirection() {
+		return sortDirection;
+	}
+
+	public void setSortDirection(final Sort.Direction sortDirection) {
+		this.sortDirection = sortDirection;
+	}
+
+	public CustomerInvoiceQuery withSortDirection(final Sort.Direction sortDirection) {
+		this.sortDirection = sortDirection;
 		return this;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(page, limit, customerIds, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy);
+		return Objects.hash(page, limit, customerIds, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy, sortDirection);
 	}
 
 	@Override
@@ -164,7 +180,8 @@ public class CustomerInvoiceQuery {
 			&& Objects.equals(status, other.status)
 			&& Objects.equals(periodFrom, other.periodFrom)
 			&& Objects.equals(periodTo, other.periodTo)
-			&& Objects.equals(sortBy, other.sortBy);
+			&& Objects.equals(sortBy, other.sortBy)
+			&& Objects.equals(sortDirection, other.sortDirection);
 	}
 
 	@Override
@@ -177,6 +194,7 @@ public class CustomerInvoiceQuery {
 			+ ", status=" + status
 			+ ", periodFrom=" + periodFrom
 			+ ", periodTo=" + periodTo
-			+ ", sortBy=" + sortBy + "]";
+			+ ", sortBy=" + sortBy
+			+ ", sortDirection=" + sortDirection + "]";
 	}
 }

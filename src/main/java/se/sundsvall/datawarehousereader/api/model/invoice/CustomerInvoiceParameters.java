@@ -7,13 +7,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingBase;
+
+import se.sundsvall.dept44.models.api.paging.AbstractParameterPagingAndSortingBase;
 
 @Schema(description = "Customer invoice request parameters model")
 @ParameterObject
-public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
+public class CustomerInvoiceParameters extends AbstractParameterPagingAndSortingBase {
 
 	@ArraySchema(schema = @Schema(description = "Customer numbers", examples = "123456"), minItems = 1)
 	@NotEmpty
@@ -35,11 +37,6 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 	@Schema(description = "Latest invoice period end. Format is YYYY-MM-DD.", examples = "2025-12-31")
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate periodTo;
-
-	@Schema(description = "Column to sort by.", examples = {
-		"periodFrom", "periodTo", "InvoiceDate", "DueDate", "InvoiceNumber", "TotalAmount"
-	})
-	private String sortBy;
 
 	public static CustomerInvoiceParameters create() {
 		return new CustomerInvoiceParameters();
@@ -123,16 +120,31 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 		return this;
 	}
 
-	public String getSortBy() {
-		return sortBy;
+	@Override
+	@ArraySchema(schema = @Schema(description = "Column to sort by", examples = {
+		"periodFrom", "periodTo", "InvoiceDate", "DueDate", "InvoiceNumber", "TotalAmount"
+	}))
+	public List<String> getSortBy() {
+		return super.getSortBy();
 	}
 
-	public void setSortBy(final String sortBy) {
-		this.sortBy = sortBy;
+	public CustomerInvoiceParameters withSortBy(final List<String> sortBy) {
+		setSortBy(sortBy);
+		return this;
 	}
 
-	public CustomerInvoiceParameters withSortBy(final String sortBy) {
-		this.sortBy = sortBy;
+	public CustomerInvoiceParameters withSortDirection(final Sort.Direction sortDirection) {
+		setSortDirection(sortDirection);
+		return this;
+	}
+
+	public CustomerInvoiceParameters withPage(final int page) {
+		setPage(page);
+		return this;
+	}
+
+	public CustomerInvoiceParameters withLimit(final int limit) {
+		setLimit(limit);
 		return this;
 	}
 
@@ -140,7 +152,7 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(customerNumbers, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy);
+		result = prime * result + Objects.hash(customerNumbers, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy, sortDirection, page, limit);
 		return result;
 	}
 
@@ -161,7 +173,10 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 			&& Objects.equals(status, other.status)
 			&& Objects.equals(periodFrom, other.periodFrom)
 			&& Objects.equals(periodTo, other.periodTo)
-			&& Objects.equals(sortBy, other.sortBy);
+			&& Objects.equals(sortBy, other.sortBy)
+			&& Objects.equals(sortDirection, other.sortDirection)
+			&& Objects.equals(page, other.page)
+			&& Objects.equals(limit, other.limit);
 	}
 
 	@Override
@@ -173,6 +188,7 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingBase {
 			+ ", periodFrom=" + periodFrom
 			+ ", periodTo=" + periodTo
 			+ ", sortBy=" + sortBy
+			+ ", sortDirection=" + sortDirection
 			+ ", page=" + page
 			+ ", limit=" + limit + "]";
 	}
