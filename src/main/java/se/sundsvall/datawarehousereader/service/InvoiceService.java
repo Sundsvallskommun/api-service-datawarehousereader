@@ -46,7 +46,7 @@ public class InvoiceService {
 
 		Page<Long> invoiceNumbers = invoiceRepository.findDistinctInvoiceNumbers(parameters, pageable);
 
-		var invoiceEntities = invoiceRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
+		var invoiceEntities = invoiceJdbcRepository.findAllByInvoiceNumberIn(invoiceNumbers.getContent());
 
 		var invoiceMap = invoiceEntities.stream()
 			.collect(groupingBy(InvoiceEntity::getInvoiceNumber, Collectors.toList()));

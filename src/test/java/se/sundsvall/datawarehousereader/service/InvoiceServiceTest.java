@@ -74,7 +74,7 @@ class InvoiceServiceTest {
 		final Page<Long> page = new PageImpl<>(invoiceNumbers, pageable, invoiceEntities.size());
 
 		when(invoiceRepositoryMock.findDistinctInvoiceNumbers(eq(params), any(Pageable.class))).thenReturn(page);
-		when(invoiceRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(invoiceEntities);
+		when(invoiceJdbcRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(invoiceEntities);
 
 		final var result = service.getInvoices(params);
 
@@ -108,7 +108,7 @@ class InvoiceServiceTest {
 		final Page<Long> page = new PageImpl<>(invoiceNumbers, pageable, invoiceEntities.size());
 
 		when(invoiceRepositoryMock.findDistinctInvoiceNumbers(eq(params), any(Pageable.class))).thenReturn(page);
-		when(invoiceRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(invoiceEntities);
+		when(invoiceJdbcRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(invoiceEntities);
 
 		final var result = service.getInvoices(params);
 
@@ -126,6 +126,43 @@ class InvoiceServiceTest {
 		assertThat(result.getInvoices()).hasSameElementsAs(toInvoices(Map.of(
 			1L, List.of(invoiceEntity1),
 			2L, List.of(invoiceEntity2))));
+	}
+
+	@Test
+	void getInvoices_aggregatesAllRowsPerInvoiceNumber() {
+		// The invoice view returns one row per facility/description line. Every row must contribute to the aggregated sets -
+		// regression test for the bug where only a single description/facility survived because JPA collapsed the rows.
+		final var invoiceNumber = 60027196918L;
+		final var facilityId = "735999109151605013";
+		final var invoiceNumbers = List.of(invoiceNumber);
+		final var rows = List.of(
+			invoiceRow(invoiceNumber, facilityId, "El"),
+			invoiceRow(invoiceNumber, facilityId, "Elhandel"),
+			invoiceRow(invoiceNumber, facilityId, "Elhandel produktion"),
+			invoiceRow(invoiceNumber, facilityId, "Elnät produktion"));
+		final var params = InvoiceParameters.create();
+
+		final var pageable = Pageable.ofSize(params.getLimit()).withPage(params.getPage() - 1);
+		final Page<Long> page = new PageImpl<>(invoiceNumbers, pageable, 1);
+
+		when(invoiceRepositoryMock.findDistinctInvoiceNumbers(eq(params), any(Pageable.class))).thenReturn(page);
+		when(invoiceJdbcRepositoryMock.findAllByInvoiceNumberIn(invoiceNumbers)).thenReturn(rows);
+
+		final var result = service.getInvoices(params);
+
+		assertThat(result.getInvoices()).hasSize(1);
+		final var invoice = result.getInvoices().getFirst();
+		assertThat(invoice.getInvoiceDescriptions())
+			.containsExactlyInAnyOrder("El", "Elhandel", "Elhandel produktion", "Elnät produktion");
+		assertThat(invoice.getFacilityIds()).containsExactly(facilityId);
+	}
+
+	private static InvoiceEntity invoiceRow(final long invoiceNumber, final String facilityId, final String invoiceDescription) {
+		final var entity = new InvoiceEntity();
+		entity.setInvoiceNumber(invoiceNumber);
+		entity.setFacilityId(facilityId);
+		entity.setInvoiceDescription(invoiceDescription);
+		return entity;
 	}
 
 	@Test

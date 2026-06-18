@@ -23,16 +23,20 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepository.CustomerInvoiceResponseExtractor;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepository.InvoiceRowMapper;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -441,6 +445,142 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(result.getMetaData().getTotalPages()).isEqualTo(9);
 			assertThat(result.getMetaData().getSortBy()).isEqualTo(List.of("periodFrom"));
 			assertThat(result.getMetaData().getSortDirection()).isEqualTo(Sort.Direction.DESC);
+		}
+	}
+
+	@Nested
+	class FindAllByInvoiceNumberIn {
+
+		@Test
+		void withInvoiceNumbers_runsRecompiledInQueryAndReturnsRows() {
+			final var invoiceNumbers = List.of(138023999L, 139349898L);
+			final var rows = List.of(new InvoiceEntity());
+
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<RowMapper<InvoiceEntity>>any()))
+				.thenReturn(rows);
+
+			final var result = repository.findAllByInvoiceNumberIn(invoiceNumbers);
+
+			verify(jdbcTemplate).query(sqlCaptor.capture(), parametersCaptor.capture(), ArgumentMatchers.<RowMapper<InvoiceEntity>>any());
+
+			assertThat(result).isSameAs(rows);
+			assertThat(sqlCaptor.getValue())
+				.contains("[kundinfo].[vInvoice_Test_251126]")
+				.contains("WHERE InvoiceNumber IN (:invoiceNumbers)")
+				.contains("OPTION (RECOMPILE)");
+			assertThat(parametersCaptor.getValue().getValue("invoiceNumbers")).isEqualTo(invoiceNumbers);
+		}
+
+		@Test
+		void withEmptyList_returnsEmptyAndSkipsQuery() {
+			assertThat(repository.findAllByInvoiceNumberIn(List.of())).isEmpty();
+			verifyNoInteractions(jdbcTemplate);
+		}
+
+		@Test
+		void withNull_returnsEmptyAndSkipsQuery() {
+			assertThat(repository.findAllByInvoiceNumberIn(null)).isEmpty();
+			verifyNoInteractions(jdbcTemplate);
+		}
+	}
+
+	@Nested
+	class InvoiceRowMapperTest {
+
+		@Mock
+		private ResultSet resultSet;
+
+		@Test
+		void mapRow_mapsAllColumns() throws SQLException {
+			when(resultSet.getLong("InvoiceNumber")).thenReturn(137968392L);
+			when(resultSet.getLong("OcrNumber")).thenReturn(137968392L);
+			when(resultSet.wasNull()).thenReturn(false);
+			when(resultSet.getDate("InvoiceDate")).thenReturn(Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 9)));
+			when(resultSet.getDate("DueDate")).thenReturn(Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 29)));
+			when(resultSet.getString("InvoiceName")).thenReturn("137968392.pdf");
+			when(resultSet.getString("InvoiceType")).thenReturn("Faktura");
+			when(resultSet.getString("InvoiceDescription")).thenReturn("El");
+			when(resultSet.getString("InvoiceStatus")).thenReturn("Skickad");
+			when(resultSet.getBigDecimal("TotalAmount")).thenReturn(new BigDecimal("12060.0000"));
+			when(resultSet.getBigDecimal("AmountVatIncluded")).thenReturn(new BigDecimal("12059.99"));
+			when(resultSet.getBigDecimal("AmountVatExcluded")).thenReturn(new BigDecimal("9647.99"));
+			when(resultSet.getBigDecimal("VatEligiblaAmount")).thenReturn(new BigDecimal("9647.99"));
+			when(resultSet.getBigDecimal("Rounding")).thenReturn(new BigDecimal("0.01"));
+			when(resultSet.getBigDecimal("Vat")).thenReturn(new BigDecimal("9647.99"));
+			when(resultSet.getString("ReversedVat")).thenReturn("false");
+			when(resultSet.getString("Currency")).thenReturn("sek");
+			when(resultSet.getInt("CustomerId")).thenReturn(600606);
+			when(resultSet.getString("CustomerType")).thenReturn("Enterprise");
+			when(resultSet.getString("FacilityId")).thenReturn("735999109144630886");
+			when(resultSet.getString("OrganizationGroup")).thenReturn("stadsbacken");
+			when(resultSet.getString("Administration")).thenReturn("Sundsvall Elnät");
+			when(resultSet.getString("OrganizationId")).thenReturn("5565027223");
+			when(resultSet.getString("Street")).thenReturn("DB79B,  FE 11040");
+			when(resultSet.getString("PostalCode")).thenReturn("83882");
+			when(resultSet.getString("City")).thenReturn("FRÖSÖN");
+			when(resultSet.getString("CareOf")).thenReturn("Fräscha fastigheter AB");
+			when(resultSet.getString("PdfAvailable")).thenReturn("true");
+
+			final var entity = new InvoiceRowMapper().mapRow(resultSet, 0);
+
+			assertThat(entity.getInvoiceNumber()).isEqualTo(137968392L);
+			assertThat(entity.getOcrNumber()).isEqualTo(137968392L);
+			assertThat(entity.getInvoiceDate()).isEqualTo(LocalDate.of(2019, Month.OCTOBER, 9));
+			assertThat(entity.getDueDate()).isEqualTo(LocalDate.of(2019, Month.OCTOBER, 29));
+			assertThat(entity.getInvoiceName()).isEqualTo("137968392.pdf");
+			assertThat(entity.getInvoiceType()).isEqualTo("Faktura");
+			assertThat(entity.getInvoiceDescription()).isEqualTo("El");
+			assertThat(entity.getInvoiceStatus()).isEqualTo("Skickad");
+			assertThat(entity.getTotalAmount()).isEqualByComparingTo("12060.00");
+			assertThat(entity.getAmountVatIncluded()).isEqualByComparingTo("12059.99");
+			assertThat(entity.getAmountVatExcluded()).isEqualByComparingTo("9647.99");
+			assertThat(entity.getVatEligibleAmount()).isEqualByComparingTo("9647.99");
+			assertThat(entity.getRounding()).isEqualByComparingTo("0.01");
+			assertThat(entity.getVat()).isEqualByComparingTo("9647.99");
+			assertThat(entity.getReversedVat()).isFalse();
+			assertThat(entity.getCurrency()).isEqualTo("sek");
+			assertThat(entity.getCustomerId()).isEqualTo(600606);
+			assertThat(entity.getCustomerType()).isEqualTo("Enterprise");
+			assertThat(entity.getFacilityId()).isEqualTo("735999109144630886");
+			assertThat(entity.getOrganizationGroup()).isEqualTo("stadsbacken");
+			assertThat(entity.getAdministration()).isEqualTo("Sundsvall Elnät");
+			assertThat(entity.getOrganizationId()).isEqualTo("5565027223");
+			assertThat(entity.getStreet()).isEqualTo("DB79B,  FE 11040");
+			assertThat(entity.getPostCode()).isEqualTo("83882");
+			assertThat(entity.getCity()).isEqualTo("FRÖSÖN");
+			assertThat(entity.getCareOf()).isEqualTo("Fräscha fastigheter AB");
+			assertThat(entity.getPdfAvailable()).isTrue();
+		}
+
+		@Test
+		void mapRow_withNullOcrNumber_mapsToNull() throws SQLException {
+			when(resultSet.getLong(anyString())).thenReturn(0L);
+			when(resultSet.wasNull()).thenReturn(true);
+
+			final var entity = new InvoiceRowMapper().mapRow(resultSet, 0);
+
+			assertThat(entity.getOcrNumber()).isNull();
+		}
+
+		// The view stores the boolean flags as strings, including the literal text 'NULL'. Anything other than 'true'/'1'
+		// resolves to false, mirroring the previous Hibernate mapping (verified against the 'NULL'-valued fixture invoice).
+		@ParameterizedTest
+		@CsvSource(nullValues = "java-null", value = {
+			"true, true",
+			"TRUE, true",
+			"false, false",
+			"NULL, false",
+			"1, true",
+			"0, false",
+			"java-null, false"
+		})
+		void mapRow_parsesBooleanFlags(final String stored, final boolean expected) throws SQLException {
+			when(resultSet.getString(anyString())).thenReturn(stored);
+
+			final var entity = new InvoiceRowMapper().mapRow(resultSet, 0);
+
+			assertThat(entity.getReversedVat()).isEqualTo(expected);
+			assertThat(entity.getPdfAvailable()).isEqualTo(expected);
 		}
 	}
 }

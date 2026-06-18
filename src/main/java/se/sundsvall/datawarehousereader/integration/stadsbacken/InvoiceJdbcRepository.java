@@ -13,11 +13,13 @@ import java.util.Objects;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.dept44.models.api.paging.PagingAndSortingMetaData;
 
 import static java.util.Optional.ofNullable;
@@ -87,6 +89,17 @@ public class InvoiceJdbcRepository {
 		ORDER BY {orderByColumns}
 		OFFSET :offset ROWS FETCH NEXT :fetch ROWS ONLY""";
 
+	/**
+	 * Reads the raw invoice view rows for a set of invoice numbers. The view name must match the {@code @Table} mapping on
+	 * {@link InvoiceEntity}. {@code OPTION (RECOMPILE)} mirrors the {@code @WithRecompile} hint the previous JPA query
+	 * used;
+	 * the Hibernate-based hint does not apply to plain JDBC, so it is added to the statement directly.
+	 */
+	private static final String SELECT_INVOICE_ROWS_SQL = """
+		SELECT * FROM [kundinfo].[vInvoice_Test_251126]
+		WHERE InvoiceNumber IN (:invoiceNumbers)
+		OPTION (RECOMPILE)""";
+
 	private final NamedParameterJdbcTemplate jdbcTemplate;
 
 	public InvoiceJdbcRepository(final NamedParameterJdbcTemplate jdbcTemplate) {
@@ -116,6 +129,22 @@ public class InvoiceJdbcRepository {
 
 		return jdbcTemplate.query(sql, parameters,
 			new CustomerInvoiceResponseExtractor(query.getPage(), query.getLimit(), metadataSortBy, metadataSortDirection));
+	}
+
+	/**
+	 * Fetches every underlying view row for the supplied invoice numbers.
+	 * <p>
+	 * The invoice view returns multiple rows per invoice (one per facility/description line). Reading those rows through
+	 * JPA collapses them into a single entity per invoice number, because {@link InvoiceEntity}'s identifier is the invoice
+	 * number alone and Hibernate deduplicates by entity identity. This JDBC read bypasses the persistence context, so every
+	 * row is returned and the caller can aggregate facilities and descriptions correctly.
+	 */
+	public List<InvoiceEntity> findAllByInvoiceNumberIn(final List<Long> invoiceNumbers) {
+		if (invoiceNumbers == null || invoiceNumbers.isEmpty()) {
+			return List.of();
+		}
+		final var parameters = new MapSqlParameterSource().addValue("invoiceNumbers", invoiceNumbers);
+		return jdbcTemplate.query(SELECT_INVOICE_ROWS_SQL, parameters, new InvoiceRowMapper());
 	}
 
 	/**
@@ -263,6 +292,65 @@ public class InvoiceJdbcRepository {
 		private static Boolean getNullableBoolean(final ResultSet rs, final String columnName) throws SQLException {
 			final var value = rs.getBoolean(columnName);
 			return rs.wasNull() ? null : value;
+		}
+	}
+
+	/**
+	 * Maps a single invoice view row to a detached {@link InvoiceEntity}. One entity is produced per row (no
+	 * deduplication),
+	 * so callers see every facility/description line for an invoice.
+	 */
+	static class InvoiceRowMapper implements RowMapper<InvoiceEntity> {
+
+		@Override
+		public InvoiceEntity mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+			final var entity = new InvoiceEntity();
+			entity.setInvoiceNumber(rs.getLong("InvoiceNumber"));
+			entity.setInvoiceDate(toLocalDate(rs.getDate("InvoiceDate")));
+			entity.setInvoiceName(rs.getString("InvoiceName"));
+			entity.setInvoiceType(rs.getString("InvoiceType"));
+			entity.setInvoiceDescription(rs.getString("InvoiceDescription"));
+			entity.setInvoiceStatus(rs.getString("InvoiceStatus"));
+			entity.setOcrNumber(getNullableLong(rs, "OcrNumber"));
+			entity.setDueDate(toLocalDate(rs.getDate("DueDate")));
+			entity.setTotalAmount(rs.getBigDecimal("TotalAmount"));
+			entity.setAmountVatIncluded(rs.getBigDecimal("AmountVatIncluded"));
+			entity.setAmountVatExcluded(rs.getBigDecimal("AmountVatExcluded"));
+			entity.setVatEligibleAmount(rs.getBigDecimal("VatEligiblaAmount"));
+			entity.setRounding(rs.getBigDecimal("Rounding"));
+			entity.setVat(rs.getBigDecimal("Vat"));
+			entity.setReversedVat(toBoolean(rs.getString("ReversedVat")));
+			entity.setCurrency(rs.getString("Currency"));
+			entity.setCustomerId(rs.getInt("CustomerId"));
+			entity.setCustomerType(rs.getString("CustomerType"));
+			entity.setFacilityId(rs.getString("FacilityId"));
+			entity.setOrganizationGroup(rs.getString("OrganizationGroup"));
+			entity.setAdministration(rs.getString("Administration"));
+			entity.setOrganizationId(rs.getString("OrganizationId"));
+			entity.setStreet(rs.getString("Street"));
+			entity.setPostCode(rs.getString("PostalCode"));
+			entity.setCity(rs.getString("City"));
+			entity.setCareOf(rs.getString("CareOf"));
+			entity.setPdfAvailable(toBoolean(rs.getString("PdfAvailable")));
+			return entity;
+		}
+
+		private static LocalDate toLocalDate(final java.sql.Date date) {
+			return date != null ? date.toLocalDate() : null;
+		}
+
+		private static Long getNullableLong(final ResultSet rs, final String columnName) throws SQLException {
+			final var value = rs.getLong(columnName);
+			return rs.wasNull() ? null : value;
+		}
+
+		/**
+		 * The invoice view stores the boolean flags as strings ('true'/'false', and the literal text 'NULL'). This mirrors
+		 * the previous Hibernate mapping, which resolved anything other than 'true' (case-insensitive) to false. '1' is also
+		 * treated as true, in case the source ever exposes the column as a bit.
+		 */
+		private static Boolean toBoolean(final String value) {
+			return "true".equalsIgnoreCase(value) || "1".equals(value);
 		}
 	}
 }

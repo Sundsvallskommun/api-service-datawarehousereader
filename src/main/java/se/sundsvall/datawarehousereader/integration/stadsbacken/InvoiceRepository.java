@@ -2,7 +2,6 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,9 +18,6 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 @Transactional(readOnly = true)
 @CircuitBreaker(name = "invoiceRepository")
 public interface InvoiceRepository extends PagingAndSortingRepository<InvoiceEntity, Integer>, JpaSpecificationExecutor<InvoiceEntity> {
-
-	@WithRecompile
-	List<InvoiceEntity> findAllByInvoiceNumberIn(final List<Long> invoiceNumbers);
 
 	@WithRecompile
 	default Page<Long> findDistinctInvoiceNumbers(final InvoiceParameters parameters, final Pageable pageable) {
