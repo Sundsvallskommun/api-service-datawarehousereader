@@ -2316,7 +2316,7 @@ VALUES (707070, N'Enterprise', '2019-11-01', '735999109700000001,735999109700000
         'Fräscha fastigheter AB', 'true');
 
 -- vInvoiceDetail
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (52013, 31.6000, 25.2800, NULL, 7667631, 766763197, '2019-09-01', '2019-09-30', 1009, 'El, påslag', 618.0, 'kWh',
@@ -2339,7 +2339,7 @@ VALUES (52013, 31.6000, 25.2800, NULL, 7667631, 766763197, '2019-09-01', '2019-0
         0.3685, 6.4200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (138326, 50.2000, 40.1600, NULL, 7678591, 767859192, '2019-08-01', '2019-08-31', 1002, 'Elpris', 100.79, 'kWh',
         0.3984, 10.0400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (138327, 36.0400, 28.8400, NULL, 7678591, 767859192, '2019-09-01', '2019-09-30', 1002, 'Elpris', 78.55, 'kWh',
@@ -2362,7 +2362,7 @@ VALUES (138327, 36.0400, 28.8400, NULL, 7678591, 767859192, '2019-09-01', '2019-
         0.3685, 3.0800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (140747, 14.0000, 11.2000, NULL, 7678801, 767880198, '2019-08-01', '2019-08-31', 1002, 'Elpris', 28.1, 'kWh',
         0.3984, 2.8000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (140748, 7.8800, 6.3000, NULL, 7678801, 767880198, '2019-09-01', '2019-09-30', 1002, 'Elpris', 17.16, 'kWh',
@@ -2385,7 +2385,7 @@ VALUES (140748, 7.8800, 6.3000, NULL, 7678801, 767880198, '2019-09-01', '2019-09
         0.3685, 0.0100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (141425, 0.0900, 0.0700, NULL, 7678861, 767886195, '2019-08-01', '2019-08-31', 1002, 'Elpris', 0.18, 'kWh',
         0.3984, 0.0200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (141426, 5.4800, 4.3800, NULL, 7678861, 767886195, '2019-09-01', '2019-09-30', 1002, 'Elpris', 11.92, 'kWh',
@@ -2408,7 +2408,7 @@ VALUES (141426, 5.4800, 4.3800, NULL, 7678861, 767886195, '2019-09-01', '2019-09
         0.3672, 4.3200, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB'),
        (142135, 0.9600, 0.7700, NULL, 7678919, 767891997, '2019-08-05', '2019-08-31', 1381, 'Elcertifikat', 28.35,
         'kWh', 0.0271, 0.1900, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (142136, 1.5000, 1.2000, NULL, 7678919, 767891997, '2019-09-01', '2019-09-30', 1381, 'Elcertifikat', 47.07,
@@ -2431,7 +2431,7 @@ VALUES (142136, 1.5000, 1.2000, NULL, 7678919, 767891997, '2019-09-01', '2019-09
         0.4603, 690.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (146500, 42137.5100, 33710.0100, NULL, 1379682, 137968293, '2019-09-01', '2019-09-30', 1413, 'Energiskatt',
         97147.0, 'kWh', 0.3470, 8427.5000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (146502, 1161.3800, 929.1000, NULL, 1379683, 137968392, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -2454,7 +2454,7 @@ VALUES (146502, 1161.3800, 929.1000, NULL, 1379683, 137968392, '2019-09-01', '20
         'kWh', 0.3470, 594.9300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149366, 1161.3800, 929.1000, NULL, 1380202, 138020292, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149367, 122.2000, 97.7600, NULL, 1380202, 138020292, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 3491.4,
@@ -2477,7 +2477,7 @@ VALUES (149367, 122.2000, 97.7600, NULL, 1380202, 138020292, '2019-09-01', '2019
         'kWh', 0.0280, 18.8700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149378, 384.6600, 307.7300, NULL, 1380204, 138020490, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 76.9300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149379, 1169.3900, 935.5100, NULL, 1380204, 138020490, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 2696.0,
@@ -2500,7 +2500,7 @@ VALUES (149379, 1169.3900, 935.5100, NULL, 1380204, 138020490, '2019-09-01', '20
         'kWh', 0.3470, 440.5500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149391, 1161.3800, 929.1000, NULL, 1380207, 138020797, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149392, 60.7000, 48.5600, NULL, 1380207, 138020797, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 1734.22,
@@ -2523,7 +2523,7 @@ VALUES (149392, 60.7000, 48.5600, NULL, 1380207, 138020797, '2019-09-01', '2019-
         8315.73, 'kWh', 0.3470, 721.3900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149402, 4078.6900, 3262.9500, NULL, 1380208, 138020896, '2019-09-01', '2019-09-30', 1413, 'Energiskatt',
         9403.31, 'kWh', 0.3470, 815.7400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149404, 2361.4500, 1889.1600, NULL, 1380209, 138020995, '2019-08-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -2546,7 +2546,7 @@ VALUES (149404, 2361.4500, 1889.1600, NULL, 1380209, 138020995, '2019-08-01', '2
         'kWh', 0.0280, 51.4500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149414, 359.8700, 287.9000, NULL, 1380210, 138021092, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 10282.0,
         'kWh', 0.0280, 71.9700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149415, 1034.0600, 827.2500, NULL, 1380210, 138021092, '2019-08-01', '2019-08-31', 1405, 'Effekt', 31.0, 'kWh',
@@ -2569,7 +2569,7 @@ VALUES (149415, 1034.0600, 827.2500, NULL, 1380210, 138021092, '2019-08-01', '20
         30.0, 'Dagar', 30.9699, 232.2800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149426, 323.5000, 258.8000, NULL, 1380212, 138021290, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 9242.8,
         'kWh', 0.0280, 64.7000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149427, 1065.2000, 852.1600, NULL, 1380212, 138021290, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -2592,7 +2592,7 @@ VALUES (149427, 1065.2000, 852.1600, NULL, 1380212, 138021290, '2019-09-01', '20
         0.7890, 47.3400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149438, 71.0100, 56.8100, NULL, 1380214, 138021498, '2019-09-01', '2019-09-30', 1406, 'Överuttag reaktiv', 30.0,
         'kVArh', 0.7890, 14.2000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149439, 952.6900, 762.1500, NULL, 1380214, 138021498, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 2196.4,
@@ -2615,7 +2615,7 @@ VALUES (149439, 952.6900, 762.1500, NULL, 1380214, 138021498, '2019-09-01', '201
         0.7890, 97.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149450, 532.6000, 426.0800, NULL, 1380216, 138021696, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 106.5200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149451, 1438.3100, 1150.6500, NULL, 1380216, 138021696, '2019-08-01', '2019-08-31', 1413, 'Energiskatt', 3316.0,
@@ -2638,7 +2638,7 @@ VALUES (149451, 1438.3100, 1150.6500, NULL, 1380216, 138021696, '2019-08-01', '2
         'kWh', 0.0280, 8.3400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149462, 250.7100, 200.5700, NULL, 1380218, 138021894, '2019-08-01', '2019-08-31', 1405, 'Effekt', 31.0, 'kWh',
         0.7890, 50.1400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149463, 266.3000, 213.0400, NULL, 1380218, 138021894, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -2661,7 +2661,7 @@ VALUES (149463, 266.3000, 213.0400, NULL, 1380218, 138021894, '2019-09-01', '201
         'kWh', 0.0280, 9.3500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149474, 408.3300, 326.6600, NULL, 1380220, 138022090, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 81.6700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149475, 579.3100, 463.4500, NULL, 1380220, 138022090, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 1335.6,
@@ -2684,7 +2684,7 @@ VALUES (149475, 579.3100, 463.4500, NULL, 1380220, 138022090, '2019-09-01', '201
         0.7890, 97.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149486, 473.4300, 378.7400, NULL, 1380222, 138022298, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 94.6900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149487, 1001.2600, 801.0100, NULL, 1380222, 138022298, '2019-08-01', '2019-08-31', 1413, 'Energiskatt', 2308.4,
@@ -2707,7 +2707,7 @@ VALUES (149487, 1001.2600, 801.0100, NULL, 1380222, 138022298, '2019-08-01', '20
         'kWh', 0.3470, 180.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149498, 1161.3800, 929.1000, NULL, 1380224, 138022496, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149499, 101.1100, 80.8900, NULL, 1380224, 138022496, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 2889.0,
@@ -2730,7 +2730,7 @@ VALUES (149499, 101.1100, 80.8900, NULL, 1380224, 138022496, '2019-09-01', '2019
         'kWh', 0.0280, 26.0300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149510, 131.7000, 105.3600, NULL, 1380226, 138022694, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 3763.02,
         'kWh', 0.0280, 26.3400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149511, 794.9600, 635.9700, NULL, 1380226, 138022694, '2019-08-01', '2019-08-31', 1405, 'Effekt', 31.0, 'kWh',
@@ -2753,7 +2753,7 @@ VALUES (149511, 794.9600, 635.9700, NULL, 1380226, 138022694, '2019-08-01', '201
         30.0, 'Dagar', 30.9699, 232.2700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149522, 129.5300, 103.6200, NULL, 1380228, 138022892, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 3700.68,
         'kWh', 0.0280, 25.9100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149523, 562.1900, 449.7500, NULL, 1380228, 138022892, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -2776,7 +2776,7 @@ VALUES (149523, 562.1900, 449.7500, NULL, 1380228, 138022892, '2019-09-01', '201
         'kWh', 0.0280, 20.8000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149534, 857.0300, 685.6200, NULL, 1380230, 138023098, '2019-08-01', '2019-08-31', 1405, 'Effekt', 31.0, 'kWh',
         0.7890, 171.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149535, 828.4800, 662.7900, NULL, 1380230, 138023098, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -2799,7 +2799,7 @@ VALUES (149535, 828.4800, 662.7900, NULL, 1380230, 138023098, '2019-09-01', '201
         'kWh', 0.3470, 186.6400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149545, 953.8800, 763.1000, NULL, 1380231, 138023197, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 2199.13,
         'kWh', 0.3470, 190.7800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149547, 1161.3700, 929.1000, NULL, 1380232, 138023296, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -2822,7 +2822,7 @@ VALUES (149547, 1161.3700, 929.1000, NULL, 1380232, 138023296, '2019-09-01', '20
         0.7890, 148.2900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149557, 887.6700, 710.1400, NULL, 1380233, 138023395, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 177.5300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149558, 1916.4800, 1533.1800, NULL, 1380233, 138023395, '2019-08-01', '2019-08-31', 1413, 'Energiskatt', 4418.4,
@@ -2845,7 +2845,7 @@ VALUES (149558, 1916.4800, 1533.1800, NULL, 1380233, 138023395, '2019-08-01', '2
         0.7890, 134.9300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149569, 1595.8500, 1276.6800, NULL, 1380235, 138023593, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 3679.2,
         'kWh', 0.3470, 319.1700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149571, 1161.3700, 929.1000, NULL, 1380236, 138023692, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -2868,7 +2868,7 @@ VALUES (149571, 1161.3700, 929.1000, NULL, 1380236, 138023692, '2019-09-01', '20
         'kWh', 0.3470, 11.3500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149582, 1161.3700, 929.1000, NULL, 1380238, 138023890, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2700, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149583, 5.0000, 4.0000, NULL, 1380238, 138023890, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 143.0,
@@ -2891,7 +2891,7 @@ VALUES (149583, 5.0000, 4.0000, NULL, 1380238, 138023890, '2019-09-01', '2019-09
         0.0280, 0.6800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149594, 147.9500, 118.3600, NULL, 1380240, 138024096, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 29.5900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149595, 42.3400, 33.8700, NULL, 1380240, 138024096, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 97.6,
@@ -2914,7 +2914,7 @@ VALUES (149595, 42.3400, 33.8700, NULL, 1380240, 138024096, '2019-09-01', '2019-
         61.0, 'Dagar', 30.9699, 472.2900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149606, 86.3100, 69.0500, NULL, 1380242, 138024294, '2019-08-01', '2019-08-31', 1404, 'Elöverföring', 2466.2,
         'kWh', 0.0280, 17.2600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149607, 93.2300, 74.5800, NULL, 1380242, 138024294, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 2663.6,
@@ -2937,7 +2937,7 @@ VALUES (149607, 93.2300, 74.5800, NULL, 1380242, 138024294, '2019-09-01', '2019-
         0.7890, 95.4000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149617, 414.2400, 331.4000, NULL, 1380243, 138024393, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 82.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149618, 501.9400, 401.5500, NULL, 1380243, 138024393, '2019-08-01', '2019-08-31', 1413, 'Energiskatt', 1157.2,
@@ -2960,7 +2960,7 @@ VALUES (149618, 501.9400, 401.5500, NULL, 1380243, 138024393, '2019-08-01', '201
         0.7890, 106.5200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149629, 3630.2300, 2904.1800, NULL, 1380245, 138024591, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 8369.4,
         'kWh', 0.3470, 726.0500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149631, 1161.3700, 929.1000, NULL, 1380246, 138024690, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -2983,7 +2983,7 @@ VALUES (149631, 1161.3700, 929.1000, NULL, 1380246, 138024690, '2019-09-01', '20
         30.0, 'Dagar', 30.9699, 232.2700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149642, 416.1800, 332.9400, NULL, 1380248, 138024898, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 11890.8,
         'kWh', 0.0280, 83.2400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149643, 1017.8600, 814.2900, NULL, 1380248, 138024898, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -3006,7 +3006,7 @@ VALUES (149643, 1017.8600, 814.2900, NULL, 1380248, 138024898, '2019-09-01', '20
         0.7890, 94.6900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149664, 1284.7600, 1027.8100, NULL, 1380252, 138025291, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 2962.0,
         'kWh', 0.3470, 256.9500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149666, 1161.3800, 929.1000, NULL, 1380253, 138025390, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -3029,7 +3029,7 @@ VALUES (149666, 1161.3800, 929.1000, NULL, 1380253, 138025390, '2019-09-01', '20
         30.0, 'Dagar', 30.9699, 232.2700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149677, 1127.6000, 902.0800, NULL, 1380255, 138025598, '2019-09-01', '2019-09-30', 1404, 'Elöverföring',
         32217.0, 'kWh', 0.0280, 225.5200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149678, 2307.9500, 1846.3600, NULL, 1380255, 138025598, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -3052,7 +3052,7 @@ VALUES (149678, 2307.9500, 1846.3600, NULL, 1380255, 138025598, '2019-09-01', '2
         0.7890, 319.5600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149689, 8260.6000, 6608.4800, NULL, 1380257, 138025796, '2019-09-01', '2019-09-30', 1413, 'Energiskatt',
         19044.6, 'kWh', 0.3470, 1652.1200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149691, 1161.3700, 929.1000, NULL, 1380258, 138025895, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
@@ -3075,7 +3075,7 @@ VALUES (149691, 1161.3700, 929.1000, NULL, 1380258, 138025895, '2019-09-01', '20
         30.0, 'Dagar', 30.9699, 232.2800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149702, 89.2100, 71.3700, NULL, 1380260, 138026091, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 2548.8,
         'kWh', 0.0280, 17.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149703, 284.0500, 227.2400, NULL, 1380260, 138026091, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
@@ -3098,7 +3098,7 @@ VALUES (149703, 284.0500, 227.2400, NULL, 1380260, 138026091, '2019-09-01', '201
         0.7890, 165.7000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149714, 23.6800, 18.9400, NULL, 1380262, 138026299, '2019-09-01', '2019-09-30', 1406, 'Överuttag reaktiv', 30.0,
         'kVArh', 0.7890, 4.7400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149715, 3792.3600, 3033.8900, NULL, 1380262, 138026299, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 8743.2,
@@ -3121,7 +3121,7 @@ VALUES (149715, 3792.3600, 3033.8900, NULL, 1380262, 138026299, '2019-09-01', '2
         52823.0, 'kWh', 0.3470, 4582.4000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149727, 1161.3800, 929.1000, NULL, 1380265, 138026596, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149728, 526.0500, 420.8400, NULL, 1380265, 138026596, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 15030.0,
@@ -3144,7 +3144,7 @@ VALUES (149728, 526.0500, 420.8400, NULL, 1380265, 138026596, '2019-09-01', '201
         'kWh', 0.0280, 112.1700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149739, 1420.2800, 1136.2200, NULL, 1380267, 138026794, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 284.0600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149740, 6950.2300, 5560.1900, NULL, 1380267, 138026794, '2019-09-01', '2019-09-30', 1413, 'Energiskatt',
@@ -3167,7 +3167,7 @@ VALUES (149740, 6950.2300, 5560.1900, NULL, 1380267, 138026794, '2019-09-01', '2
         22106.8, 'kWh', 0.3470, 1917.7700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149752, 1161.3700, 929.1000, NULL, 1380270, 138027099, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149753, 3.9500, 3.1600, NULL, 1380270, 138027099, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 112.8,
@@ -3190,7 +3190,7 @@ VALUES (149753, 3.9500, 3.1600, NULL, 1380270, 138027099, '2019-09-01', '2019-09
         36217.6, 'kWh', 0.0280, 253.5200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149764, 2367.1300, 1893.7000, NULL, 1380272, 138027297, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 473.4300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149765, 15709.3900, 12567.5100, NULL, 1380272, 138027297, '2019-09-01', '2019-09-30', 1413, 'Energiskatt',
@@ -3213,7 +3213,7 @@ VALUES (149765, 15709.3900, 12567.5100, NULL, 1380272, 138027297, '2019-09-01', 
         18237.0, 'kWh', 0.3470, 1582.0600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (149777, 1161.3700, 929.1000, NULL, 1380275, 138027594, '2019-09-01', '2019-09-30', 1407, 'Fast Elnätsavgift',
         30.0, 'Dagar', 30.9699, 232.2700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (149778, 5.3800, 4.3000, NULL, 1380275, 138027594, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 153.6,
@@ -3236,7 +3236,7 @@ VALUES (149778, 5.3800, 4.3000, NULL, 1380275, 138027594, '2019-09-01', '2019-09
         'kWh', 0.0280, 12.2200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (150463, 118.3500, 94.6800, NULL, 1380395, 138039599, '2019-09-01', '2019-09-30', 1405, 'Effekt', 30.0, 'kWh',
         0.7890, 23.6700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (150464, 757.3300, 605.8600, NULL, 1380395, 138039599, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 1746.0,
@@ -3259,7 +3259,7 @@ VALUES (150464, 757.3300, 605.8600, NULL, 1380395, 138039599, '2019-09-01', '201
         'kWh', 0.3470, 332.9500, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB'),
        (228105, 270.9600, 216.7700, NULL, 1390032, 139003297, '2019-07-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         92.0, 'Dagar', 2.3562, 54.1900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (228106, 19.5400, 15.6300, NULL, 1390032, 139003297, '2019-07-01', '2019-07-31', 1404, 'Elöverföring', 111.62,
@@ -3282,7 +3282,7 @@ VALUES (228106, 19.5400, 15.6300, NULL, 1390032, 139003297, '2019-07-01', '2019-
         'kWh', 0.1400, 3.7600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (228116, 15.9100, 12.7200, NULL, 1390033, 139003396, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 90.84,
         'kWh', 0.1400, 3.1900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (228117, 50.5900, 40.4700, NULL, 1390033, 139003396, '2019-07-01', '2019-07-31', 1413, 'Energiskatt', 116.63,
@@ -3305,7 +3305,7 @@ VALUES (228117, 50.5900, 40.4700, NULL, 1390033, 139003396, '2019-07-01', '2019-
         'kWh', 0.3470, 10.7300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (228835, 60.0400, 48.0400, NULL, 1390121, 139012199, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 138.43,
         'kWh', 0.3470, 12.0000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (230656, 167.8800, 134.3000, NULL, 1390340, 139034094, '2019-08-05', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3328,7 +3328,7 @@ VALUES (230656, 167.8800, 134.3000, NULL, 1390340, 139034094, '2019-08-05', '201
         30.0, 'Dagar', 33.7205, 252.9000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243573, 221.7900, 177.4300, NULL, 1393420, 139342091, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 1613.02,
         'kWh', 0.1100, 44.3600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243574, 699.6500, 559.7200, NULL, 1393420, 139342091, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 1613.02,
@@ -3351,7 +3351,7 @@ VALUES (243574, 699.6500, 559.7200, NULL, 1393420, 139342091, '2019-09-01', '201
         'kWh', 0.1100, 56.5100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243586, 891.3500, 713.0800, NULL, 1393423, 139342398, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 2055.0,
         'kWh', 0.3470, 178.2700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243588, 701.5100, 561.2100, NULL, 1393424, 139342497, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3374,7 +3374,7 @@ VALUES (243588, 701.5100, 561.2100, NULL, 1393424, 139342497, '2019-09-01', '201
         'kWh', 0.3470, 195.1900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243604, 509.1800, 407.3400, NULL, 1393428, 139342893, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 13.5781, 101.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243605, 208.3100, 166.6500, NULL, 1393428, 139342893, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 1515.02,
@@ -3397,7 +3397,7 @@ VALUES (243605, 208.3100, 166.6500, NULL, 1393428, 139342893, '2019-09-01', '201
         30.0, 'Dagar', 13.5781, 101.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243617, 49.3600, 39.4900, NULL, 1393431, 139343198, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 358.98,
         'kWh', 0.1100, 9.8700, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243618, 155.7100, 124.5700, NULL, 1393431, 139343198, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 358.98,
@@ -3420,7 +3420,7 @@ VALUES (243618, 155.7100, 124.5700, NULL, 1393431, 139343198, '2019-09-01', '201
         'kWh', 0.1100, 36.2600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243630, 571.9600, 457.5700, NULL, 1393434, 139343495, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 1318.64,
         'kWh', 0.3470, 114.3900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243632, 509.1700, 407.3400, NULL, 1393435, 139343594, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3443,7 +3443,7 @@ VALUES (243632, 509.1700, 407.3400, NULL, 1393435, 139343594, '2019-09-01', '201
         'kWh', 0.3470, 195.6300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243644, 981.7800, 785.4200, NULL, 1393438, 139343891, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 26.1808, 196.3600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243645, 259.4100, 207.5300, NULL, 1393438, 139343891, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 1886.6,
@@ -3466,7 +3466,7 @@ VALUES (243645, 259.4100, 207.5300, NULL, 1393438, 139343891, '2019-09-01', '201
         30.0, 'Dagar', 10.0055, 75.0400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243657, 57.0000, 45.6000, NULL, 1393441, 139344196, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 414.54,
         'kWh', 0.1100, 11.4000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243658, 179.8100, 143.8500, NULL, 1393441, 139344196, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 414.54,
@@ -3489,7 +3489,7 @@ VALUES (243658, 179.8100, 143.8500, NULL, 1393441, 139344196, '2019-09-01', '201
         'kWh', 0.1100, 46.3500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243670, 730.9900, 584.7900, NULL, 1393444, 139344493, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 1685.27,
         'kWh', 0.3470, 146.2000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243672, 701.5100, 561.2100, NULL, 1393445, 139344592, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3512,7 +3512,7 @@ VALUES (243672, 701.5100, 561.2100, NULL, 1393445, 139344592, '2019-09-01', '201
         'kWh', 0.3470, 87.1500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243684, 242.0500, 193.6400, NULL, 1393448, 139344899, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 6.4548, 48.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243685, 14.2300, 11.3800, NULL, 1393448, 139344899, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 103.44,
@@ -3535,7 +3535,7 @@ VALUES (243685, 14.2300, 11.3800, NULL, 1393448, 139344899, '2019-09-01', '2019-
         30.0, 'Dagar', 10.0055, 75.0400, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB'),
        (243697, 73.1100, 58.4900, NULL, 1393451, 139345193, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 531.753,
         'kWh', 0.1100, 14.6200, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243698, 230.6500, 184.5200, NULL, 1393451, 139345193, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 531.753,
@@ -3558,7 +3558,7 @@ VALUES (243698, 230.6500, 184.5200, NULL, 1393451, 139345193, '2019-09-01', '201
         9208.14, 'kWh', 0.1100, 253.2300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243710, 3994.0300, 3195.2200, NULL, 1393454, 139345490, '2019-09-01', '2019-09-30', 1413, 'Energiskatt',
         9208.14, 'kWh', 0.3470, 798.8100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243712, 701.5200, 561.2100, NULL, 1393455, 139345599, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3581,7 +3581,7 @@ VALUES (243712, 701.5200, 561.2100, NULL, 1393455, 139345599, '2019-09-01', '201
         'kWh', 0.3470, 202.3200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243724, 509.1700, 407.3400, NULL, 1393458, 139345896, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 13.5781, 101.8300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243725, 296.3900, 237.1100, NULL, 1393458, 139345896, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 2155.57,
@@ -3604,7 +3604,7 @@ VALUES (243725, 296.3900, 237.1100, NULL, 1393458, 139345896, '2019-09-01', '201
         30.0, 'Dagar', 13.5781, 101.8300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243737, 25.9800, 20.7800, NULL, 1393461, 139346191, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 188.95,
         'kWh', 0.1100, 5.2000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243738, 81.9600, 65.5700, NULL, 1393461, 139346191, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 188.95,
@@ -3627,7 +3627,7 @@ VALUES (243738, 81.9600, 65.5700, NULL, 1393461, 139346191, '2019-09-01', '2019-
         'kWh', 0.1100, 5.3900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243750, 85.0100, 68.0100, NULL, 1393464, 139346498, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 196.0,
         'kWh', 0.3470, 17.0000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243752, 509.1700, 407.3400, NULL, 1393465, 139346597, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3650,7 +3650,7 @@ VALUES (243752, 509.1700, 407.3400, NULL, 1393465, 139346597, '2019-09-01', '201
         'kWh', 0.3470, 63.5500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243764, 242.0600, 193.6400, NULL, 1393468, 139346894, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 6.4548, 48.4200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243765, 13.8600, 11.0900, NULL, 1393468, 139346894, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 100.784,
@@ -3673,7 +3673,7 @@ VALUES (243765, 13.8600, 11.0900, NULL, 1393468, 139346894, '2019-09-01', '2019-
         30.0, 'Dagar', 13.5781, 101.8400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243777, 2.3000, 1.8400, NULL, 1393471, 139347199, '2019-08-01', '2019-08-31', 1404, 'Elöverföring', 16.73,
         'kWh', 0.1100, 0.4600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243778, 2.2900, 1.8300, NULL, 1393471, 139347199, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 16.64,
@@ -3696,7 +3696,7 @@ VALUES (243778, 2.2900, 1.8300, NULL, 1393471, 139347199, '2019-09-01', '2019-09
         30.0, 'Dagar', 6.4548, 48.4000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243789, 69.5800, 55.6600, NULL, 1393473, 139347397, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 506.0,
         'kWh', 0.1100, 13.9200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243790, 219.4800, 175.5800, NULL, 1393473, 139347397, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 506.0,
@@ -3719,7 +3719,7 @@ VALUES (243790, 219.4800, 175.5800, NULL, 1393473, 139347397, '2019-09-01', '201
         'kWh', 0.1100, 0.3000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243802, 4.6900, 3.7500, NULL, 1393476, 139347694, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 10.82, 'kWh',
         0.3470, 0.9400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243804, 242.0500, 193.6400, NULL, 1393477, 139347793, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3742,7 +3742,7 @@ VALUES (243804, 242.0500, 193.6400, NULL, 1393477, 139347793, '2019-09-01', '201
         'kWh', 0.3470, 220.6600, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243816, 242.0500, 193.6400, NULL, 1393480, 139348098, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 6.4548, 48.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243817, 82.0500, 65.6400, NULL, 1393480, 139348098, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 596.7,
@@ -3765,7 +3765,7 @@ VALUES (243817, 82.0500, 65.6400, NULL, 1393480, 139348098, '2019-09-01', '2019-
         30.0, 'Dagar', 6.4548, 48.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243829, 7.0500, 5.6400, NULL, 1393483, 139348395, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 51.25,
         'kWh', 0.1100, 1.4100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243830, 22.2300, 17.7800, NULL, 1393483, 139348395, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 51.25,
@@ -3788,7 +3788,7 @@ VALUES (243830, 22.2300, 17.7800, NULL, 1393483, 139348395, '2019-09-01', '2019-
         'kWh', 0.1100, 17.0200, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243842, 268.5300, 214.8200, NULL, 1393486, 139348692, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 619.07,
         'kWh', 0.3470, 53.7100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243844, 242.0500, 193.6400, NULL, 1393487, 139348791, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3811,7 +3811,7 @@ VALUES (243844, 242.0500, 193.6400, NULL, 1393487, 139348791, '2019-09-01', '201
         'kWh', 0.3470, 586.0400, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243856, 701.5100, 561.2100, NULL, 1393490, 139349096, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
         30.0, 'Dagar', 18.7068, 140.3000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243857, 384.2100, 307.3700, NULL, 1393490, 139349096, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 2794.28,
@@ -3834,7 +3834,7 @@ VALUES (243857, 384.2100, 307.3700, NULL, 1393490, 139349096, '2019-09-01', '201
         30.0, 'Dagar', 18.7068, 140.3000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243869, 79.0100, 63.2100, NULL, 1393493, 139349393, '2019-09-01', '2019-09-30', 1404, 'Elöverföring', 574.6,
         'kWh', 0.1100, 15.8000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243870, 249.2400, 199.3900, NULL, 1393493, 139349393, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 574.6,
@@ -3857,7 +3857,7 @@ VALUES (243870, 249.2400, 199.3900, NULL, 1393493, 139349393, '2019-09-01', '201
         'kWh', 0.1100, 25.9300, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243882, 408.9000, 327.1200, NULL, 1393496, 139349690, '2019-09-01', '2019-09-30', 1413, 'Energiskatt', 942.7,
         'kWh', 0.3470, 81.7800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (243884, 981.7800, 785.4200, NULL, 1393497, 139349799, '2019-09-01', '2019-09-30', 1403, 'Fast Elnätsavgift',
@@ -3880,7 +3880,7 @@ VALUES (243884, 981.7800, 785.4200, NULL, 1393497, 139349799, '2019-09-01', '201
         'kWh', 0.3470, 8.8100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (243894, -16.5400, -13.2300, NULL, 1393498, 139349898, '2019-08-01', '2019-08-31', 1413, 'Energiskatt', -38.14,
         'kWh', 0.3470, -3.3100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (250473, -40.0000, -32.0000, NULL, 7679161, 767916190, '2019-09-06', '2019-09-06', 1339, 'Trädavfall', -0.1,
@@ -3903,7 +3903,7 @@ VALUES (250473, -40.0000, -32.0000, NULL, 7679161, 767916190, '2019-09-06', '201
         'Månad', 47.2000, 11.8000, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (250816, 25.4400, 20.3500, NULL, 7671714, 767171499, '2019-09-01', '2019-09-30', 1009, 'El, påslag', 90.84,
         'kWh', 0.2240, 5.0900, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (250817, 41.7000, 33.3600, NULL, 7671714, 767171499, '2019-09-01', '2019-09-30', 1002, 'Elpris', 90.84, 'kWh',
@@ -3926,7 +3926,7 @@ VALUES (250817, 41.7000, 33.3600, NULL, 7671714, 767171499, '2019-09-01', '2019-
         0.3672, 26.1800, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB'),
        (250833, 9.0500, 7.2400, NULL, 7671717, 767171796, '2019-09-01', '2019-09-30', 1381, 'Elcertifikat', 285.16,
         'kWh', 0.0254, 1.8100, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (250834, 59.0000, 47.2000, NULL, 7671717, 767171796, '2019-09-01', '2019-09-30', 1018, 'Månadsavgift', 1.0,
@@ -3949,7 +3949,7 @@ VALUES (250834, 59.0000, 47.2000, NULL, 7671717, 767171796, '2019-09-01', '2019-
         'Månad', 1.5733, 8.2600, 25.0, '5564786647','1000000001','Nordisk Energiadministration AB'),
        (254126, 60.7600, 48.6100, NULL, 7672349, 767234990, '2019-09-10', '2019-09-30', 1009, 'El, påslag', 217.0,
         'kWh', 0.2240, 12.1500, 25.0, '5565027223','1000000002','Svensk Kraftförvaltning AB');
-INSERT INTO kundinfo.vInvoiceDetail_Test_251126 (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
+INSERT INTO kundinfo.vInvoiceDetail (invoiceProductSeq, Amount, AmountVatExcluded, Description, invoiceId,
                                      InvoiceNumber, periodFrom, periodTo, Productcode, ProductName, Quantity, unit,
                                      Unitprice, Vat, Vatrate, OrganizationId,FacilityId,Administration)
 VALUES (254127, 99.6000, 79.6800, NULL, 7672349, 767234990, '2019-09-10', '2019-09-30', 1002, 'Elpris', 217.0, 'kWh',
