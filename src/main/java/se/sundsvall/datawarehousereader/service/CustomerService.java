@@ -2,6 +2,7 @@ package se.sundsvall.datawarehousereader.service;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -74,7 +75,7 @@ public class CustomerService {
 	public CustomerDetailsResponse getCustomerDetails(final CustomerDetailsParameters parameters) {
 		final var fromDateTime = Optional.ofNullable(parameters.getFromDateTime())
 			.map(OffsetDateTime::toLocalDateTime)
-			.orElse(LocalDateTime.now().minusYears(1L));
+			.orElse(LocalDateTime.now(ZoneId.systemDefault()).minusYears(1L));
 
 		final var result = getCustomerDetailsWithParameters(fromDateTime, parameters);
 		final var metadata = result.isEmpty() ? MetadataEmbeddable.create() : result.getFirst().getMetadata();
