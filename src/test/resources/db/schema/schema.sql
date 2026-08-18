@@ -135,7 +135,7 @@
         primary key (InvoiceNumber)
     );
 
-    create table kundinfo.vInvoiceDetail_Test_251126 (
+    create table kundinfo.vInvoiceDetail (
         Amount money,
         AmountVatExcluded money,
         InvoiceProductSeq int not null,
@@ -153,6 +153,7 @@
         Productname nvarchar(255),
         periodFrom nvarchar(4000),
         periodTo nvarchar(4000),
+        rowOrganizationId varchar(10),
         unit nvarchar(255),
         primary key (InvoiceProductSeq)
     );

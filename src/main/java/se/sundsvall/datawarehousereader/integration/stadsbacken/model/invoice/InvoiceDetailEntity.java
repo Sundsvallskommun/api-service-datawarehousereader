@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(schema = "kundinfo", name = "vInvoiceDetail_Test_251126")
+@Table(schema = "kundinfo", name = "vInvoiceDetail")
 public class InvoiceDetailEntity {
 
 	@Id
@@ -65,6 +65,17 @@ public class InvoiceDetailEntity {
 
 	@Column(name = "Administration", insertable = false, updatable = false, columnDefinition = "nvarchar(255)")
 	private String administration;
+
+	@Column(name = "rowOrganizationId", insertable = false, updatable = false, columnDefinition = "varchar(10)")
+	private String rowOrganizationId;
+
+	public String getRowOrganizationId() {
+		return rowOrganizationId;
+	}
+
+	public void setRowOrganizationId(String rowOrganizationId) {
+		this.rowOrganizationId = rowOrganizationId;
+	}
 
 	public String getAdministration() {
 		return administration;
@@ -219,12 +230,13 @@ public class InvoiceDetailEntity {
 			&& Objects.equals(amount, that.amount) && Objects.equals(invoiceNumber, that.invoiceNumber) && Objects.equals(amountVatExcluded, that.amountVatExcluded) && Objects.equals(vat, that.vat)
 			&& Objects.equals(vatRate, that.vatRate) && Objects.equals(quantity, that.quantity) && Objects.equals(unit, that.unit) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(description,
 				that.description) && Objects.equals(productName, that.productName) && Objects.equals(organizationId, that.organizationId) && Objects.equals(facilityId, that.facilityId) && Objects.equals(administration,
-					that.administration);
+					that.administration) && Objects.equals(rowOrganizationId, that.rowOrganizationId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(invoiceProductSeq, invoiceId, productCode, periodFrom, periodTo, amount, invoiceNumber, amountVatExcluded, vat, vatRate, quantity, unit, unitPrice, description, productName, organizationId, facilityId, administration);
+		return Objects.hash(invoiceProductSeq, invoiceId, productCode, periodFrom, periodTo, amount, invoiceNumber, amountVatExcluded, vat, vatRate, quantity, unit, unitPrice, description, productName, organizationId, facilityId, administration,
+			rowOrganizationId);
 	}
 
 	@Override
@@ -248,6 +260,7 @@ public class InvoiceDetailEntity {
 			", organizationId='" + organizationId + '\'' +
 			", facilityId='" + facilityId + '\'' +
 			", administration='" + administration + '\'' +
+			", rowOrganizationId='" + rowOrganizationId + '\'' +
 			'}';
 	}
 }
