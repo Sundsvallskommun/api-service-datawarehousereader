@@ -3,6 +3,7 @@ package se.sundsvall.datawarehousereader.service.mapper;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 import se.sundsvall.datawarehousereader.api.model.Category;
 import se.sundsvall.datawarehousereader.api.model.agreement.Agreement;
@@ -46,8 +47,12 @@ public class AgreementMapper {
 	}
 
 	private static Boolean isActive(AgreementEntity entity) {
-		final var startDateHasOccurred = nonNull(entity.getFromDate()) && (entity.getFromDate().isBefore(LocalDate.now().atTime(LocalTime.MAX)) || entity.getFromDate().isEqual(LocalDate.now().atTime(LocalTime.MAX)));
-		final var endDateHasNotOccurred = ofNullable(entity.getToDate()).orElse(LocalDateTime.now()).isAfter(LocalDate.now().atStartOfDay()) || ofNullable(entity.getToDate()).orElse(LocalDateTime.now()).isEqual(LocalDate.now().atStartOfDay());
+		final var endOfToday = LocalDate.now(ZoneId.systemDefault()).atTime(LocalTime.MAX);
+		final var startOfToday = LocalDate.now(ZoneId.systemDefault()).atStartOfDay();
+		final var toDate = ofNullable(entity.getToDate()).orElse(LocalDateTime.now(ZoneId.systemDefault()));
+
+		final var startDateHasOccurred = nonNull(entity.getFromDate()) && (entity.getFromDate().isBefore(endOfToday) || entity.getFromDate().isEqual(endOfToday));
+		final var endDateHasNotOccurred = toDate.isAfter(startOfToday) || toDate.isEqual(startOfToday);
 		return startDateHasOccurred && endDateHasNotOccurred;
 	}
 

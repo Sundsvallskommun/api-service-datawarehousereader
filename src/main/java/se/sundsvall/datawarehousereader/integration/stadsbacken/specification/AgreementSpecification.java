@@ -2,6 +2,7 @@ package se.sundsvall.datawarehousereader.integration.stadsbacken.specification;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import se.sundsvall.datawarehousereader.api.model.Category;
@@ -110,7 +111,7 @@ public interface AgreementSpecification {
 	}
 
 	static Specification<AgreementEntity> isActive() {
-		return BUILDER.buildDateFilter(FROM_DATE, null, LocalDate.now().atTime(LocalTime.MAX))
-			.and((entity, cq, cb) -> cb.or(cb.isNull(entity.get(TO_DATE)), cb.greaterThanOrEqualTo(entity.get(TO_DATE), LocalDate.now().atStartOfDay())));
+		return BUILDER.buildDateFilter(FROM_DATE, null, LocalDate.now(ZoneId.systemDefault()).atTime(LocalTime.MAX))
+			.and((entity, cq, cb) -> cb.or(cb.isNull(entity.get(TO_DATE)), cb.greaterThanOrEqualTo(entity.get(TO_DATE), LocalDate.now(ZoneId.systemDefault()).atStartOfDay())));
 	}
 }
