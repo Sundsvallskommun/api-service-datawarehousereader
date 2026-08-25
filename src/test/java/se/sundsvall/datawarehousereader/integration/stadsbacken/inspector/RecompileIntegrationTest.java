@@ -30,7 +30,15 @@ import static org.assertj.core.api.Assertions.assertThat;
  * fired, the inspector is the one the entity manager factory was built with, and the hint survived to the statement.
  * </p>
  */
-@SpringBootTest(classes = Application.class, properties = "spring.jpa.properties.hibernate.format_sql=false")
+@SpringBootTest(classes = Application.class, properties = {
+	// Statements are asserted on as single lines, so the formatter has to stay out of the way.
+	"spring.jpa.properties.hibernate.format_sql=false",
+	// The junit profile has every context write target/database/generated-schema.sql, and this one would write it
+	// unformatted because of the setting above. SchemaVerificationTest compares that file against the formatted
+	// schema.sql, so leaving generation on here fails that test whenever this context happens to be the last one
+	// built before it runs.
+	"spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=none"
+})
 @ActiveProfiles("junit")
 class RecompileIntegrationTest {
 
