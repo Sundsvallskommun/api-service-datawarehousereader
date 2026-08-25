@@ -133,4 +133,16 @@ class GetInvoicesForCustomerIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test12_getForCustomerSpanningMultipleOrganizations() {
+		// Invoice 767891997 belongs to organization 5564786647 while 767886195 and 767880198 belong to 5565027223, so this
+		// page forces the batched detail lookup to attribute rows to invoices across organization boundaries.
+		setupCall()
+			.withServicePath(PATH + "?customerNumbers=10335&periodFrom=2019-10-08&periodTo=2019-10-08&sortBy=InvoiceNumber&sortDirection=DESC&limit=3")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }

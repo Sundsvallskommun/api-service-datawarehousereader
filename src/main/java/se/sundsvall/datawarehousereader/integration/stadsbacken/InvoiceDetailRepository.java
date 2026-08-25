@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import java.util.Collection;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,4 +14,7 @@ public interface InvoiceDetailRepository extends CrudRepository<InvoiceDetailEnt
 
 	@WithRecompile
 	List<InvoiceDetailEntity> findAllByOrganizationIdAndInvoiceNumber(String organizationNumber, long invoiceNumber);
+
+	@WithRecompile
+	List<InvoiceDetailEntity> findAllByInvoiceNumberIn(Collection<Long> invoiceNumbers);
 }
