@@ -32,7 +32,12 @@ class PartyIntegrationTest {
 
 	@Test
 	void testCacheableAnnotationExistsOnLegalIdMethod() throws Exception {
-		assertThat(PartyIntegration.class.getMethod("getLegalId", PartyType.class, String.class, String.class).getAnnotation(Cacheable.class).value()).containsExactly("legalIds");
+		final var annotation = PartyIntegration.class.getMethod("getLegalId", PartyType.class, String.class, String.class).getAnnotation(Cacheable.class);
+
+		assertThat(annotation.value()).containsExactly("legalIds");
+		// Without this, every concurrent request for the same party misses the cold cache and calls the party service on
+		// its own thread.
+		assertThat(annotation.sync()).isTrue();
 	}
 
 	@Test
@@ -68,7 +73,10 @@ class PartyIntegrationTest {
 
 	@Test
 	void testCacheableAnnotationExistsOnPartyIdMethod() throws Exception {
-		assertThat(PartyIntegration.class.getMethod("getPartyId", PartyType.class, String.class, String.class).getAnnotation(Cacheable.class).value()).containsExactly("partyIds");
+		final var annotation = PartyIntegration.class.getMethod("getPartyId", PartyType.class, String.class, String.class).getAnnotation(Cacheable.class);
+
+		assertThat(annotation.value()).containsExactly("partyIds");
+		assertThat(annotation.sync()).isTrue();
 	}
 
 	@Test
