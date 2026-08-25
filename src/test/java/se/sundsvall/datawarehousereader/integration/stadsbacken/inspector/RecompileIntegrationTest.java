@@ -1,35 +1,53 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.inspector;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.spi.ILoggingEvent;
+import ch.qos.logback.core.read.ListAppender;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.function.Supplier;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
+import se.sundsvall.datawarehousereader.Application;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase.Replace.NONE;
 
 /**
  * Integration test to verify that the recompile hint is properly applied to SQL queries.
+ *
+ * <p>
+ * The statements are read off the org.hibernate.SQL logger rather than off the inspector, since Hibernate logs a
+ * statement after handing it to the {@link org.hibernate.resource.jdbc.spi.StatementInspector}. What the logger sees is
+ * therefore what is prepared against the connection, which is the thing worth asserting on: it holds only if the aspect
+ * fired, the inspector is the one the entity manager factory was built with, and the hint survived to the statement.
+ * </p>
  */
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = NONE)
-@ActiveProfiles("junit")
-@Import({
-	RecompileStatementInspector.class, HibernateConfig.class, RecompileAspect.class
+@SpringBootTest(classes = Application.class, properties = {
+	// Statements are asserted on as single lines, so the formatter has to stay out of the way.
+	"spring.jpa.properties.hibernate.format_sql=false",
+	// The junit profile has every context write target/database/generated-schema.sql, and this one would write it
+	// unformatted because of the setting above. SchemaVerificationTest compares that file against the formatted
+	// schema.sql, so leaving generation on here fails that test whenever this context happens to be the last one
+	// built before it runs.
+	"spring.jpa.properties.jakarta.persistence.schema-generation.scripts.action=none"
 })
+@ActiveProfiles("junit")
 class RecompileIntegrationTest {
 
+	private static final String SQL_LOGGER = "org.hibernate.SQL";
+	private static final String RECOMPILE_HINT = "option (recompile)";
+	private static final String ANNOTATED_TABLE = "vInvoiceDetail";
+
 	@Autowired
-	private AgreementRepository agreementRepository;
+	private InvoiceDetailRepository invoiceDetailRepository;
 
 	@Autowired
 	private RecompileStatementInspector inspector;
@@ -74,19 +92,44 @@ class RecompileIntegrationTest {
 	}
 
 	@Test
-	void testAgreementRepositoryQueryWithRecompileAnnotation() {
-		// This test verifies that the @WithRecompile annotation triggers the recompile context
-		// The actual SQL cannot be easily intercepted in this test, but we can verify
-		// that the query executes successfully with the annotation
+	void testQueryOnAnnotatedMethodCarriesTheRecompileHint() {
+		// Act
+		final var statements = captureStatements(() -> invoiceDetailRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
 
-		// Execute query with @WithRecompile annotation
-		final var result = agreementRepository.findAllByParameters(
-			AgreementParameters.create().withAgreementId("1"),
-			null,
-			PageRequest.of(0, 10));
+		// Assert
+		assertThat(statements)
+			.isNotEmpty()
+			.allSatisfy(statement -> assertThat(statement).contains(ANNOTATED_TABLE).endsWith(RECOMPILE_HINT));
+	}
 
-		// Verify that the query executed without errors
-		assertThat(result).isNotNull();
+	/**
+	 * The hint is meant to follow the annotation rather than the connection, so a method without one has to come out
+	 * unhinted even though it runs against the same entity and the same session factory.
+	 */
+	@Test
+	void testQueryOnUnannotatedMethodCarriesNoRecompileHint() {
+		// Act
+		final var statements = captureStatements(() -> invoiceDetailRepository.findById(1));
+
+		// Assert
+		assertThat(statements)
+			.isNotEmpty()
+			.allSatisfy(statement -> assertThat(statement).doesNotContain(RECOMPILE_HINT));
+	}
+
+	/**
+	 * The padding of an IN-clause is applied while the statement is rendered and the hint is appended to the rendered
+	 * statement, so the two do not cancel one another out. Three bound values are padded to four.
+	 */
+	@Test
+	void testInClausePaddingSurvivesTheRecompileHint() {
+		// Act
+		final var statements = captureStatements(() -> invoiceDetailRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
+
+		// Assert
+		assertThat(statements)
+			.isNotEmpty()
+			.allSatisfy(statement -> assertThat(statement).contains("in (?,?,?,?)").endsWith(RECOMPILE_HINT));
 	}
 
 	@Test
@@ -97,7 +140,7 @@ class RecompileIntegrationTest {
 		RecompileContext.enable();
 		final var inspectedSql = inspector.inspect(selectSql);
 
-		assertThat(inspectedSql).isEqualTo("select 1 as test_value option (recompile)");
+		assertThat(inspectedSql).isEqualTo("select 1 as test_value " + RECOMPILE_HINT);
 	}
 
 	@Test
@@ -109,5 +152,34 @@ class RecompileIntegrationTest {
 			assertThat(rs.next()).isTrue();
 			assertThat(rs.getInt(1)).isEqualTo(1);
 		}
+	}
+
+	/**
+	 * Runs the given query and returns the statements Hibernate prepared while it ran.
+	 *
+	 * @param  query the query to run
+	 * @return       the prepared statements, in the order they were prepared
+	 */
+	private List<String> captureStatements(final Supplier<Object> query) {
+		final var logger = (Logger) LoggerFactory.getLogger(SQL_LOGGER);
+		final var appender = new ListAppender<ILoggingEvent>();
+		final var originalLevel = logger.getLevel();
+
+		appender.start();
+		logger.addAppender(appender);
+		logger.setLevel(Level.DEBUG);
+
+		try {
+			query.get();
+		} finally {
+			logger.setLevel(originalLevel);
+			logger.detachAppender(appender);
+			appender.stop();
+		}
+
+		return appender.list.stream()
+			.map(ILoggingEvent::getFormattedMessage)
+			.map(String::strip)
+			.toList();
 	}
 }

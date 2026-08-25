@@ -59,7 +59,7 @@ class InvoiceServiceTest {
 
 	@AfterEach
 	void tearDown() {
-		verifyNoMoreInteractions(invoiceRepositoryMock);
+		verifyNoMoreInteractions(invoiceRepositoryMock, invoiceDetailRepositoryMock, invoiceJdbcRepositoryMock);
 	}
 
 	@Test
@@ -156,13 +156,15 @@ class InvoiceServiceTest {
 		final var jdbcResponse = CustomerInvoiceResponse.create().withInvoices(List.of(first, second));
 
 		final var detailA = new InvoiceDetailEntity();
+		detailA.setOrganizationId(organizationA);
+		detailA.setInvoiceNumber(invoiceA);
 		final var detailB = new InvoiceDetailEntity();
+		detailB.setOrganizationId(organizationB);
+		detailB.setInvoiceNumber(invoiceB);
 
 		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class))).thenReturn(jdbcResponse);
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationA, invoiceA))
-			.thenReturn(List.of(detailA));
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationB, invoiceB))
-			.thenReturn(List.of(detailB));
+		when(invoiceDetailRepositoryMock.findAllByInvoiceNumberIn(List.of(invoiceA, invoiceB)))
+			.thenReturn(List.of(detailA, detailB));
 
 		final var result = service.getInvoicesForCustomer(parameters);
 
@@ -185,8 +187,7 @@ class InvoiceServiceTest {
 		assertThat(query.getPeriodTo()).isEqualTo(LocalDate.of(2025, Month.DECEMBER, 31));
 		assertThat(query.getSortBy()).isEqualTo(List.of("periodFrom", "InvoiceDate"));
 		assertThat(query.getSortDirection()).isEqualTo(Sort.Direction.DESC);
-		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationA, invoiceA);
-		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationB, invoiceB);
+		verify(invoiceDetailRepositoryMock).findAllByInvoiceNumberIn(List.of(invoiceA, invoiceB));
 	}
 
 	@Test
@@ -233,13 +234,41 @@ class InvoiceServiceTest {
 
 		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
 			.thenReturn(CustomerInvoiceResponse.create().withInvoices(List.of(invoice)));
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber("orgX", 1L))
+		when(invoiceDetailRepositoryMock.findAllByInvoiceNumberIn(List.of(1L)))
 			.thenReturn(List.of());
 
 		final var result = service.getInvoicesForCustomer(parameters);
 
 		assertThat(result.getInvoices().getFirst().getDetails()).isEmpty();
-		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber("orgX", 1L);
+		verify(invoiceJdbcRepositoryMock).getInvoices(any(CustomerInvoiceQuery.class));
+		verify(invoiceDetailRepositoryMock).findAllByInvoiceNumberIn(List.of(1L));
+	}
+
+	@Test
+	void getInvoicesForCustomer_nullInvoiceNumber_setsEmptyListWithoutQueryingDetails() {
+		final var parameters = CustomerInvoiceParameters.create().withCustomerNumbers(List.of("123456"));
+		final var invoice = CustomerInvoice.create().withOrganizationNumber("orgX");
+
+		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
+			.thenReturn(CustomerInvoiceResponse.create().withInvoices(List.of(invoice)));
+
+		final var result = service.getInvoicesForCustomer(parameters);
+
+		assertThat(result.getInvoices().getFirst().getDetails()).isEmpty();
+		verify(invoiceJdbcRepositoryMock).getInvoices(any(CustomerInvoiceQuery.class));
+	}
+
+	@Test
+	void getInvoicesForCustomer_nullInvoiceList_doesNotCallDetailRepository() {
+		final var parameters = CustomerInvoiceParameters.create().withCustomerNumbers(List.of("123456"));
+
+		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
+			.thenReturn(CustomerInvoiceResponse.create());
+
+		final var result = service.getInvoicesForCustomer(parameters);
+
+		assertThat(result.getInvoices()).isNull();
+		verify(invoiceJdbcRepositoryMock).getInvoices(any(CustomerInvoiceQuery.class));
 	}
 
 	@Test

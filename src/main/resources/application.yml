@@ -35,6 +35,13 @@ spring:
       hibernate:
         proc:
           param_null_passing: true
+        query:
+          # Pads IN-clause parameter lists to the next power of two so that a varying number of bound parameters
+          # yields a small, fixed set of statement shapes instead of one per list size, which keeps the Hibernate
+          # query plan cache from churning on batched detail lookups. It buys nothing in the SQL Server plan cache
+          # for a query whose repository method is annotated with @WithRecompile, since option (recompile) has the
+          # server compile the statement afresh on every execution and cache no plan for it.
+          in_clause_parameter_padding: true
       jakarta:
         persistence:
           schema-generation:
