@@ -9,8 +9,8 @@ import org.springframework.data.domain.Sort;
  * Parameter object for {@link InvoiceJdbcRepository#getInvoices(CustomerInvoiceQuery)}.
  *
  * <p>
- * List valued filters (customer numbers, organization ids and facility ids) are carried as comma separated strings,
- * matching what the underlying SQL function and the STRING_SPLIT based filtering expect.
+ * List valued filters (customer numbers, organization ids, facility ids and invoice numbers) are carried as comma
+ * separated strings, matching what the underlying SQL function and the STRING_SPLIT based filtering expect.
  */
 public class CustomerInvoiceQuery {
 
@@ -19,6 +19,7 @@ public class CustomerInvoiceQuery {
 	private String customerIds;
 	private String organizationIds;
 	private String facilityIds;
+	private String invoiceNumbers;
 	private String status;
 	private LocalDate periodFrom;
 	private LocalDate periodTo;
@@ -94,6 +95,19 @@ public class CustomerInvoiceQuery {
 		return this;
 	}
 
+	public String getInvoiceNumbers() {
+		return invoiceNumbers;
+	}
+
+	public void setInvoiceNumbers(final String invoiceNumbers) {
+		this.invoiceNumbers = invoiceNumbers;
+	}
+
+	public CustomerInvoiceQuery withInvoiceNumbers(final String invoiceNumbers) {
+		this.setInvoiceNumbers(invoiceNumbers);
+		return this;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -161,7 +175,7 @@ public class CustomerInvoiceQuery {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(page, limit, customerIds, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy, sortDirection);
+		return Objects.hash(page, limit, customerIds, organizationIds, facilityIds, invoiceNumbers, status, periodFrom, periodTo, sortBy, sortDirection);
 	}
 
 	@Override
@@ -177,6 +191,7 @@ public class CustomerInvoiceQuery {
 			&& Objects.equals(customerIds, other.customerIds)
 			&& Objects.equals(organizationIds, other.organizationIds)
 			&& Objects.equals(facilityIds, other.facilityIds)
+			&& Objects.equals(invoiceNumbers, other.invoiceNumbers)
 			&& Objects.equals(status, other.status)
 			&& Objects.equals(periodFrom, other.periodFrom)
 			&& Objects.equals(periodTo, other.periodTo)
@@ -191,6 +206,7 @@ public class CustomerInvoiceQuery {
 			+ ", customerIds=" + customerIds
 			+ ", organizationIds=" + organizationIds
 			+ ", facilityIds=" + facilityIds
+			+ ", invoiceNumbers=" + invoiceNumbers
 			+ ", status=" + status
 			+ ", periodFrom=" + periodFrom
 			+ ", periodTo=" + periodTo

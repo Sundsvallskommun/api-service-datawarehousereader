@@ -46,6 +46,7 @@ public class InvoiceJdbcRepository {
 	private static final String SORT_BY = "sortBy";
 	private static final String FACILITY_IDS = "facilityIds";
 	private static final String INVOICE_STATUS = "invoiceStatus";
+	private static final String INVOICE_NUMBERS = "invoiceNumbers";
 	private static final String OFFSET = "offset";
 	private static final String FETCH = "fetch";
 
@@ -81,6 +82,8 @@ public class InvoiceJdbcRepository {
 		SELECT inner_query.*, COUNT(*) OVER () AS FilteredTotalRecords
 		FROM [kundinfo].[fnInvoiceNumberWithPagingAndSort] ( :functionPageNumber, :functionPageSize, :organizationIds, :customerIds, :periodFrom, :periodTo, :sortBy ) AS inner_query
 		WHERE (:invoiceStatus IS NULL OR inner_query.InvoiceStatus = :invoiceStatus)
+		  AND (:invoiceNumbers IS NULL OR inner_query.InvoiceNumber IN (
+		        SELECT CAST(value AS bigint) FROM STRING_SPLIT(:invoiceNumbers, ',')))
 		  AND (:facilityIds IS NULL OR EXISTS (
 		        SELECT 1 FROM STRING_SPLIT(:facilityIds, ',') facility
 		        WHERE inner_query.FacilityId LIKE '%' + LTRIM(RTRIM(facility.value)) + '%'))
@@ -109,6 +112,7 @@ public class InvoiceJdbcRepository {
 			.addValue(SORT_BY, sortColumns.getFirst())  // resolveSortColumns always returns at least DEFAULT_SORT_COLUMN, i.e. no null here
 			.addValue(FACILITY_IDS, query.getFacilityIds())
 			.addValue(INVOICE_STATUS, query.getStatus())
+			.addValue(INVOICE_NUMBERS, query.getInvoiceNumbers())
 			.addValue(OFFSET, (query.getPage() - 1) * query.getLimit())
 			.addValue(FETCH, query.getLimit());
 

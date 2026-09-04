@@ -27,6 +27,7 @@ import static java.util.Collections.emptyList;
 import static java.util.Collections.emptyMap;
 import static java.util.Optional.ofNullable;
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.joining;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toDetails;
 import static se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper.toInvoices;
 
@@ -70,6 +71,7 @@ public class InvoiceService {
 			.withCustomerIds(toCommaSeparated(parameters.getCustomerNumbers()))
 			.withOrganizationIds(toCommaSeparated(parameters.getOrganizationIds()))
 			.withFacilityIds(toCommaSeparated(parameters.getFacilityIds()))
+			.withInvoiceNumbers(toCommaSeparatedNumbers(parameters.getInvoiceNumbers()))
 			.withStatus(parameters.getStatus())
 			.withPeriodFrom(parameters.getPeriodFrom())
 			.withPeriodTo(parameters.getPeriodTo())
@@ -116,6 +118,13 @@ public class InvoiceService {
 		return ofNullable(values)
 			.filter(list -> !list.isEmpty())
 			.map(list -> String.join(",", list))
+			.orElse(null);
+	}
+
+	private static String toCommaSeparatedNumbers(final List<Long> values) {
+		return ofNullable(values)
+			.filter(list -> !list.isEmpty())
+			.map(list -> list.stream().map(String::valueOf).collect(joining(",")))
 			.orElse(null);
 	}
 

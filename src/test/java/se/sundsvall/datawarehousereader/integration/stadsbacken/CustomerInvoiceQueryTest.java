@@ -41,6 +41,7 @@ class CustomerInvoiceQueryTest {
 		final var customerIds = "123456,600606";
 		final var organizationIds = "5565027223,5564786647";
 		final var facilityIds = "123456789012345670,123456789012345671";
+		final var invoiceNumbers = "123456789,123456790";
 		final var status = "Betalad";
 		final var periodFrom = LocalDate.parse("2025-01-01");
 		final var periodTo = LocalDate.parse("2025-12-31");
@@ -53,6 +54,7 @@ class CustomerInvoiceQueryTest {
 			.withCustomerIds(customerIds)
 			.withOrganizationIds(organizationIds)
 			.withFacilityIds(facilityIds)
+			.withInvoiceNumbers(invoiceNumbers)
 			.withStatus(status)
 			.withPeriodFrom(periodFrom)
 			.withPeriodTo(periodTo)
@@ -65,6 +67,7 @@ class CustomerInvoiceQueryTest {
 		assertThat(query.getCustomerIds()).isEqualTo(customerIds);
 		assertThat(query.getOrganizationIds()).isEqualTo(organizationIds);
 		assertThat(query.getFacilityIds()).isEqualTo(facilityIds);
+		assertThat(query.getInvoiceNumbers()).isEqualTo(invoiceNumbers);
 		assertThat(query.getStatus()).isEqualTo(status);
 		assertThat(query.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(query.getPeriodTo()).isEqualTo(periodTo);

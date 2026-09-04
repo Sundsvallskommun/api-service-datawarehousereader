@@ -207,8 +207,25 @@ class InvoiceServiceTest {
 		assertThat(query.getOrganizationIds()).isNull();
 		assertThat(query.getFacilityIds()).isNull();
 		assertThat(query.getStatus()).isNull();
+		assertThat(query.getInvoiceNumbers()).isNull();
 		assertThat(query.getPage()).isEqualTo(1);
 		assertThat(query.getLimit()).isEqualTo(100);
+	}
+
+	@Test
+	void getInvoicesForCustomer_joinsInvoiceNumbers() {
+		final var parameters = CustomerInvoiceParameters.create()
+			.withCustomerNumbers(List.of("123456"))
+			.withInvoiceNumbers(List.of(295334999L, 60003118415L));
+
+		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
+			.thenReturn(CustomerInvoiceResponse.create().withInvoices(List.of()));
+
+		service.getInvoicesForCustomer(parameters);
+
+		final var queryCaptor = ArgumentCaptor.forClass(CustomerInvoiceQuery.class);
+		verify(invoiceJdbcRepositoryMock).getInvoices(queryCaptor.capture());
+		assertThat(queryCaptor.getValue().getInvoiceNumbers()).isEqualTo("295334999,60003118415");
 	}
 
 	@Test

@@ -27,6 +27,9 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingAndSorting
 	@ArraySchema(schema = @Schema(description = "Facility ids to filter by. A row matches if any of its facility ids contains a requested value", examples = "123456789012345670"))
 	private List<String> facilityIds;
 
+	@ArraySchema(schema = @Schema(description = "Invoice numbers", examples = "123456789"))
+	private List<Long> invoiceNumbers;
+
 	@Schema(description = "Invoice status", examples = "Betalad")
 	private String status;
 
@@ -78,6 +81,19 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingAndSorting
 
 	public CustomerInvoiceParameters withFacilityIds(final List<String> facilityIds) {
 		this.facilityIds = facilityIds;
+		return this;
+	}
+
+	public List<Long> getInvoiceNumbers() {
+		return invoiceNumbers;
+	}
+
+	public void setInvoiceNumbers(final List<Long> invoiceNumbers) {
+		this.invoiceNumbers = invoiceNumbers;
+	}
+
+	public CustomerInvoiceParameters withInvoiceNumbers(final List<Long> invoiceNumbers) {
+		this.invoiceNumbers = invoiceNumbers;
 		return this;
 	}
 
@@ -152,7 +168,7 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingAndSorting
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(customerNumbers, organizationIds, facilityIds, status, periodFrom, periodTo, sortBy, sortDirection, page, limit);
+		result = prime * result + Objects.hash(customerNumbers, organizationIds, facilityIds, invoiceNumbers, status, periodFrom, periodTo, sortBy, sortDirection, page, limit);
 		return result;
 	}
 
@@ -170,6 +186,7 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingAndSorting
 		return Objects.equals(customerNumbers, other.customerNumbers)
 			&& Objects.equals(organizationIds, other.organizationIds)
 			&& Objects.equals(facilityIds, other.facilityIds)
+			&& Objects.equals(invoiceNumbers, other.invoiceNumbers)
 			&& Objects.equals(status, other.status)
 			&& Objects.equals(periodFrom, other.periodFrom)
 			&& Objects.equals(periodTo, other.periodTo)
@@ -184,6 +201,7 @@ public class CustomerInvoiceParameters extends AbstractParameterPagingAndSorting
 		return "CustomerInvoiceParameters [customerNumbers=" + customerNumbers
 			+ ", organizationIds=" + organizationIds
 			+ ", facilityIds=" + facilityIds
+			+ ", invoiceNumbers=" + invoiceNumbers
 			+ ", status=" + status
 			+ ", periodFrom=" + periodFrom
 			+ ", periodTo=" + periodTo
