@@ -39,6 +39,7 @@ class CustomerInvoiceParametersTest {
 		final var customerNumbers = List.of("123456", "600606");
 		final var organizationIds = List.of("5565027223", "5564786647");
 		final var facilityIds = List.of("123456789012345670", "123456789012345671");
+		final var invoiceNumbers = List.of(123456789L, 123456790L);
 		final var status = "Betalad";
 		final var periodFrom = LocalDate.parse("2024-01-01").minusMonths(3);
 		final var periodTo = LocalDate.parse("2024-01-01");
@@ -51,6 +52,7 @@ class CustomerInvoiceParametersTest {
 			.withCustomerNumbers(customerNumbers)
 			.withOrganizationIds(organizationIds)
 			.withFacilityIds(facilityIds)
+			.withInvoiceNumbers(invoiceNumbers)
 			.withStatus(status)
 			.withPeriodFrom(periodFrom)
 			.withPeriodTo(periodTo)
@@ -63,6 +65,7 @@ class CustomerInvoiceParametersTest {
 		assertThat(parameters.getCustomerNumbers()).isEqualTo(customerNumbers);
 		assertThat(parameters.getOrganizationIds()).isEqualTo(organizationIds);
 		assertThat(parameters.getFacilityIds()).isEqualTo(facilityIds);
+		assertThat(parameters.getInvoiceNumbers()).isEqualTo(invoiceNumbers);
 		assertThat(parameters.getStatus()).isEqualTo(status);
 		assertThat(parameters.getPeriodFrom()).isEqualTo(periodFrom);
 		assertThat(parameters.getPeriodTo()).isEqualTo(periodTo);

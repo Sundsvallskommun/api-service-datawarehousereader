@@ -5,7 +5,7 @@ info:
   license:
     name: MIT License
     url: https://opensource.org/licenses/MIT
-  version: "5.7"
+  version: "5.8"
 servers:
 - url: http://localhost:53033
   description: Generated server url
@@ -444,6 +444,17 @@ paths:
               ids contains a requested value
             examples:
             - "123456789012345670"
+      - name: invoiceNumbers
+        in: query
+        required: false
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int64
+            description: Invoice numbers
+            examples:
+            - 123456789
       - name: status
         in: query
         description: Invoice status

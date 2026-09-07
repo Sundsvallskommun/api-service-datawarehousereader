@@ -61,6 +61,7 @@ class InvoiceJdbcRepositoryTest {
 			final var periodTo = LocalDate.of(2025, Month.DECEMBER, 31);
 			final var facilityIds = "123456789012345670";
 			final var invoiceStatus = "Betalad";
+			final var invoiceNumbers = "123456789,123456790";
 
 			final var query = CustomerInvoiceQuery.create()
 				.withPage(2)
@@ -72,7 +73,8 @@ class InvoiceJdbcRepositoryTest {
 				.withSortBy(List.of("InvoiceNumber"))
 				.withSortDirection(Sort.Direction.DESC)
 				.withFacilityIds(facilityIds)
-				.withStatus(invoiceStatus);
+				.withStatus(invoiceStatus)
+				.withInvoiceNumbers(invoiceNumbers);
 
 			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
 				.thenReturn(CustomerInvoiceResponse.create());
@@ -94,11 +96,33 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(params.getValue("sortBy")).isEqualTo("InvoiceNumber");
 			assertThat(params.getValue("facilityIds")).isEqualTo(facilityIds);
 			assertThat(params.getValue("invoiceStatus")).isEqualTo(invoiceStatus);
+			assertThat(params.getValue("invoiceNumbers")).isEqualTo(invoiceNumbers);
 			assertThat(params.getValue("offset")).isEqualTo(10);
 			assertThat(params.getValue("fetch")).isEqualTo(10);
 			// InvoiceNumber is also the tie breaker, so it appears once with the requested direction
 			assertThat(sqlCaptor.getValue()).contains("ORDER BY inner_query.InvoiceNumber DESC")
 				.doesNotContain("inner_query.InvoiceNumber DESC, inner_query.InvoiceNumber");
+		}
+
+		@Test
+		void getInvoices_withInvoiceNumbers_addsInvoiceNumberPredicate() {
+			when(jdbcTemplate.query(anyString(), any(MapSqlParameterSource.class), ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any()))
+				.thenReturn(CustomerInvoiceResponse.create());
+
+			repository.getInvoices(CustomerInvoiceQuery.create()
+				.withPage(1)
+				.withLimit(10)
+				.withCustomerIds("123456")
+				.withInvoiceNumbers("123456789,123456790"));
+
+			verify(jdbcTemplate).query(
+				sqlCaptor.capture(),
+				parametersCaptor.capture(),
+				ArgumentMatchers.<ResultSetExtractor<CustomerInvoiceResponse>>any());
+
+			assertThat(sqlCaptor.getValue()).contains("AND (:invoiceNumbers IS NULL OR inner_query.InvoiceNumber IN (")
+				.contains("SELECT CAST(value AS bigint) FROM STRING_SPLIT(:invoiceNumbers, ',')))");
+			assertThat(parametersCaptor.getValue().getValue("invoiceNumbers")).isEqualTo("123456789,123456790");
 		}
 
 		@Test
@@ -185,6 +209,7 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(params.getValue("periodTo")).isNull();
 			assertThat(params.getValue("facilityIds")).isNull();
 			assertThat(params.getValue("invoiceStatus")).isNull();
+			assertThat(params.getValue("invoiceNumbers")).isNull();
 			assertThat(params.getValue("offset")).isEqualTo(0);
 			assertThat(params.getValue("fetch")).isEqualTo(10);
 			// null sortBy is defaulted to periodFrom for both the function argument and the order by

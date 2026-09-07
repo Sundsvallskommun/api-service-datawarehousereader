@@ -145,4 +145,40 @@ class GetInvoicesForCustomerIT extends AbstractAppTest {
 			.withExpectedResponse(RESPONSE_FILE)
 			.sendRequestAndVerifyResponse();
 	}
+
+	@Test
+	void test13_getForCustomerFilteredByInvoiceNumber() {
+		// Narrowing an ordinary customer query down to a single invoice, which is how a caller holding customer number,
+		// organization number and invoice number reads one invoice together with its details.
+		setupCall()
+			.withServicePath(PATH + "?customerNumbers=600606&organizationIds=5565027223&invoiceNumbers=137968194")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
+
+	@Test
+	void test14_getForCustomerWithNonExistingInvoiceNumber() {
+		// An unknown invoice number yields an empty page rather than a 404, since this is a filter on a collection
+		// resource and not a lookup of a single resource.
+		setupCall()
+			.withServicePath(PATH + "?customerNumbers=600606&invoiceNumbers=999999999")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
+
+	@Test
+	void test15_getForCustomerFilteredByMultipleInvoiceNumbers() {
+		// Two invoice numbers in one call must both come back, which is what separates the list filter from the single
+		// value it replaced.
+		setupCall()
+			.withServicePath(PATH + "?customerNumbers=600606&invoiceNumbers=137968194,137968293")
+			.withHttpMethod(GET)
+			.withExpectedResponseStatus(OK)
+			.withExpectedResponse(RESPONSE_FILE)
+			.sendRequestAndVerifyResponse();
+	}
 }
