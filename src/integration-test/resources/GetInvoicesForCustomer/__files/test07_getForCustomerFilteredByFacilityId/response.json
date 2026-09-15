@@ -30,6 +30,11 @@
 					"quantity": 30.0,
 					"unit": "Dagar",
 					"unitPrice": 30.9699,
+					"unitPriceVatExcluded": 24.7759,
+					"invoiceUnitPrice": 3096.9900,
+					"invoiceUnitPriceVatExcluded": 2477.5920,
+					"invoiceUnitPriceCurrency": "öre",
+					"invoiceUnitPriceUnit": "Dagar",
 					"vat": 232.27,
 					"vatRate": 25.0
 				},
@@ -47,6 +52,11 @@
 					"quantity": 355.0,
 					"unit": "kWh",
 					"unitPrice": 0.028,
+					"unitPriceVatExcluded": 0.0224,
+					"invoiceUnitPrice": 2.8000,
+					"invoiceUnitPriceVatExcluded": 2.2400,
+					"invoiceUnitPriceCurrency": "öre",
+					"invoiceUnitPriceUnit": "kWh",
 					"vat": 2.49,
 					"vatRate": 25.0
 				},
@@ -64,6 +74,11 @@
 					"quantity": 30.0,
 					"unit": "kWh",
 					"unitPrice": 0.789,
+					"unitPriceVatExcluded": 0.6312,
+					"invoiceUnitPrice": 78.9000,
+					"invoiceUnitPriceVatExcluded": 63.1200,
+					"invoiceUnitPriceCurrency": "öre",
+					"invoiceUnitPriceUnit": "kWh",
 					"vat": 5.92,
 					"vatRate": 25.0
 				},
@@ -81,6 +96,11 @@
 					"quantity": 355.0,
 					"unit": "kWh",
 					"unitPrice": 0.347,
+					"unitPriceVatExcluded": 0.2776,
+					"invoiceUnitPrice": 34.7000,
+					"invoiceUnitPriceVatExcluded": 27.7600,
+					"invoiceUnitPriceCurrency": "öre",
+					"invoiceUnitPriceUnit": "kWh",
 					"vat": 30.79,
 					"vatRate": 25.0
 				}

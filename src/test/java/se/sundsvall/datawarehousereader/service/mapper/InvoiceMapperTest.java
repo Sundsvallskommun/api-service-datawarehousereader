@@ -9,8 +9,6 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 import se.sundsvall.datawarehousereader.api.model.CustomerType;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
-import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -155,76 +153,5 @@ class InvoiceMapperTest {
 				VAT,
 				VAT_ELIGIBLE_AMOUNT,
 				PDF_AVAILABLE));
-	}
-
-	@Test
-	void toDetailsWithNull() {
-		assertThat(InvoiceMapper.toDetails(null)).isEmpty();
-	}
-
-	@Test
-	void toDetailsWithEmptyList() {
-		assertThat(InvoiceMapper.toDetails(Collections.emptyList())).isEmpty();
-	}
-
-	@Test
-	void toDetails() {
-		final var entity = new InvoiceDetailEntity();
-		entity.setAmount(AMOUNT);
-		entity.setAmountVatExcluded(AMOUNT_VAT_EXCLUDED);
-		entity.setDescription(INVOICE_DESCRIPTION);
-		entity.setInvoiceId(INVOICE_ID);
-		entity.setInvoiceNumber(INVOICE_NUMBER);
-		entity.setOrganizationId(ORGANIZATION_ID);
-		entity.setPeriodFrom(PERIOD_FROM);
-		entity.setPeriodTo(PERIOD_TO);
-		entity.setProductCode(PRODUCT_CODE);
-		entity.setProductName(PRODUCT_NAME);
-		entity.setQuantity(QUANTITY);
-		entity.setUnit(UNIT);
-		entity.setUnitPrice(UNIT_PRICE);
-		entity.setVat(VAT);
-		entity.setVatRate(VAT_RATE);
-		entity.setFacilityId(FACILITY_ID);
-		entity.setAdministration(ADMINISTRATION);
-
-		final var result = InvoiceMapper.toDetails(List.of(entity));
-
-		assertThat(result)
-			.hasSize(1)
-			.extracting(
-				InvoiceDetail::getAmount,
-				InvoiceDetail::getAmountVatExcluded,
-				InvoiceDetail::getDescription,
-				InvoiceDetail::getInvoiceNumber,
-				InvoiceDetail::getOrganizationNumber,
-				InvoiceDetail::getPeriodFrom,
-				InvoiceDetail::getPeriodTo,
-				InvoiceDetail::getProductCode,
-				InvoiceDetail::getProductName,
-				InvoiceDetail::getQuantity,
-				InvoiceDetail::getUnit,
-				InvoiceDetail::getUnitPrice,
-				InvoiceDetail::getVat,
-				InvoiceDetail::getVatRate,
-				InvoiceDetail::getFacilityId,
-				InvoiceDetail::getAdministration)
-			.containsExactly(tuple(
-				AMOUNT,
-				AMOUNT_VAT_EXCLUDED,
-				INVOICE_DESCRIPTION,
-				INVOICE_NUMBER,
-				ORGANIZATION_ID,
-				PERIOD_FROM,
-				PERIOD_TO,
-				PRODUCT_CODE,
-				PRODUCT_NAME,
-				QUANTITY,
-				UNIT,
-				UNIT_PRICE,
-				VAT,
-				VAT_RATE,
-				FACILITY_ID,
-				ADMINISTRATION));
 	}
 }

@@ -14,9 +14,10 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.Application;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -44,10 +45,10 @@ class RecompileIntegrationTest {
 
 	private static final String SQL_LOGGER = "org.hibernate.SQL";
 	private static final String RECOMPILE_HINT = "option (recompile)";
-	private static final String ANNOTATED_TABLE = "vInvoiceDetail";
+	private static final String ANNOTATED_TABLE = "vInvoice_Test_251126";
 
 	@Autowired
-	private InvoiceDetailRepository invoiceDetailRepository;
+	private InvoiceRepository invoiceRepository;
 
 	@Autowired
 	private RecompileStatementInspector inspector;
@@ -94,7 +95,7 @@ class RecompileIntegrationTest {
 	@Test
 	void testQueryOnAnnotatedMethodCarriesTheRecompileHint() {
 		// Act
-		final var statements = captureStatements(() -> invoiceDetailRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
+		final var statements = captureStatements(() -> invoiceRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
 
 		// Assert
 		assertThat(statements)
@@ -109,7 +110,7 @@ class RecompileIntegrationTest {
 	@Test
 	void testQueryOnUnannotatedMethodCarriesNoRecompileHint() {
 		// Act
-		final var statements = captureStatements(() -> invoiceDetailRepository.findById(1));
+		final var statements = captureStatements(() -> invoiceRepository.findAll(Pageable.ofSize(1)));
 
 		// Assert
 		assertThat(statements)
@@ -124,7 +125,7 @@ class RecompileIntegrationTest {
 	@Test
 	void testInClausePaddingSurvivesTheRecompileHint() {
 		// Act
-		final var statements = captureStatements(() -> invoiceDetailRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
+		final var statements = captureStatements(() -> invoiceRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
 
 		// Assert
 		assertThat(statements)

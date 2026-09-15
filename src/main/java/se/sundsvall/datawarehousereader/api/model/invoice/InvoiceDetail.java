@@ -33,6 +33,21 @@ public class InvoiceDetail {
 	@Schema(description = "Price per unit", examples = "0.347", accessMode = READ_ONLY)
 	private BigDecimal unitPrice;
 
+	@Schema(description = "Price per unit excluded VAT", examples = "0.278", accessMode = READ_ONLY)
+	private BigDecimal unitPriceVatExcluded;
+
+	@Schema(description = "Price per unit as presented on the invoice, expressed in the currency and unit given by invoiceUnitPriceCurrency and invoiceUnitPriceUnit", examples = "34.7", accessMode = READ_ONLY)
+	private BigDecimal invoiceUnitPrice;
+
+	@Schema(description = "Price per unit excluded VAT as presented on the invoice, expressed in the currency and unit given by invoiceUnitPriceCurrency and invoiceUnitPriceUnit", examples = "27.8", accessMode = READ_ONLY)
+	private BigDecimal invoiceUnitPriceVatExcluded;
+
+	@Schema(description = "Currency that the invoice unit prices are expressed in", examples = "öre", accessMode = READ_ONLY)
+	private String invoiceUnitPriceCurrency;
+
+	@Schema(description = "Unit that the invoice unit prices are expressed per", examples = "kWh", accessMode = READ_ONLY)
+	private String invoiceUnitPriceUnit;
+
 	@Schema(description = "Period from", examples = "2022-01-01", accessMode = READ_ONLY)
 	private String periodFrom;
 
@@ -191,6 +206,71 @@ public class InvoiceDetail {
 		return this;
 	}
 
+	public BigDecimal getUnitPriceVatExcluded() {
+		return unitPriceVatExcluded;
+	}
+
+	public void setUnitPriceVatExcluded(BigDecimal unitPriceVatExcluded) {
+		this.unitPriceVatExcluded = unitPriceVatExcluded;
+	}
+
+	public InvoiceDetail withUnitPriceVatExcluded(BigDecimal unitPriceVatExcluded) {
+		this.unitPriceVatExcluded = unitPriceVatExcluded;
+		return this;
+	}
+
+	public BigDecimal getInvoiceUnitPrice() {
+		return invoiceUnitPrice;
+	}
+
+	public void setInvoiceUnitPrice(BigDecimal invoiceUnitPrice) {
+		this.invoiceUnitPrice = invoiceUnitPrice;
+	}
+
+	public InvoiceDetail withInvoiceUnitPrice(BigDecimal invoiceUnitPrice) {
+		this.invoiceUnitPrice = invoiceUnitPrice;
+		return this;
+	}
+
+	public BigDecimal getInvoiceUnitPriceVatExcluded() {
+		return invoiceUnitPriceVatExcluded;
+	}
+
+	public void setInvoiceUnitPriceVatExcluded(BigDecimal invoiceUnitPriceVatExcluded) {
+		this.invoiceUnitPriceVatExcluded = invoiceUnitPriceVatExcluded;
+	}
+
+	public InvoiceDetail withInvoiceUnitPriceVatExcluded(BigDecimal invoiceUnitPriceVatExcluded) {
+		this.invoiceUnitPriceVatExcluded = invoiceUnitPriceVatExcluded;
+		return this;
+	}
+
+	public String getInvoiceUnitPriceCurrency() {
+		return invoiceUnitPriceCurrency;
+	}
+
+	public void setInvoiceUnitPriceCurrency(String invoiceUnitPriceCurrency) {
+		this.invoiceUnitPriceCurrency = invoiceUnitPriceCurrency;
+	}
+
+	public InvoiceDetail withInvoiceUnitPriceCurrency(String invoiceUnitPriceCurrency) {
+		this.invoiceUnitPriceCurrency = invoiceUnitPriceCurrency;
+		return this;
+	}
+
+	public String getInvoiceUnitPriceUnit() {
+		return invoiceUnitPriceUnit;
+	}
+
+	public void setInvoiceUnitPriceUnit(String invoiceUnitPriceUnit) {
+		this.invoiceUnitPriceUnit = invoiceUnitPriceUnit;
+	}
+
+	public InvoiceDetail withInvoiceUnitPriceUnit(String invoiceUnitPriceUnit) {
+		this.invoiceUnitPriceUnit = invoiceUnitPriceUnit;
+		return this;
+	}
+
 	public String getPeriodFrom() {
 		return periodFrom;
 	}
@@ -275,14 +355,17 @@ public class InvoiceDetail {
 			return false;
 		InvoiceDetail that = (InvoiceDetail) o;
 		return Objects.equals(invoiceNumber, that.invoiceNumber) && Objects.equals(amount, that.amount) && Objects.equals(amountVatExcluded, that.amountVatExcluded) && Objects.equals(vat, that.vat)
-			&& Objects.equals(vatRate, that.vatRate) && Objects.equals(quantity, that.quantity) && Objects.equals(unit, that.unit) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(periodFrom,
-				that.periodFrom) && Objects.equals(periodTo, that.periodTo) && Objects.equals(description, that.description) && Objects.equals(productCode, that.productCode) && Objects.equals(productName, that.productName)
+			&& Objects.equals(vatRate, that.vatRate) && Objects.equals(quantity, that.quantity) && Objects.equals(unit, that.unit) && Objects.equals(unitPrice, that.unitPrice) && Objects.equals(unitPriceVatExcluded,
+				that.unitPriceVatExcluded) && Objects.equals(invoiceUnitPrice, that.invoiceUnitPrice) && Objects.equals(invoiceUnitPriceVatExcluded, that.invoiceUnitPriceVatExcluded) && Objects.equals(invoiceUnitPriceCurrency,
+					that.invoiceUnitPriceCurrency) && Objects.equals(invoiceUnitPriceUnit, that.invoiceUnitPriceUnit) && Objects.equals(periodFrom,
+						that.periodFrom) && Objects.equals(periodTo, that.periodTo) && Objects.equals(description, that.description) && Objects.equals(productCode, that.productCode) && Objects.equals(productName, that.productName)
 			&& Objects.equals(organizationNumber, that.organizationNumber) && Objects.equals(administration, that.administration) && Objects.equals(facilityId, that.facilityId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(invoiceNumber, amount, amountVatExcluded, vat, vatRate, quantity, unit, unitPrice, periodFrom, periodTo, description, productCode, productName, organizationNumber, administration, facilityId);
+		return Objects.hash(invoiceNumber, amount, amountVatExcluded, vat, vatRate, quantity, unit, unitPrice, unitPriceVatExcluded, invoiceUnitPrice, invoiceUnitPriceVatExcluded, invoiceUnitPriceCurrency, invoiceUnitPriceUnit,
+			periodFrom, periodTo, description, productCode, productName, organizationNumber, administration, facilityId);
 	}
 
 	@Override
@@ -296,6 +379,11 @@ public class InvoiceDetail {
 			", quantity=" + quantity +
 			", unit='" + unit + '\'' +
 			", unitPrice=" + unitPrice +
+			", unitPriceVatExcluded=" + unitPriceVatExcluded +
+			", invoiceUnitPrice=" + invoiceUnitPrice +
+			", invoiceUnitPriceVatExcluded=" + invoiceUnitPriceVatExcluded +
+			", invoiceUnitPriceCurrency='" + invoiceUnitPriceCurrency + '\'' +
+			", invoiceUnitPriceUnit='" + invoiceUnitPriceUnit + '\'' +
 			", periodFrom='" + periodFrom + '\'' +
 			", periodTo='" + periodTo + '\'' +
 			", description='" + description + '\'' +
