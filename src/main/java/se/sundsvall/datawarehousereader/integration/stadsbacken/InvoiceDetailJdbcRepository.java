@@ -36,12 +36,18 @@ public class InvoiceDetailJdbcRepository {
 	 * The function accepts a single invoice number, so the numbers are split into rows and the function is applied to each
 	 * of them, keeping the lookup to a single round trip. The organization number is passed as null since it is not known
 	 * per invoice here - an invoice number identifies its details on its own.
+	 * <p>
+	 * Every page size yields this one statement, so without the hint a plan compiled for a page holding a single invoice
+	 * would be reused for a page holding a hundred. The JPA lookup this replaced avoided that by carrying @WithRecompile
+	 * and padding its IN-clause into a small set of statement shapes; neither reaches a query issued over JDBC, so the
+	 * hint is spelled out here instead.
 	 */
 	private static final String SQL_BY_INVOICE_NUMBERS = """
 		SELECT details.*
 		FROM STRING_SPLIT(:invoiceNumbers, ',') AS invoice
 		CROSS APPLY [kundinfo].[fnInvoiceDetails] ( invoice.value, NULL ) AS details
-		ORDER BY details.Invoicenumber, details.RowSortOrder""";
+		ORDER BY details.Invoicenumber, details.RowSortOrder
+		OPTION (RECOMPILE)""";
 
 	private static final RowMapper<InvoiceDetail> ROW_MAPPER = (rs, rowNum) -> InvoiceDetail.create()
 		.withAdministration(rs.getString("Administration"))
