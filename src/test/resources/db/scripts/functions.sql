@@ -98,3 +98,24 @@ SELECT
     CAST(@PageSize AS int) AS Count  -- replace, see note
 FROM numbered
 WHERE RowNum BETWEEN ((@PageNumber - 1) * @PageSize + 1) AND (@PageNumber * @PageSize);
+
+-- Not how it works in datalagret - there fnInvoiceDetails is the source of the detail rows. Here it reads the rows
+-- from the kundinfo.vInvoiceDetail table (created in initialize.sql) so the shape of the result set, and thereby the
+-- column-to-field mapping in InvoiceDetailJdbcRepository, can be verified. RowSortOrder is derived rather than stored.
+CREATE OR ALTER FUNCTION kundinfo.fnInvoiceDetails(
+    @InvoiceNumber      varchar(max),
+    @OrganizationNumber varchar(max))
+    RETURNS TABLE
+    AS
+    RETURN
+        SELECT
+            d.InvoiceProductSeq, d.invoiceid, d.Invoicenumber, d.FacilityId,
+            d.Amount, d.AmountVatExcluded, d.Vat, d.Vatrate, d.Quantity, d.unit,
+            d.Unitprice, d.UnitpriceVatExcluded, d.InvoiceUnitprice,
+            d.InvoiceUnitpriceVatExcluded, d.InvoiceUnitpriceCurrency, d.InvoiceUnitpriceunit,
+            d.periodFrom, d.periodTo, d.Description, d.Productname, d.Productcode,
+            d.Administration, d.OrganizationId, d.rowOrganizationId,
+            ROW_NUMBER() OVER (PARTITION BY d.Invoicenumber ORDER BY d.InvoiceProductSeq) AS RowSortOrder
+        FROM kundinfo.vInvoiceDetail d
+        WHERE d.Invoicenumber = CAST(@InvoiceNumber AS bigint)
+          AND (@OrganizationNumber IS NULL OR d.OrganizationId = @OrganizationNumber);

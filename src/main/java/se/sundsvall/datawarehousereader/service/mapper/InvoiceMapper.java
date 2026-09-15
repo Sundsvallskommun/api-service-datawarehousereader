@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import se.sundsvall.datawarehousereader.api.model.invoice.Invoice;
-import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
 import se.sundsvall.datawarehousereader.service.util.ServiceUtil;
 
@@ -101,29 +99,4 @@ public class InvoiceMapper {
 			.withPdfAvailable(entity.getPdfAvailable());
 	}
 
-	public static List<InvoiceDetail> toDetails(final List<InvoiceDetailEntity> entities) {
-		return ofNullable(entities).orElse(emptyList()).stream()
-			.map(InvoiceMapper::toDetail)
-			.toList();
-	}
-
-	private static InvoiceDetail toDetail(final InvoiceDetailEntity entity) {
-		return InvoiceDetail.create()
-			.withAmount(entity.getAmount())
-			.withAmountVatExcluded(entity.getAmountVatExcluded())
-			.withDescription(entity.getDescription())
-			.withInvoiceNumber(entity.getInvoiceNumber())
-			.withOrganizationNumber(entity.getOrganizationId())
-			.withPeriodFrom(entity.getPeriodFrom())
-			.withPeriodTo(entity.getPeriodTo())
-			.withProductCode(entity.getProductCode())
-			.withProductName(entity.getProductName())
-			.withQuantity(entity.getQuantity())
-			.withUnit(entity.getUnit())
-			.withUnitPrice(entity.getUnitPrice())
-			.withVat(entity.getVat())
-			.withVatRate(entity.getVatRate())
-			.withFacilityId(entity.getFacilityId())
-			.withAdministration(entity.getAdministration());
-	}
 }

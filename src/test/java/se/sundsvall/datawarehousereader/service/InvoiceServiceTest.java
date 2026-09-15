@@ -19,14 +19,13 @@ import org.springframework.data.domain.Sort;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoice;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceParameters;
 import se.sundsvall.datawarehousereader.api.model.invoice.CustomerInvoiceResponse;
+import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceDetail;
 import se.sundsvall.datawarehousereader.api.model.invoice.InvoiceParameters;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.CustomerInvoiceQuery;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceDetailJdbcRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceJdbcRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
-import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceDetailEntity;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.model.invoice.InvoiceEntity;
-import se.sundsvall.datawarehousereader.service.mapper.InvoiceMapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,7 +42,7 @@ class InvoiceServiceTest {
 	private InvoiceRepository invoiceRepositoryMock;
 
 	@Mock
-	private InvoiceDetailRepository invoiceDetailRepositoryMock;
+	private InvoiceDetailJdbcRepository invoiceDetailJdbcRepositoryMock;
 
 	@Mock
 	private InvoiceJdbcRepository invoiceJdbcRepositoryMock;
@@ -59,7 +58,7 @@ class InvoiceServiceTest {
 
 	@AfterEach
 	void tearDown() {
-		verifyNoMoreInteractions(invoiceRepositoryMock, invoiceDetailRepositoryMock, invoiceJdbcRepositoryMock);
+		verifyNoMoreInteractions(invoiceRepositoryMock, invoiceDetailJdbcRepositoryMock, invoiceJdbcRepositoryMock);
 	}
 
 	@Test
@@ -155,24 +154,22 @@ class InvoiceServiceTest {
 			.withOrganizationNumber(organizationB);
 		final var jdbcResponse = CustomerInvoiceResponse.create().withInvoices(List.of(first, second));
 
-		final var detailA = new InvoiceDetailEntity();
-		detailA.setOrganizationId(organizationA);
-		detailA.setInvoiceNumber(invoiceA);
-		final var detailB = new InvoiceDetailEntity();
-		detailB.setOrganizationId(organizationB);
-		detailB.setInvoiceNumber(invoiceB);
+		final var detailA = InvoiceDetail.create()
+			.withOrganizationNumber(organizationA)
+			.withInvoiceNumber(invoiceA);
+		final var detailB = InvoiceDetail.create()
+			.withOrganizationNumber(organizationB)
+			.withInvoiceNumber(invoiceB);
 
 		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class))).thenReturn(jdbcResponse);
-		when(invoiceDetailRepositoryMock.findAllByInvoiceNumberIn(List.of(invoiceA, invoiceB)))
+		when(invoiceDetailJdbcRepositoryMock.getInvoiceDetails(List.of(invoiceA, invoiceB)))
 			.thenReturn(List.of(detailA, detailB));
 
 		final var result = service.getInvoicesForCustomer(parameters);
 
 		assertThat(result).isSameAs(jdbcResponse);
-		assertThat(result.getInvoices().getFirst().getDetails())
-			.usingRecursiveComparison().isEqualTo(InvoiceMapper.toDetails(List.of(detailA)));
-		assertThat(result.getInvoices().get(1).getDetails())
-			.usingRecursiveComparison().isEqualTo(InvoiceMapper.toDetails(List.of(detailB)));
+		assertThat(result.getInvoices().getFirst().getDetails()).containsExactly(detailA);
+		assertThat(result.getInvoices().get(1).getDetails()).containsExactly(detailB);
 
 		final var queryCaptor = ArgumentCaptor.forClass(CustomerInvoiceQuery.class);
 		verify(invoiceJdbcRepositoryMock).getInvoices(queryCaptor.capture());
@@ -187,7 +184,7 @@ class InvoiceServiceTest {
 		assertThat(query.getPeriodTo()).isEqualTo(LocalDate.of(2025, Month.DECEMBER, 31));
 		assertThat(query.getSortBy()).isEqualTo(List.of("periodFrom", "InvoiceDate"));
 		assertThat(query.getSortDirection()).isEqualTo(Sort.Direction.DESC);
-		verify(invoiceDetailRepositoryMock).findAllByInvoiceNumberIn(List.of(invoiceA, invoiceB));
+		verify(invoiceDetailJdbcRepositoryMock).getInvoiceDetails(List.of(invoiceA, invoiceB));
 	}
 
 	@Test
@@ -251,14 +248,14 @@ class InvoiceServiceTest {
 
 		when(invoiceJdbcRepositoryMock.getInvoices(any(CustomerInvoiceQuery.class)))
 			.thenReturn(CustomerInvoiceResponse.create().withInvoices(List.of(invoice)));
-		when(invoiceDetailRepositoryMock.findAllByInvoiceNumberIn(List.of(1L)))
+		when(invoiceDetailJdbcRepositoryMock.getInvoiceDetails(List.of(1L)))
 			.thenReturn(List.of());
 
 		final var result = service.getInvoicesForCustomer(parameters);
 
 		assertThat(result.getInvoices().getFirst().getDetails()).isEmpty();
 		verify(invoiceJdbcRepositoryMock).getInvoices(any(CustomerInvoiceQuery.class));
-		verify(invoiceDetailRepositoryMock).findAllByInvoiceNumberIn(List.of(1L));
+		verify(invoiceDetailJdbcRepositoryMock).getInvoiceDetails(List.of(1L));
 	}
 
 	@Test
@@ -293,12 +290,12 @@ class InvoiceServiceTest {
 		var organizationNumber = "1234567890";
 		var invoiceNumber = 987654L;
 
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber)).thenReturn(List.of());
+		when(invoiceDetailJdbcRepositoryMock.getInvoiceDetails(organizationNumber, invoiceNumber)).thenReturn(List.of());
 
 		var result = service.getInvoiceDetails(organizationNumber, invoiceNumber);
 
 		assertThat(result).isEmpty();
-		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
+		verify(invoiceDetailJdbcRepositoryMock).getInvoiceDetails(organizationNumber, invoiceNumber);
 	}
 
 	@Test
@@ -306,15 +303,14 @@ class InvoiceServiceTest {
 		var organizationNumber = "1234567890";
 		var invoiceNumber = 987654L;
 
-		var invoiceDetailEntity = new InvoiceDetailEntity();
+		var invoiceDetail = InvoiceDetail.create().withInvoiceNumber(invoiceNumber);
 
-		when(invoiceDetailRepositoryMock.findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber)).thenReturn(List.of(invoiceDetailEntity));
+		when(invoiceDetailJdbcRepositoryMock.getInvoiceDetails(organizationNumber, invoiceNumber)).thenReturn(List.of(invoiceDetail));
 
 		var result = service.getInvoiceDetails(organizationNumber, invoiceNumber);
 
-		assertThat(result).hasSize(1);
-		assertThat(result).usingRecursiveComparison().isEqualTo(InvoiceMapper.toDetails(List.of(invoiceDetailEntity)));
+		assertThat(result).containsExactly(invoiceDetail);
 
-		verify(invoiceDetailRepositoryMock).findAllByOrganizationIdAndInvoiceNumber(organizationNumber, invoiceNumber);
+		verify(invoiceDetailJdbcRepositoryMock).getInvoiceDetails(organizationNumber, invoiceNumber);
 	}
 }

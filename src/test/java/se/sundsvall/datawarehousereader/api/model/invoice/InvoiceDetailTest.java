@@ -37,6 +37,11 @@ class InvoiceDetailTest {
 		final var quantity = 666D;
 		final var unit = "unit";
 		final var unitPrice = valueOf(303);
+		final var unitPriceVatExcluded = valueOf(304);
+		final var invoiceUnitPrice = valueOf(305);
+		final var invoiceUnitPriceVatExcluded = valueOf(306);
+		final var invoiceUnitPriceCurrency = "invoiceUnitPriceCurrency";
+		final var invoiceUnitPriceUnit = "invoiceUnitPriceUnit";
 		final var vat = valueOf(404);
 		final var vatRate = 777D;
 		final var organizationNumber = "organizationNumber";
@@ -55,6 +60,11 @@ class InvoiceDetailTest {
 			.withQuantity(quantity)
 			.withUnit(unit)
 			.withUnitPrice(unitPrice)
+			.withUnitPriceVatExcluded(unitPriceVatExcluded)
+			.withInvoiceUnitPrice(invoiceUnitPrice)
+			.withInvoiceUnitPriceVatExcluded(invoiceUnitPriceVatExcluded)
+			.withInvoiceUnitPriceCurrency(invoiceUnitPriceCurrency)
+			.withInvoiceUnitPriceUnit(invoiceUnitPriceUnit)
 			.withVat(vat)
 			.withVatRate(vatRate)
 			.withAdministration(administration)
@@ -73,6 +83,11 @@ class InvoiceDetailTest {
 		assertThat(detail.getQuantity()).isEqualTo(quantity);
 		assertThat(detail.getUnit()).isEqualTo(unit);
 		assertThat(detail.getUnitPrice()).isEqualTo(unitPrice);
+		assertThat(detail.getUnitPriceVatExcluded()).isEqualTo(unitPriceVatExcluded);
+		assertThat(detail.getInvoiceUnitPrice()).isEqualTo(invoiceUnitPrice);
+		assertThat(detail.getInvoiceUnitPriceVatExcluded()).isEqualTo(invoiceUnitPriceVatExcluded);
+		assertThat(detail.getInvoiceUnitPriceCurrency()).isEqualTo(invoiceUnitPriceCurrency);
+		assertThat(detail.getInvoiceUnitPriceUnit()).isEqualTo(invoiceUnitPriceUnit);
 		assertThat(detail.getVat()).isEqualTo(vat);
 		assertThat(detail.getVatRate()).isEqualTo(vatRate);
 		assertThat(detail.getAdministration()).isEqualTo(administration);

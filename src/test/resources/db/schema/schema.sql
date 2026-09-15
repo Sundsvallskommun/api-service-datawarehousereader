@@ -135,25 +135,3 @@
         primary key (InvoiceNumber)
     );
 
-    create table kundinfo.vInvoiceDetail (
-        Amount money,
-        AmountVatExcluded money,
-        InvoiceProductSeq int not null,
-        Productcode smallint not null,
-        Quantity float(53),
-        Unitprice money,
-        Vat money,
-        Vatrate float(53),
-        invoiceid int not null,
-        Invoicenumber bigint,
-        Administration nvarchar(255),
-        Description nvarchar(255),
-        FacilityId varchar(50),
-        OrganizationId varchar(10),
-        Productname nvarchar(255),
-        periodFrom nvarchar(4000),
-        periodTo nvarchar(4000),
-        rowOrganizationId varchar(10),
-        unit nvarchar(255),
-        primary key (InvoiceProductSeq)
-    );

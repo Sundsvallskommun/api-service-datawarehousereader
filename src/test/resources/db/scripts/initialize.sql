@@ -12,9 +12,41 @@ drop procedure if exists kundinfo.spMeasurementElectricity;
 drop function if exists kundinfo.fnCustomerDetailWithPagingAndSort;
 drop function if exists kundinfo.fnInstalledBaseWithPagingAndSort;
 drop function if exists kundinfo.fnInvoiceNumberWithPagingAndSort;
+drop function if exists kundinfo.fnInvoiceDetails;
 
 drop schema if exists kundinfo;
 create schema kundinfo;
+
+-- Backing table for kundinfo.fnInvoiceDetails (see functions.sql). Unlike the other kundinfo tables this one is not
+-- present in db/schema/schema.sql, since that file is generated from the JPA entity mappings and invoice details are
+-- no longer read through JPA - the service calls the table valued function over plain JDBC instead.
+create table kundinfo.vInvoiceDetail
+(
+    InvoiceProductSeq           int not null primary key,
+    invoiceid                   int not null,
+    Invoicenumber               bigint,
+    FacilityId                  varchar(50),
+    Amount                      money,
+    AmountVatExcluded           money,
+    Vat                         money,
+    Vatrate                     float(53),
+    Quantity                    float(53),
+    unit                        nvarchar(255),
+    Unitprice                   money,
+    UnitpriceVatExcluded        money,
+    InvoiceUnitprice            money,
+    InvoiceUnitpriceVatExcluded money,
+    InvoiceUnitpriceCurrency    nvarchar(255),
+    InvoiceUnitpriceunit        nvarchar(255),
+    periodFrom                  nvarchar(4000),
+    periodTo                    nvarchar(4000),
+    Description                 nvarchar(255),
+    Productname                 nvarchar(255),
+    Productcode                 smallint not null,
+    Administration              nvarchar(255),
+    OrganizationId              varchar(10),
+    rowOrganizationId           varchar(10)
+);
 
 create procedure kundinfo.spMeasurementDistrictCooling(@customerorgid as varchar(8000),
                                                        @anlaggningsID as varchar(255), @datum_start as datetime2,

@@ -3970,6 +3970,17 @@ VALUES (254127, 99.6000, 79.6800, NULL, 7672349, 767234990, '2019-09-10', '2019-
         'Tensider alkaliska', 1.0, 'Engång', 15.3250, 45.9800, 25.0, NULL,NULL,NULL),
        (254330, 6.0000, 4.8000, 'Spillolja, Märkning: Gatan 3307', 7679204, 767920499, NULL, NULL, 1460, 'Spillolja',
         1.0, 'Engång', 1.6000, 1.2000, 25.0, NULL,NULL,NULL);
+
+-- The unit price columns that fnInvoiceDetails added are derived from Unitprice rather than listed row by row above.
+-- Each column gets its own factor so that a column accidentally mapped to the wrong field in InvoiceDetailJdbcRepository
+-- shows up as a differing value. The invoice unit prices are expressed in öre, i.e. hundredths of the Unitprice currency.
+UPDATE kundinfo.vInvoiceDetail
+SET UnitpriceVatExcluded        = round(Unitprice * 0.8, 4),
+    InvoiceUnitprice            = round(Unitprice * 100, 4),
+    InvoiceUnitpriceVatExcluded = round(Unitprice * 80, 4),
+    InvoiceUnitpriceCurrency    = 'öre',
+    InvoiceUnitpriceunit        = unit;
+
 -- vAgreements
 INSERT INTO kundinfo.vAgreements (uuid, customerorgid, customerId, facilityId, category, billingId, agreementId,
                                   description, mainAgreement, binding, bindingRule, PlacementStatus, NetAreaId,
