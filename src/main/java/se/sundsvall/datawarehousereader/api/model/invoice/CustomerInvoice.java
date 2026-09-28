@@ -70,6 +70,9 @@ public class CustomerInvoice {
 	@Schema(description = "Amount eligible for VAT", examples = "986.81", accessMode = READ_ONLY)
 	private BigDecimal vatEligibleAmount;
 
+	@Schema(description = "VAT amount", examples = "246.70", accessMode = READ_ONLY)
+	private BigDecimal vat;
+
 	@Schema(description = "Rounding", examples = "0.49", accessMode = READ_ONLY)
 	private BigDecimal rounding;
 
@@ -354,6 +357,19 @@ public class CustomerInvoice {
 		return this;
 	}
 
+	public BigDecimal getVat() {
+		return vat;
+	}
+
+	public void setVat(final BigDecimal vat) {
+		this.vat = vat;
+	}
+
+	public CustomerInvoice withVat(final BigDecimal vat) {
+		this.vat = vat;
+		return this;
+	}
+
 	public BigDecimal getRounding() {
 		return rounding;
 	}
@@ -511,7 +527,7 @@ public class CustomerInvoice {
 			&& Objects.equals(dueDate, that.dueDate) && Objects.equals(periodFrom, that.periodFrom)
 			&& Objects.equals(periodTo, that.periodTo) && Objects.equals(totalAmount, that.totalAmount)
 			&& Objects.equals(amountVatIncluded, that.amountVatIncluded) && Objects.equals(amountVatExcluded, that.amountVatExcluded)
-			&& Objects.equals(vatEligibleAmount, that.vatEligibleAmount) && Objects.equals(rounding, that.rounding)
+			&& Objects.equals(vatEligibleAmount, that.vatEligibleAmount) && Objects.equals(vat, that.vat) && Objects.equals(rounding, that.rounding)
 			&& Objects.equals(organizationGroup, that.organizationGroup) && Objects.equals(organizationNumber, that.organizationNumber)
 			&& Objects.equals(administration, that.administration) && Objects.equals(street, that.street)
 			&& Objects.equals(postCode, that.postCode) && Objects.equals(city, that.city)
@@ -523,7 +539,7 @@ public class CustomerInvoice {
 	public int hashCode() {
 		return Objects.hash(customerNumber, customerType, facilityIds, invoiceNumber, invoiceId, jointInvoiceId,
 			invoiceDate, invoiceName, invoiceType, invoiceDescription, invoiceStatus, ocrNumber, dueDate,
-			periodFrom, periodTo, totalAmount, amountVatIncluded, amountVatExcluded, vatEligibleAmount, rounding,
+			periodFrom, periodTo, totalAmount, amountVatIncluded, amountVatExcluded, vatEligibleAmount, vat, rounding,
 			organizationGroup, organizationNumber, administration, street, postCode, city, careOf,
 			invoiceReference, pdfAvailable, details);
 	}
@@ -550,6 +566,7 @@ public class CustomerInvoice {
 			", amountVatIncluded=" + amountVatIncluded +
 			", amountVatExcluded=" + amountVatExcluded +
 			", vatEligibleAmount=" + vatEligibleAmount +
+			", vat=" + vat +
 			", rounding=" + rounding +
 			", organizationGroup='" + organizationGroup + '\'' +
 			", organizationNumber='" + organizationNumber + '\'' +
