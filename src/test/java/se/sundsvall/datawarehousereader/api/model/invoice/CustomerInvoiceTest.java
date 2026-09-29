@@ -56,6 +56,7 @@ class CustomerInvoiceTest {
 		final var amountVatIncluded = valueOf(1233);
 		final var amountVatExcluded = valueOf(986);
 		final var vatEligibleAmount = valueOf(986);
+		final var vat = valueOf(247);
 		final var rounding = valueOf(0);
 		final var organizationGroup = "stadsbacken";
 		final var organizationNumber = "5565027223";
@@ -88,6 +89,7 @@ class CustomerInvoiceTest {
 			.withAmountVatIncluded(amountVatIncluded)
 			.withAmountVatExcluded(amountVatExcluded)
 			.withVatEligibleAmount(vatEligibleAmount)
+			.withVat(vat)
 			.withRounding(rounding)
 			.withOrganizationGroup(organizationGroup)
 			.withOrganizationNumber(organizationNumber)
@@ -120,6 +122,7 @@ class CustomerInvoiceTest {
 		assertThat(invoice.getAmountVatIncluded()).isEqualTo(amountVatIncluded);
 		assertThat(invoice.getAmountVatExcluded()).isEqualTo(amountVatExcluded);
 		assertThat(invoice.getVatEligibleAmount()).isEqualTo(vatEligibleAmount);
+		assertThat(invoice.getVat()).isEqualTo(vat);
 		assertThat(invoice.getRounding()).isEqualTo(rounding);
 		assertThat(invoice.getOrganizationGroup()).isEqualTo(organizationGroup);
 		assertThat(invoice.getOrganizationNumber()).isEqualTo(organizationNumber);

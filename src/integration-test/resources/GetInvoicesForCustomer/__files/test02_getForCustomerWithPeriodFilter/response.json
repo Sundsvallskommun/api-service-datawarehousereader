@@ -127,6 +127,7 @@
 			"rounding": -0.36,
 			"street": "DB79B,  FE 11040",
 			"totalAmount": 1357.0,
+			"vat": 271.47,
 			"vatEligibleAmount": 1085.89
 		},
 		{
@@ -249,6 +250,7 @@
 			"rounding": -0.01,
 			"street": "DB79B,  FE 11040",
 			"totalAmount": 48631.0,
+			"vat": 9726.2,
 			"vatEligibleAmount": 38904.81
 		},
 		{
@@ -393,6 +395,7 @@
 			"rounding": 0.01,
 			"street": "DB79B,  FE 11040",
 			"totalAmount": 12060.0,
+			"vat": 2412.0,
 			"vatEligibleAmount": 9647.99
 		}
 	]

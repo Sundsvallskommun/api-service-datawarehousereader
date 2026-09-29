@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -209,7 +210,7 @@ public class InvoiceJdbcRepository {
 		}
 
 		private CustomerInvoice mapRow(final ResultSet rs) throws SQLException {
-			return CustomerInvoice.create()
+			final var invoice = CustomerInvoice.create()
 				.withCustomerNumber(rs.getString("CustomerId"))
 				.withCustomerType(fromValue(rs.getString("CustomerType"), INTERNAL_SERVER_ERROR, UNKNOWN_CUSTOMER_TYPE))
 				.withFacilityIds(toFacilityIds(rs.getString("FacilityId")))
@@ -239,6 +240,21 @@ public class InvoiceJdbcRepository {
 				.withCareOf(rs.getString("CareOf"))
 				.withInvoiceReference(rs.getString("InvoiceReference"))
 				.withPdfAvailable(getNullableBoolean(rs, "pdfAvailable"));
+
+			return invoice.withVat(toVat(invoice));
+		}
+
+		/**
+		 * TotalAmount is the VAT inclusive sum of the invoice rows plus the öre rounding, so TotalAmount - Rounding -
+		 * AmountVatExcluded is the VAT. AmountVatIncluded cannot be used instead of TotalAmount - Rounding, since in
+		 * Stadsbacken it already includes the rounding and would put the VAT off by it. Null when any of the amounts is
+		 * missing.
+		 */
+		private static BigDecimal toVat(final CustomerInvoice invoice) {
+			if (invoice.getTotalAmount() == null || invoice.getRounding() == null || invoice.getAmountVatExcluded() == null) {
+				return null;
+			}
+			return invoice.getTotalAmount().subtract(invoice.getRounding()).subtract(invoice.getAmountVatExcluded());
 		}
 
 		/**

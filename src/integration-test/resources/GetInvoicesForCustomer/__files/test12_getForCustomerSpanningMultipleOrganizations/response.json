@@ -197,6 +197,7 @@
 			"rounding": -0.44,
 			"street": "Fakturor",
 			"totalAmount": 169.0,
+			"vat": 33.89,
 			"vatEligibleAmount": 135.55
 		},
 		{
@@ -451,6 +452,7 @@
 			"rounding": -0.39,
 			"street": "Fakturor",
 			"totalAmount": 186.0,
+			"vat": 37.28,
 			"vatEligibleAmount": 149.11
 		},
 		{
@@ -705,6 +707,7 @@
 			"rounding": 0.13,
 			"street": "Fakturor",
 			"totalAmount": 239.0,
+			"vat": 47.77,
 			"vatEligibleAmount": 191.1
 		}
 	]

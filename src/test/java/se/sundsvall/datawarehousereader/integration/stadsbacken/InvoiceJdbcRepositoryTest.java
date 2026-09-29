@@ -361,11 +361,13 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(first.getFacilityIds()).containsExactly("facility1", "facility2");
 			assertThat(first.getPeriodFrom()).isEqualTo(LocalDate.of(2025, Month.SEPTEMBER, 1));
 			assertThat(first.getPeriodTo()).isEqualTo(LocalDate.of(2025, Month.SEPTEMBER, 30));
+			assertThat(first.getVat()).isEqualTo(new BigDecimal("246.70"));
 
 			final var second = result.getInvoices().get(1);
 			assertThat(second.getOrganizationNumber()).isEqualTo("5564786647");
 			assertThat(second.getInvoiceNumber()).isEqualTo(60003118415L);
 			assertThat(second.getFacilityIds()).containsExactly("facility3");
+			assertThat(second.getVat()).isEqualTo(new BigDecimal("388.02"));
 
 			final var meta = result.getMetaData();
 			assertThat(meta.getPage()).isEqualTo(1);
@@ -447,6 +449,7 @@ class InvoiceJdbcRepositoryTest {
 			assertThat(item.getPeriodTo()).isNull();
 			assertThat(item.getPdfAvailable()).isNull();
 			assertThat(item.getTotalAmount()).isNull();
+			assertThat(item.getVat()).isNull();
 		}
 
 		@Test
