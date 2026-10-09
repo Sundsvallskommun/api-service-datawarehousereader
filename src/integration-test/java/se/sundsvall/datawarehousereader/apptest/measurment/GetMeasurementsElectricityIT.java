@@ -1,5 +1,10 @@
 package se.sundsvall.datawarehousereader.apptest.measurment;
 
+import org.junit.jupiter.api.Test;
+import se.sundsvall.datawarehousereader.Application;
+import se.sundsvall.dept44.test.AbstractAppTest;
+import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
+
 import static java.lang.String.format;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpStatus.OK;
@@ -8,11 +13,6 @@ import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.HOUR;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.MONTH;
 import static se.sundsvall.datawarehousereader.api.model.measurement.Aggregation.QUARTER;
-
-import org.junit.jupiter.api.Test;
-import se.sundsvall.datawarehousereader.Application;
-import se.sundsvall.dept44.test.AbstractAppTest;
-import se.sundsvall.dept44.test.annotation.wiremock.WireMockAppTestSuite;
 
 /**
  * Read electricity-measurements tests
