@@ -6,7 +6,7 @@
 			}
 		},
 		"method": "GET",
-		"urlPath": "/api-party/2281/ENTERPRISE/A0B52C5B-93AC-480B-821D-E238C8F4D95/legalId"
+		"urlPath": "/api-party/2281/ENTERPRISE/A0B52C5B-93AC-480B-821D-E238C8F4D950/legalId"
 	},
 	"response": {
 		"headers": {

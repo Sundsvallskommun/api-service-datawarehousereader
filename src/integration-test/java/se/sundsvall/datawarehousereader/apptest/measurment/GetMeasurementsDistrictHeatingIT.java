@@ -42,7 +42,7 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 	void test02_getDistrictHeatingHour() {
 		setupCall()
 			.withServicePath(format(PATH, DISTRICT_HEATING, HOUR) +
-				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D95" +
+				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D950" +
 				"&facilityId=9115803075" +
 				"&fromDateTime=2022-01-01T00:00:00.817Z" +
 				"&toDateTime=2022-01-01T23:59:59.817Z")
@@ -56,7 +56,7 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 	void test03_getDistrictHeatingDay() {
 		setupCall()
 			.withServicePath(format(PATH, DISTRICT_HEATING, DAY) +
-				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D95" +
+				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D950" +
 				"&facilityId=9261219043" +
 				"&fromDateTime=2022-03-23T00:00:00.000Z" +
 				"&toDateTime=2022-03-25T23:59:59.817Z")
@@ -70,7 +70,7 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 	void test04_getDistrictHeatingHourWithDisplay() {
 		setupCall()
 			.withServicePath(format(PATH, DISTRICT_HEATING, HOUR) +
-				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D95" +
+				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D950" +
 				"&facilityId=9115803075" +
 				"&fromDateTime=2022-01-01T00:00:00.817Z" +
 				"&toDateTime=2022-01-01T23:59:59.817Z" +
@@ -85,7 +85,7 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 	void test05_getDistrictHeatingDayWithMultipleFacilityIds() {
 		setupCall()
 			.withServicePath(format(PATH, DISTRICT_HEATING, DAY) +
-				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D95" +
+				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D950" +
 				"&facilityId=9115803075" +
 				"&facilityId=9261219043" +
 				"&fromDateTime=2022-03-23T00:00:00.000Z" +
@@ -100,7 +100,7 @@ class GetMeasurementsDistrictHeatingIT extends AbstractAppTest {
 	void test06_getDistrictHeatingDayWithCorrectedAggregated() {
 		setupCall()
 			.withServicePath(format(PATH, DISTRICT_HEATING, DAY) +
-				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D95" +
+				"?partyId=A0B52C5B-93AC-480B-821D-E238C8F4D950" +
 				"&facilityId=9999999999" +
 				"&fromDateTime=2022-03-23T00:00:00.000Z" +
 				"&toDateTime=2022-03-25T23:59:59.817Z" +

@@ -158,7 +158,7 @@ class CustomerResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("customerEngagementOrgId", "must match the regular expression ^([1235789][\\d][2-9]\\d{7})$"),
+			tuple("customerEngagementOrgId", "must match the regular expression ^([1235-9][\\d][2-9]\\d{7})$"),
 			tuple("customerDetailsParameters", "'customerEngagementOrgId' must be provided"),
 			tuple("customerDetailsParameters",
 				"One or more of the sortBy properties [not-valid-property] are not valid. Valid properties to sort by are [installedChangedFlg, address, organizationName, city, phone2, phone3, active, customerCategoryID, co, customerChangedFlg, phone1, organizationId, zipcode, email2, email1, customerCategoryDescription, moveInDate, customerId, name, customerOrgId, partyId]."));
