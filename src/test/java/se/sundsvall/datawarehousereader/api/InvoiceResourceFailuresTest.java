@@ -200,7 +200,7 @@ class InvoiceResourceFailuresTest {
 		assertThat(response.getTitle()).isEqualTo("Constraint Violation");
 		assertThat(response.getStatus()).isEqualTo(BAD_REQUEST);
 		assertThat(response.getViolations()).extracting("field", "message").containsExactlyInAnyOrder(
-			tuple("getInvoiceDetails.organizationNumber", "must match the regular expression ^([1235789][\\d][2-9]\\d{7})$"));
+			tuple("getInvoiceDetails.organizationNumber", "must match the regular expression ^([1235-9][\\d][2-9]\\d{7})$"));
 
 		verifyNoInteractions(serviceMock);
 	}
