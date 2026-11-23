@@ -7,6 +7,7 @@ import ch.qos.logback.core.read.ListAppender;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Supplier;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.AfterEach;
@@ -14,12 +15,18 @@ import org.junit.jupiter.api.Test;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ActiveProfiles;
 import se.sundsvall.datawarehousereader.Application;
+import se.sundsvall.datawarehousereader.api.model.agreement.AgreementParameters;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.AgreementRepository;
 import se.sundsvall.datawarehousereader.integration.stadsbacken.InvoiceRepository;
+import se.sundsvall.datawarehousereader.integration.stadsbacken.model.agreement.AgreementEntity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATING;
 
 /**
  * Integration test to verify that the recompile hint is properly applied to SQL queries.
@@ -46,9 +53,15 @@ class RecompileIntegrationTest {
 	private static final String SQL_LOGGER = "org.hibernate.SQL";
 	private static final String RECOMPILE_HINT = "option (recompile)";
 	private static final String ANNOTATED_TABLE = "vInvoice_Test_251126";
+	private static final String RECOMPILE_HASH_JOIN_HINT = "option (recompile, hash join)";
+	private static final String HASH_JOIN = "hash join";
+	private static final String AGREEMENT_TABLE = "vAgreements";
 
 	@Autowired
 	private InvoiceRepository invoiceRepository;
+
+	@Autowired
+	private AgreementRepository agreementRepository;
 
 	@Autowired
 	private RecompileStatementInspector inspector;
@@ -101,6 +114,51 @@ class RecompileIntegrationTest {
 		assertThat(statements)
 			.isNotEmpty()
 			.allSatisfy(statement -> assertThat(statement).contains(ANNOTATED_TABLE).endsWith(RECOMPILE_HINT));
+	}
+
+	/**
+	 * A page smaller than the result makes Spring Data issue the count query as well, so both the page query and the
+	 * count query are captured.
+	 */
+	@Test
+	void testAgreementSearchCarriesRecompileAndHashJoinHintOnPageAndCountQuery() {
+		// Act
+		final var page = new AtomicReference<Page<AgreementEntity>>();
+		final var statements = captureStatements(() -> {
+			page.set(agreementRepository.findAllByParameters(AgreementParameters.create().withCategory(List.of(DISTRICT_HEATING)), null, PageRequest.of(0, 5)));
+			return page.get();
+		});
+
+		// Assert
+		assertThat(page.get().getContent()).hasSize(5);
+		assertThat(page.get().getTotalElements()).isEqualTo(13);
+		assertThat(page.get().getTotalPages()).isEqualTo(3);
+		assertThat(statements)
+			.hasSize(2)
+			.allSatisfy(statement -> assertThat(statement).startsWith("select").contains(AGREEMENT_TABLE).endsWith(" " + RECOMPILE_HASH_JOIN_HINT));
+		assertThat(statements.get(1)).startsWith("select count_big(*)");
+	}
+
+	@Test
+	void testQueryOnAnnotatedMethodWithoutHashJoinCarriesNoHashJoinHint() {
+		// Act
+		final var statements = captureStatements(() -> invoiceRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
+
+		// Assert
+		assertThat(statements)
+			.isNotEmpty()
+			.allSatisfy(statement -> assertThat(statement).endsWith(" " + RECOMPILE_HINT).doesNotContain(HASH_JOIN));
+	}
+
+	@Test
+	void testQueryOnUnannotatedMethodCarriesNoQueryHintAtAll() {
+		// Act
+		final var statements = captureStatements(() -> invoiceRepository.findAll(Pageable.ofSize(1)));
+
+		// Assert
+		assertThat(statements)
+			.isNotEmpty()
+			.allSatisfy(statement -> assertThat(statement).doesNotContain("recompile").doesNotContain(HASH_JOIN));
 	}
 
 	/**
