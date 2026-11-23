@@ -7,12 +7,8 @@ public final class RecompileContext {
 
 	private RecompileContext() {}
 
-	public static void enable() {
-		RECOMPILE_ENABLED.set(true);
-	}
-
 	public static void enable(final boolean hashJoin) {
-		enable();
+		RECOMPILE_ENABLED.set(true);
 		HASH_JOIN_ENABLED.set(hashJoin);
 	}
 

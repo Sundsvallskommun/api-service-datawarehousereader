@@ -85,7 +85,7 @@ class RecompileIntegrationTest {
 		assertThat(RecompileContext.isEnabled()).isFalse();
 
 		// Enable in current thread
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		assertThat(RecompileContext.isEnabled()).isTrue();
 
 		// Verify in a new thread that it's not enabled (ThreadLocal isolation)
@@ -196,7 +196,7 @@ class RecompileIntegrationTest {
 		// Verify that the inspector can handle real SQL queries
 		final var selectSql = "select 1 as test_value";
 
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		final var inspectedSql = inspector.inspect(selectSql);
 
 		assertThat(inspectedSql).isEqualTo("select 1 as test_value " + RECOMPILE_HINT);

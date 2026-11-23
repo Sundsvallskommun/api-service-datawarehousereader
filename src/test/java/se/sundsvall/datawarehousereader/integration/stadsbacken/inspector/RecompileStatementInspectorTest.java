@@ -16,7 +16,7 @@ class RecompileStatementInspectorTest {
 	void testInspectorAddsRecompileHintWhenEnabled() {
 		// Arrange
 		final var inspector = new RecompileStatementInspector();
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		final var originalSql = "select * from table_name where id = 1";
 
 		// Act
@@ -43,7 +43,7 @@ class RecompileStatementInspectorTest {
 	void testInspectorIgnoresNonSelectStatements() {
 		// Arrange
 		final var inspector = new RecompileStatementInspector();
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		final var insertSql = "insert into table_name (col) values (1)";
 		final var updateSql = "update table_name set col = 1";
 		final var deleteSql = "delete from table_name where id = 1";
@@ -58,7 +58,7 @@ class RecompileStatementInspectorTest {
 	void testInspectorHandlesCaseInsensitiveSelect() {
 		// Arrange
 		final var inspector = new RecompileStatementInspector();
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		final var upperCaseSql = "SELECT * FROM table_name";
 		final var mixedCaseSql = "Select * From table_name";
 
@@ -115,7 +115,7 @@ class RecompileStatementInspectorTest {
 		// Arrange & Act & Assert
 		assertThat(RecompileContext.isEnabled()).isFalse();
 
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		assertThat(RecompileContext.isEnabled()).isTrue();
 
 		RecompileContext.disable();

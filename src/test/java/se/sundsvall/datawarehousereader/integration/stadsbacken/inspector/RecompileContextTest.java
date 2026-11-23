@@ -21,7 +21,7 @@ class RecompileContextTest {
 
 	@Test
 	void enableThenDisable() {
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		assertThat(RecompileContext.isEnabled()).isTrue();
 
 		RecompileContext.disable();
@@ -95,7 +95,7 @@ class RecompileContextTest {
 
 	@Test
 	void threadLocalIsolation() throws InterruptedException {
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		assertThat(RecompileContext.isEnabled()).isTrue();
 
 		final var latch = new CountDownLatch(1);
