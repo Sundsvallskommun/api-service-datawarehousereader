@@ -11,11 +11,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 class RecompileAspectTest {
 
-	private static TestService proxy(final TestService target) {
+	private static <T> T proxy(final T target) {
 		final var factory = new AspectJProxyFactory(target);
 		factory.addAspect(new RecompileAspect());
 		return factory.getProxy();
@@ -69,6 +70,9 @@ class RecompileAspectTest {
 
 		assertThat(result).isEqualTo(123);
 		verify(pjp, times(1)).proceed();
+		verify(pjp).getSignature();
+		verify(signature).getMethod();
+		verifyNoMoreInteractions(pjp, signature);
 		assertThat(RecompileContext.isEnabled()).isFalse();
 	}
 
@@ -114,9 +118,7 @@ class RecompileAspectTest {
 	@Test
 	void methodChoiceOverridesTypeChoice() {
 		final var target = new TypeAnnotatedService();
-		final var factory = new AspectJProxyFactory(target);
-		factory.addAspect(new RecompileAspect());
-		final TypeAnnotatedService proxy = factory.getProxy();
+		final var proxy = proxy(target);
 
 		proxy.methodWithHashJoin();
 
@@ -127,9 +129,7 @@ class RecompileAspectTest {
 	@Test
 	void typeChoiceAppliesToMethodWithoutOwnAnnotation() {
 		final var target = new HashJoinTypeService();
-		final var factory = new AspectJProxyFactory(target);
-		factory.addAspect(new RecompileAspect());
-		final HashJoinTypeService proxy = factory.getProxy();
+		final var proxy = proxy(target);
 
 		proxy.plain();
 

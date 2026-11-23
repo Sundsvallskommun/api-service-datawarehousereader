@@ -113,7 +113,7 @@ class RecompileIntegrationTest {
 		// Assert
 		assertThat(statements)
 			.isNotEmpty()
-			.allSatisfy(statement -> assertThat(statement).contains(ANNOTATED_TABLE).endsWith(RECOMPILE_HINT));
+			.allSatisfy(statement -> assertThat(statement).contains(ANNOTATED_TABLE).endsWith(" " + RECOMPILE_HINT).doesNotContain(HASH_JOIN));
 	}
 
 	/**
@@ -139,28 +139,6 @@ class RecompileIntegrationTest {
 		assertThat(statements.get(1)).startsWith("select count_big(*)");
 	}
 
-	@Test
-	void testQueryOnAnnotatedMethodWithoutHashJoinCarriesNoHashJoinHint() {
-		// Act
-		final var statements = captureStatements(() -> invoiceRepository.findAllByInvoiceNumberIn(List.of(1L, 2L, 3L)));
-
-		// Assert
-		assertThat(statements)
-			.isNotEmpty()
-			.allSatisfy(statement -> assertThat(statement).endsWith(" " + RECOMPILE_HINT).doesNotContain(HASH_JOIN));
-	}
-
-	@Test
-	void testQueryOnUnannotatedMethodCarriesNoQueryHintAtAll() {
-		// Act
-		final var statements = captureStatements(() -> invoiceRepository.findAll(Pageable.ofSize(1)));
-
-		// Assert
-		assertThat(statements)
-			.isNotEmpty()
-			.allSatisfy(statement -> assertThat(statement).doesNotContain("recompile").doesNotContain(HASH_JOIN));
-	}
-
 	/**
 	 * The hint is meant to follow the annotation rather than the connection, so a method without one has to come out
 	 * unhinted even though it runs against the same entity and the same session factory.
@@ -173,7 +151,7 @@ class RecompileIntegrationTest {
 		// Assert
 		assertThat(statements)
 			.isNotEmpty()
-			.allSatisfy(statement -> assertThat(statement).doesNotContain(RECOMPILE_HINT));
+			.allSatisfy(statement -> assertThat(statement).doesNotContain("recompile").doesNotContain(HASH_JOIN));
 	}
 
 	/**

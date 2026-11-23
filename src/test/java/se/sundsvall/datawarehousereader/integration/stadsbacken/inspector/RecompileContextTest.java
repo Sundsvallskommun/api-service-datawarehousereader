@@ -17,12 +17,14 @@ class RecompileContextTest {
 	@Test
 	void defaultsToFalse() {
 		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 	}
 
 	@Test
 	void enableThenDisable() {
 		RecompileContext.enable(false);
 		assertThat(RecompileContext.isEnabled()).isTrue();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 
 		RecompileContext.disable();
 		assertThat(RecompileContext.isEnabled()).isFalse();
@@ -30,19 +32,6 @@ class RecompileContextTest {
 		// idempotent
 		RecompileContext.disable();
 		assertThat(RecompileContext.isEnabled()).isFalse();
-	}
-
-	@Test
-	void hashJoinDefaultsToFalse() {
-		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
-	}
-
-	@Test
-	void enableWithoutHashJoinLeavesHashJoinDisabled() {
-		RecompileContext.enable(false);
-
-		assertThat(RecompileContext.isEnabled()).isTrue();
-		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 	}
 
 	@Test
@@ -75,8 +64,9 @@ class RecompileContextTest {
 	}
 
 	@Test
-	void hashJoinThreadLocalIsolation() throws InterruptedException {
+	void threadLocalIsolation() throws InterruptedException {
 		RecompileContext.enable(true);
+		assertThat(RecompileContext.isEnabled()).isTrue();
 
 		final var latch = new CountDownLatch(1);
 		final boolean[] otherThread = new boolean[2];
@@ -90,24 +80,7 @@ class RecompileContextTest {
 		assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
 		assertThat(otherThread[0]).isFalse();
 		assertThat(otherThread[1]).isFalse();
+		assertThat(RecompileContext.isEnabled()).isTrue();
 		assertThat(RecompileContext.isHashJoinEnabled()).isTrue();
-	}
-
-	@Test
-	void threadLocalIsolation() throws InterruptedException {
-		RecompileContext.enable(false);
-		assertThat(RecompileContext.isEnabled()).isTrue();
-
-		final var latch = new CountDownLatch(1);
-		final boolean[] otherThread = new boolean[1];
-
-		new Thread(() -> {
-			otherThread[0] = RecompileContext.isEnabled();
-			latch.countDown();
-		}).start();
-
-		assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
-		assertThat(otherThread[0]).isFalse();
-		assertThat(RecompileContext.isEnabled()).isTrue();
 	}
 }
