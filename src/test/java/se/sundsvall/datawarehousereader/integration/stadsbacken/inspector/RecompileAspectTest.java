@@ -1,6 +1,7 @@
 package se.sundsvall.datawarehousereader.integration.stadsbacken.inspector;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.aop.aspectj.annotation.AspectJProxyFactory;
@@ -55,6 +56,9 @@ class RecompileAspectTest {
 	void directUnitTestOfAdvice_callsProceedAndCleansUp() throws Throwable {
 		final var aspect = new RecompileAspect();
 		final var pjp = mock(ProceedingJoinPoint.class);
+		final var signature = mock(MethodSignature.class);
+		when(pjp.getSignature()).thenReturn(signature);
+		when(signature.getMethod()).thenReturn(TestService.class.getDeclaredMethod("ok"));
 
 		when(pjp.proceed()).thenAnswer(inv -> {
 			assertThat(RecompileContext.isEnabled()).isTrue();
@@ -68,12 +72,115 @@ class RecompileAspectTest {
 		assertThat(RecompileContext.isEnabled()).isFalse();
 	}
 
+	@Test
+	void hashJoinIsDisabledDuringInvocationWithoutExplicitChoice() {
+		final var target = new TestService();
+		final var proxy = proxy(target);
+
+		proxy.ok();
+
+		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isFalse();
+	}
+
+	@Test
+	void hashJoinIsEnabledDuringInvocationWhenChosenAndDisabledAfterReturn() {
+		final var target = new TestService();
+		final var proxy = proxy(target);
+
+		final var out = proxy.hashJoin();
+
+		assertThat(out).isEqualTo("hash");
+		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isTrue();
+		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
+	}
+
+	@Test
+	void hashJoinAndRecompileAreDisabledAfterExceptionInHashJoinMethod() {
+		final var target = new TestService();
+		final var proxy = proxy(target);
+
+		assertThatThrownBy(proxy::hashJoinBoom)
+			.isInstanceOf(IllegalStateException.class)
+			.hasMessage("hash boom");
+
+		assertThat(target.hashJoinInside).isTrue();
+		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
+	}
+
+	@Test
+	void methodChoiceOverridesTypeChoice() {
+		final var target = new TypeAnnotatedService();
+		final var factory = new AspectJProxyFactory(target);
+		factory.addAspect(new RecompileAspect());
+		final TypeAnnotatedService proxy = factory.getProxy();
+
+		proxy.methodWithHashJoin();
+
+		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isTrue();
+	}
+
+	@Test
+	void typeChoiceAppliesToMethodWithoutOwnAnnotation() {
+		final var target = new HashJoinTypeService();
+		final var factory = new AspectJProxyFactory(target);
+		factory.addAspect(new RecompileAspect());
+		final HashJoinTypeService proxy = factory.getProxy();
+
+		proxy.plain();
+
+		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isTrue();
+	}
+
+	@WithRecompile(hashJoin = true)
+	static class HashJoinTypeService {
+		volatile boolean enabledInside;
+		volatile boolean hashJoinInside;
+
+		void plain() {
+			enabledInside = RecompileContext.isEnabled();
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
+		}
+	}
+
+	@WithRecompile(hashJoin = false)
+	static class TypeAnnotatedService {
+		volatile boolean enabledInside;
+		volatile boolean hashJoinInside;
+
+		@WithRecompile(hashJoin = true)
+		void methodWithHashJoin() {
+			enabledInside = RecompileContext.isEnabled();
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
+		}
+	}
+
 	static class TestService {
 		volatile boolean enabledInside;
+		volatile boolean hashJoinInside;
+
+		@WithRecompile(hashJoin = true)
+		String hashJoin() {
+			enabledInside = RecompileContext.isEnabled();
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
+			return "hash";
+		}
+
+		@WithRecompile(hashJoin = true)
+		void hashJoinBoom() {
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
+			throw new IllegalStateException("hash boom");
+		}
 
 		@WithRecompile
 		String ok() {
 			enabledInside = RecompileContext.isEnabled();
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
 			return "ok";
 		}
 
