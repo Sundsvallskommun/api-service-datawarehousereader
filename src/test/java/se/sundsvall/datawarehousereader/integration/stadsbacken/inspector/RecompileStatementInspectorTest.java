@@ -68,6 +68,49 @@ class RecompileStatementInspectorTest {
 	}
 
 	@Test
+	void testInspectorAddsRecompileAndHashJoinHintWhenBothEnabled() {
+		final var inspector = new RecompileStatementInspector();
+		RecompileContext.enable(true);
+
+		final var result = inspector.inspect("select * from table_name where id = 1");
+
+		assertThat(result).isEqualTo("select * from table_name where id = 1 option (recompile, hash join)");
+	}
+
+	@Test
+	void testInspectorAddsOnlyRecompileHintWhenHashJoinNotEnabled() {
+		final var inspector = new RecompileStatementInspector();
+		RecompileContext.enable(false);
+
+		final var result = inspector.inspect("select * from table_name where id = 1");
+
+		assertThat(result).isEqualTo("select * from table_name where id = 1 option (recompile)");
+	}
+
+	@Test
+	void testInspectorLeavesSelectUnchangedWhenRecompileDisabledAfterHashJoinEnabled() {
+		final var inspector = new RecompileStatementInspector();
+		RecompileContext.enable(true);
+		RecompileContext.disable();
+		final var originalSql = "select * from table_name where id = 1";
+
+		assertThat(inspector.inspect(originalSql)).isEqualTo(originalSql);
+	}
+
+	@Test
+	void testInspectorIgnoresNonSelectStatementsWhenHashJoinEnabled() {
+		final var inspector = new RecompileStatementInspector();
+		RecompileContext.enable(true);
+		final var insertSql = "insert into table_name (col) values (1)";
+		final var updateSql = "update table_name set col = 1";
+		final var withSql = "with cte as (select 1 as x) select x from cte";
+
+		assertThat(inspector.inspect(insertSql)).isEqualTo(insertSql);
+		assertThat(inspector.inspect(updateSql)).isEqualTo(updateSql);
+		assertThat(inspector.inspect(withSql)).isEqualTo(withSql);
+	}
+
+	@Test
 	void testContextEnableAndDisable() {
 		// Arrange & Act & Assert
 		assertThat(RecompileContext.isEnabled()).isFalse();
