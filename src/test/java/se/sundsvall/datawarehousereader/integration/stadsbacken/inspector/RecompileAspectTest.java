@@ -61,6 +61,7 @@ class RecompileAspectTest {
 		final var aspect = new RecompileAspect();
 		final var pjp = mock(ProceedingJoinPoint.class);
 		final var signature = mock(MethodSignature.class);
+		when(pjp.getTarget()).thenReturn(new TestService());
 		when(pjp.getSignature()).thenReturn(signature);
 		when(signature.getMethod()).thenReturn(TestService.class.getDeclaredMethod("ok"));
 
@@ -73,6 +74,7 @@ class RecompileAspectTest {
 
 		assertThat(result).isEqualTo(123);
 		verify(pjp, times(1)).proceed();
+		verify(pjp).getTarget();
 		verify(pjp).getSignature();
 		verify(signature).getMethod();
 		verifyNoMoreInteractions(pjp, signature);
@@ -124,6 +126,33 @@ class RecompileAspectTest {
 
 		assertThat(target.enabledInside).isTrue();
 		assertThat(target.hashJoinInside).isTrue();
+	}
+
+	@Test
+	void methodChoiceOnImplementationAppliesThroughInterfaceProxy() {
+		final var target = new InterfaceServiceImpl();
+		final InterfaceService proxy = proxy(target);
+
+		proxy.run();
+
+		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isTrue();
+	}
+
+	interface InterfaceService {
+		void run();
+	}
+
+	static class InterfaceServiceImpl implements InterfaceService {
+		boolean enabledInside;
+		boolean hashJoinInside;
+
+		@WithRecompile(hashJoin = true)
+		@Override
+		public void run() {
+			enabledInside = RecompileContext.isEnabled();
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
+		}
 	}
 
 	static class HashJoinTypeSubService extends HashJoinTypeService {
