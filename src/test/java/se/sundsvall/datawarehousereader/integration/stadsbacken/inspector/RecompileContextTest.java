@@ -28,6 +28,7 @@ class RecompileContextTest {
 
 		RecompileContext.disable();
 		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 
 		// idempotent
 		RecompileContext.disable();
@@ -35,19 +36,12 @@ class RecompileContextTest {
 	}
 
 	@Test
-	void enableWithHashJoinEnablesBoth() {
+	void enableWithHashJoinThenDisable() {
 		RecompileContext.enable(true);
-
 		assertThat(RecompileContext.isEnabled()).isTrue();
 		assertThat(RecompileContext.isHashJoinEnabled()).isTrue();
-	}
-
-	@Test
-	void disableClearsBothRecompileAndHashJoin() {
-		RecompileContext.enable(true);
 
 		RecompileContext.disable();
-
 		assertThat(RecompileContext.isEnabled()).isFalse();
 		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 	}
