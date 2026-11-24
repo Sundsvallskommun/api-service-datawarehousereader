@@ -37,6 +37,7 @@ class RecompileAspectTest {
 
 		assertThat(out).isEqualTo("ok");
 		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isFalse();
 		assertThat(RecompileContext.isEnabled()).isFalse(); // no leak
 	}
 
@@ -50,7 +51,9 @@ class RecompileAspectTest {
 			.hasMessage("boom");
 
 		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isTrue();
 		assertThat(RecompileContext.isEnabled()).isFalse(); // still no leak
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 	}
 
 	@Test
@@ -77,17 +80,6 @@ class RecompileAspectTest {
 	}
 
 	@Test
-	void hashJoinIsDisabledDuringInvocationWithoutExplicitChoice() {
-		final var target = new TestService();
-		final var proxy = proxy(target);
-
-		proxy.ok();
-
-		assertThat(target.enabledInside).isTrue();
-		assertThat(target.hashJoinInside).isFalse();
-	}
-
-	@Test
 	void hashJoinIsEnabledDuringInvocationWhenChosenAndDisabledAfterReturn() {
 		final var target = new TestService();
 		final var proxy = proxy(target);
@@ -96,20 +88,6 @@ class RecompileAspectTest {
 
 		assertThat(out).isEqualTo("hash");
 		assertThat(target.enabledInside).isTrue();
-		assertThat(target.hashJoinInside).isTrue();
-		assertThat(RecompileContext.isEnabled()).isFalse();
-		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
-	}
-
-	@Test
-	void hashJoinAndRecompileAreDisabledAfterExceptionInHashJoinMethod() {
-		final var target = new TestService();
-		final var proxy = proxy(target);
-
-		assertThatThrownBy(proxy::hashJoinBoom)
-			.isInstanceOf(IllegalStateException.class)
-			.hasMessage("hash boom");
-
 		assertThat(target.hashJoinInside).isTrue();
 		assertThat(RecompileContext.isEnabled()).isFalse();
 		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
@@ -135,6 +113,20 @@ class RecompileAspectTest {
 
 		assertThat(target.enabledInside).isTrue();
 		assertThat(target.hashJoinInside).isTrue();
+	}
+
+	@Test
+	void typeChoiceOnSuperclassAppliesToInheritedMethodOfSubclass() {
+		final var target = new HashJoinTypeSubService();
+		final var proxy = proxy(target);
+
+		proxy.plain();
+
+		assertThat(target.enabledInside).isTrue();
+		assertThat(target.hashJoinInside).isTrue();
+	}
+
+	static class HashJoinTypeSubService extends HashJoinTypeService {
 	}
 
 	@WithRecompile(hashJoin = true)
@@ -171,12 +163,6 @@ class RecompileAspectTest {
 			return "hash";
 		}
 
-		@WithRecompile(hashJoin = true)
-		void hashJoinBoom() {
-			hashJoinInside = RecompileContext.isHashJoinEnabled();
-			throw new IllegalStateException("hash boom");
-		}
-
 		@WithRecompile
 		String ok() {
 			enabledInside = RecompileContext.isEnabled();
@@ -184,9 +170,10 @@ class RecompileAspectTest {
 			return "ok";
 		}
 
-		@WithRecompile
+		@WithRecompile(hashJoin = true)
 		void boom() {
 			enabledInside = RecompileContext.isEnabled();
+			hashJoinInside = RecompileContext.isHashJoinEnabled();
 			throw new IllegalStateException("boom");
 		}
 	}

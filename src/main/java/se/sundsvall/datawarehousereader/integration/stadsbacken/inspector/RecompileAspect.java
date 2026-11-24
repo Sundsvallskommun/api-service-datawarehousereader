@@ -16,7 +16,7 @@ public class RecompileAspect {
 	public Object applyRecompile(ProceedingJoinPoint joinPoint) throws Throwable {
 		final var method = ((MethodSignature) joinPoint.getSignature()).getMethod();
 		final var annotation = ofNullable(method.getAnnotation(WithRecompile.class))
-			.orElseGet(() -> joinPoint.getTarget().getClass().getAnnotation(WithRecompile.class));
+			.orElseGet(() -> method.getDeclaringClass().getAnnotation(WithRecompile.class));
 		try {
 			RecompileContext.enable(annotation.hashJoin());
 			return joinPoint.proceed();
