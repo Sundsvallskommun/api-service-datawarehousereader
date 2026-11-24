@@ -51,9 +51,9 @@ import static se.sundsvall.datawarehousereader.api.model.Category.DISTRICT_HEATI
 class RecompileIntegrationTest {
 
 	private static final String SQL_LOGGER = "org.hibernate.SQL";
-	private static final String RECOMPILE_HINT = "option (recompile)";
+	private static final String RECOMPILE_HINT = " option (recompile)";
 	private static final String ANNOTATED_TABLE = "vInvoice_Test_251126";
-	private static final String RECOMPILE_HASH_JOIN_HINT = "option (recompile, hash join)";
+	private static final String RECOMPILE_HASH_JOIN_HINT = " option (recompile, hash join)";
 	private static final String HASH_JOIN = "hash join";
 	private static final String AGREEMENT_TABLE = "vAgreements";
 
@@ -113,7 +113,7 @@ class RecompileIntegrationTest {
 		// Assert
 		assertThat(statements)
 			.isNotEmpty()
-			.allSatisfy(statement -> assertThat(statement).contains(ANNOTATED_TABLE).endsWith(" " + RECOMPILE_HINT).doesNotContain(HASH_JOIN));
+			.allSatisfy(statement -> assertThat(statement).contains(ANNOTATED_TABLE).endsWith(RECOMPILE_HINT).doesNotContain(HASH_JOIN));
 	}
 
 	/**
@@ -135,7 +135,7 @@ class RecompileIntegrationTest {
 		assertThat(page.get().getTotalPages()).isEqualTo(3);
 		assertThat(statements)
 			.hasSize(2)
-			.allSatisfy(statement -> assertThat(statement).startsWith("select").contains(AGREEMENT_TABLE).endsWith(" " + RECOMPILE_HASH_JOIN_HINT));
+			.allSatisfy(statement -> assertThat(statement).startsWith("select").contains(AGREEMENT_TABLE).endsWith(RECOMPILE_HASH_JOIN_HINT));
 		assertThat(statements.get(1)).startsWith("select count_big(*)");
 	}
 
@@ -177,7 +177,7 @@ class RecompileIntegrationTest {
 		RecompileContext.enable(false);
 		final var inspectedSql = inspector.inspect(selectSql);
 
-		assertThat(inspectedSql).isEqualTo("select 1 as test_value " + RECOMPILE_HINT);
+		assertThat(inspectedSql).isEqualTo("select 1 as test_value" + RECOMPILE_HINT);
 	}
 
 	@Test

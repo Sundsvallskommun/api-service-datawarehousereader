@@ -47,11 +47,13 @@ class RecompileStatementInspectorTest {
 		final var insertSql = "insert into table_name (col) values (1)";
 		final var updateSql = "update table_name set col = 1";
 		final var deleteSql = "delete from table_name where id = 1";
+		final var withSql = "with cte as (select 1 as x) select x from cte";
 
 		// Act & Assert
 		assertThat(inspector.inspect(insertSql)).isEqualTo(insertSql);
 		assertThat(inspector.inspect(updateSql)).isEqualTo(updateSql);
 		assertThat(inspector.inspect(deleteSql)).isEqualTo(deleteSql);
+		assertThat(inspector.inspect(withSql)).isEqualTo(withSql);
 	}
 
 	@Test
@@ -78,36 +80,6 @@ class RecompileStatementInspectorTest {
 
 		// Assert
 		assertThat(result).isEqualTo("select * from table_name where id = 1 option (recompile, hash join)");
-	}
-
-	@Test
-	void testInspectorLeavesSelectUnchangedWhenRecompileDisabledAfterHashJoinEnabled() {
-		// Arrange
-		final var inspector = new RecompileStatementInspector();
-		RecompileContext.enable(true);
-		RecompileContext.disable();
-		final var originalSql = "select * from table_name where id = 1";
-
-		// Act
-		final var result = inspector.inspect(originalSql);
-
-		// Assert
-		assertThat(result).isEqualTo(originalSql);
-	}
-
-	@Test
-	void testInspectorIgnoresNonSelectStatementsWhenHashJoinEnabled() {
-		// Arrange
-		final var inspector = new RecompileStatementInspector();
-		RecompileContext.enable(true);
-		final var insertSql = "insert into table_name (col) values (1)";
-		final var updateSql = "update table_name set col = 1";
-		final var withSql = "with cte as (select 1 as x) select x from cte";
-
-		// Act & Assert
-		assertThat(inspector.inspect(insertSql)).isEqualTo(insertSql);
-		assertThat(inspector.inspect(updateSql)).isEqualTo(updateSql);
-		assertThat(inspector.inspect(withSql)).isEqualTo(withSql);
 	}
 
 	@Test

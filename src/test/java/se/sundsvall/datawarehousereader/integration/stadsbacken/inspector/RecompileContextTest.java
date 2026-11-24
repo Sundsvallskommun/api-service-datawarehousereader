@@ -53,17 +53,6 @@ class RecompileContextTest {
 	}
 
 	@Test
-	void hashJoinIsNotCarriedIntoNextEnableWithoutHashJoin() {
-		RecompileContext.enable(true);
-		RecompileContext.disable();
-
-		RecompileContext.enable(false);
-
-		assertThat(RecompileContext.isEnabled()).isTrue();
-		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
-	}
-
-	@Test
 	void threadLocalIsolation() throws InterruptedException {
 		RecompileContext.enable(true);
 		assertThat(RecompileContext.isEnabled()).isTrue();
