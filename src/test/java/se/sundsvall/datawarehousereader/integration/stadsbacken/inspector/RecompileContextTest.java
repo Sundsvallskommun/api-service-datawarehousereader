@@ -17,15 +17,18 @@ class RecompileContextTest {
 	@Test
 	void defaultsToFalse() {
 		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 	}
 
 	@Test
 	void enableThenDisable() {
-		RecompileContext.enable();
+		RecompileContext.enable(false);
 		assertThat(RecompileContext.isEnabled()).isTrue();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 
 		RecompileContext.disable();
 		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
 
 		// idempotent
 		RecompileContext.disable();
@@ -33,20 +36,34 @@ class RecompileContextTest {
 	}
 
 	@Test
+	void enableWithHashJoinThenDisable() {
+		RecompileContext.enable(true);
+		assertThat(RecompileContext.isEnabled()).isTrue();
+		assertThat(RecompileContext.isHashJoinEnabled()).isTrue();
+
+		RecompileContext.disable();
+		assertThat(RecompileContext.isEnabled()).isFalse();
+		assertThat(RecompileContext.isHashJoinEnabled()).isFalse();
+	}
+
+	@Test
 	void threadLocalIsolation() throws InterruptedException {
-		RecompileContext.enable();
+		RecompileContext.enable(true);
 		assertThat(RecompileContext.isEnabled()).isTrue();
 
 		final var latch = new CountDownLatch(1);
-		final boolean[] otherThread = new boolean[1];
+		final boolean[] otherThread = new boolean[2];
 
 		new Thread(() -> {
 			otherThread[0] = RecompileContext.isEnabled();
+			otherThread[1] = RecompileContext.isHashJoinEnabled();
 			latch.countDown();
 		}).start();
 
 		assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
 		assertThat(otherThread[0]).isFalse();
+		assertThat(otherThread[1]).isFalse();
 		assertThat(RecompileContext.isEnabled()).isTrue();
+		assertThat(RecompileContext.isHashJoinEnabled()).isTrue();
 	}
 }

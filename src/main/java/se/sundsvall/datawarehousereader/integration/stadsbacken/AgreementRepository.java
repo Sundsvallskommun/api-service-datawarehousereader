@@ -35,7 +35,8 @@ import static se.sundsvall.datawarehousereader.integration.stadsbacken.specifica
 @CircuitBreaker(name = "agreementRepository")
 public interface AgreementRepository extends PagingAndSortingRepository<AgreementEntity, AgreementKey>, JpaSpecificationExecutor<AgreementEntity> {
 
-	@WithRecompile
+	// Hash join: paged search on partyId + ELECTRICITY_TRADE times out with nested loops against vAgreements
+	@WithRecompile(hashJoin = true)
 	default Page<AgreementEntity> findAllByParameters(AgreementParameters agreementParameters, String customerOrgId, Pageable pageable) {
 		final var parameters = ofNullable(agreementParameters).orElse(AgreementParameters.create());
 		return this.findAll(withAgreementId(ServiceUtil.toInteger(parameters.getAgreementId()))
